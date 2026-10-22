@@ -1,3 +1,4 @@
+using System;
 using PCL.Core.Utils.Exts;
 using PCL.Core.Utils.OS;
 
@@ -17,6 +18,11 @@ public static class Secrets
     public static string CurseForgeAPIKey { get; } = EnvironmentInterop.GetSecret("CURSEFORGE_API_KEY", readEnvDebugOnly: true).ReplaceNullOrEmpty();
 
     /// <summary>
+    /// 当前构建是否配置了 CurseForge API Key，未配置时官方 API 一律返回 403
+    /// </summary>
+    public static bool HasCurseForgeAPIKey => !string.IsNullOrWhiteSpace(CurseForgeAPIKey);
+
+    /// <summary>
     /// 遥测密钥
     /// </summary>
     public static string TelemetryKey { get; } = EnvironmentInterop.GetSecret("TELEMETRY_KEY", readEnvDebugOnly: true).ReplaceNullOrEmpty();
@@ -34,7 +40,13 @@ public static class Secrets
     /// <summary>
     /// 联机根服务器
     /// </summary>
-    public static string[] LinkServers { get; } = EnvironmentInterop.GetSecret("LINK_SERVER_ROOT", readEnvDebugOnly: true).ReplaceNullOrEmpty().Split("|");
+    public static string[] LinkServers { get; } = ParseServerList(EnvironmentInterop.GetSecret("LINK_SERVER_ROOT", readEnvDebugOnly: true));
+
+    /// <summary>
+    /// 解析以 <c>|</c> 分隔的服务器列表，忽略空项，未配置时返回空数组
+    /// </summary>
+    public static string[] ParseServerList(string? raw) =>
+        (raw ?? "").Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
     /// <summary>
     /// 当前版本的 Git 提交 SHA

@@ -1968,7 +1968,7 @@ public static class ModComp
         {
             get
             {
-                if (tag.StartsWithF("/") || !source.HasFlag(CompSourceType.CurseForge))
+                if (tag.StartsWithF("/") || !source.HasFlag(CompSourceType.CurseForge) || !Secrets.HasCurseForgeAPIKey)
                     storage.curseForgeTotal = 0;
                 if (tag.EndsWithF("/") || !source.HasFlag(CompSourceType.Modrinth))
                     storage.modrinthTotal = 0;
@@ -1988,8 +1988,11 @@ public static class ModComp
         {
             if (!source.HasFlag(CompSourceType.CurseForge))
                 return null;
-            if (tag.StartsWithF("/"))
+            // 未配置 API Key 时官方接口必定 403，只从 Modrinth 获取
+            if (tag.StartsWithF("/") || !Secrets.HasCurseForgeAPIKey)
                 storage.curseForgeTotal = 0;
+            if (!Secrets.HasCurseForgeAPIKey)
+                return null;
             if (storage.curseForgeTotal > -1 && storage.curseForgeTotal <= storage.curseForgeOffset)
                 return null;
             // 应用筛选参数
@@ -2593,7 +2596,7 @@ public static class ModComp
                     catch (Exception ex)
                     {
                         lastError = ex;
-                        LogWrapper.Error(ex, "CurseForge 获取失败");
+                        LogWrapper.Warn(ex, "CurseForge 获取失败");
                     }
                 }));
 
@@ -2617,7 +2620,7 @@ public static class ModComp
                     catch (Exception ex)
                     {
                         lastError = ex;
-                        LogWrapper.Error(ex, "Modrinth 获取失败");
+                        LogWrapper.Warn(ex, "Modrinth 获取失败");
                     }
                 }));
 

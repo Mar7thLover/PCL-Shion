@@ -3347,6 +3347,7 @@
     <sys:String x:Key="Tools.GameLink.Create.Title">创建大厅</sys:String>
     <sys:String x:Key="Tools.GameLink.EasyTierVersion">联机双方目前使用的启动器版本不同，这可能会导致一些连接问题&#xA;强烈建议双方升级到最新版本后再继续联机</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.ConnectFailed">无法连接到大厅服务器</sys:String>
+    <sys:String x:Key="Tools.GameLink.Error.NoServer">当前版本未配置联机服务器，联机大厅不可用</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.NetworkTestFailed">获取网络测试结果失败。请查看错误详情。</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.ServerExit">在服务器退出时发生了错误！</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.ServerMessage">与大厅服务器的连接出现错误。&#xA;&#xA;原始错误信息：&#xA;{0}</sys:String>

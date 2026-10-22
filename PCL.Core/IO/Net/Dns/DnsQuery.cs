@@ -61,7 +61,8 @@ public class DnsQuery : IDisposable
         }
         catch (Exception ex)
         {
-            LogWrapper.Warn(ModuleName, $"Failed to resolve DNS for {host}: {ex.Message}, use system default DNS");
+            // 已回退到系统 DNS，不影响使用，只记录日志
+            LogWrapper.Info(ModuleName, $"Failed to resolve DNS for {host}: {ex.Message}, use system default DNS");
         }
 
         return null;
@@ -78,7 +79,7 @@ public class DnsQuery : IDisposable
 
         if (queryResponse.All(static x => x is null))
         {
-            LogWrapper.Warn(ModuleName, $"Failed to query IP for host {host} using DoH, use system default DNS");
+            LogWrapper.Info(ModuleName, $"Failed to query IP for host {host} using DoH, use system default DNS");
             return await System.Net.Dns.GetHostAddressesAsync(host, cts);
         }
 

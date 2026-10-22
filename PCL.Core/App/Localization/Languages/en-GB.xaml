@@ -3291,6 +3291,7 @@
     <sys:String x:Key="Tools.GameLink.Create.Title">Create lobby</sys:String>
     <sys:String x:Key="Tools.GameLink.EasyTierVersion">Both sides are using different launcher versions, which may cause connection issues.&#xA;We strongly recommend that both sides upgrade to the latest version before continuing.</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.ConnectFailed">Failed to connect to the lobby server</sys:String>
+    <sys:String x:Key="Tools.GameLink.Error.NoServer">No lobby server is configured in this build, so the lobby is unavailable</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.NetworkTestFailed">Failed to get network test results. See the details below.</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.ServerExit">An error occurred whilst exiting the server!</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.ServerMessage">A lobby server error occurred.&#xA;&#xA;Original error:&#xA;{0}</sys:String>

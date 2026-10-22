@@ -384,6 +384,22 @@ public partial class PageToolsGameLink
     private void GetAnnouncement()
     {
         var requestId = Volatile.Read(ref _announcementRequestId);
+        // 未配置联机服务器（如本地或第三方构建）时直接提示，不去请求空地址
+        if (Secrets.LinkServers.Length == 0)
+        {
+            LogWrapper.Info("[Link] No lobby server configured, lobby is unavailable");
+            LobbyInfoProvider.IsLobbyAvailable = false;
+            ModBase.RunInUi(() =>
+            {
+                if (!IsCurrentAnnouncementRequest(requestId)) return;
+                _announcementLoadState = AnnouncementLoadState.Failed;
+                HintAnnounce.Visibility = Visibility.Visible;
+                HintAnnounce.Theme = MyHint.Themes.Red;
+                HintAnnounce.Text = Lang.Text("Tools.GameLink.Error.NoServer");
+            });
+            return;
+        }
+
         ModBase.RunInNewThread(() =>
         {
             try
@@ -436,7 +452,7 @@ public partial class PageToolsGameLink
                     }
                     catch (Exception ex)
                     {
-                        LogWrapper.Error(ex, $"[Link] Failed to get announcement from server {serverNumber}");
+                        LogWrapper.Warn(ex, $"[Link] Failed to get announcement from server {serverNumber}");
                         if (!TryApplyCurrentAnnouncementRequest(requestId, () =>
                             {
                                 States.Link.AnnounceCacheConfig.Reset();
@@ -570,7 +586,8 @@ public partial class PageToolsGameLink
                     HintAnnounce.Theme = MyHint.Themes.Red;
                     HintAnnounce.Text = Lang.Text("Tools.GameLink.Error.ConnectFailed");
                 });
-                LogWrapper.Error(ex, "[Link] Failed to get lobby announcement");
+                // 页面上已显示红色的连接失败提示，不再弹窗
+                LogWrapper.Warn(ex, "[Link] Failed to get lobby announcement");
             }
         });
     }

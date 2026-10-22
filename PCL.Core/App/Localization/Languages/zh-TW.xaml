@@ -3291,6 +3291,7 @@
     <sys:String x:Key="Tools.GameLink.Create.Title">建立大廳</sys:String>
     <sys:String x:Key="Tools.GameLink.EasyTierVersion">連線雙方目前使用的啟動器版本不同，這可能會導致一些連線問題&#xA;強烈建議雙方升級到最新版本後再繼續連線</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.ConnectFailed">無法連線到大廳伺服器</sys:String>
+    <sys:String x:Key="Tools.GameLink.Error.NoServer">目前版本未設定連線伺服器，連線大廳無法使用</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.NetworkTestFailed">取得網路測試結果失敗。請檢視錯誤詳情。</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.ServerExit">在伺服器退出時發生了錯誤！</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.ServerMessage">與大廳伺服器的連線出現錯誤。&#xA;&#xA;原始錯誤資訊：&#xA;{0}</sys:String>
