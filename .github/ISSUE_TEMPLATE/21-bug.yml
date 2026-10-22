@@ -9,11 +9,11 @@ body:
       label: "检查项 / Checklist"
       description: "请逐个检查下列项目，并勾选确认 / Please review each item below and check the boxes to confirm."
       options:
-        - label: "我已在 [Issues 页面](https://github.com/PCL-Community/PCL-CE/issues?q=is%3Aissue+) 中搜索，确认了这一 Bug 未被提交过 / I have searched the [Issues page](https://github.com/PCL-Community/PCL-CE/issues?q=is%3Aissue+) and confirmed that this bug has not been reported yet."
+        - label: "我已在 [Issues 页面](https://github.com/Mar7thLover/PCL-CE/issues?q=is%3Aissue+) 中搜索，确认了这一 Bug 未被提交过 / I have searched the [Issues page](https://github.com/Mar7thLover/PCL-CE/issues?q=is%3Aissue+) and confirmed that this bug has not been reported yet."
           required: true
-        - label: "我确认只是全部选中而没有[仔细确认](https://github.com/PCL-Community/PCL-CE/issues?q=is%3Aissue+)就直接提交了这个 Issue，并且同意这个 Issue 可以直接被关闭 / I confirm that I checked all boxes without carefully reading them, and agree that this issue may be closed directly."
+        - label: "我确认只是全部选中而没有[仔细确认](https://github.com/Mar7thLover/PCL-CE/issues?q=is%3Aissue+)就直接提交了这个 Issue，并且同意这个 Issue 可以直接被关闭 / I confirm that I checked all boxes without carefully reading them, and agree that this issue may be closed directly."
           required: false
-        - label: "我确认正在使用当前更新分支的最新版 PCL CE，若不是，此 Issue 可能会被直接关闭（更新方式：启动器 `设置-关于-软件更新` 检查更新，或在 [Releases](https://github.com/PCL-Community/PCL-CE/releases) 页面下载） / I confirm that I am using the latest PCL CE version on the current update channel. If not, this issue may be closed directly. To update, check for updates in `Settings → About → Updates`, or download the latest version from the [Releases page](https://github.com/PCL-Community/PCL-CE/releases)."
+        - label: "我确认正在使用当前更新分支的最新版 PCL Shion，若不是，此 Issue 可能会被直接关闭（更新方式：启动器 `设置-关于-软件更新` 检查更新，或在 [Releases](https://github.com/Mar7thLover/PCL-CE/releases) 页面下载） / I confirm that I am using the latest PCL Shion version on the current update channel. If not, this issue may be closed directly. To update, check for updates in `Settings → About → Updates`, or download the latest version from the [Releases page](https://github.com/Mar7thLover/PCL-CE/releases)."
           required: true
         - label: "我确认会详细描述我所遇到的问题，并附上日志和截图，而不是随便填点东西敷衍了事 / I will describe the problem in detail, attach logs and screenshots, and avoid submitting vague or incomplete information."
           required: true
@@ -42,7 +42,7 @@ body:
     id: "yml-4"
     attributes:
       label: "日志与附件 / Logs & Attachments"
-      description: "在问题发生后立即使用 `设置-查看日志-导出日志` 并上传导出的压缩包。**若手动关掉了启动器或启动器直接崩溃，请重启之后使用 `导出全部日志` 而不是 `导出日志`，否则导出的日志可能不包含故障关键信息。** / After the issue occurs, immediately use `Settings → Logs → Export log` and upload the exported zip file. **If you manually closed the launcher, or if the launcher crashed, restart PCL CE and use `Export all logs` instead of `Export log`; otherwise, the exported logs may not contain key information about the issue.**"
+      description: "在问题发生后立即使用 `设置-查看日志-导出日志` 并上传导出的压缩包。**若手动关掉了启动器或启动器直接崩溃，请重启之后使用 `导出全部日志` 而不是 `导出日志`，否则导出的日志可能不包含故障关键信息。** / After the issue occurs, immediately use `Settings → Logs → Export log` and upload the exported zip file. **If you manually closed the launcher, or if the launcher crashed, restart PCL Shion and use `Export all logs` instead of `Export log`; otherwise, the exported logs may not contain key information about the issue.**"
       placeholder: |
         先点击这个文本框，然后再将文件直接拖拽到文本框中以上传。
         如果有相关截图或文件，也请一并上传。

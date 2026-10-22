@@ -4,70 +4,79 @@
 
 <img src="Plain Craft Launcher 2/Images/icon.ico" alt="Logo" width="80" height="80">
 
-# PCL Community Edition
+# PCL Shion
 
-[![Stars](https://img.shields.io/github/stars/PCL-Community/PCL-CE?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTggLjI1YS43NS43NSAwIDAgMSAuNjczLjQxOGwxLjg4MiAzLjgxNSA0LjIxLjYxMmEuNzUuNzUgMCAwIDEgLjQxNiAxLjI3OWwtMy4wNDYgMi45Ny43MTkgNC4xOTJhLjc1MS43NTEgMCAwIDEtMS4wODguNzkxTDggMTIuMzQ3bC0zLjc2NiAxLjk4YS43NS43NSAwIDAgMS0xLjA4OC0uNzlsLjcyLTQuMTk0TC44MTggNi4zNzRhLjc1Ljc1IDAgMCAxIC40MTYtMS4yOGw0LjIxLS42MTFMNy4zMjcuNjY4QS43NS43NSAwIDAgMSA4IC4yNVoiIGZpbGw9IiNlYWM1NGYiLz48L3N2Zz4=&logoSize=auto&label=stars&labelColor=444444&color=eac54f)](https://github.com/PCL-Community/PCL-CE/)
-![GitHub Release](https://img.shields.io/github/v/release/PCL-Community/PCL-CE?label=release&logo=github&style=for-the-badge)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/PCL-Community/PCL-CE/build-test.yml?style=for-the-badge)
+[![Stars](https://img.shields.io/github/stars/Mar7thLover/PCL-CE?style=for-the-badge&label=stars&labelColor=444444&color=eac54f&logo=github)](https://github.com/Mar7thLover/PCL-CE/)
+[![Last commit](https://img.shields.io/github/last-commit/Mar7thLover/PCL-CE/dev?style=for-the-badge&label=last%20commit&labelColor=444444&logo=github)](https://github.com/Mar7thLover/PCL-CE/commits/dev)
+[![Issues](https://img.shields.io/github/issues/Mar7thLover/PCL-CE?style=for-the-badge&label=issues&labelColor=444444&color=1F883D&logo=github)](https://github.com/Mar7thLover/PCL-CE/issues)
+[![Pull requests](https://img.shields.io/github/issues-pr/Mar7thLover/PCL-CE?style=for-the-badge&label=pull%20requests&labelColor=444444&color=1F883D&logo=github)](https://github.com/Mar7thLover/PCL-CE/pulls)
 
-[![Issues](https://img.shields.io/github/issues/PCL-Community/PCL-CE?style=for-the-badge&label=issues&labelColor=444444&color=1F883D&logo=github)](https://github.com/PCL-Community/PCL-CE/issues)
-[![Pull requests](https://img.shields.io/github/issues-pr/PCL-Community/PCL-CE?style=for-the-badge&label=pull%20requests&labelColor=444444&color=1F883D&logo=github)](https://github.com/PCL-Community/PCL-CE/pulls)
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/PCL-Community/PCL-CE/total?style=for-the-badge)
-[![Bilibili](https://img.shields.io/badge/Threads-bilibili-00A4DB?style=for-the-badge&labelColor=444444&logo=bilibili)](https://space.bilibili.com/3546847192811755/dynamic) <br />
-
-<a href="https://trendshift.io/repositories/21800?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-21800" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/21800/daily?language=C%23" alt="PCL-Community%2FPCL-CE | Trendshift" width="250" height="55"/></a>
-<a href="https://trendshift.io/repositories/21800" target="_blank"><img src="https://trendshift.io/api/badge/repositories/21800" alt="PCL-Community%2FPCL-CE | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-
-[download](https://github.com/PCL-Community/PCL-CE/releases/latest) |
-[Upstream repo](https://github.com/Meloong-Git/PCL)
-
-[Submit issues](https://github.com/PCL-Community/PCL-CE/issues/new/choose) |
-[Contribution Guidelines](https://github.com/PCL-Community/PCL-CE/wiki/开发指南)
+[Download](https://github.com/Mar7thLover/PCL-CE/releases) |
+[Report a bug or suggest a feature](https://github.com/Mar7thLover/PCL-CE/issues/new/choose) |
+[Contributing](CONTRIBUTING.md)
 
 </div>
 
-PCL CE is a community edition developed as a secondary project based on PCL’s open-source code. It includes features and improvements that have not yet been implemented in the main branch.
+PCL Shion (詩音) is a **third-party modified version**, independently developed from [PCL Community Edition (PCL CE)](https://github.com/PCL-Community/PCL-CE), which is itself based on [Plain Craft Launcher](https://github.com/Meloong-Git/PCL) by LTCat (龙腾猫跃).
 
-The version numbers of the community edition do not strictly correspond to those of the main branch, so please do not report community edition issues to the official repository.
+This project is not affiliated with the official PCL or the PCL CE community. **Please do not report issues with this project to the official repository or to the PCL CE community.** Use [this repository's Issues](https://github.com/Mar7thLover/PCL-CE/issues) instead.
 
-Everyone is welcome to try it out!
+> [!WARNING]
+> This project is under **heavy development**. Features and UI change frequently and may be unstable.
 
-**Developing group:** [599620549](https://qm.qq.com/q/PNQA4Md8wc) | **User group 1:** [1028074835](https://qm.qq.com/q/qrMGJo8BQQ) | **User group 2:** [1070029541](https://qm.qq.com/q/lBywbDMWhG)
+## ✨ How It Differs from PCL CE
+
+### 🌏 Region restrictions removed, and they will never come back
+
+In [#3673](https://github.com/PCL-Community/PCL-CE/pull/3673) and [#3676](https://github.com/PCL-Community/PCL-CE/pull/3676), upstream PCL CE started guessing whether the user is in mainland China from the system region, time zone and language, and used that to disable downloading, installing and completing Minecraft and modpacks.
+
+PCL Shion has removed this restriction entirely, so downloading and installing work for users in every region. **We promise never to reintroduce any region-based feature restriction.**
+
+### 🚀 Actively developed, feature suggestions welcome
+
+Upstream PCL CE has entered maintenance mode and no longer accepts feature requests. PCL Shion keeps adding new features, and **any reasonable feature suggestion is welcome**. Just [open an issue](https://github.com/Mar7thLover/PCL-CE/issues/new/choose).
+
+## 🗺️ Roadmap
+
+- **Cross-platform UI framework**: gradually replace the current Windows-only WPF with a new cross-platform UI framework. The migration will be incremental: the new UI ships first as an experimental feature and becomes the default once it is mature.
+- **Themes and personalization**: richer themes and personalization options.
+- **Fun little tools**: more handy and fun built-in tools.
+- **A new multiplayer solution**: an alternative online multiplayer solution that does not depend on Natayark OpenID.
+- **…and more**: more plans will be announced as development goes on. Your ideas are welcome too.
 
 ## 💻 Supported Platforms
 
 | Operating System | Support Status | Requirements |
 |---|---|---|
-| Windows 10 1809 (17763) or later | ✅ Fully supported | [.NET 10 Desktop Runtime](http://get.dot.net/10) |
-| Windows 8 to Windows 10 1809 (17763) | ⚠️ Expected to run; community support offered at discretion | [.NET 10 Desktop Runtime](http://get.dot.net/10) |
-| Windows 7 or earlier | ❌ Not supported | N/A |
-| macOS / Linux / Other OS | ⚠️ Cross-platform development only (cross-compilation) | [.NET 10 SDK](http://get.dot.net/10) |
+| Windows 10 1809 (17763) or later | ✅ Fully supported | [.NET 10 Desktop Runtime](https://get.dot.net/10) |
+| Windows 8 - Windows 10 1809 (17763) | ⚠️ Should work, not guaranteed | [.NET 10 Desktop Runtime](https://get.dot.net/10) |
+| Windows 7 or earlier | ❌ Not supported | / |
+| macOS / Linux / other operating systems | ⚠️ Cross-platform development only (cross-compilation) | [.NET 10 SDK](https://get.dot.net/10) |
 
-**✅ Fully supported**: We will provide as much support as possible, but you must ensure you are using the latest version of the launcher.
+**✅ Fully supported**: we provide as much support as possible, but you must be on the latest version of the launcher.
 
-**⚠️ Expected to run; community support offered at discretion**: PCL CE is expected to run on these platforms, but full functionality is not guaranteed. You may need to upgrade to a fully supported OS version to receive further community technical support.
+**⚠️ Should work, not guaranteed**: PCL Shion should run on these platforms, but not every feature is guaranteed to work.
 
-**❌ Not supported**: PCL CE may not be usable on these platforms and might not even launch at all. Please upgrade your OS to use PCL CE.
+**❌ Not supported**: PCL Shion works poorly on these platforms, or may not start at all. Please upgrade your operating system.
 
-**⚠️ Cross-platform development only (cross-compilation)**: PCL CE’s source code can be built on macOS and Linux, but it cannot run directly. As a developer, you can develop on these platforms and then move the build artifacts to Windows for testing.
+**⚠️ Cross-platform development only (cross-compilation)**: the source code builds on macOS and Linux but cannot run there directly. You can develop on these platforms and test the build output on Windows. This will gradually change as the cross-platform UI framework lands.
 
-**Note**:     
-The community only supports the latest version of the launcher.    
-Depending on the nature of certain issues (e.g., an incomplete system environment), you may still need to upgrade your OS to continue receiving support.    
-PCL CE always recommends using the latest version of your OS for the best experience.    
-You can still try using the latest launcher version on unsupported platforms, but you may encounter many additional problems.
+**Note**: only the latest version of the launcher is supported.
 
 ## 🔒 License
 
-- `Plain Craft Launcher 2/` uses [Custom License](https://github.com/PCL-Community/PCL-CE/blob/dev/Plain%20Craft%20Launcher%202/LICENCE)
-- `All other directories` use [Apache License 2.0](https://github.com/PCL-Community/PCL-CE/blob/dev/LICENSE)
+- `Plain Craft Launcher 2/` uses a [custom license](Plain%20Craft%20Launcher%202/LICENCE)
+- `All other directories` use the [Apache License 2.0](LICENSE)
 
-## 🌟 Statistic
-![Alt](https://repobeats.axiom.co/api/embed/3e46296e6e3a134991a783480fd2f62723bb0353.svg "Repobeats analytics image")
+## 🙏 Acknowledgements
 
-[![Star History Chart](https://api.star-history.com/svg?repos=PCL-Community/PCL-CE&type=Date)](https://www.star-history.com/#PCL-Community/PCL-CE&Date)
+- [LTCat (龙腾猫跃)](https://github.com/LTCatt) and [Plain Craft Launcher](https://github.com/Meloong-Git/PCL): the original author and project of PCL. [Sponsor LTCat](https://afdian.com/a/LTCat)
+- [PCL-Community](https://github.com/PCL-Community) and [PCL CE](https://github.com/PCL-Community/PCL-CE): the Community Edition this project is based on, and all of its contributors.
 
-**Views** (Total / Today): [![Hits](https://hits.zkitefly.eu.org/?tag=https://github.com/PCL-Community/PCL-CE)](https://hits.zkitefly.eu.org/?tag=https://github.com/PCL-Community/PCL-CE&web=true)
+## 🌟 Statistics
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Mar7thLover/PCL-CE&type=Date)](https://www.star-history.com/#Mar7thLover/PCL-CE&Date)
+
 ## ❤️ Contributors
 
-[![](https://contrib.rocks/image?repo=PCL-Community/PCL-CE)](https://github.com/PCL-Community/PCL-CE/graphs/contributors)
+[![](https://contrib.rocks/image?repo=Mar7thLover/PCL-CE)](https://github.com/Mar7thLover/PCL-CE/graphs/contributors)

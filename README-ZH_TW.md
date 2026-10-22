@@ -4,70 +4,79 @@
 
 <img src="Plain Craft Launcher 2/Images/icon.ico" alt="Logo" width="80" height="80">
 
-# PCL Community Edition
+# PCL 詩音（Shion）
 
-[![Stars](https://img.shields.io/github/stars/PCL-Community/PCL-CE?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHBhdGggZD0iTTggLjI1YS43NS43NSAwIDAgMSAuNjczLjQxOGwxLjg4MiAzLjgxNSA0LjIxLjYxMmEuNzUuNzUgMCAwIDEgLjQxNiAxLjI3OWwtMy4wNDYgMi45Ny43MTkgNC4xOTJhLjc1MS43NTEgMCAwIDEtMS4wODguNzkxTDggMTIuMzQ3bC0zLjc2NiAxLjk4YS43NS43NSAwIDAgMS0xLjA4OC0uNzlsLjcyLTQuMTk0TC44MTggNi4zNzRhLjc1Ljc1IDAgMCAxIC40MTYtMS4yOGw0LjIxLS42MTFMNy4zMjcuNjY4QS43NS43NSAwIDAgMSA4IC4yNVoiIGZpbGw9IiNlYWM1NGYiLz48L3N2Zz4=&logoSize=auto&label=stars&labelColor=444444&color=eac54f)](https://github.com/PCL-Community/PCL-CE/)
-![GitHub Release](https://img.shields.io/github/v/release/PCL-Community/PCL-CE?label=release&logo=github&style=for-the-badge)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/PCL-Community/PCL-CE/build-test.yml?style=for-the-badge)
+[![Stars](https://img.shields.io/github/stars/Mar7thLover/PCL-CE?style=for-the-badge&label=stars&labelColor=444444&color=eac54f&logo=github)](https://github.com/Mar7thLover/PCL-CE/)
+[![Last commit](https://img.shields.io/github/last-commit/Mar7thLover/PCL-CE/dev?style=for-the-badge&label=last%20commit&labelColor=444444&logo=github)](https://github.com/Mar7thLover/PCL-CE/commits/dev)
+[![Issues](https://img.shields.io/github/issues/Mar7thLover/PCL-CE?style=for-the-badge&label=issues&labelColor=444444&color=1F883D&logo=github)](https://github.com/Mar7thLover/PCL-CE/issues)
+[![Pull requests](https://img.shields.io/github/issues-pr/Mar7thLover/PCL-CE?style=for-the-badge&label=pull%20requests&labelColor=444444&color=1F883D&logo=github)](https://github.com/Mar7thLover/PCL-CE/pulls)
 
-[![Issues](https://img.shields.io/github/issues/PCL-Community/PCL-CE?style=for-the-badge&label=issues&labelColor=444444&color=1F883D&logo=github)](https://github.com/PCL-Community/PCL-CE/issues)
-[![Pull requests](https://img.shields.io/github/issues-pr/PCL-Community/PCL-CE?style=for-the-badge&label=pull%20requests&labelColor=444444&color=1F883D&logo=github)](https://github.com/PCL-Community/PCL-CE/pulls)
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/PCL-Community/PCL-CE/total?style=for-the-badge)
-[![嗶哩嗶哩](https://img.shields.io/badge/貼文-bilibili-00A4DB?style=for-the-badge&labelColor=444444&logo=bilibili)](https://space.bilibili.com/3546847192811755/dynamic) <br />
-
-<a href="https://trendshift.io/repositories/21800?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-21800" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/21800/daily?language=C%23" alt="PCL-Community%2FPCL-CE | Trendshift" width="250" height="55"/></a>
-<a href="https://trendshift.io/repositories/21800" target="_blank"><img src="https://trendshift.io/api/badge/repositories/21800" alt="PCL-Community%2FPCL-CE | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-
-[社群版下載](https://github.com/PCL-Community/PCL-CE/releases/latest) |
-[上游儲存庫](https://github.com/Meloong-Git/PCL)
-
-[提交問題](https://github.com/PCL-Community/PCL-CE/issues/new/choose) |
-[貢獻指南](https://github.com/PCL-Community/PCL-CE/wiki/开发指南)
+[下載](https://github.com/Mar7thLover/PCL-CE/releases) |
+[回報問題或建議](https://github.com/Mar7thLover/PCL-CE/issues/new/choose) |
+[貢獻指南](CONTRIBUTING.md)
 
 </div>
 
-PCL CE 是基於 PCL 開放原始碼二次開發的社群版本，包括了主線暫未製作的功能和改進！
+PCL 詩音（Shion）是基於 [PCL 社群版（PCL CE）](https://github.com/PCL-Community/PCL-CE) 獨立進行二次開發的**第三方修改版**，PCL CE 則源自龍騰貓躍的 [Plain Craft Launcher](https://github.com/Meloong-Git/PCL)。
 
-社群版的版本號與主線並非嚴格對應關係，也請不要向官方儲存庫回饋社群版問題。
+本專案與 PCL 官方、PCL CE 社群均無隸屬關係，**請不要向官方倉庫或 PCL CE 社群回報本專案的問題**，有問題請在 [本倉庫的 Issues](https://github.com/Mar7thLover/PCL-CE/issues) 提出。
 
-歡迎大家來用用看！
+> [!WARNING]
+> 本專案正處於**密集開發階段**，功能與介面變動頻繁，可能出現不穩定的情況。
 
-**開發群:** [599620549](https://qm.qq.com/q/PNQA4Md8wc) | **使用者 1 群:** [1028074835](https://qm.qq.com/q/qrMGJo8BQQ) | **使用者 2 群:** [1070029541](https://qm.qq.com/q/lBywbDMWhG)
+## ✨ 與 PCL CE 的不同
+
+### 🌏 移除區域限制，並承諾不會重新引入
+
+上游 PCL CE 在 [#3673](https://github.com/PCL-Community/PCL-CE/pull/3673) 與 [#3676](https://github.com/PCL-Community/PCL-CE/pull/3676) 中，依據系統地區、時區與語言判斷使用者是否位於中國大陸，並據此停用 Minecraft 本體、模組包的下載、安裝與補全。
+
+PCL 詩音已完整移除這套限制，所有地區的使用者都可以正常使用下載與安裝功能。**我們承諾不會重新引入任何基於地區的功能限制。**
+
+### 🚀 銳意開發，歡迎新功能建議
+
+上游 PCL CE 已進入維護階段，不再受理新功能請求；PCL 詩音則會持續開發新功能，**歡迎任何合理的新功能建議**，請直接 [提交 Issue](https://github.com/Mar7thLover/PCL-CE/issues/new/choose)。
+
+## 🗺️ 開發計畫
+
+- **跨平台 UI 框架**：準備以新的跨平台 UI 框架逐步取代現有僅支援 Windows 的 WPF。遷移會漸進進行，新介面先作為實驗性功能提供，成熟後再成為預設。
+- **主題與個人化**：引入更豐富的主題與個人化選項。
+- **有趣的小工具**：加入更多實用又好玩的小工具。
+- **新的連線方案**：考慮引入不依賴 Natayark OpenID 的連線方案，作為現有方案的替代選擇。
+- **……以及更多**：更多計畫會在開發過程中陸續公布，也歡迎提出你的想法。
 
 ## 💻 支援平台
 
-| 作業系統 | 支援情況 | 環境要求 |
+| 作業系統 | 支援情況 | 環境需求 |
 |---|---|---|
 | Windows 10 1809 (17763) 或更高 | ✅ 完整支援 | [.NET 10 Desktop Runtime](https://get.dot.net/10) |
-| Windows 8 - Windows 10 1809 (17763) | ⚠️ 理論能跑，酌情提供社群支援 | [.NET 10 Desktop Runtime](https://get.dot.net/10) |
-| Windows 7 或更低版本 | ❌ 不支援 | / |
-| macOS / Linux / 其他作業系統 | ⚠️ 僅跨平台開發支援（交叉編譯）| [.NET 10 SDK](https://get.dot.net/10) |
+| Windows 8 - Windows 10 1809 (17763) | ⚠️ 理論可用，不保證可用 | [.NET 10 Desktop Runtime](https://get.dot.net/10) |
+| Windows 7 或更舊版本 | ❌ 不支援 | / |
+| macOS / Linux / 其他作業系統 | ⚠️ 僅跨平台開發支援（交叉編譯） | [.NET 10 SDK](https://get.dot.net/10) |
 
 **✅ 完整支援**：盡可能提供一切相關支援，但必須確保啟動器為最新版本。
 
-**⚠️ 理論能跑，酌情提供社群支援**：PCL CE 應該可以在這些平台上執行，但不保證功能完全可用。你可能需要升級到完整支援的系統版本以獲得進一步社群技術支援。
+**⚠️ 理論可用，不保證可用**：PCL 詩音應該可以在這些平台上執行，但不保證功能完全可用。
 
-**❌ 不支援**：PCL CE 在這些平台的可用性較低，甚至根本打不開。請升級作業系統以使用 PCL CE。
+**❌ 不支援**：PCL 詩音在這些平台的可用性較低，甚至根本無法開啟。請升級作業系統後使用。
 
-**⚠️ 僅跨平台開發支援（交叉編譯）**：PCL CE 的原始碼可以在 macOS 與 Linux 平台編譯，但無法直接執行。作為開發者，你可以在這些平台上進行開發，然後將編譯產物轉移到 Windows 系統測試。
+**⚠️ 僅跨平台開發支援（交叉編譯）**：原始碼可以在 macOS 與 Linux 平台編譯，但無法直接執行。你可以在這些平台上開發，再把編譯產物轉移到 Windows 系統測試。隨著跨平台 UI 框架的引入，這一情況會逐步改變。
 
-**注**：
-社群僅對最新版本的啟動器提供支援。
-取決於部分問題的特殊性（如系統不完整），有時你仍然必須升級作業系統以繼續獲得支援。
-PCL CE 始終建議使用最新版本的作業系統以獲得最佳體驗。
-你仍然可以嘗試在不受支援的系統上使用 PCL CE，但可能會遇到很多額外問題。
+**註**：僅對最新版本的啟動器提供支援。
 
 ## 🔒 授權條款
 
-- `Plain Craft Launcher 2/` 使用 [自訂授權條款](https://github.com/PCL-Community/PCL-CE/blob/dev/Plain%20Craft%20Launcher%202/LICENCE)
-- `其餘所有目錄` 使用 [Apache License 2.0](https://github.com/PCL-Community/PCL-CE/blob/dev/LICENSE)
+- `Plain Craft Launcher 2/` 使用 [自訂授權條款](Plain%20Craft%20Launcher%202/LICENCE)
+- `其餘所有目錄` 使用 [Apache License 2.0](LICENSE)
+
+## 🙏 致謝
+
+- [龍騰貓躍](https://github.com/LTCatt) 與 [Plain Craft Launcher](https://github.com/Meloong-Git/PCL)：PCL 的原作者與原專案。[贊助龍騰貓躍](https://afdian.com/a/LTCat)
+- [PCL-Community](https://github.com/PCL-Community) 與 [PCL CE](https://github.com/PCL-Community/PCL-CE)：本專案所基於的社群版及其全體貢獻者。
 
 ## 🌟 統計資料
-![Alt](https://repobeats.axiom.co/api/embed/3e46296e6e3a134991a783480fd2f62723bb0353.svg "Repobeats analytics image")
 
-[![Star History Chart](https://api.star-history.com/svg?repos=PCL-Community/PCL-CE&type=Date)](https://www.star-history.com/#PCL-Community/PCL-CE&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Mar7thLover/PCL-CE&type=Date)](https://www.star-history.com/#Mar7thLover/PCL-CE&Date)
 
-**此頁瀏覽量**（總計 / 今日）：[![Hits](https://hits.zkitefly.eu.org/?tag=https://github.com/PCL-Community/PCL-CE)](https://hits.zkitefly.eu.org/?tag=https://github.com/PCL-Community/PCL-CE&web=true)
 ## ❤️ 貢獻者
 
-[![](https://contrib.rocks/image?repo=PCL-Community/PCL-CE)](https://github.com/PCL-Community/PCL-CE/graphs/contributors)
+[![](https://contrib.rocks/image?repo=Mar7thLover/PCL-CE)](https://github.com/Mar7thLover/PCL-CE/graphs/contributors)
