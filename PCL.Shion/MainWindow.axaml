@@ -11,20 +11,66 @@
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource WindowBackgroundBrush}">
 
+    <Window.Styles>
+        <!-- 标题栏页签：文字加底部指示线，选中时用强调色 -->
+        <Style Selector="Button.tab">
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Indicator" Padding="14,0"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            BorderThickness="0,0,0,2">
+                        <ContentPresenter VerticalAlignment="Center" Content="{TemplateBinding Content}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+        <Style Selector="Button.tab:pointerover:not(.selected)">
+            <Setter Property="Foreground" Value="{DynamicResource AccentHoverBrush}" />
+        </Style>
+        <Style Selector="Button.tab.selected">
+            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" />
+        </Style>
+        <Style Selector="Button.tab.selected /template/ Border#Indicator">
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+        </Style>
+    </Window.Styles>
+
     <Grid RowDefinitions="Auto,*">
         <Border Grid.Row="0" Height="56"
                 Background="{DynamicResource SurfaceBrush}"
                 BorderBrush="{DynamicResource SurfaceBorderBrush}"
                 BorderThickness="0,0,0,1">
-            <StackPanel Margin="20,0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
-                <TextBlock Text="{x:Static svc:Strings.AppName}"
+            <StackPanel Margin="20,0" Orientation="Horizontal" Spacing="16">
+                <TextBlock VerticalAlignment="Center"
+                           Text="{x:Static svc:Strings.AppName}"
                            FontSize="18" FontWeight="Bold"
                            Foreground="{DynamicResource AccentBrush}" />
-                <Border Width="1" Height="18" Background="{DynamicResource SurfaceBorderBrush}" />
-                <TextBlock Text="{x:Static svc:Strings.PageLaunch}" FontSize="15" FontWeight="SemiBold" />
+                <Border Width="1" Height="18" VerticalAlignment="Center"
+                        Background="{DynamicResource SurfaceBorderBrush}" />
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <Button Classes="tab" Classes.selected="{Binding IsLaunchPage}"
+                            Content="{x:Static svc:Strings.PageLaunch}"
+                            Command="{Binding ShowLaunchCommand}" />
+                    <Button Classes="tab" Classes.selected="{Binding IsDownloadPage}"
+                            Content="{x:Static svc:Strings.PageDownload}"
+                            Command="{Binding ShowDownloadCommand}" />
+                </StackPanel>
             </StackPanel>
         </Border>
 
-        <views:HomeView Grid.Row="1" DataContext="{Binding Home}" />
+        <!-- 两个页面常驻，切换页签只改显隐，日志、列表和进度不会丢失 -->
+        <Grid Grid.Row="1">
+            <Panel IsVisible="{Binding IsLaunchPage}">
+                <views:HomeView DataContext="{Binding Home}" />
+            </Panel>
+            <Panel IsVisible="{Binding IsDownloadPage}">
+                <views:DownloadView DataContext="{Binding Download}" />
+            </Panel>
+        </Grid>
     </Grid>
 </Window>

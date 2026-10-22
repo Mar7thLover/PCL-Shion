@@ -24,6 +24,6 @@
     </ItemGroup>
     <ItemGroup>
         <AvaloniaResource Include="Assets\**" Exclude="Assets\Strings\**" />
-        <EmbeddedResource Include="Assets\Strings\*.json" LogicalName="PCL.Shion.Strings.%(Filename)%(Extension)" />
+        <EmbeddedResource Include="Assets\Strings\**\*.json" LogicalName="PCL.Shion.Strings.%(Filename).json" WithCulture="false" />
     </ItemGroup>
 </Project>

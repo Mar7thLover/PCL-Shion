@@ -4,7 +4,8 @@ using System.Text;
 namespace PCL.Shion.Core.Launch;
 
 /// <summary>
-/// 一个正在运行的游戏进程。事件在线程池线程上触发，调用方需要在 <see cref="Start"/> 返回后立即订阅。
+/// 一个正在运行的游戏进程。事件在线程池线程上触发。进程启动后就开始读取输出，要收到全部输出与退出通知，
+/// 处理程序须作为 <see cref="Start"/> 的参数传入；在 <see cref="Start"/> 返回后再订阅，可能错过已经发出的事件。
 /// </summary>
 public sealed class GameSession : IDisposable
 {
@@ -29,8 +30,11 @@ public sealed class GameSession : IDisposable
     /// <summary>
     /// 按 <paramref name="plan"/> 启动 Java 进程。
     /// </summary>
+    /// <param name="plan">启动计划。</param>
+    /// <param name="onOutput">在进程启动前就订阅 <see cref="OutputReceived"/> 的处理程序，因此不会错过任何一行输出。</param>
+    /// <param name="onExited">在进程启动前就订阅 <see cref="Exited"/> 的处理程序，因此不会错过过早的退出。</param>
     /// <exception cref="System.ComponentModel.Win32Exception">无法启动 Java 可执行文件。</exception>
-    public static GameSession Start(LaunchPlan plan)
+    public static GameSession Start(LaunchPlan plan, Action<string>? onOutput = null, Action<int>? onExited = null)
     {
         var startInfo = new ProcessStartInfo(plan.JavaExecutable)
         {
@@ -47,6 +51,8 @@ public sealed class GameSession : IDisposable
 
         var process = new Process { StartInfo = startInfo, EnableRaisingEvents = true };
         var session = new GameSession(process);
+        session.OutputReceived += onOutput;
+        session.Exited += onExited;
         try
         {
             process.Start();

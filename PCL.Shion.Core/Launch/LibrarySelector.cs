@@ -26,16 +26,16 @@ internal static class LibrarySelector
             if (library.Natives.Count == 0)
             {
                 key = MavenName.GetKey(library.Name);
-                entry = new SelectedLibrary(library.ArtifactPath ?? MavenName.GetPath(library.Name), null);
+                var path = library.Artifact?.Path ?? MavenName.GetPath(library.Name);
+                entry = new SelectedLibrary(path, null, library.Artifact, library.RepositoryUrl);
             }
             else if (library.Natives.TryGetValue(environment.OsName, out var template))
             {
                 var classifier = template.Replace("${arch}", environment.Arch == "x86" ? "32" : "64");
-                var path = library.ClassifierPaths.TryGetValue(classifier, out var classifierPath)
-                    ? classifierPath
-                    : MavenName.GetPath(library.Name, classifier);
+                var download = library.Classifiers.GetValueOrDefault(classifier);
+                var path = download?.Path ?? MavenName.GetPath(library.Name, classifier);
                 key = $"{MavenName.GetKey(library.Name)}:{classifier}";
-                entry = new SelectedLibrary(path, library.ExtractExclude);
+                entry = new SelectedLibrary(path, library.ExtractExclude, download, library.RepositoryUrl);
             }
             else
             {

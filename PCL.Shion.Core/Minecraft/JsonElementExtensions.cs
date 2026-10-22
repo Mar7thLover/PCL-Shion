@@ -28,6 +28,12 @@ internal static class JsonElementExtensions
         return value is { } number && number.TryGetInt32(out var result) ? result : null;
     }
 
+    public static long? GetInt64Property(this JsonElement element, string name)
+    {
+        var value = GetProperty(element, name, JsonValueKind.Number);
+        return value is { } number && number.TryGetInt64(out var result) ? result : null;
+    }
+
     private static JsonElement? GetProperty(JsonElement element, string name, JsonValueKind kind)
     {
         if (element.ValueKind == JsonValueKind.Object

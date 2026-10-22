@@ -128,6 +128,10 @@
                                        Text="{Binding JavaPath}"
                                        ToolTip.Tip="{Binding JavaPath}"
                                        IsVisible="{Binding HasJavaPath}" />
+                            <Button Margin="0,8,0,0" Padding="14,6" CornerRadius="8" HorizontalAlignment="Left"
+                                    Content="{Binding JavaOfferText}"
+                                    Command="{Binding DownloadJavaCommand}"
+                                    IsVisible="{Binding HasJavaOffer}" />
                         </StackPanel>
                     </Border>
                 </StackPanel>
@@ -135,6 +139,9 @@
                 <StackPanel Grid.Row="4" Margin="0,20,0,0" Spacing="10">
                     <Button Classes="primary" Content="{x:Static svc:Strings.LaunchGame}"
                             Command="{Binding LaunchCommand}" />
+                    <ProgressBar Height="6" Minimum="0" Maximum="1"
+                                 Value="{Binding ProgressValue}"
+                                 IsVisible="{Binding IsProgressVisible}" />
                     <TextBlock Classes="caption" TextWrapping="Wrap" MinHeight="32"
                                Text="{Binding StatusText}" />
                 </StackPanel>

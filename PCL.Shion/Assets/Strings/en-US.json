@@ -1,6 +1,7 @@
 {
     "AppName": "PCL Shion",
     "PageLaunch": "Launch",
+    "PageDownload": "Download",
     "PlayerName": "Player name",
     "PlayerNameHint": "3 to 16 letters, digits or underscores",
     "Instances": "Instances",
@@ -18,15 +19,12 @@
     "LaunchGame": "Launch game",
     "StatusReady": "Ready",
     "StatusPreparing": "Preparing to launch…",
-    "StatusMissingFiles": "{0} file(s) missing, cannot launch: {1}",
     "StatusLaunchFailed": "Launch failed: {0}",
     "StatusRunning": "Game running (PID {0})",
     "StatusExited": "Game exited with code {0}",
     "LogTitle": "Game log",
     "LogEmpty": "Game output appears here once it starts",
     "LogStarting": "Launching instance {0}, Java: {1}",
-    "LogMissingFiles": "{0} file(s) missing, cannot launch (automatic download is not supported yet):",
-    "LogMissingFilesMore": "…and {0} more",
     "LogLaunchFailed": "Launch failed: {0}",
     "LogExited": "Game exited with code {0}"
 }

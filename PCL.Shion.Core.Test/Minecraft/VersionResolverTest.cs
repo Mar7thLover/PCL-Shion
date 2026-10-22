@@ -12,7 +12,7 @@ public sealed class VersionResolverTest
           "type": "release",
           "mainClass": "net.minecraft.client.main.Main",
           "assets": "5",
-          "assetIndex": { "id": "5" },
+          "assetIndex": { "id": "5", "url": "https://example.invalid/5.json" },
           "javaVersion": { "component": "java-runtime-gamma", "majorVersion": 17 },
           "downloads": { "client": { "url": "https://example.invalid/client.jar" } },
           "arguments": {
@@ -68,7 +68,10 @@ public sealed class VersionResolverTest
         Assert.AreEqual("net.minecraft.client.main.Main", version.MainClass);
         Assert.AreEqual("release", version.Type);
         Assert.AreEqual("5", version.AssetIndexId);
+        Assert.AreEqual("https://example.invalid/5.json", version.AssetIndexDownload?.Url);
         Assert.AreEqual(17, version.JavaMajorVersion);
+        Assert.AreEqual("java-runtime-gamma", version.JavaComponent);
+        Assert.AreEqual("https://example.invalid/client.jar", version.ClientJarDownload?.Url);
         Assert.HasCount(2, version.Libraries);
         Assert.HasCount(2, version.JvmArguments);
         Assert.HasCount(2, version.GameArguments);
@@ -88,7 +91,9 @@ public sealed class VersionResolverTest
         Assert.AreEqual("fabric-1.20.1", version.Id);
         Assert.AreEqual("net.fabricmc.loader.impl.launch.knot.KnotClient", version.MainClass);
         Assert.AreEqual(17, version.JavaMajorVersion);
+        Assert.AreEqual("java-runtime-gamma", version.JavaComponent);
         Assert.AreEqual("5", version.AssetIndexId);
+        Assert.AreEqual("https://example.invalid/5.json", version.AssetIndexDownload?.Url);
         CollectionAssert.AreEqual(
             new[]
             {
@@ -183,7 +188,10 @@ public sealed class VersionResolverTest
         var fromChild = VersionResolver.Resolve(_root.RootPath, "fabric-1.20.1");
 
         Assert.AreEqual(parentJar, fromParent.ClientJarPath);
+        Assert.AreEqual("https://example.invalid/client.jar", fromParent.ClientJarDownload?.Url);
         Assert.AreEqual(childJar, fromChild.ClientJarPath);
+        // 子版本自己的 jar 可能改过，不能拿父版本的校验值去校验它
+        Assert.IsNull(fromChild.ClientJarDownload);
     }
 
     [TestMethod]
@@ -196,7 +204,9 @@ public sealed class VersionResolverTest
         var own = VersionResolver.Resolve(_root.RootPath, "1.20.1");
 
         Assert.AreEqual(_root.GetPath("versions/1.20.1/1.20.1.jar"), inherited.ClientJarPath);
+        Assert.AreEqual("https://example.invalid/client.jar", inherited.ClientJarDownload?.Url);
         Assert.AreEqual(_root.GetPath("versions/1.20.1/1.20.1.jar"), own.ClientJarPath);
+        Assert.AreEqual("https://example.invalid/client.jar", own.ClientJarDownload?.Url);
     }
 
     [TestMethod]
@@ -208,6 +218,28 @@ public sealed class VersionResolverTest
         var version = VersionResolver.Resolve(_root.RootPath, "child");
 
         Assert.AreEqual(_root.GetPath("versions/base/base.jar"), version.ClientJarPath);
+        Assert.IsNull(version.ClientJarDownload);
+    }
+
+    [TestMethod]
+    public void AssetIndexDownloadFollowsTheIndexId()
+    {
+        _root.WriteVersion("1.20.1", VanillaJson);
+        _root.WriteVersion("same-index", """{ "inheritsFrom": "1.20.1", "assets": "5" }""");
+        _root.WriteVersion("other-index", """{ "inheritsFrom": "1.20.1", "assets": "legacy" }""");
+        _root.WriteVersion("own-index", """
+            { "inheritsFrom": "1.20.1", "assetIndex": { "id": "17", "url": "https://example.invalid/17.json", "sha1": "abc", "size": 12 } }
+            """);
+
+        Assert.AreEqual("https://example.invalid/5.json", VersionResolver.Resolve(_root.RootPath, "same-index").AssetIndexDownload?.Url);
+
+        var other = VersionResolver.Resolve(_root.RootPath, "other-index");
+        Assert.AreEqual("legacy", other.AssetIndexId);
+        Assert.IsNull(other.AssetIndexDownload);
+
+        var own = VersionResolver.Resolve(_root.RootPath, "own-index");
+        Assert.AreEqual("17", own.AssetIndexId);
+        Assert.AreEqual(new FileDownload("https://example.invalid/17.json", "abc", 12), own.AssetIndexDownload);
     }
 
     [TestMethod]
@@ -262,7 +294,17 @@ public sealed class VersionResolverTest
         _root.WriteVersion("base", """
             {
               "mainClass": "Main",
-              "logging": { "client": { "argument": "-Dlog4j.configurationFile=${path}", "file": { "id": "client-1.12.xml" } } }
+              "logging": {
+                "client": {
+                  "argument": "-Dlog4j.configurationFile=${path}",
+                  "file": {
+                    "id": "client-1.12.xml",
+                    "sha1": "bd65e7d2e3c237be76cfbef4c2405033d7f91521",
+                    "size": 888,
+                    "url": "https://piston-data.mojang.com/v1/objects/bd65e7d2e3c237be76cfbef4c2405033d7f91521/client-1.12.xml"
+                  }
+                }
+              }
             }
             """);
         _root.WriteVersion("child", """{ "inheritsFrom": "base" }""");
@@ -271,6 +313,12 @@ public sealed class VersionResolverTest
 
         Assert.AreEqual("-Dlog4j.configurationFile=${path}", version.LoggingArgument);
         Assert.AreEqual("client-1.12.xml", version.LoggingFileId);
+        Assert.AreEqual(
+            new FileDownload(
+                "https://piston-data.mojang.com/v1/objects/bd65e7d2e3c237be76cfbef4c2405033d7f91521/client-1.12.xml",
+                "bd65e7d2e3c237be76cfbef4c2405033d7f91521",
+                888),
+            version.LoggingFileDownload);
     }
 
     [TestMethod]

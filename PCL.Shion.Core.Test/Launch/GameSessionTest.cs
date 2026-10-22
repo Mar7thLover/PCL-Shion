@@ -44,6 +44,33 @@ public sealed class GameSessionTest
     }
 
     [TestMethod]
+    public void HandlersPassedToStartReceiveTheOutputAndTheExitCode()
+    {
+        var plan = CreatePlan("echo out& exit /b 5", "echo out; exit 5");
+        var lines = new List<string>();
+        var exited = new ManualResetEventSlim();
+        var exitCode = int.MinValue;
+
+        using var session = GameSession.Start(
+            plan,
+            line =>
+            {
+                lock (lines)
+                    lines.Add(line.Trim());
+            },
+            code =>
+            {
+                exitCode = code;
+                exited.Set();
+            });
+
+        Assert.IsTrue(exited.Wait(Timeout), "the process did not exit in time");
+        Assert.AreEqual(5, exitCode);
+        lock (lines)
+            CollectionAssert.AreEqual(new[] { "out" }, lines.ToArray());
+    }
+
+    [TestMethod]
     public void RunsInTheWorkingDirectoryOfThePlan()
     {
         using var directory = new FakeMinecraftRoot();

@@ -7,6 +7,7 @@ public static class Strings
 {
     public static string AppName => Localizer.Get(nameof(AppName));
     public static string PageLaunch => Localizer.Get(nameof(PageLaunch));
+    public static string PageDownload => Localizer.Get(nameof(PageDownload));
 
     public static string PlayerName => Localizer.Get(nameof(PlayerName));
     public static string PlayerNameHint => Localizer.Get(nameof(PlayerNameHint));
@@ -28,7 +29,6 @@ public static class Strings
     public static string LaunchGame => Localizer.Get(nameof(LaunchGame));
     public static string StatusReady => Localizer.Get(nameof(StatusReady));
     public static string StatusPreparing => Localizer.Get(nameof(StatusPreparing));
-    public static string StatusMissingFiles(int count, string files) => Localizer.Format(nameof(StatusMissingFiles), count, files);
     public static string StatusLaunchFailed(string message) => Localizer.Format(nameof(StatusLaunchFailed), message);
     public static string StatusRunning(int processId) => Localizer.Format(nameof(StatusRunning), processId);
     public static string StatusExited(int exitCode) => Localizer.Format(nameof(StatusExited), exitCode);
@@ -36,8 +36,6 @@ public static class Strings
     public static string LogTitle => Localizer.Get(nameof(LogTitle));
     public static string LogEmpty => Localizer.Get(nameof(LogEmpty));
     public static string LogStarting(string instance, string java) => Localizer.Format(nameof(LogStarting), instance, java);
-    public static string LogMissingFiles(int count) => Localizer.Format(nameof(LogMissingFiles), count);
-    public static string LogMissingFilesMore(int count) => Localizer.Format(nameof(LogMissingFilesMore), count);
     public static string LogLaunchFailed(string message) => Localizer.Format(nameof(LogLaunchFailed), message);
     public static string LogExited(int exitCode) => Localizer.Format(nameof(LogExited), exitCode);
 }

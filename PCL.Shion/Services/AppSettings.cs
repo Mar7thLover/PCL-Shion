@@ -2,12 +2,15 @@ using System;
 using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using PCL.Shion.Core.Minecraft;
+using PCL.Shion.Core.Sources;
 
 namespace PCL.Shion.Services;
 
 /// <summary>
-/// 启动器设置，保存在 <c>%APPDATA%\PCL Shion\settings.json</c>（不与 PCL CE 共用目录）。
+/// 启动器设置，保存在 <see cref="Environment.SpecialFolder.ApplicationData"/> 下的 <c>PCL Shion/settings.json</c>
+/// （Windows 为 <c>%APPDATA%\PCL Shion</c>，Linux 为 <c>~/.config/PCL Shion</c>，macOS 为 <c>~/Library/Application Support/PCL Shion</c>），不与 PCL CE 共用目录。
 /// </summary>
 public sealed class AppSettings
 {
@@ -15,12 +18,15 @@ public sealed class AppSettings
     {
         WriteIndented = true,
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        Converters = { new JsonStringEnumConverter() },
     };
 
     public string MinecraftRoot { get; set; } = MinecraftFolder.GetDefault();
     public string PlayerName { get; set; } = "";
     public string? SelectedInstance { get; set; }
     public int MaxMemoryMb { get; set; } = 4096;
+    public DownloadSource DownloadSource { get; set; } = DownloadSource.Official;
+    public int MaxDownloadConcurrency { get; set; } = 32;
 
     private static string FilePath { get; } = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PCL Shion", "settings.json");

@@ -16,11 +16,22 @@ public sealed class ResolvedVersion
     /// <summary>资源索引 ID；版本 JSON 未声明时为 legacy。</summary>
     public required string AssetIndexId { get; init; }
 
+    /// <summary>资源索引的下载信息；声明 <see cref="AssetIndexId"/> 的版本没有给出下载地址时为 null。</summary>
+    public FileDownload? AssetIndexDownload { get; init; }
+
     /// <summary>版本要求的 Java 主版本号；未声明时为 null。</summary>
     public int? JavaMajorVersion { get; init; }
 
+    /// <summary>版本要求的官方 Java 运行时组件（javaVersion.component），如 java-runtime-delta；未声明时为 null。</summary>
+    public string? JavaComponent { get; init; }
+
     /// <summary>客户端 jar 的完整路径，文件不一定存在。</summary>
     public required string ClientJarPath { get; init; }
+
+    /// <summary>
+    /// 客户端 jar 的下载信息，取自 <see cref="ClientJarPath"/> 所属版本的 downloads.client；该版本未声明时为 null。
+    /// </summary>
+    public FileDownload? ClientJarDownload { get; init; }
 
     /// <summary>原版 Minecraft 版本号，无法确定时为 null。</summary>
     public string? MinecraftVersion { get; init; }
@@ -43,4 +54,7 @@ public sealed class ResolvedVersion
 
     /// <summary>logging.client.file.id，即 assets/log_configs 下的文件名。</summary>
     public string? LoggingFileId { get; init; }
+
+    /// <summary>日志配置文件的下载信息；未声明时为 null。</summary>
+    public FileDownload? LoggingFileDownload { get; init; }
 }

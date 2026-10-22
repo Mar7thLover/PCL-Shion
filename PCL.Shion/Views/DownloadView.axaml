@@ -1,0 +1,219 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PCL.Shion.ViewModels"
+             x:Class="PCL.Shion.Views.DownloadView"
+             x:DataType="vm:DownloadViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SurfaceBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+
+        <Style Selector="TextBlock.section">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+        </Style>
+        <Style Selector="TextBlock.caption">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+        </Style>
+        <Style Selector="TextBlock.error">
+            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+        </Style>
+
+        <Style Selector="TextBox.invalid">
+            <Setter Property="BorderBrush" Value="{DynamicResource DangerBrush}" />
+        </Style>
+        <Style Selector="TextBox.invalid:focus /template/ Border#PART_BorderElement">
+            <Setter Property="BorderBrush" Value="{DynamicResource DangerBrush}" />
+        </Style>
+
+        <Style Selector="Button.wide">
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Height" Value="44" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentHoverBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+        </Style>
+        <Style Selector="Button.primary:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentPressedBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+        </Style>
+
+        <!-- 类型筛选：横向排列的分段按钮 -->
+        <Style Selector="ListBox.segmented">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="ListBox.segmented ListBoxItem">
+            <Setter Property="Padding" Value="14,0" />
+            <Setter Property="MinHeight" Value="38" />
+            <Setter Property="CornerRadius" Value="8" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- 顶部：搜索、类型筛选、下载源 -->
+        <Border Grid.Row="0" Padding="20,12"
+                Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource SurfaceBorderBrush}"
+                BorderThickness="0,0,0,1"
+                IsEnabled="{Binding !IsInstalling}">
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="16">
+                <TextBox Grid.Column="0" Height="38" MaxWidth="320" HorizontalAlignment="Left"
+                         CornerRadius="8" VerticalContentAlignment="Center"
+                         PlaceholderText="{x:Static vm:DownloadStrings.SearchPlaceholder}"
+                         Text="{Binding SearchText}" />
+
+                <ListBox Grid.Column="1" Classes="segmented" SelectionMode="AlwaysSelected"
+                         ItemsSource="{Binding TypeOptions}"
+                         SelectedItem="{Binding SelectedType}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="4" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
+                    <TextBlock Classes="caption" VerticalAlignment="Center"
+                               Text="{x:Static vm:DownloadStrings.SourceLabel}" />
+                    <ComboBox Width="160" Height="38" CornerRadius="8" VerticalContentAlignment="Center"
+                              ItemsSource="{Binding SourceOptions}"
+                              SelectedItem="{Binding SelectedSource}" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" ColumnDefinitions="340,*">
+
+            <!-- 左侧：所选版本、实例名、安装与进度 -->
+            <Border Grid.Column="0" Padding="20"
+                    Background="{DynamicResource SurfaceBrush}"
+                    BorderBrush="{DynamicResource SurfaceBorderBrush}"
+                    BorderThickness="0,0,1,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="20">
+
+                        <TextBlock Classes="caption" TextWrapping="Wrap"
+                                   Text="{x:Static vm:DownloadStrings.SelectVersionHint}"
+                                   IsVisible="{Binding !HasSelection}" />
+
+                        <StackPanel Spacing="20" IsVisible="{Binding HasSelection}">
+                            <StackPanel Spacing="6">
+                                <TextBlock Classes="section" Text="{x:Static vm:DownloadStrings.SelectedVersionTitle}" />
+                                <Border Classes="card" Padding="12,10">
+                                    <StackPanel Spacing="2">
+                                        <TextBlock FontSize="18" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"
+                                                   Text="{Binding SelectedVersion.Id}" />
+                                        <TextBlock Classes="caption" Text="{Binding SelectedVersion.Description}" />
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+
+                            <StackPanel Spacing="6">
+                                <TextBlock Classes="section" Text="{x:Static vm:DownloadStrings.InstanceNameTitle}" />
+                                <TextBox Height="38" CornerRadius="8" VerticalContentAlignment="Center"
+                                         IsEnabled="{Binding !IsInstalling}"
+                                         Text="{Binding InstanceName}"
+                                         Classes.invalid="{Binding HasNameError}" />
+                                <TextBlock Classes="caption error" TextWrapping="Wrap"
+                                           Text="{Binding NameError}"
+                                           IsVisible="{Binding HasNameError}" />
+                            </StackPanel>
+
+                            <StackPanel Spacing="10">
+                                <Button Classes="wide primary" Content="{x:Static vm:DownloadStrings.Install}"
+                                        Command="{Binding InstallCommand}"
+                                        IsVisible="{Binding !IsInstalling}" />
+                                <Button Classes="wide" Content="{x:Static vm:DownloadStrings.Cancel}"
+                                        Command="{Binding CancelCommand}"
+                                        IsVisible="{Binding IsInstalling}" />
+
+                                <StackPanel Spacing="6" IsVisible="{Binding IsInstalling}">
+                                    <TextBlock Text="{Binding StageText}" />
+                                    <ProgressBar Minimum="0" Maximum="100"
+                                                 Value="{Binding ProgressPercent}"
+                                                 IsIndeterminate="{Binding IsProgressIndeterminate}" />
+                                    <TextBlock Classes="caption" TextWrapping="Wrap" Text="{Binding ProgressDetail}" />
+                                    <TextBlock Classes="caption" Text="{Binding SpeedText}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <TextBlock TextWrapping="Wrap"
+                                   Text="{Binding ResultText}"
+                                   Classes.error="{Binding ResultIsError}"
+                                   IsVisible="{Binding HasResult}" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- 右侧：版本列表 -->
+            <Border Grid.Column="1" Classes="card" Margin="20" ClipToBounds="True"
+                    IsEnabled="{Binding !IsInstalling}">
+                <Grid RowDefinitions="Auto,*">
+                    <Grid Grid.Row="0" Margin="14,10,14,6" ColumnDefinitions="*,110,110">
+                        <TextBlock Classes="caption" Text="{x:Static vm:DownloadStrings.ColumnVersion}" />
+                        <TextBlock Grid.Column="1" Classes="caption" Text="{x:Static vm:DownloadStrings.ColumnType}" />
+                        <TextBlock Grid.Column="2" Classes="caption" Text="{x:Static vm:DownloadStrings.ColumnDate}" />
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <ListBox Background="Transparent" BorderThickness="0" Padding="4"
+                                 ItemsSource="{Binding VisibleVersions}"
+                                 SelectedItem="{Binding SelectedVersion}">
+                            <ListBox.Styles>
+                                <Style Selector="ListBoxItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="Padding" Value="10,6" />
+                                </Style>
+                            </ListBox.Styles>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="vm:DownloadVersionItem">
+                                    <Grid ColumnDefinitions="*,110,110">
+                                        <TextBlock VerticalAlignment="Center" FontWeight="SemiBold"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Text="{Binding Id}" />
+                                        <TextBlock Grid.Column="1" Classes="caption" VerticalAlignment="Center"
+                                                   Text="{Binding TypeText}" />
+                                        <TextBlock Grid.Column="2" Classes="caption" VerticalAlignment="Center"
+                                                   Text="{Binding DateText}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <StackPanel Margin="16" MaxWidth="360" Spacing="10"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    IsVisible="{Binding HasVersionsHint}">
+                            <TextBlock Classes="caption" TextWrapping="Wrap" TextAlignment="Center"
+                                       Text="{Binding VersionsHint}" />
+                            <Button HorizontalAlignment="Center"
+                                    Content="{x:Static vm:DownloadStrings.Retry}"
+                                    Command="{Binding LoadVersionsCommand}"
+                                    IsVisible="{Binding LoadFailed}" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

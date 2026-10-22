@@ -9,29 +9,35 @@ namespace PCL.Shion.Core.Minecraft;
 /// <param name="MainClass">mainClass。</param>
 /// <param name="Type">type。</param>
 /// <param name="AssetIndexId">assetIndex.id，缺失时取 assets。</param>
+/// <param name="AssetIndexDownload">assetIndex 的下载信息。</param>
 /// <param name="JavaMajorVersion">javaVersion.majorVersion。</param>
+/// <param name="JavaComponent">javaVersion.component。</param>
 /// <param name="ClientVersion">clientVersion（部分合并版 JSON 带有）。</param>
 /// <param name="MinecraftArguments">旧格式的 minecraftArguments。</param>
 /// <param name="JvmArguments">arguments.jvm。</param>
 /// <param name="GameArguments">arguments.game。</param>
 /// <param name="Libraries">libraries。</param>
-/// <param name="DeclaresClientJar">是否声明了 downloads.client，即本版本自带客户端 jar。</param>
+/// <param name="ClientJarDownload">downloads.client；不为 null 即表示本版本自带客户端 jar。</param>
 /// <param name="LoggingArgument">logging.client.argument。</param>
 /// <param name="LoggingFileId">logging.client.file.id。</param>
+/// <param name="LoggingFileDownload">logging.client.file 的下载信息。</param>
 internal sealed record VersionFile(
     string? InheritsFrom,
     string? MainClass,
     string? Type,
     string? AssetIndexId,
+    FileDownload? AssetIndexDownload,
     int? JavaMajorVersion,
+    string? JavaComponent,
     string? ClientVersion,
     string? MinecraftArguments,
     IReadOnlyList<VersionArgument> JvmArguments,
     IReadOnlyList<VersionArgument> GameArguments,
     IReadOnlyList<VersionLibrary> Libraries,
-    bool DeclaresClientJar,
+    FileDownload? ClientJarDownload,
     string? LoggingArgument,
-    string? LoggingFileId)
+    string? LoggingFileId,
+    FileDownload? LoggingFileDownload)
 {
     private static readonly JsonDocumentOptions DocumentOptions = new()
     {
@@ -59,22 +65,38 @@ internal sealed record VersionFile(
             throw new InvalidDataException("The version JSON root must be an object.");
 
         var arguments = root.GetObjectProperty("arguments");
+        var assetIndex = root.GetObjectProperty("assetIndex");
+        var javaVersion = root.GetObjectProperty("javaVersion");
         var logging = root.GetObjectProperty("logging")?.GetObjectProperty("client");
+        var loggingFile = logging?.GetObjectProperty("file");
 
         return new VersionFile(
             InheritsFrom: root.GetStringProperty("inheritsFrom"),
             MainClass: root.GetStringProperty("mainClass"),
             Type: root.GetStringProperty("type"),
-            AssetIndexId: root.GetObjectProperty("assetIndex")?.GetStringProperty("id") ?? root.GetStringProperty("assets"),
-            JavaMajorVersion: root.GetObjectProperty("javaVersion")?.GetInt32Property("majorVersion"),
+            AssetIndexId: assetIndex?.GetStringProperty("id") ?? root.GetStringProperty("assets"),
+            AssetIndexDownload: ParseFileDownload(assetIndex),
+            JavaMajorVersion: javaVersion?.GetInt32Property("majorVersion"),
+            JavaComponent: javaVersion?.GetStringProperty("component"),
             ClientVersion: root.GetStringProperty("clientVersion"),
             MinecraftArguments: root.GetStringProperty("minecraftArguments"),
             JvmArguments: ParseArguments(arguments?.GetArrayProperty("jvm")),
             GameArguments: ParseArguments(arguments?.GetArrayProperty("game")),
             Libraries: ParseLibraries(root.GetArrayProperty("libraries")),
-            DeclaresClientJar: root.GetObjectProperty("downloads")?.GetObjectProperty("client") is not null,
+            ClientJarDownload: ParseFileDownload(root.GetObjectProperty("downloads")?.GetObjectProperty("client")),
             LoggingArgument: logging?.GetStringProperty("argument"),
-            LoggingFileId: logging?.GetObjectProperty("file")?.GetStringProperty("id"));
+            LoggingFileId: loggingFile?.GetStringProperty("id"),
+            LoggingFileDownload: ParseFileDownload(loggingFile));
+    }
+
+    /// <summary>
+    /// 读取含 url 的下载描述，sha1 与 size 可以缺省；对象不存在或没有 url 时返回 null。
+    /// </summary>
+    private static FileDownload? ParseFileDownload(JsonElement? element)
+    {
+        if (element is not { } value || value.GetStringProperty("url") is not { } url)
+            return null;
+        return new FileDownload(url, value.GetStringProperty("sha1"), value.GetInt64Property("size"));
     }
 
     private static List<VersionArgument> ParseArguments(JsonElement? array)
@@ -163,25 +185,35 @@ internal sealed record VersionFile(
                 ?? throw new InvalidDataException("A library entry has no name.");
             var downloads = item.GetObjectProperty("downloads");
 
-            var classifierPaths = new Dictionary<string, string>();
-            if (downloads?.GetObjectProperty("classifiers") is { } classifiers)
+            var classifiers = new Dictionary<string, LibraryDownload>();
+            if (downloads?.GetObjectProperty("classifiers") is { } classifierObject)
             {
-                foreach (var classifier in classifiers.EnumerateObject())
+                foreach (var classifier in classifierObject.EnumerateObject())
                 {
-                    if (classifier.Value.GetStringProperty("path") is { } path)
-                        classifierPaths[classifier.Name] = path;
+                    if (classifier.Value.ValueKind == JsonValueKind.Object)
+                        classifiers[classifier.Name] = ParseLibraryDownload(classifier.Value);
                 }
             }
 
             libraries.Add(new VersionLibrary(
                 Name: name,
-                ArtifactPath: downloads?.GetObjectProperty("artifact")?.GetStringProperty("path"),
+                RepositoryUrl: item.GetStringProperty("url"),
+                Artifact: downloads?.GetObjectProperty("artifact") is { } artifact ? ParseLibraryDownload(artifact) : null,
                 Rules: ParseRules(item.GetArrayProperty("rules")),
                 Natives: ParseNatives(item.GetObjectProperty("natives")),
-                ClassifierPaths: classifierPaths,
+                Classifiers: classifiers,
                 ExtractExclude: ParseExtractExclude(item.GetObjectProperty("extract")?.GetArrayProperty("exclude"))));
         }
         return libraries;
+    }
+
+    private static LibraryDownload ParseLibraryDownload(JsonElement element)
+    {
+        return new LibraryDownload(
+            Path: element.GetStringProperty("path"),
+            Url: element.GetStringProperty("url"),
+            Sha1: element.GetStringProperty("sha1"),
+            Size: element.GetInt64Property("size"));
     }
 
     private static Dictionary<string, string> ParseNatives(JsonElement? natives)
