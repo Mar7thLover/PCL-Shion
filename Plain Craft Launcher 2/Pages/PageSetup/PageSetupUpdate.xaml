@@ -7,7 +7,13 @@
     PanScroll="{Binding ElementName=PanBack}">
     <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
         <StackPanel x:Name="PanMain" Margin="25,25,25,10">
-            <local:MyCard Height="Auto">
+            <local:MyCard x:Name="CardShionNotice" Margin="0,0,0,15">
+                <StackPanel Margin="20,20,20,20">
+                    <TextBlock x:Name="TextShionNotice" FontSize="14" LineHeight="23" LineStackingStrategy="BlockLineHeight" TextWrapping="Wrap" />
+                    <local:MyButton x:Name="BtnShionReleases" Text="{DynamicResource Setup.Update.Shion.OpenReleases}" ColorType="Highlight" Height="35" Padding="13,0" HorizontalAlignment="Left" Margin="0,15,0,0" Click="BtnShionReleases_Click" />
+                </StackPanel>
+            </local:MyCard>
+            <local:MyCard x:Name="CardUpdateSettings" Height="Auto" Visibility="Collapsed">
                 <StackPanel Margin="20,15,20,15">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -57,7 +63,7 @@
                     </Grid>
                 </StackPanel>
             </local:MyCard>
-            <local:MyCard x:Name="CardUpdate" Margin="0,15">
+            <local:MyCard x:Name="CardUpdate" Margin="0,15" Visibility="Collapsed">
                 <StackPanel Margin="20,20,20,20">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -79,9 +85,9 @@
                         <local:MyImage x:Name="ImgUpdateIcon" Source="https://www.pclc.cc/img/pcl-ce/icon.webp"
                                        Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="50" Width="50"
                                        HorizontalAlignment="Left" VerticalAlignment="Center" />
-                        <TextBlock x:Name="TextUpdateName" Text="PCL CE 2.14.0" FontWeight="Bold" FontSize="20"
+                        <TextBlock x:Name="TextUpdateName" Text="PCL Shion" FontWeight="Bold" FontSize="20"
                                    Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-                        <TextBlock x:Name="TextUpdateDesc" Text="by PCL-Community" FontSize="14" Grid.Row="2"
+                        <TextBlock x:Name="TextUpdateDesc" Text="by Mar7thLover" FontSize="14" Grid.Row="2"
                                    Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" />
                         <local:MyButton x:Name="BtnUpdate" Text="{DynamicResource Setup.Update.Install}" ColorType="Highlight" Grid.Row="0"
                                         Grid.RowSpan="2" Grid.Column="3" HorizontalAlignment="Center"
@@ -116,9 +122,9 @@
                                Grid.RowSpan="3" Height="50" Width="50" HorizontalAlignment="Left"
                                VerticalAlignment="Center" />
                         <!-- <local:MyImage x:Name="ImgUpdateIcon" FallbackSource="pack://application:,,,/images/icon.ico" Source="https://www.pclc.cc/img/pcl-ce/icon.webp" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="50" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center"/> -->
-                        <TextBlock x:Name="TextCurrentVersion" Text="PCL CE 2.13.4" FontWeight="Bold" FontSize="20"
+                        <TextBlock x:Name="TextCurrentVersion" Text="PCL Shion" FontWeight="Bold" FontSize="20"
                                    Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-                        <TextBlock x:Name="TextCurrentDesc" Text="{DynamicResource Setup.Update.Latest}" FontSize="14" Grid.Row="2" Grid.Column="2"
+                        <TextBlock x:Name="TextCurrentDesc" Text="{DynamicResource Setup.Update.Shion.Status}" FontSize="14" Grid.Row="2" Grid.Column="2"
                                    HorizontalAlignment="Left" VerticalAlignment="Top" />
                         <local:MyButton x:Name="BtnCheckAgain" Text="{DynamicResource Setup.Update.CheckAgain}" ColorType="Highlight" Grid.Row="0"
                                         Grid.RowSpan="2" Grid.Column="3" HorizontalAlignment="Stretch"

@@ -7,6 +7,9 @@ public static class AnnouncementService
 {
     public static void Load()
     {
+        // PCL Shion 不拉取上游更新源提供的公告
+        if (!UpdateManager.InAppUpdateEnabled)
+            return;
         if (States.System.AnnounceSolution > 1)
             return;
 

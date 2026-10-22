@@ -23,7 +23,7 @@ internal static class Program
             while (!Debugger.IsAttached) Thread.Sleep(50);
         }
 #endif
-        Console.WriteLine("Welcome to Plain Craft Launcher 2 Community Edition!");
+        Console.WriteLine("Welcome to PCL Shion (a third-party modified version based on PCL CE)!");
         // Preloading tasks
         ApplicationService.Loading = static () =>
         {

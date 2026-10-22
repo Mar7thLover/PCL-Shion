@@ -47,7 +47,7 @@ public partial class FormMain
                 changelog = Lang.Text("Main.UpdateLog.Empty");
             if (ModMain.MyMsgBoxMarkdown(changelog,
                     Lang.Text("Main.UpdateLog.Title", ModBase.versionBranchName, ModBase.versionBaseName), Lang.Text("Common.Action.Confirm"), Lang.Text("Main.UpdateLog.FullChangelog")) ==
-                2) ModBase.OpenWebsite("https://github.com/PCL-Community/PCL2-CE/releases");
+                2) ModBase.OpenWebsite(ModBase.shionReleasesUrl);
         }, "UpdateLog Output");
     }
 
@@ -241,7 +241,7 @@ public partial class FormMain
                         $"{hint}{"\r\n"}{"\r\n"}{Lang.Text("Main.SpecialVersion.HideHintNotice")}",
                         Lang.Text("Main.SpecialVersion.Title"), Lang.Text("Main.SpecialVersion.IUnderstand"), Lang.Text("Main.SpecialVersion.OpenDownloadPageAndExit"), isWarn: true, button2Action: () =>
                         {
-                            ModBase.OpenWebsite("https://github.com/PCL-Community/PCL2-CE/releases/latest");
+                            ModBase.OpenWebsite(ModBase.shionReleasesUrl + "/latest");
                             EndProgram(false);
                         });
                 }
@@ -278,7 +278,7 @@ public partial class FormMain
                 {
                     ModDownload.dlClientListMojangLoader.Start(1); // PCL 会同时根据这里的加载结果决定是否使用官方源进行下载
                     RunCountSub();
-                    UpdateManager.serverLoader.Start(1);
+                    if (UpdateManager.InAppUpdateEnabled) UpdateManager.serverLoader.Start(1); // PCL Shion 不检查更新、不拉取上游公告
                     ModBase.RunInNewThread(ModMain.TryClearTaskTemp, "TryClearTaskTemp", ThreadPriority.BelowNormal);
                 }
                 catch (Exception ex)
@@ -337,7 +337,7 @@ public partial class FormMain
         if ((int)Config.Launch.GameWindowMode == 5)
             Config.Launch.GameWindowMode = GameWindowSizeMode.Default;
 
-        // 更新后展示社区版提示
+        // 更新后展示 PCL Shion 提示
         UpdateManager.ShowCEAnnounce();
         // 输出更新日志
         if (lastVersionCode <= 0)
@@ -585,7 +585,7 @@ public partial class FormMain
             if (!isLogShown)
             {
                 ModBase.FeedbackInfo();
-                ModBase.Log("请在 https://github.com/PCL-Community/PCL2-CE/issues 提交错误报告，以便于社区解决此问题！（这也有可能是原版 PCL 的问题）");
+                ModBase.Log("请在 " + ModBase.shionIssuesUrl + " 提交错误报告，以便于解决此问题！请勿向原版 PCL 或 PCL CE 反馈 PCL Shion 的问题。");
                 isLogShown = true;
                 ModBase.ShellOnly(LogWrapper.CurrentLogger.CurrentLogFiles.Last());
             }

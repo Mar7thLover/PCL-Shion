@@ -12,16 +12,18 @@ public static class UpdateManager
 {
     public static bool isUpdateWaitingRestart;
 
-    public static UpdatesWrapperModel remoteServer = new(new List<IUpdateSource>
-    {
-        new UpdatesMirrorChyanModel(),
-        new UpdatesRandomModel(new[]
-        {
-            new UpdatesMinioModel("https://s3.pysio.online/pcl2-ce/", "Pysio"),
-            new UpdatesMinioModel("https://staticassets.naids.com/resources/pclce/", "Naids")
-        }),
-        new UpdatesMinioModel("https://github.com/PCL-Community/PCL2_CE_Server/raw/main/", "GitHub")
-    });
+    /// <summary>
+    ///     PCL Shion 暂不提供应用内更新。
+    ///     为 false 时，启动器不会检查、下载上游 PCL CE 的更新或构建，也不会替换自身，更不会拉取上游公告；
+    ///     新版本请前往 <see cref="ModBase.shionReleasesUrl" /> 手动下载。
+    /// </summary>
+    public static readonly bool InAppUpdateEnabled = false;
+
+    /// <summary>
+    ///     更新源列表。上游 PCL CE 的更新源（MirrorChyan / Pysio / Naids / PCL2_CE_Server）已移除，
+    ///     PCL Shion 尚未提供自己的更新源，因此这里保持为空，即使有代码误调用也不会访问上游。
+    /// </summary>
+    public static UpdatesWrapperModel remoteServer = new(new List<IUpdateSource>());
 
     public static bool IsCurrentVersionBeta
     {
@@ -35,6 +37,9 @@ public static class UpdateManager
     
     public static UpdateEnums.VersionStatus GetVersionStatus()
     {
+        // PCL Shion 不联网检查更新：无法判断时视为最新，以免阻止问题反馈、或在崩溃分析中误报“启动器已过时”
+        if (!InAppUpdateEnabled)
+            return UpdateEnums.VersionStatus.Latest;
         try
         {
             if (IsCurrentVersionBeta && (int)Config.Update.UpdateChannel != 1)
@@ -72,6 +77,12 @@ public static class UpdateManager
 
     public static void UpdateStart(UpdateEnums.UpdateType type, string receivedKey = null, bool forceValidated = false)
     {
+        if (!InAppUpdateEnabled)
+        {
+            ModBase.Log("[Update] PCL Shion 暂不提供应用内更新，已跳过更新流程。请前往 " + ModBase.shionReleasesUrl + " 下载新版本");
+            return;
+        }
+
         var dlTargetPath = ModBase.exePath + @"PCL\Plain Craft Launcher Community Edition.exe";
         ModBase.RunInNewThread(() =>
         {
@@ -207,6 +218,17 @@ public static class UpdateManager
     {
         // 注意：如果要自行实现这个功能，请换用另一个文件路径，以免与官方版本冲突
         var latestPCLPath = Path.Combine(ModBase.pathTemp, "CE-Latest.exe");
+        if (!InAppUpdateEnabled)
+        {
+            // PCL Shion 不会从上游下载 PCL CE，整合包内附带的启动器直接使用当前正在运行的这一份
+            ModBase.Log("[Update] 未启用应用内更新，使用当前正在运行的 PCL Shion 作为整合包内附带的启动器");
+            if (File.Exists(latestPCLPath) &&
+                (ModBase.GetFileSHA256(latestPCLPath) ?? "") == (ModBase.GetFileSHA256(Basics.ExecutablePath) ?? ""))
+                return;
+            ModBase.CopyFile(Basics.ExecutablePath, latestPCLPath);
+            return;
+        }
+
         var target = remoteServer.GetLatestVersion(UpdateChannel.stable,
             SystemInfo.IsArm64System ? UpdateArch.arm64 : UpdateArch.x64);
         if (target is null)
@@ -237,6 +259,13 @@ public static class UpdateManager
 
     private static void LoadOnlineInfo()
     {
+        // PCL Shion 不检查更新，也不拉取上游的公告
+        if (!InAppUpdateEnabled)
+        {
+            ModBase.Log("[Update] PCL Shion 暂不提供应用内更新，已跳过更新检查与公告获取");
+            return;
+        }
+
         ScheduleBasedOnConfig();
         AnnouncementService.Load();
     }
@@ -265,7 +294,7 @@ public static class UpdateManager
     }
 
     /// <summary>
-    ///     展示社区版提示
+    ///     展示 PCL Shion 提示
     /// </summary>
     /// <param name="IsUpdate">是否为更新时启动</param>
     public static void ShowCEAnnounce()

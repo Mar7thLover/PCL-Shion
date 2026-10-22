@@ -60,7 +60,7 @@ public partial class PageSetupFeedback
     public void FeedbackListGet(ModLoader.LoaderTask<bool, List<Feedback>> task)
     {
         var list = Requester.FetchJson(
-            "https://api.github.com/repos/PCL-Community/PCL2-CE/issues?state=all&sort=created&per_page=200",
+            ModBase.shionApiRepoUrl + "/issues?state=all&sort=created&per_page=200",
             new RequestParam
             {
                 Retries = 3,

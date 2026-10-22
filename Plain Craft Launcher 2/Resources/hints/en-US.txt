@@ -1,5 +1,5 @@
 
-PCL CE is a community-derived version of PCL developed by PCL-Community.
+PCL Shion is a third-party modified version based on PCL CE, a community-derived version of PCL developed by PCL-Community.
 
 Create a hints.txt file in the PCL folder to customize the "Did You Know" content. Make sure the encoding is UTF-8!
 
@@ -979,9 +979,9 @@ It is possible for a village to generate on the border of two or more biomes but
 
 The original inhabitants of villages were pigmen, whose later design concepts were used for piglins.
 
-PCL CE is developed by PCL-Community based on the official PCL, and has no affiliation with LTCat(龙腾猫跃).
+PCL Shion is based on PCL CE, which is developed by PCL-Community based on the official PCL and has no affiliation with LTCat(龙腾猫跃).
 
-PCL CE supports importing HMCL archives.
+PCL Shion supports importing HMCL archives.
 
 PCL CE is developed by PCL-Community, but PCL-Community develops more than just PCL CE.
 
@@ -989,23 +989,23 @@ PCL CE stands for Plain Craft Launcher Community Edition.
 
 Your Minecraft downloads are so fast thanks to bangbang93's BMCLAPI!
 
-PCL CE can directly update the Minecraft game and mod loaders from the "Instance Settings - Modify" tab.
+PCL Shion can directly update the Minecraft game and mod loaders from the "Instance Settings - Modify" tab.
 
-PCL CE supports Gaussian blur.
+PCL Shion supports Gaussian blur.
 
-PCL CE supports dynamic backgrounds.
+PCL Shion supports dynamic backgrounds.
 
-According to official edition statistics, 94.5% of users clicked on the "Do not click" button (don't even think about it; this community edition doesn't have that).
+According to official edition statistics, 94.5% of users clicked on the "Do not click" button (don't even think about it; this version doesn't have that).
 
-PCL CE has implemented some of the official PCL's toolbox features, such as memory optimization, daily luck, game cache cleaning, high-speed download, and more community-developed tools.
+PCL Shion has implemented some of the official PCL's toolbox features, such as memory optimization, daily luck, game cache cleaning, high-speed download, and more community-developed tools.
 
-PCL CE supports log viewing and exporting, making it easy for users to submit detailed logs when reporting bugs.
+PCL Shion supports log viewing and exporting, making it easy for users to submit detailed logs when reporting bugs.
 
-PCL CE supports using Mirror酱 to accelerate updates.
+PCL Shion does not provide in-app updates yet. Download new versions from https://github.com/Mar7thLover/PCL-Shion/releases.
 
-PCL CE supports dark mode, so your eyes won't be blinded when sneaking in some Minecraft gaming at night.
+PCL Shion supports dark mode, so your eyes won't be blinded when sneaking in some Minecraft gaming at night.
 
-PCL CE supports all drag-and-drop operations from the official version; you can directly drag and drop modpacks or mods to install.
+PCL Shion supports all drag-and-drop operations from the official version; you can directly drag and drop modpacks or mods to install.
 
 PCL CE has its own user group, but you need to be able to open GitHub to know the group number.
 
@@ -1013,27 +1013,27 @@ When the game crashes, never just send a screenshot! Always send the log!! Witho
 
 Alt+F4 closes the window, it's not diamonds or a gift pack!
 
-Most of the PCL CE development team are students, so updates might be a bit slow.
+PCL Shion is based on PCL CE, and most of the PCL CE development team are students, so updates might be a bit slow.
 
-PCL CE supports checking server status in "Instance Settings - Server" or "Tools - Toolbox - Peek at Server", so you can see if your favorite server is online without entering the game.
+PCL Shion supports checking server status in "Instance Settings - Server" or "Tools - Toolbox - Peek at Server", so you can see if your favorite server is online without entering the game.
 
-PCL CE allows save backups in "Instance Settings - Saves - Details - Backup".
+PCL Shion allows save backups in "Instance Settings - Saves - Details - Backup".
 
-PCL CE allows modifying save game difficulty, command permission, and difficulty lock in "Instance Settings - Saves - Details".
+PCL Shion allows modifying save game difficulty, command permission, and difficulty lock in "Instance Settings - Saves - Details".
 
-PCL CE supports translating mod descriptions.
+PCL Shion supports translating mod descriptions.
 
-PCL CE's multiplayer feature uses EasyTier for P2P hole punching.
+PCL Shion's multiplayer feature uses EasyTier for P2P hole punching.
 
-PCL CE can upgrade a game instance's Authlib during installation to fix Minecraft 1.16.5's multiplayer issues.
+PCL Shion can upgrade a game instance's Authlib during installation to fix Minecraft 1.16.5's multiplayer issues.
 
 Press F12 to temporarily re-display hidden settings.
 
-PCL CE supports changing fonts.
+PCL Shion supports changing fonts.
 
-PCL CE supports changing the game's process priority. With proper settings, the game won't compete for CPU while idling, nor will other programs compete while you play.
+PCL Shion supports changing the game's process priority. With proper settings, the game won't compete for CPU while idling, nor will other programs compete while you play.
 
-Do not run PCL CE as administrator unless necessary; this causes various permission issues and breaks system-level interactions such as drag-and-drop!
+Do not run PCL Shion as administrator unless necessary; this causes various permission issues and breaks system-level interactions such as drag-and-drop!
 
 Hover your mouse over some text in the settings to see a detailed explanation of that setting.
 

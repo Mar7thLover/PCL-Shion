@@ -98,7 +98,7 @@
                         Grid.Row="2"
                         Grid.Column="2"
                         Height="35"
-                        local:CustomEventService.EventData="https://github.com/PCL-Community/PCL2-CE"
+                        local:CustomEventService.EventData="https://github.com/Mar7thLover/PCL-Shion"
                         local:CustomEventService.EventType="OpenUrl"
                         Text="{DynamicResource Setup.About.SourceCode}" />
                 </Grid>
@@ -336,7 +336,7 @@
                     <local:MyTextButton
                         Grid.Row="2"
                         HorizontalAlignment="Center"
-                        local:CustomEventService.EventData="https://github.com/PCL-Community/PCL2-CE/graphs/contributors"
+                        local:CustomEventService.EventData="https://github.com/Mar7thLover/PCL-Shion/graphs/contributors"
                         local:CustomEventService.EventType="OpenUrl"
                         Text="{DynamicResource Setup.About.Contributors.ViewMore}" />
                 </Grid>

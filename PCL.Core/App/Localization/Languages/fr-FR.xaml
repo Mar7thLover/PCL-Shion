@@ -8,19 +8,19 @@
     <sys:String x:Key="Application.Control.Error.OperationFailed">L'opération sur un élément de l'interface a échoué. Veuillez consulter les détails de l'erreur.</sys:String>
     <sys:String x:Key="Application.Control.Loading.Default">Chargement...</sys:String>
     <sys:String x:Key="Application.Control.Loading.Failed">Échec du chargement.</sys:String>
-    <sys:String x:Key="Application.EnvironmentWarning.Message">PCL CE a détecté des problèmes d'environnement au démarrage:
+    <sys:String x:Key="Application.EnvironmentWarning.Message">PCL Shion a détecté des problèmes d'environnement au démarrage:
 
 {0}
 
 Si ces problèmes ne sont pas résolus, certaines fonctions risquent de ne pas fonctionner correctement…</sys:String>
-    <sys:String x:Key="Application.EnvironmentWarning.SocialSoftwareFolder">- PCL CE est en cours d'exécution depuis le dossier de téléchargement de logiciels sociaux tels que Discord, WhatsApp, etc. Veuillez envisager de le déplacer vers un autre emplacement, sinon cela pourrait entraîner la perte des sauvegardes de jeu ou des paramètres</sys:String>
-    <sys:String x:Key="Application.EnvironmentWarning.System32Bit">- Votre système est en 32 bits, ce qui n'est pas pris en charge par PCL CE ni par les versions récentes de Minecraft. Il est fortement recommandé de réinstaller un système 64 bits avant de jouer</sys:String>
-    <sys:String x:Key="Application.EnvironmentWarning.TempFolder">- PCL CE est en cours d'exécution dans le dossier temporaire, veuillez extraire PCL CE de l'archive avant de l'utiliser, sinon cela pourrait entraîner la perte des sauvegardes de jeu ou des paramètres</sys:String>
+    <sys:String x:Key="Application.EnvironmentWarning.SocialSoftwareFolder">- PCL Shion est en cours d'exécution depuis le dossier de téléchargement de logiciels sociaux tels que Discord, WhatsApp, etc. Veuillez envisager de le déplacer vers un autre emplacement, sinon cela pourrait entraîner la perte des sauvegardes de jeu ou des paramètres</sys:String>
+    <sys:String x:Key="Application.EnvironmentWarning.System32Bit">- Votre système est en 32 bits, ce qui n'est pas pris en charge par PCL Shion ni par les versions récentes de Minecraft. Il est fortement recommandé de réinstaller un système 64 bits avant de jouer</sys:String>
+    <sys:String x:Key="Application.EnvironmentWarning.TempFolder">- PCL Shion est en cours d'exécution dans le dossier temporaire, veuillez extraire PCL Shion de l'archive avant de l'utiliser, sinon cela pourrait entraîner la perte des sauvegardes de jeu ou des paramètres</sys:String>
     <sys:String x:Key="Application.EnvironmentWarning.Title">Avertissement d'environnement</sys:String>
     <sys:String x:Key="Application.EnvironmentWarning.WindowsVersion">- La version de Windows ne répond pas aux exigences recommandées, Windows 10 1809 ou version ultérieure est recommandé, il est conseillé d'envisager une mise à niveau de Windows</sys:String>
-    <sys:String x:Key="Application.InitializationError.Path">Chemin d'accès de PCL CE : {0}</sys:String>
+    <sys:String x:Key="Application.InitializationError.Path">Chemin d'accès de PCL Shion : {0}</sys:String>
     <sys:String x:Key="Application.InitializationError.PathUnavailable">Échec de la récupération</sys:String>
-    <sys:String x:Key="Application.InitializationError.Title">Erreur d'initialisation de PCL CE</sys:String>
+    <sys:String x:Key="Application.InitializationError.Title">Erreur d'initialisation de PCL Shion</sys:String>
     <sys:String x:Key="Application.Loader.Error.OperationFailed">Le chargement de la tâche a échoué. Veuillez consulter les détails de l'erreur.</sys:String>
     <sys:String x:Key="Common.Dialog.Title">Astuce</sys:String>
     <sys:String x:Key="Common.Dialog.Warning">Avertissement</sys:String>
@@ -85,12 +85,12 @@ Si ces problèmes ne sont pas résolus, certaines fonctions risquent de ne pas f
     <sys:String x:Key="Config.Error.InvalidFormat.RecoveryMessage">L'initialisation de la configuration a échoué lors de l'étape {0}.
 
 Le fichier de configuration situé à {1} contient des données invalides et a été sauvegardé vers {2}.
-Pour éviter que le problème ne se reproduise, PCL CE a tenté de restaurer une version précédente si elle était disponible. Si vous avez modifié le fichier de configuration manuellement, corrigez le problème et remplacez le fichier actuel.
+Pour éviter que le problème ne se reproduise, PCL Shion a tenté de restaurer une version précédente si elle était disponible. Si vous avez modifié le fichier de configuration manuellement, corrigez le problème et remplacez le fichier actuel.
 
-Si vous ne savez pas ce qui s'est passé, vous pouvez ignorer ce message pour le moment. Après le redémarrage de PCL CE, les paramètres concernés peuvent revenir à leurs valeurs par défaut, mais l'utilisation normale ne devrait pas être affectée.</sys:String>
+Si vous ne savez pas ce qui s'est passé, vous pouvez ignorer ce message pour le moment. Après le redémarrage de PCL Shion, les paramètres concernés peuvent revenir à leurs valeurs par défaut, mais l'utilisation normale ne devrait pas être affectée.</sys:String>
     <sys:String x:Key="Config.Error.LoadFailed.DebugMessage">L'initialisation de la configuration a échoué lors de l'étape {0}.
 
-Le système de configuration n'a pas pu être initialisé. Corrigez le problème et redémarrez PCL CE.</sys:String>
+Le système de configuration n'a pas pu être initialisé. Corrigez le problème et redémarrez PCL Shion.</sys:String>
     <sys:String x:Key="Config.Error.LoadFailed.Message">Le système de configuration a échoué lors de l'étape {0}.</sys:String>
     <sys:String x:Key="Config.Error.LoadFailed.Title">Échec de l'initialisation de la configuration</sys:String>
     <sys:String x:Key="Config.Error.SaveFailed.Message">Impossible d'enregistrer le fichier de configuration.
@@ -167,7 +167,7 @@ Ce que vous pouvez essayer
     <sys:String x:Key="Crash.Reason.ModRequiresJava11">Certains mods installés nécessitent Java 11 ou une version ultérieure.</sys:String>
     <sys:String x:Key="Crash.Reason.MultipleForgeInInstanceJson">L'instance JSON contient plusieurs arguments de version Forge.</sys:String>
     <sys:String x:Key="Crash.Reason.NightConfigBug">Night Config a rencontré une erreur lors de la lecture des fichiers de configuration.</sys:String>
-    <sys:String x:Key="Crash.Reason.NoAnalyzableFile">Le jeu a rencontré un problème, mais PCL CE n'a pas pu trouver de fichiers journaux associés à analyser.</sys:String>
+    <sys:String x:Key="Crash.Reason.NoAnalyzableFile">Le jeu a rencontré un problème, mais PCL Shion n'a pas pu trouver de fichiers journaux associés à analyser.</sys:String>
     <sys:String x:Key="Crash.Reason.OldForgeNewJavaIncompatible">Une ancienne version de Forge est incompatible avec la version Java sélectionnée.</sys:String>
     <sys:String x:Key="Crash.Reason.OpenGl1282">Un pack de shaders ou de ressources peut avoir déclenché l'erreur OpenGL 1282.</sys:String>
     <sys:String x:Key="Crash.Reason.OptiFineForgeIncompatible">OptiFine peut être incompatible avec la version actuelle de Forge ou de Minecraft.</sys:String>
@@ -183,21 +183,21 @@ Ce que vous pouvez essayer
     <sys:String x:Key="Launch.Homepage.SlowWarning">Le chargement de la page d'accueil est trop lent ({0} secondes). Veuillez signaler ce problème à l'auteur de la page d'accueil, ou cesser temporairement d'utiliser cette page.</sys:String>
     <sys:String x:Key="Crash.Reason.SpecificEntity.Multiple">Certaines entités dans le monde peuvent avoir causé l'erreur.</sys:String>
     <sys:String x:Key="Crash.Reason.SpecificEntity.Single">L'entité {0} peut avoir causé l'erreur.</sys:String>
-    <sys:String x:Key="Crash.Reason.StackKeyword.Multiple">PCL CE a trouvé des mots-clés possiblement liés dans la trace de pile d'erreurs:
+    <sys:String x:Key="Crash.Reason.StackKeyword.Multiple">PCL Shion a trouvé des mots-clés possiblement liés dans la trace de pile d'erreurs:
 {0}</sys:String>
-    <sys:String x:Key="Crash.Reason.StackKeyword.Single">PCL CE a trouvé un mot-clé possiblement lié dans la trace de pile d'erreurs: {0}</sys:String>
+    <sys:String x:Key="Crash.Reason.StackKeyword.Single">PCL Shion a trouvé un mot-clé possiblement lié dans la trace de pile d'erreurs: {0}</sys:String>
     <sys:String x:Key="Crash.Reason.SuspectedMod.Multiple">Le rapport de crash soupçonne que les mods suivants ont causé l'erreur:
 {0}</sys:String>
     <sys:String x:Key="Common.Format.TimeSpan.Past">il y a {0}</sys:String>
     <sys:String x:Key="Common.Action.GotIt">J'ai compris</sys:String>
     <sys:String x:Key="Crash.Reason.SuspectedMod.Single">Le rapport de crash soupçonne que le mod {0} a causé l'erreur.</sys:String>
     <sys:String x:Key="Crash.Reason.TooManyModsIdLimit">Trop de mods sont installés, dépassant la limite d'ID d'une ancienne version de Minecraft.</sys:String>
-    <sys:String x:Key="Crash.Reason.Unknown.Auto">PCL CE n'a pas pu déterminer la cause exacte du crash.</sys:String>
-    <sys:String x:Key="Crash.Reason.Unknown.Manual">PCL CE n'a pas pu déterminer la cause de cette erreur.</sys:String>
-    <sys:String x:Key="Crash.Reason.UnknownFinding">PCL CE a détecté une cause d'erreur sans détails: {0}</sys:String>
+    <sys:String x:Key="Crash.Reason.Unknown.Auto">PCL Shion n'a pas pu déterminer la cause exacte du crash.</sys:String>
+    <sys:String x:Key="Crash.Reason.Unknown.Manual">PCL Shion n'a pas pu déterminer la cause de cette erreur.</sys:String>
+    <sys:String x:Key="Crash.Reason.UnknownFinding">PCL Shion a détecté une cause d'erreur sans détails: {0}</sys:String>
     <sys:String x:Key="Crash.Reason.UsingJdk">Le jeu utilise peut-être un JDK, ou la version Java sélectionnée est peut-être trop récente.</sys:String>
     <sys:String x:Key="Crash.Reason.UsingOpenJ9">Le runtime Java OpenJ9 peut être incompatible avec le jeu, les mods ou le chargeur.</sys:String>
-    <sys:String x:Key="Crash.Reason.VeryShortOutput">La sortie du jeu est trop courte pour que PCL CE puisse l'analyser. Sortie brute:
+    <sys:String x:Key="Crash.Reason.VeryShortOutput">La sortie du jeu est trop courte pour que PCL Shion puisse l'analyser. Sortie brute:
 {0}</sys:String>
     <sys:String x:Key="Crash.Report.Export.Success">Rapport de crash exporté!</sys:String>
     <sys:String x:Key="Crash.Report.SaveDialog.DefaultFileName">Rapport de crash-{0}.zip</sys:String>
@@ -208,7 +208,7 @@ Ce que vous pouvez essayer
     <sys:String x:Key="Crash.Report.Environment.Gpu">GPU {0}:{1} ({2} MiB, {3})</sys:String>
     <sys:String x:Key="Crash.Report.Environment.InstanceSection">‐ Informations sur l'instance -</sys:String>
     <sys:String x:Key="Crash.Report.Environment.LauncherId">Code d'identification:{0}</sys:String>
-    <sys:String x:Key="Crash.Report.Environment.LauncherVersion">Version de PCL CE: {0}</sys:String>
+    <sys:String x:Key="Crash.Report.Environment.LauncherVersion">Version de PCL Shion: {0}</sys:String>
     <sys:String x:Key="Crash.Report.Environment.MemoryAllocation">Allocation de mémoire (mémoire allouée / mémoire physique installée): {0} / {1} GiB ({2} MiB)</sys:String>
     <sys:String x:Key="Crash.Report.Environment.MinecraftFolder">Dossier Minecraft: {0}</sys:String>
     <sys:String x:Key="Crash.Report.Environment.OperatingSystem">Système d'exploitation: {0} (64 bits: {1}, ARM64: {2})</sys:String>
@@ -232,12 +232,12 @@ Ce que vous pouvez essayer
     <sys:String x:Key="Crash.Suggestion.FollowLoaderInstructions">Suivez les messages du chargeur ci-dessus ou dans le rapport de crash pour résoudre le problème.</sys:String>
     <sys:String x:Key="Crash.Report.Environment.Log4j2NoLookups">Log4j2 NoLookups：{0}</sys:String>
     <sys:String x:Key="Crash.Suggestion.GraphicsDriver.Generic">Essayez de mettre à jour ou de rétrograder le pilote graphique. Si nécessaire, passez à une version plus ancienne de Java.</sys:String>
-    <sys:String x:Key="Crash.Suggestion.GraphicsDriver.IntelOrIntegrated">Si l'appareil dispose d'un GPU dédié, utilisez-le pour lancer PCL CE et Minecraft. Vous pouvez aussi mettre à jour ou rétrograder le pilote graphique.</sys:String>
+    <sys:String x:Key="Crash.Suggestion.GraphicsDriver.IntelOrIntegrated">Si l'appareil dispose d'un GPU dédié, utilisez-le pour lancer PCL Shion et Minecraft. Vous pouvez aussi mettre à jour ou rétrograder le pilote graphique.</sys:String>
     <sys:String x:Key="Crash.Suggestion.IncompleteForgeInstallation">Réinitialisez ou réinstallez Forge dans les paramètres de l'instance. Ne supprimez pas le dossier libraries lors de l'empaquetage d'une instance.</sys:String>
     <sys:String x:Key="Crash.Suggestion.InvalidModFileName">Supprimez ou renommez le fichier de mod concerné afin que son nom ne contienne que des lettres anglaises, des chiffres, des traits d'union, des traits de soulignement et des points.</sys:String>
     <sys:String x:Key="Crash.Suggestion.JavaIncompatible">Choisissez une version Java adaptée dans les paramètres de lancement selon la version de Minecraft et les exigences des mods.</sys:String>
     <sys:String x:Key="Crash.Suggestion.JavaTooNew">Dans les paramètres de lancement, passez à une version plus ancienne de Java, puis réessayez.</sys:String>
-    <sys:String x:Key="Crash.Suggestion.LauncherOutdated">Vous utilisez une version obsolète de PCL CE. La mise à jour de PCL CE peut résoudre ce problème: Paramètres → Lanceur → Vérifier les mises à jour.</sys:String>
+    <sys:String x:Key="Crash.Suggestion.LauncherOutdated">Vous utilisez une version obsolète de PCL Shion. La mise à jour de PCL Shion peut résoudre ce problème: Paramètres → Lanceur → Vérifier les mises à jour.</sys:String>
     <sys:String x:Key="Crash.Suggestion.MissingMixinBootstrap">Vérifiez que MixinBootstrap, le chargeur de mods et les dépendances associées sont correctement installés.</sys:String>
     <sys:String x:Key="Crash.Suggestion.ModConfigCrash">Essayez de supprimer le fichier de configuration de ce mod, puis relancez le jeu. Si nécessaire, mettez à jour ou désactivez le mod.</sys:String>
     <sys:String x:Key="Crash.Suggestion.ModLoaderIncompatible">Ouvrez les paramètres de l'instance et ajustez ou réinstallez la version du chargeur de mods.</sys:String>
@@ -287,4 +287,7 @@ Ce que vous pouvez essayer
     <sys:String x:Key="Download.Comp.Category.Energy">Énergie</sys:String>
     <sys:String x:Key="Download.Comp.Category.Entities">Entités</sys:String>
     <sys:String x:Key="Download.Comp.Category.Equipment">Équipement</sys:String>
+    <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion does not provide in-app updates yet. Please download new versions manually from {0}.</sys:String>
+    <sys:String x:Key="Setup.Update.Shion.OpenReleases">Open download page</sys:String>
+    <sys:String x:Key="Setup.Update.Shion.Status">In-app updates are not available</sys:String>
 </ResourceDictionary>

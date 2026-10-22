@@ -20,15 +20,15 @@
     <sys:String x:Key="Application.Control.Loading.UnknownError">未知錯誤</sys:String>
     <sys:String x:Key="Application.Control.MessageBox.Error.OperationFailed">訊息對話方塊操作失敗。請檢視錯誤詳情。</sys:String>
     <sys:String x:Key="Application.EnvironmentWarning.IKnow">我知道了</sys:String>
-    <sys:String x:Key="Application.EnvironmentWarning.Message">PCL CE 在啟動時偵測到環境問題：&#xA;&#xA;{0}&#xA;&#xA;不解決這些問題可能會導致部分功能無法正常運作……</sys:String>
-    <sys:String x:Key="Application.EnvironmentWarning.SocialSoftwareFolder">- PCL CE 正在 QQ、微信、TIM 等社交軟體的下載資料夾執行，請考慮移動到其他位置，否則可能導致遊戲存檔或設定遺失</sys:String>
-    <sys:String x:Key="Application.EnvironmentWarning.System32Bit">- 目前系統為 32 位元，不受 PCL CE 和新版 Minecraft 支援，強烈建議重灌為 64 位元系統後再進行遊戲</sys:String>
-    <sys:String x:Key="Application.EnvironmentWarning.TempFolder">- PCL CE 正在暫存資料夾執行，請將 PCL CE 從壓縮檔中解壓縮後再使用，否則可能導致遊戲存檔或設定遺失</sys:String>
+    <sys:String x:Key="Application.EnvironmentWarning.Message">PCL Shion 在啟動時偵測到環境問題：&#xA;&#xA;{0}&#xA;&#xA;不解決這些問題可能會導致部分功能無法正常運作……</sys:String>
+    <sys:String x:Key="Application.EnvironmentWarning.SocialSoftwareFolder">- PCL Shion 正在 QQ、微信、TIM 等社交軟體的下載資料夾執行，請考慮移動到其他位置，否則可能導致遊戲存檔或設定遺失</sys:String>
+    <sys:String x:Key="Application.EnvironmentWarning.System32Bit">- 目前系統為 32 位元，不受 PCL Shion 和新版 Minecraft 支援，強烈建議重灌為 64 位元系統後再進行遊戲</sys:String>
+    <sys:String x:Key="Application.EnvironmentWarning.TempFolder">- PCL Shion 正在暫存資料夾執行，請將 PCL Shion 從壓縮檔中解壓縮後再使用，否則可能導致遊戲存檔或設定遺失</sys:String>
     <sys:String x:Key="Application.EnvironmentWarning.Title">環境警告</sys:String>
     <sys:String x:Key="Application.EnvironmentWarning.WindowsVersion">- Windows 版本低於建議需求；建議使用 Windows 10 1809 或更新版本，並考慮升級 Windows</sys:String>
-    <sys:String x:Key="Application.InitializationError.Path">PCL CE 所在路徑：{0}</sys:String>
+    <sys:String x:Key="Application.InitializationError.Path">PCL Shion 所在路徑：{0}</sys:String>
     <sys:String x:Key="Application.InitializationError.PathUnavailable">取得失敗</sys:String>
-    <sys:String x:Key="Application.InitializationError.Title">PCL CE 初始化錯誤</sys:String>
+    <sys:String x:Key="Application.InitializationError.Title">PCL Shion 初始化錯誤</sys:String>
     <sys:String x:Key="Application.Loader.Error.OperationFailed">任務載入操作失敗。請檢視錯誤詳情。</sys:String>
 
     <!-- Common -->
@@ -101,8 +101,8 @@
 
     <!-- Config -->
 
-    <sys:String x:Key="Config.Error.InvalidFormat.RecoveryMessage">設定初始化失敗，目前位於 {0} 階段。&#xA;&#xA;設定檔 {1} 的內容出現問題，已備份到 {2}。&#xA;為盡可能防止重複故障，若存在上一版本，PCL CE 已嘗試將設定復原至上一版本。若曾手動更改過設定檔，請修復問題並取代目前的設定檔。&#xA;&#xA;如果你不知道發生了什麼事，可以先忽略。重新開啟啟動器後，相關設定項可能會復原為預設值，但通常不影響正常使用。</sys:String>
-    <sys:String x:Key="Config.Error.LoadFailed.DebugMessage">設定初始化失敗，目前位於 {0} 階段。&#xA;&#xA;設定系統無法完成初始化。請修復問題後重啟 PCL CE。</sys:String>
+    <sys:String x:Key="Config.Error.InvalidFormat.RecoveryMessage">設定初始化失敗，目前位於 {0} 階段。&#xA;&#xA;設定檔 {1} 的內容出現問題，已備份到 {2}。&#xA;為盡可能防止重複故障，若存在上一版本，PCL Shion 已嘗試將設定復原至上一版本。若曾手動更改過設定檔，請修復問題並取代目前的設定檔。&#xA;&#xA;如果你不知道發生了什麼事，可以先忽略。重新開啟啟動器後，相關設定項可能會復原為預設值，但通常不影響正常使用。</sys:String>
+    <sys:String x:Key="Config.Error.LoadFailed.DebugMessage">設定初始化失敗，目前位於 {0} 階段。&#xA;&#xA;設定系統無法完成初始化。請修復問題後重啟 PCL Shion。</sys:String>
     <sys:String x:Key="Config.Error.LoadFailed.Message">設定系統在 {0} 階段發生錯誤。</sys:String>
     <sys:String x:Key="Config.Error.LoadFailed.Title">設定初始化失敗</sys:String>
     <sys:String x:Key="Config.Error.SaveFailed.Message">無法儲存設定檔。&#xA;&#xA;路徑：{0}</sys:String>
@@ -176,17 +176,17 @@
     <sys:String x:Key="Crash.Reason.SpecificBlock.Single">方塊 {0} 可能導致了遊戲出錯。</sys:String>
     <sys:String x:Key="Crash.Reason.SpecificEntity.Multiple">世界中的某些實體可能導致了遊戲出錯。</sys:String>
     <sys:String x:Key="Crash.Reason.SpecificEntity.Single">實體 {0} 可能導致了遊戲出錯。</sys:String>
-    <sys:String x:Key="Crash.Reason.StackKeyword.Multiple">PCL CE 在錯誤堆疊中找到了可能相關的關鍵字：&#xA;{0}</sys:String>
-    <sys:String x:Key="Crash.Reason.StackKeyword.Single">PCL CE 在錯誤堆疊中找到了可能相關的關鍵字：{0}</sys:String>
+    <sys:String x:Key="Crash.Reason.StackKeyword.Multiple">PCL Shion 在錯誤堆疊中找到了可能相關的關鍵字：&#xA;{0}</sys:String>
+    <sys:String x:Key="Crash.Reason.StackKeyword.Single">PCL Shion 在錯誤堆疊中找到了可能相關的關鍵字：{0}</sys:String>
     <sys:String x:Key="Crash.Reason.SuspectedMod.Multiple">當機報告懷疑以下模組導致了遊戲出錯：&#xA;{0}</sys:String>
     <sys:String x:Key="Crash.Reason.SuspectedMod.Single">當機報告懷疑模組 {0} 導致了遊戲出錯。</sys:String>
     <sys:String x:Key="Crash.Reason.TooManyModsIdLimit">模組數量過多，超出了舊版 Minecraft 的 ID 限制。</sys:String>
-    <sys:String x:Key="Crash.Reason.Unknown.Auto">PCL CE 無法確定遊戲出錯的具體原因。</sys:String>
-    <sys:String x:Key="Crash.Reason.Unknown.Manual">PCL CE 無法確定錯誤原因。</sys:String>
-    <sys:String x:Key="Crash.Reason.UnknownFinding">PCL CE 偵測到一個沒有詳細說明的錯誤原因：{0}</sys:String>
+    <sys:String x:Key="Crash.Reason.Unknown.Auto">PCL Shion 無法確定遊戲出錯的具體原因。</sys:String>
+    <sys:String x:Key="Crash.Reason.Unknown.Manual">PCL Shion 無法確定錯誤原因。</sys:String>
+    <sys:String x:Key="Crash.Reason.UnknownFinding">PCL Shion 偵測到一個沒有詳細說明的錯誤原因：{0}</sys:String>
     <sys:String x:Key="Crash.Reason.UsingJdk">遊戲可能正在使用 JDK，或目前 Java 版本過高。</sys:String>
     <sys:String x:Key="Crash.Reason.UsingOpenJ9">目前使用的 OpenJ9 Java 可能與遊戲、模組或載入器不相容。</sys:String>
-    <sys:String x:Key="Crash.Reason.VeryShortOutput">遊戲輸出過短，PCL CE 無法獲得足夠的分析資訊。原始輸出：&#xA;{0}</sys:String>
+    <sys:String x:Key="Crash.Reason.VeryShortOutput">遊戲輸出過短，PCL Shion 無法獲得足夠的分析資訊。原始輸出：&#xA;{0}</sys:String>
     <sys:String x:Key="Crash.Reason.X86JavaMemoryLimit.OnX64Os">目前使用的是 32 位元 Java，無法分配遊戲所需的記憶體。</sys:String>
     <sys:String x:Key="Crash.Reason.X86JavaMemoryLimit.OnX86Os">目前使用的是 32 位元作業系統，無法為遊戲提供所需的記憶體。</sys:String>
 
@@ -204,7 +204,7 @@
     <sys:String x:Key="Crash.Report.Environment.Gpu">顯示卡 {0}：{1} ({2} MiB, {3})</sys:String>
     <sys:String x:Key="Crash.Report.Environment.InstanceSection">- 實例資訊 -</sys:String>
     <sys:String x:Key="Crash.Report.Environment.LauncherId">識別碼：{0}</sys:String>
-    <sys:String x:Key="Crash.Report.Environment.LauncherVersion">PCL CE 版本：{0}</sys:String>
+    <sys:String x:Key="Crash.Report.Environment.LauncherVersion">PCL Shion 版本：{0}</sys:String>
     <sys:String x:Key="Crash.Report.Environment.Log4j2NoLookups">Log4j2 NoLookups：{0}</sys:String>
     <sys:String x:Key="Crash.Report.Environment.MemoryAllocation">記憶體分配 (分配的記憶體 / 已安裝實體記憶體)：{0} / {1} GiB ({2} MiB)</sys:String>
     <sys:String x:Key="Crash.Report.Environment.MinecraftFolder">Minecraft 資料夾：{0}</sys:String>
@@ -235,12 +235,12 @@
     <sys:String x:Key="Crash.Suggestion.FileOrContentValidationFailed">刪除遊戲及相關模組後重新下載。</sys:String>
     <sys:String x:Key="Crash.Suggestion.FollowLoaderInstructions">請根據上述原始錯誤資訊或錯誤報告中的載入器提示進行處理。</sys:String>
     <sys:String x:Key="Crash.Suggestion.GraphicsDriver.Generic">嘗試更新或回退顯示卡驅動；必要時改用更低版本的 Java。</sys:String>
-    <sys:String x:Key="Crash.Suggestion.GraphicsDriver.IntelOrIntegrated">若裝置有獨立顯示卡，請使用獨立顯示卡啟動 PCL CE 與 Minecraft；也可以更新或回退顯示卡驅動。</sys:String>
+    <sys:String x:Key="Crash.Suggestion.GraphicsDriver.IntelOrIntegrated">若裝置有獨立顯示卡，請使用獨立顯示卡啟動 PCL Shion 與 Minecraft；也可以更新或回退顯示卡驅動。</sys:String>
     <sys:String x:Key="Crash.Suggestion.IncompleteForgeInstallation">在實例設定中重設或重新安裝 Forge；不要在打包實例時刪除 libraries 資料夾。</sys:String>
     <sys:String x:Key="Crash.Suggestion.InvalidModFileName">移除或重新命名異常的模組檔案，使檔名僅包含英文字母、數字、短橫線、下劃線和小數點。</sys:String>
     <sys:String x:Key="Crash.Suggestion.JavaIncompatible">根據 Minecraft 版本和模組要求，在啟動設定中選擇合適的 Java。</sys:String>
     <sys:String x:Key="Crash.Suggestion.JavaTooNew">在啟動設定中改用較低版本的 Java 後再試。</sys:String>
-    <sys:String x:Key="Crash.Suggestion.LauncherOutdated">目前使用的 PCL CE 版本較舊。更新 PCL CE 可能會解決此問題：設定 → 啟動器 → 檢查更新。</sys:String>
+    <sys:String x:Key="Crash.Suggestion.LauncherOutdated">目前使用的 PCL Shion 版本較舊。更新 PCL Shion 可能會解決此問題：設定 → 啟動器 → 檢查更新。</sys:String>
     <sys:String x:Key="Crash.Suggestion.MissingMixinBootstrap">檢查 MixinBootstrap、模組載入器和相關前置是否已完整安裝。</sys:String>
     <sys:String x:Key="Crash.Suggestion.ModConfigCrash">嘗試刪除該模組的設定檔後重新啟動；必要時更新或停用該模組。</sys:String>
     <sys:String x:Key="Crash.Suggestion.ModLoaderIncompatible">開啟實例設定並調整或重新安裝模組載入器版本。</sys:String>
@@ -768,12 +768,12 @@
     <!-- Event -->
 
     <sys:String x:Key="Event.Download.Confirm">即將從該網址下載檔案：&#xA;{0}</sys:String>
-    <sys:String x:Key="Event.Error.DownloadUrlRequired">EventData 必須為以 http:// 或 https:// 開頭的網址。&#xA;PCL CE 不支援其他下載協議。</sys:String>
+    <sys:String x:Key="Event.Error.DownloadUrlRequired">EventData 必須為以 http:// 或 https:// 開頭的網址。&#xA;PCL Shion 不支援其他下載協議。</sys:String>
     <sys:String x:Key="Event.Error.ExecutionFailed">事件執行失敗（{0}, {1}）</sys:String>
     <sys:String x:Key="Event.Error.FileNotFound">未找到 EventData 指向的本機檔案：{0}</sys:String>
     <sys:String x:Key="Event.Error.MissingArgs">EventType {0} 需要至少 2 個以 | 分割的參數，例如 {1}</sys:String>
     <sys:String x:Key="Event.Error.Title">事件執行失敗</sys:String>
-    <sys:String x:Key="Event.Error.UnknownType">未知的事件型別：{0}&#xA;請檢查事件型別填寫是否正確，或 PCL CE 是否為最新版本。</sys:String>
+    <sys:String x:Key="Event.Error.UnknownType">未知的事件型別：{0}&#xA;請檢查事件型別填寫是否正確，或 PCL Shion 是否為最新版本。</sys:String>
     <sys:String x:Key="Event.Error.UrlRequired">EventData 必須為一個網址。&#xA;如果想要啟動程式，請將 EventType 改為 OpenFile。</sys:String>
     <sys:String x:Key="Event.LaunchGame.SelectVersion">請先選擇一個 Minecraft 實例！</sys:String>
     <sys:String x:Key="Event.LaunchGame.Starting">正在啟動 {0}……</sys:String>
@@ -797,7 +797,7 @@
     <sys:String x:Key="Instance.Install.Action.StartReset">開始重設</sys:String>
     <sys:String x:Key="Instance.Install.Error.OperationFailed">實例安裝操作失敗。請檢視錯誤詳情。</sys:String>
     <sys:String x:Key="Instance.Install.NoExtraInstall">無附加安裝</sys:String>
-    <sys:String x:Key="Instance.Install.Reset.Message">你正在重設目前實例。&#xA;PCL CE 將會重新連線下載該實例所需的檔案，並重新安裝模組載入器（如有）。&#xA;此操作不會使你的存檔、模組、資源包等資訊遺失。</sys:String>
+    <sys:String x:Key="Instance.Install.Reset.Message">你正在重設目前實例。&#xA;PCL Shion 將會重新連線下載該實例所需的檔案，並重新安裝模組載入器（如有）。&#xA;此操作不會使你的存檔、模組、資源包等資訊遺失。</sys:String>
     <sys:String x:Key="Instance.Install.Reset.Title">重設此實例</sys:String>
 
     <!-- Instance.Export -->
@@ -826,7 +826,7 @@
     <sys:String x:Key="Instance.Export.StartExport">開始匯出</sys:String>
     <sys:String x:Key="Instance.Export.Task.CopyContent">複製匯出內容</sys:String>
     <sys:String x:Key="Instance.Export.Task.CreateArchive">建立壓縮檔</sys:String>
-    <sys:String x:Key="Instance.Export.Task.DownloadPclRelease">下載 PCL CE 正式版</sys:String>
+    <sys:String x:Key="Instance.Export.Task.DownloadPclRelease">下載 PCL Shion 正式版</sys:String>
     <sys:String x:Key="Instance.Export.Task.FetchFileInfo">連線取得檔案資訊</sys:String>
     <sys:String x:Key="Instance.Export.ZipFilter">壓縮檔案(*.zip)|*.zip</sys:String>
 
@@ -839,7 +839,7 @@
     <sys:String x:Key="Instance.Export.Advanced.ExportConfig">儲存設定檔</sys:String>
     <sys:String x:Key="Instance.Export.Advanced.ImportConfig">讀取設定檔</sys:String>
     <sys:String x:Key="Instance.Export.Advanced.Modrinth">Modrinth 上傳模式</sys:String>
-    <sys:String x:Key="Instance.Export.Advanced.Modrinth.ToolTip">如果你想要打包上傳到 Modrinth，勾選此項會生成完全符合 Modrinth 要求的模組包檔案。&#xA;由於 Modrinth 要求，只能從 CurseForge 下載的資源將無法連線下載，會被直接放入模組包中。&#xA;此外，勾選後也不能在模組包中包含 PCL CE 啟動器檔案。</sys:String>
+    <sys:String x:Key="Instance.Export.Advanced.Modrinth.ToolTip">如果你想要打包上傳到 Modrinth，勾選此項會生成完全符合 Modrinth 要求的模組包檔案。&#xA;由於 Modrinth 要求，只能從 CurseForge 下載的資源將無法連線下載，會被直接放入模組包中。&#xA;此外，勾選後也不能在模組包中包含 PCL Shion 啟動器檔案。</sys:String>
     <sys:String x:Key="Instance.Export.Advanced.Title">進階選項</sys:String>
 
     <!-- Instance.Export.Config -->
@@ -858,8 +858,8 @@
     <sys:String x:Key="Instance.Export.Config.Comment.ExcludedFiles">排除的檔案</sys:String>
     <sys:String x:Key="Instance.Export.Config.Comment.ExtraFiles">如果想將額外的檔案自動放到壓縮檔根目錄中，可以將它們的路徑寫在下方。</sys:String>
     <sys:String x:Key="Instance.Export.Config.Comment.ExtraFiles2">必須是完整路徑。每行中，若以 \ 結尾則代表是資料夾，不以 \ 結尾則代表是檔案。</sys:String>
-    <sys:String x:Key="Instance.Export.Config.Comment.IncludeLauncher">是否打包正式版 PCL CE，以便沒有啟動器的玩家安裝模組包。</sys:String>
-    <sys:String x:Key="Instance.Export.Config.Comment.IncludeLauncherCustom">是否打包 PCL CE 個性化內容，例如功能隱藏設定、首頁、背景音樂和圖片等。</sys:String>
+    <sys:String x:Key="Instance.Export.Config.Comment.IncludeLauncher">是否打包正式版 PCL Shion，以便沒有啟動器的玩家安裝模組包。</sys:String>
+    <sys:String x:Key="Instance.Export.Config.Comment.IncludeLauncherCustom">是否打包 PCL Shion 個性化內容，例如功能隱藏設定、首頁、背景音樂和圖片等。</sys:String>
     <sys:String x:Key="Instance.Export.Config.Comment.ModifyRules">修改下方的規則以控制需要匯出的內容。</sys:String>
     <sys:String x:Key="Instance.Export.Config.Comment.Modrinth">如果你想要打包上傳到 Modrinth，啟用此項會生成完全符合 Modrinth 要求的模組包檔案。</sys:String>
     <sys:String x:Key="Instance.Export.Config.Comment.Modrinth2">由於 Modrinth 要求，只能從 CurseForge 下載的資源將無法連線下載，會被直接放入模組包中。</sys:String>
@@ -883,9 +883,9 @@
     <sys:String x:Key="Instance.Export.Option.ImportantData.Desc">指令碼檔案、內建資源包、資料包等</sys:String>
     <sys:String x:Key="Instance.Export.Option.Jei">JEI 個人資訊</sys:String>
     <sys:String x:Key="Instance.Export.Option.Jei.Desc">物品我的最愛等</sys:String>
-    <sys:String x:Key="Instance.Export.Option.Launcher">PCL CE 啟動器程式</sys:String>
-    <sys:String x:Key="Instance.Export.Option.Launcher.Desc">打包 PCL CE，以便沒有啟動器的玩家安裝模組包</sys:String>
-    <sys:String x:Key="Instance.Export.Option.LauncherCustom">PCL CE 個性化內容</sys:String>
+    <sys:String x:Key="Instance.Export.Option.Launcher">PCL Shion 啟動器程式</sys:String>
+    <sys:String x:Key="Instance.Export.Option.Launcher.Desc">打包 PCL Shion，以便沒有啟動器的玩家安裝模組包</sys:String>
+    <sys:String x:Key="Instance.Export.Option.LauncherCustom">PCL Shion 個性化內容</sys:String>
     <sys:String x:Key="Instance.Export.Option.LauncherCustom.Desc">功能隱藏設定、首頁、背景音樂和圖片等</sys:String>
     <sys:String x:Key="Instance.Export.Option.Maps">已繪製的地圖</sys:String>
     <sys:String x:Key="Instance.Export.Option.Maps.Desc">地圖類模組為現有的存檔、伺服器紀錄的地圖、路標點等</sys:String>
@@ -945,12 +945,12 @@
     <sys:String x:Key="Instance.Overall.Delete.PermanentSuccess">實例 {0} 已永久刪除！</sys:String>
     <sys:String x:Key="Instance.Overall.Delete.RecycleBinSuccess">實例 {0} 已刪除到資源回收筒！</sys:String>
     <sys:String x:Key="Instance.Overall.Description.Default">預設描述</sys:String>
-    <sys:String x:Key="Instance.Overall.Description.EditMessage">修改實例的描述文字，留空則使用 PCL CE 的預設描述。</sys:String>
+    <sys:String x:Key="Instance.Overall.Description.EditMessage">修改實例的描述文字，留空則使用 PCL Shion 的預設描述。</sys:String>
     <sys:String x:Key="Instance.Overall.Description.EditTitle">更改描述</sys:String>
     <sys:String x:Key="Instance.Overall.EditDescription">修改實例描述</sys:String>
     <sys:String x:Key="Instance.Overall.Error.OperationFailed">實例概覽操作失敗。請檢視錯誤詳情。</sys:String>
     <sys:String x:Key="Instance.Overall.Favorite">加入我的最愛</sys:String>
-    <sys:String x:Key="Instance.Overall.Hide.ConfirmMessage">確認要從實例清單中隱藏該實例嗎？隱藏該實例後，它將不再出現於 PCL CE 顯示的實例清單中。&#xA;此後，在實例清單頁面按下 F11 才可以檢視被隱藏的實例。</sys:String>
+    <sys:String x:Key="Instance.Overall.Hide.ConfirmMessage">確認要從實例清單中隱藏該實例嗎？隱藏該實例後，它將不再出現於 PCL Shion 顯示的實例清單中。&#xA;此後，在實例清單頁面按下 F11 才可以檢視被隱藏的實例。</sys:String>
     <sys:String x:Key="Instance.Overall.Hide.ConfirmTitle">隱藏實例提示</sys:String>
     <sys:String x:Key="Instance.Overall.Name.EditTitle">重新命名實例</sys:String>
     <sys:String x:Key="Instance.Overall.Name.RenameSuccess">重新命名成功！</sys:String>
@@ -962,7 +962,7 @@
     <sys:String x:Key="Instance.Overall.Patch.Success">修補遊戲核心成功</sys:String>
     <sys:String x:Key="Instance.Overall.Personalization.Title">個人化</sys:String>
     <sys:String x:Key="Instance.Overall.Rename">修改實例名</sys:String>
-    <sys:String x:Key="Instance.Overall.Reset.ConfirmMessage">你確認要重設實例 {0} 嗎？&#xA;PCL CE 將會嘗試重新從網際網路取得此實例的資源檔案資訊，並重新執行自動安裝。</sys:String>
+    <sys:String x:Key="Instance.Overall.Reset.ConfirmMessage">你確認要重設實例 {0} 嗎？&#xA;PCL Shion 將會嘗試重新從網際網路取得此實例的資源檔案資訊，並重新執行自動安裝。</sys:String>
     <sys:String x:Key="Instance.Overall.Reset.ConfirmTitle">實例重設確認</sys:String>
     <sys:String x:Key="Instance.Overall.Reset.NotSupported">該實例暫不支援重設！</sys:String>
     <sys:String x:Key="Instance.Overall.Reset.QuiltUnsupported">無法重設：目前啟動器已不再支援 Quilt 載入器。</sys:String>
@@ -1398,7 +1398,7 @@
     <sys:String x:Key="Instance.Setup.Advanced.IgnoreJavaCompatibility">忽略 Java 相容性警告</sys:String>
     <sys:String x:Key="Instance.Setup.Advanced.IgnoreJavaCompatibility.ToolTip">如果手動選擇了與目前實例不相容的 Java，則自動跳過相容性警告對話方塊，強制使用手動選擇的 Java。</sys:String>
     <sys:String x:Key="Instance.Setup.Advanced.JvmArgs.ToolTip">啟動 Minecraft 時使用的額外 JVM 參數，在沒有確定把握的情況下請不要嘗試修改。&#xA;支援 Minecraft 實例 JSON 中的字串取代標記，例如 ${library_directory}。&#xA;&#xA;若留空，則跟隨全域設定的值。</sys:String>
-    <sys:String x:Key="Instance.Setup.Advanced.PreLaunchCommand.ToolTip">該項不會覆蓋全域設定：啟動時會先執行全域設定的指令，再執行實例設定的指令。&#xA;&#xA;在 Minecraft 啟動前執行特定指令或程式，語法與 Windows 的指令提示字元一致。&#xA;&#xA;可以使用以下取代標記實現相對路徑（路徑均以 \ 結尾）：&#xA; · {path}：PCL CE 的 exe 檔案所在的資料夾&#xA; · {minecraft}：.minecraft 資料夾&#xA; · {verpath}：實例資料夾（.minecraft\versions\實例名\）&#xA; · {verindie}：開啟實例隔離時等同實例資料夾，未開啟時等同 .minecraft 資料夾&#xA; · {java}：遊戲執行時的 Java 資料夾&#xA;&#xA;除此之外，也支援以下取代標記：&#xA; · {user}：玩家名字&#xA; · {login}：玩家的登入方式&#xA; · {uuid}：玩家的 UUID&#xA; · {name}：遊戲實例名&#xA; · {date}、{time}：目前的系統時間&#xA; · {version}：遊戲對應的原版版本號&#xA;&#xA;例如：&#xA; · "{verpath}test.exe" ：執行實例資料夾下的 test.exe 程式&#xA; · "{java}java.exe" -jar "{verpath}test.jar" ：用 Java 執行實例資料夾下的 test.jar&#xA; · notepad "{verindie}options.txt" ：使用記事本開啟該實例的設定檔&#xA;&#xA;涉及路徑的操作最好都打上雙引號，以避免路徑中的空格導致執行失敗。&#xA;執行指令時，指令列所在的目錄是目前的 .minecraft 資料夾。</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.PreLaunchCommand.ToolTip">該項不會覆蓋全域設定：啟動時會先執行全域設定的指令，再執行實例設定的指令。&#xA;&#xA;在 Minecraft 啟動前執行特定指令或程式，語法與 Windows 的指令提示字元一致。&#xA;&#xA;可以使用以下取代標記實現相對路徑（路徑均以 \ 結尾）：&#xA; · {path}：PCL Shion 的 exe 檔案所在的資料夾&#xA; · {minecraft}：.minecraft 資料夾&#xA; · {verpath}：實例資料夾（.minecraft\versions\實例名\）&#xA; · {verindie}：開啟實例隔離時等同實例資料夾，未開啟時等同 .minecraft 資料夾&#xA; · {java}：遊戲執行時的 Java 資料夾&#xA;&#xA;除此之外，也支援以下取代標記：&#xA; · {user}：玩家名字&#xA; · {login}：玩家的登入方式&#xA; · {uuid}：玩家的 UUID&#xA; · {name}：遊戲實例名&#xA; · {date}、{time}：目前的系統時間&#xA; · {version}：遊戲對應的原版版本號&#xA;&#xA;例如：&#xA; · "{verpath}test.exe" ：執行實例資料夾下的 test.exe 程式&#xA; · "{java}java.exe" -jar "{verpath}test.jar" ：用 Java 執行實例資料夾下的 test.jar&#xA; · notepad "{verindie}options.txt" ：使用記事本開啟該實例的設定檔&#xA;&#xA;涉及路徑的操作最好都打上雙引號，以避免路徑中的空格導致執行失敗。&#xA;執行指令時，指令列所在的目錄是目前的 .minecraft 資料夾。</sys:String>
     <sys:String x:Key="Instance.Setup.Advanced.UseDebugLog4j">使用除錯級別 log4j 設定檔</sys:String>
     <sys:String x:Key="Instance.Setup.Advanced.UseDebugLog4j.Message">本選項會修改遊戲日誌層級修改為最低，大量日誌輸出會消耗大量磁碟空間並可能影響遊戲效能。這也可能帶來一定安全風險。如果你不知道你在做什麼，不要修改此選項！&#xA;你確認要繼續修改嗎？</sys:String>
     <sys:String x:Key="Instance.Setup.Advanced.UseGlobalProxy">跟隨啟動器網路 Proxy 設定</sys:String>
@@ -1432,7 +1432,7 @@
     <sys:String x:Key="Instance.Setup.Options.Java.SelectRelative.Invalid">選擇啟動器資料夾下的 Java（目前路徑無效）</sys:String>
     <sys:String x:Key="Instance.Setup.Options.Java.SelectRelative.WithJava">啟動器資料夾下的 Java | {0}</sys:String>
     <sys:String x:Key="Instance.Setup.Options.Java.SelectRelativeToolTip">將選擇相對於例專案錄的 Java 路徑</sys:String>
-    <sys:String x:Key="Instance.Setup.Options.Java.ToolTip">若將 Java 放在遊戲資料夾或 PCL CE 資料夾，在進行自動選擇時 PCL CE 會盡量優先選擇它</sys:String>
+    <sys:String x:Key="Instance.Setup.Options.Java.ToolTip">若將 Java 放在遊戲資料夾或 PCL Shion 資料夾，在進行自動選擇時 PCL Shion 會盡量優先選擇它</sys:String>
 
     <!-- Instance.Setup.Server -->
 
@@ -1469,10 +1469,10 @@
     <sys:String x:Key="Launch.Error.ExportScriptTitle">匯出啟動指令碼失敗</sys:String>
     <sys:String x:Key="Launch.Error.OperationFailed">啟動頁操作失敗。請檢視錯誤詳情。</sys:String>
     <sys:String x:Key="Launch.Error.Title">啟動失敗</sys:String>
-    <sys:String x:Key="Launch.Right.CommunityHint.HidePrompt">若要永久隱藏此提示，請輸入正確的 PCL CE 開發組織名稱。</sys:String>
-    <sys:String x:Key="Launch.Right.CommunityHint.InputTitle">輸入 PCL CE 開發組織名稱</sys:String>
-    <sys:String x:Key="Launch.Right.CommunityHint.Message">你正在使用 PCL CE（PCL 社群版）！此版本為獨立開發和維護，與原版維護路線不同，體驗有所出入。&#xA;&#xA;如果你是意外下載到了 PCL CE ，我們十分建議您下載原版 PCL 長期使用，此發行版本對新手使用者體驗可能不友好。&#xA;此外， PCL CE 的問題請向 PCL CE 的儲存庫提交 Issue，不要向官方儲存庫回饋 PCL CE 的問題哦！</sys:String>
-    <sys:String x:Key="Launch.Right.CommunityHint.Title">PCL CE 提示</sys:String>
+    <sys:String x:Key="Launch.Right.CommunityHint.HidePrompt">若要永久隱藏此提示，請輸入正確的 PCL Shion 維護者名稱。</sys:String>
+    <sys:String x:Key="Launch.Right.CommunityHint.InputTitle">輸入 PCL Shion 維護者名稱</sys:String>
+    <sys:String x:Key="Launch.Right.CommunityHint.Message">你正在使用 PCL 詩音（Shion）！這是基於 PCL CE（PCL 社群版）修改的第三方版本，並非原版 PCL 或 PCL CE 官方發布的版本。此版本為獨立開發和維護，與原版 PCL 及 PCL CE 的維護路線不同，體驗有所出入。&#xA;&#xA;如果你是意外下載到了 PCL Shion，我們十分建議您下載原版 PCL 長期使用，此發行版本對新手使用者體驗可能不友好。&#xA;此外，PCL Shion 的問題請向 PCL Shion 的儲存庫提交 Issue，不要向原版 PCL 或 PCL CE 的儲存庫回饋 PCL Shion 的問題哦！</sys:String>
+    <sys:String x:Key="Launch.Right.CommunityHint.Title">PCL Shion 提示</sys:String>
     <sys:String x:Key="Launch.Right.CommunityHint.WrongInput">不太對哦……</sys:String>
     <sys:String x:Key="Launch.Right.Log.Title">啟動日誌</sys:String>
 
@@ -1768,7 +1768,7 @@
     <sys:String x:Key="Link.Lobby.JoinFailed">加入大廳失敗，可能是大廳不存在或已被解散</sys:String>
     <sys:String x:Key="Link.Lobby.LoginRequired">請先登入 Natayark ID 再使用大廳！</sys:String>
     <sys:String x:Key="Link.Lobby.MotdDesc"> - {0}</sys:String>
-    <sys:String x:Key="Link.Lobby.MotdFormat">PCL CE 大廳{0}</sys:String>
+    <sys:String x:Key="Link.Lobby.MotdFormat">PCL Shion 大廳{0}</sys:String>
     <sys:String x:Key="Link.Lobby.UnsupportedType">不支援的大廳型別: {0}</sys:String>
     <sys:String x:Key="Link.Lobby.WorldNameFormat">{0} / {1} ({2})</sys:String>
 
@@ -1843,10 +1843,10 @@
     <!-- Main -->
 
     <sys:String x:Key="Main.April.Nope">木大！</sys:String>
-    <sys:String x:Key="Main.DebugMode.Hint">[除錯模式] PCL CE 正以除錯模式執行，這可能會導致效能下降，若無必要請不要開啟！</sys:String>
+    <sys:String x:Key="Main.DebugMode.Hint">[除錯模式] PCL Shion 正以除錯模式執行，這可能會導致效能下降，若無必要請不要開啟！</sys:String>
     <sys:String x:Key="Main.Error.OperationFailed">啟動器介面操作失敗。請檢視錯誤詳情。</sys:String>
     <sys:String x:Key="Main.Error.ScrollToTopFailed">無法返回頂部。</sys:String>
-    <sys:String x:Key="Main.Eula.Message">在使用 PCL CE 前，請同意 PCL 的使用者協議與免責宣告。</sys:String>
+    <sys:String x:Key="Main.Eula.Message">在使用 PCL Shion 前，請同意 PCL 的使用者協議與免責宣告。</sys:String>
     <sys:String x:Key="Main.Eula.Title">協議授權</sys:String>
     <sys:String x:Key="Main.Eula.View">檢視使用者協議與免責宣告</sys:String>
     <sys:String x:Key="Main.Exit.HasDownloadingTask">還有下載工作尚未完成，是否確認結束？</sys:String>
@@ -1855,13 +1855,13 @@
     <sys:String x:Key="Main.Extra.GiveUp.ToolTip">投降</sys:String>
     <sys:String x:Key="Main.Extra.ShutdownMinecraft.ToolTip">關閉 Minecraft</sys:String>
     <sys:String x:Key="Main.Extra.TaskManager.ToolTip">任務管理</sys:String>
-    <sys:String x:Key="Main.Extra.UpdateRestart.ToolTip">重啟 PCL CE 以應用軟體更新</sys:String>
-    <sys:String x:Key="Main.Extra.UpdateRestart.ToolTipWithVersion">重啟 PCL CE 以應用軟體更新 ({0} → {1})</sys:String>
+    <sys:String x:Key="Main.Extra.UpdateRestart.ToolTip">重啟 PCL Shion 以應用軟體更新</sys:String>
+    <sys:String x:Key="Main.Extra.UpdateRestart.ToolTipWithVersion">重啟 PCL Shion 以應用軟體更新 ({0} → {1})</sys:String>
     <sys:String x:Key="Main.HiddenFeature.Disabled">功能隱藏設定已暫時關閉！</sys:String>
     <sys:String x:Key="Main.HiddenFeature.Enabled">功能隱藏設定已重新開啟！</sys:String>
     <sys:String x:Key="Main.ShutdownMinecraft.Success">已關閉執行中的 Minecraft！</sys:String>
-    <sys:String x:Key="Main.SpecialVersion.CiHint">目前執行的 PCL CE 為 CI 自動建置版本。&#xA;此版本包含最新的錯誤修正、最佳化與新功能，但效能和穩定性較差，不適合日常使用或製作模組包。&#xA;&#xA;除非社群開發者要求，或您確實需要使用，否則請下載最新穩定版。</sys:String>
-    <sys:String x:Key="Main.SpecialVersion.DebugHint">目前執行的 PCL CE 為 Debug 版本。&#xA;該版本僅適合開發者除錯執行，可能會有嚴重的效能下降以及各種奇怪的網路問題。&#xA;&#xA;非開發者使用者使用該版本造成的一切問題均不被社群支援，相關 issue 可能會被直接關閉。&#xA;除非您是開發者，否則請立即刪除該版本，並下載最新穩定版使用。</sys:String>
+    <sys:String x:Key="Main.SpecialVersion.CiHint">目前執行的 PCL Shion 為 CI 自動建置版本。&#xA;此版本包含最新的錯誤修正、最佳化與新功能，但效能和穩定性較差，不適合日常使用或製作模組包。&#xA;&#xA;除非開發者要求，或您確實需要使用，否則請下載最新穩定版。</sys:String>
+    <sys:String x:Key="Main.SpecialVersion.DebugHint">目前執行的 PCL Shion 為 Debug 版本。&#xA;該版本僅適合開發者除錯執行，可能會有嚴重的效能下降以及各種奇怪的網路問題。&#xA;&#xA;非開發者使用者使用該版本造成的一切問題均不受支援，相關 issue 可能會被直接關閉。&#xA;除非您是開發者，否則請立即刪除該版本，並下載最新穩定版使用。</sys:String>
     <sys:String x:Key="Main.SpecialVersion.HideHintNotice">可以新增 PCL_DISABLE_DEBUG_HINT 環境變數 (任意值) 來隱藏這個提示。</sys:String>
     <sys:String x:Key="Main.SpecialVersion.IUnderstand">我清楚我在做什麼</sys:String>
     <sys:String x:Key="Main.SpecialVersion.OpenDownloadPageAndExit">開啟最新版下載頁並退出</sys:String>
@@ -1880,7 +1880,7 @@
     <sys:String x:Key="Main.Title.TaskManager">任務管理</sys:String>
     <sys:String x:Key="Main.UpdateLog.Empty">歡迎使用呀~</sys:String>
     <sys:String x:Key="Main.UpdateLog.FullChangelog">完整更新紀錄</sys:String>
-    <sys:String x:Key="Main.UpdateLog.Title">PCL CE 已更新至 {0} {1}</sys:String>
+    <sys:String x:Key="Main.UpdateLog.Title">PCL Shion 已更新至 {0} {1}</sys:String>
     <sys:String x:Key="Main.HomepageReset.Title">首頁預設已重設</sys:String>
     <sys:String x:Key="Main.HomepageReset.Content">由於啟動器更新，已重設首頁預設。請重新前往 設定 - 個性化 選擇預設</sys:String>
 
@@ -1902,7 +1902,7 @@
     <sys:String x:Key="Main.FileDrag.SaveImportFailed">匯入存檔失敗</sys:String>
     <sys:String x:Key="Main.FileDrag.SaveInvalid">匯入後的存檔缺少 level.dat！</sys:String>
     <sys:String x:Key="Main.FileDrag.SaveNotFound">壓縮檔內沒有可匯入的 Minecraft 存檔！</sys:String>
-    <sys:String x:Key="Main.FileDrag.UnknownOperation">PCL CE 無法確定應當執行的檔案拖曳操作……</sys:String>
+    <sys:String x:Key="Main.FileDrag.UnknownOperation">PCL Shion 無法確定應當執行的檔案拖曳操作……</sys:String>
 
     <!-- Minecraft -->
 
@@ -1927,7 +1927,7 @@
     <sys:String x:Key="Minecraft.Download.Loader.NewForge">新版 Forge</sys:String>
     <sys:String x:Key="Minecraft.Download.ServerBatch.InstructionEula">如果提示 "You need to agree to the EULA"，請編輯 eula.txt 同意協議!</sys:String>
     <sys:String x:Key="Minecraft.Download.ServerBatch.InstructionJavaPath">如果服務端立即停止，請右鍵編輯該指令碼，使用!JAVA_HOME!取代%JAVA_HOME%</sys:String>
-    <sys:String x:Key="Minecraft.Download.ServerBatch.InstructionPclSettings">你可以在 PCL CE 的 [設定 → 啟動選項 → 啟動器內 Java 路徑] 中將此版本選為合適的 Java 並啟用!</sys:String>
+    <sys:String x:Key="Minecraft.Download.ServerBatch.InstructionPclSettings">你可以在 PCL Shion 的 [設定 → 啟動選項 → 啟動器內 Java 路徑] 中將此版本選為合適的 Java 並啟用!</sys:String>
     <sys:String x:Key="Minecraft.Download.ServerBatch.ServerStopped">服務端已停止。</sys:String>
     <sys:String x:Key="Minecraft.Download.ServerBatch.Title">{0} 原版服務端</sys:String>
 
@@ -1977,7 +1977,7 @@
     <sys:String x:Key="Minecraft.Download.Modpack.BundledLauncher.Message">模組包裡似乎內建了啟動器，是否換用它繼續安裝？&#xD;&#xA;即將開啟：{0}</sys:String>
     <sys:String x:Key="Minecraft.Download.Modpack.BundledLauncher.Title">換用模組包啟動器？</sys:String>
     <sys:String x:Key="Minecraft.Download.Modpack.BundledLauncher.UseBundled">換用</sys:String>
-    <sys:String x:Key="Minecraft.Download.Modpack.EncryptedArchiveUnsupported">PCL CE 無法處理加密的壓縮檔，請在解壓縮後重新壓縮為不加密的 zip 格式再試</sys:String>
+    <sys:String x:Key="Minecraft.Download.Modpack.EncryptedArchiveUnsupported">PCL Shion 無法處理加密的壓縮檔，請在解壓縮後重新壓縮為不加密的 zip 格式再試</sys:String>
     <sys:String x:Key="Minecraft.Download.Modpack.Error.OperationFailed">模組包操作失敗。請檢視錯誤詳情。</sys:String>
     <sys:String x:Key="Minecraft.Download.Modpack.FileDialog.Filter">模組包檔案(*.rar;*.zip;*.mrpack)|*.rar;*.zip;*.mrpack</sys:String>
     <sys:String x:Key="Minecraft.Download.Modpack.FileDialog.Title">選擇模組包壓縮檔</sys:String>
@@ -1996,7 +1996,7 @@
     <sys:String x:Key="Minecraft.Download.Modpack.PathOutsideInstance.Message">模組包的檔案路徑超出了實例資料夾，請向模組包作者回饋此問題！&#xD;&#xA;錯誤的檔案：{0}</sys:String>
     <sys:String x:Key="Minecraft.Download.Modpack.PathOutsideInstance.Title">檔案路徑校驗失敗</sys:String>
     <sys:String x:Key="Minecraft.Download.Modpack.QuiltUnsupported">無法安裝模組包：目前啟動器已不再支援 Quilt 載入器。</sys:String>
-    <sys:String x:Key="Minecraft.Download.Modpack.RarUnsupported">PCL CE 無法處理 rar 格式的壓縮檔，請在解壓縮後重新壓縮為 zip 格式再試</sys:String>
+    <sys:String x:Key="Minecraft.Download.Modpack.RarUnsupported">PCL Shion 無法處理 rar 格式的壓縮檔，請在解壓縮後重新壓縮為 zip 格式再試</sys:String>
     <sys:String x:Key="Minecraft.Download.Modpack.SelectEmptyFolder.Message">接下來請選擇一個空資料夾，它會被安裝到這個資料夾裡。</sys:String>
     <sys:String x:Key="Minecraft.Download.Modpack.SelectTargetFolder.Title">選擇安裝目標（必須是一個空白資料夾）</sys:String>
     <sys:String x:Key="Minecraft.Download.Modpack.SomeModsDeleted">模組包中的部分模組版本已被模組作者刪除，所以沒辦法繼續安裝了，請向模組包作者回饋該問題</sys:String>
@@ -2150,7 +2150,7 @@
     <sys:String x:Key="Minecraft.Launch.Cancelled">已取消啟動！</sys:String>
     <sys:String x:Key="Minecraft.Launch.DemoMode">遊戲將以試玩模式啟動！</sys:String>
     <sys:String x:Key="Minecraft.Launch.Donate.Decline">但是我拒絕</sys:String>
-    <sys:String x:Key="Minecraft.Launch.Donate.Message">PCL CE 已經為你啟動了 {0} 次遊戲啦！&#xA;如果 PCL CE 還算好用的話，也許可以考慮贊助一下 PCL 原作者……&#xA;如果沒有大家的支援，PCL 很難在免費、無任何廣告的情況下維持數年的更新（磕頭）……！</sys:String>
+    <sys:String x:Key="Minecraft.Launch.Donate.Message">PCL Shion 已經為你啟動了 {0} 次遊戲啦！&#xA;如果 PCL Shion 還算好用的話，也許可以考慮贊助一下 PCL 原作者……&#xA;如果沒有大家的支援，PCL 很難在免費、無任何廣告的情況下維持數年的更新（磕頭）……！</sys:String>
     <sys:String x:Key="Minecraft.Launch.Donate.Support">支援一下！</sys:String>
     <sys:String x:Key="Minecraft.Launch.Donate.Title">{0} 次啟動！</sys:String>
     <sys:String x:Key="Minecraft.Launch.ExportScript.Cancelled">已取消匯出啟動指令碼！</sys:String>
@@ -2190,7 +2190,7 @@
     <!-- Minecraft.Launch.Java -->
 
     <sys:String x:Key="Minecraft.Launch.Java.AutoDownload.Action">自動下載</sys:String>
-    <sys:String x:Key="Minecraft.Launch.Java.AutoDownload.Message">PCL CE 未找到 {0}，是否需要自動下載？&#xA;如果已經安裝了 {0}，可以在 設定 → 啟動選項 → 遊戲 Java 中手動匯入。</sys:String>
+    <sys:String x:Key="Minecraft.Launch.Java.AutoDownload.Message">PCL Shion 未找到 {0}，是否需要自動下載？&#xA;如果已經安裝了 {0}，可以在 設定 → 啟動選項 → 遊戲 Java 中手動匯入。</sys:String>
     <sys:String x:Key="Minecraft.Launch.Java.AutoDownload.Title">自動下載 Java？</sys:String>
     <sys:String x:Key="Minecraft.Launch.Java.Compatibility.CheckFailed">檢查 Java 相容性失敗。請檢視錯誤詳情。</sys:String>
     <sys:String x:Key="Minecraft.Launch.Java.Compatibility.GlobalSelectedOutOfRange">全域指定的 Java（{0}）超出版本要求範圍 [{1}, {2}]，可能導致遊戲崩潰。</sys:String>
@@ -2203,7 +2203,7 @@
     <sys:String x:Key="Minecraft.Launch.Java.NeedJava8U141OrLater">你需要安裝 Java 8u141 或更高版本的 Java 8 才能啟動該版本。&#xA;請自行搜尋並安裝，安裝後在 設定 → 啟動選項 → 遊戲 Java 中重新搜尋或匯入。</sys:String>
     <sys:String x:Key="Minecraft.Launch.Java.NeedJava8U141ToU320">你需要安裝 Java 8u141 ~ 8u320 才能啟動該版本。&#xA;請自行搜尋並安裝，安裝後在 設定 → 啟動選項 → 遊戲 Java 中重新搜尋或匯入。</sys:String>
     <sys:String x:Key="Minecraft.Launch.Java.NeedLegacyJavaFixerOrJava7">你需要先安裝 LegacyJavaFixer 模組，或安裝 Java 7 才能啟動該版本。&#xA;請自行搜尋並安裝 Java 7，安裝後在 設定 → 啟動選項 → 遊戲 Java 中重新搜尋或匯入。</sys:String>
-    <sys:String x:Key="Minecraft.Launch.Java.NotFound.Manual.Message">PCL CE 未找到 {0}。&#xA;請自行搜尋並安裝 {0}，安裝後在 設定 → 啟動選項 → 遊戲 Java 中重新搜尋或匯入。</sys:String>
+    <sys:String x:Key="Minecraft.Launch.Java.NotFound.Manual.Message">PCL Shion 未找到 {0}。&#xA;請自行搜尋並安裝 {0}，安裝後在 設定 → 啟動選項 → 遊戲 Java 中重新搜尋或匯入。</sys:String>
     <sys:String x:Key="Minecraft.Launch.Java.NotFound.Title">未找到 Java</sys:String>
     <sys:String x:Key="Minecraft.Launch.Java.Task.Download">下載 Java</sys:String>
     <sys:String x:Key="Minecraft.Launch.Java.Task.DownloadFiles">下載 Java 檔案</sys:String>
@@ -2249,8 +2249,8 @@
 
     <sys:String x:Key="Minecraft.Launch.Login.Microsoft.AbnormalIp">目前 IP 的登入嘗試異常。&#xA;如果你使用了 VPN 或 Proxy，請把它們關掉或更換節點後再試！</sys:String>
     <sys:String x:Key="Minecraft.Launch.Login.Microsoft.Banned">該帳戶似乎已被微軟封禁，無法登入。</sys:String>
-    <sys:String x:Key="Minecraft.Launch.Login.Microsoft.ChangeBirthDate.Message">請在開啟的網頁中修改帳戶的出生日期（至少改為 18 歲以上）。&#xA;在修改成功後等待一分鐘，然後再回到 PCL CE，就可以正常登入了！</sys:String>
-    <sys:String x:Key="Minecraft.Launch.Login.Microsoft.ChangeBirthDate.SupportMessage">請在開啟的網頁中修改帳戶的出生日期（至少改為 18 歲以上）。&#xA;在修改成功後等待一分鐘，然後再回到 PCL CE，就可以正常登入了！</sys:String>
+    <sys:String x:Key="Minecraft.Launch.Login.Microsoft.ChangeBirthDate.Message">請在開啟的網頁中修改帳戶的出生日期（至少改為 18 歲以上）。&#xA;在修改成功後等待一分鐘，然後再回到 PCL Shion，就可以正常登入了！</sys:String>
+    <sys:String x:Key="Minecraft.Launch.Login.Microsoft.ChangeBirthDate.SupportMessage">請在開啟的網頁中修改帳戶的出生日期（至少改為 18 歲以上）。&#xA;在修改成功後等待一分鐘，然後再回到 PCL Shion，就可以正常登入了！</sys:String>
     <sys:String x:Key="Minecraft.Launch.Login.Microsoft.CreateProfile.Button">建立檔案</sys:String>
     <sys:String x:Key="Minecraft.Launch.Login.Microsoft.CreateProfile.Message">請先建立 Minecraft 玩家檔案，然後再重新登入。</sys:String>
     <sys:String x:Key="Minecraft.Launch.Login.Microsoft.NotPurchased">暫時無法取得到此帳戶資訊，此帳戶可能沒有購買 Minecraft Java Edition 或帳戶的 Xbox Game Pass 已過期</sys:String>
@@ -2306,15 +2306,15 @@
 
     <!-- Music.Error -->
 
-    <sys:String x:Key="Music.Error.DeviceBusy">音訊裝置正被其他程式佔用。請關閉佔用程式後重啟 PCL CE，以復原音樂功能。</sys:String>
-    <sys:String x:Key="Music.Error.DeviceChanged">音訊裝置已發生變化。請重啟 PCL CE，以復原音樂功能。</sys:String>
+    <sys:String x:Key="Music.Error.DeviceBusy">音訊裝置正被其他程式佔用。請關閉佔用程式後重啟 PCL Shion，以復原音樂功能。</sys:String>
+    <sys:String x:Key="Music.Error.DeviceChanged">音訊裝置已發生變化。請重啟 PCL Shion，以復原音樂功能。</sys:String>
     <sys:String x:Key="Music.Error.NoAvailable">沒有可以播放的音樂！</sys:String>
     <sys:String x:Key="Music.Error.NotDetected">未偵測到可用的背景音樂！</sys:String>
     <sys:String x:Key="Music.Error.NotStarted">音樂播放尚未開始！</sys:String>
     <sys:String x:Key="Music.Error.OperationFailed">初始化或重新整理背景音樂失敗。請檢視錯誤詳情。</sys:String>
     <sys:String x:Key="Music.Error.PlaybackFailed">無法播放 {0}。</sys:String>
-    <sys:String x:Key="Music.Error.PropertyChangeUnsupported">無法播放 {0}：PCL CE 不支援播放過程中變更音訊屬性的檔案。</sys:String>
-    <sys:String x:Key="Music.Error.UnsupportedFormat">無法播放 {0}：PCL CE 可能不支援此格式，請轉換為 .wav、.mp3 或 .flac。</sys:String>
+    <sys:String x:Key="Music.Error.PropertyChangeUnsupported">無法播放 {0}：PCL Shion 不支援播放過程中變更音訊屬性的檔案。</sys:String>
+    <sys:String x:Key="Music.Error.UnsupportedFormat">無法播放 {0}：PCL Shion 可能不支援此格式，請轉換為 .wav、.mp3 或 .flac。</sys:String>
 
     <!-- Select -->
 
@@ -2322,7 +2322,7 @@
 
     <!-- Select.Folder -->
 
-    <sys:String x:Key="Select.Folder.AccessDenied">新增資料夾失敗：PCL CE 沒有存取該資料夾的權限！</sys:String>
+    <sys:String x:Key="Select.Folder.AccessDenied">新增資料夾失敗：PCL Shion 沒有存取該資料夾的權限！</sys:String>
     <sys:String x:Key="Select.Folder.AddExisting.Title">新增已有資料夾</sys:String>
     <sys:String x:Key="Select.Folder.AddExisting.ToolTip">將一個已有的 Minecraft 資料夾新增到清單</sys:String>
     <sys:String x:Key="Select.Folder.AddOrImport">新增或匯入</sys:String>
@@ -2331,7 +2331,7 @@
     <sys:String x:Key="Select.Folder.CannotAddWhileDownloading">在下載工作進行時，無法新增遊戲資料夾！</sys:String>
     <sys:String x:Key="Select.Folder.CannotCreateWhileDownloading">在下載工作進行時，無法建立遊戲資料夾！</sys:String>
     <sys:String x:Key="Select.Folder.Cleanup.Keep">保留</sys:String>
-    <sys:String x:Key="Select.Folder.Cleanup.Message">是否需要清理 PCL CE 在該資料夾中的設定檔？&#xA;這包括各個實例的獨立設定（如自訂圖示、第三方登入設定）等，對遊戲本身沒有影響。</sys:String>
+    <sys:String x:Key="Select.Folder.Cleanup.Message">是否需要清理 PCL Shion 在該資料夾中的設定檔？&#xA;這包括各個實例的獨立設定（如自訂圖示、第三方登入設定）等，對遊戲本身沒有影響。</sys:String>
     <sys:String x:Key="Select.Folder.Cleanup.Title">設定檔清理</sys:String>
     <sys:String x:Key="Select.Folder.Clear">清空</sys:String>
     <sys:String x:Key="Select.Folder.Clear.Confirm">確認清空</sys:String>
@@ -2340,7 +2340,7 @@
     <sys:String x:Key="Select.Folder.Clear.InProgress">正在清空資料夾 {0}！</sys:String>
     <sys:String x:Key="Select.Folder.Clear.Success">已清空資料夾 {0}！</sys:String>
     <sys:String x:Key="Select.Folder.CreateNew.Title">新增 .minecraft 資料夾</sys:String>
-    <sys:String x:Key="Select.Folder.CreateNew.ToolTip">在 PCL CE 目前所在資料夾下建立新的 .minecraft 資料夾</sys:String>
+    <sys:String x:Key="Select.Folder.CreateNew.ToolTip">在 PCL Shion 目前所在資料夾下建立新的 .minecraft 資料夾</sys:String>
     <sys:String x:Key="Select.Folder.CreateSuccess">新增 .minecraft 資料夾成功！</sys:String>
     <sys:String x:Key="Select.Folder.CurrentFolder">目前資料夾</sys:String>
     <sys:String x:Key="Select.Folder.Delete.Confirm">確認刪除</sys:String>
@@ -2438,7 +2438,7 @@
     <sys:String x:Key="Select.Instance.Description.ExperimentalSnapshot">實驗性快照{0}</sys:String>
     <sys:String x:Key="Select.Instance.Description.ExperimentalSnapshot.Pending">實驗性快照</sys:String>
     <sys:String x:Key="Select.Instance.Description.NeedInherit">需要安裝 {0} 作為前置實例</sys:String>
-    <sys:String x:Key="Select.Instance.Description.NoPermission">PCL CE 沒有對該資料夾的存取權限，請右鍵以系統管理員身分執行 PCL CE</sys:String>
+    <sys:String x:Key="Select.Instance.Description.NoPermission">PCL Shion 沒有對該資料夾的存取權限，請右鍵以系統管理員身分執行 PCL Shion</sys:String>
     <sys:String x:Key="Select.Instance.Description.NotFound">未找到實例 {0}</sys:String>
     <sys:String x:Key="Select.Instance.Description.NotLoaded">該實例未被載入，請向開發者回饋此問題</sys:String>
     <sys:String x:Key="Select.Instance.Description.Old">遠古版本</sys:String>
@@ -2450,7 +2450,7 @@
     <sys:String x:Key="Select.Instance.Description.Snapshot">快照版 {0}</sys:String>
     <sys:String x:Key="Select.Instance.Description.Snapshot.Unknown">快照</sys:String>
     <sys:String x:Key="Select.Instance.Description.UnknownError">未知錯誤</sys:String>
-    <sys:String x:Key="Select.Instance.Description.UnknownMcVersion">PCL CE 無法識別該版本的 Minecraft 版本號</sys:String>
+    <sys:String x:Key="Select.Instance.Description.UnknownMcVersion">PCL Shion 無法識別該版本的 Minecraft 版本號</sys:String>
 
     <!-- Setup -->
 
@@ -2488,7 +2488,7 @@
     <sys:String x:Key="Setup.About.EasterEgg.Bored.Yes">是的</sys:String>
     <sys:String x:Key="Setup.About.EasterEgg.ClickDisabled">還點，還點就不讓你點了……</sys:String>
     <sys:String x:Key="Setup.About.EasterEgg.Encouragement">嗯，加油吧，嗯……</sys:String>
-    <sys:String x:Key="Setup.About.EasterEgg.HiddenTheme">隱藏主題 混亂黃 已……嗯不對，這是 PCL CE，應該沒有這東西……</sys:String>
+    <sys:String x:Key="Setup.About.EasterEgg.HiddenTheme">隱藏主題 混亂黃 已……嗯不對，這是 PCL Shion，應該沒有這東西……</sys:String>
     <sys:String x:Key="Setup.About.EasterEgg.NiceClick">點這個很好玩嗎……</sys:String>
     <sys:String x:Key="Setup.About.EasterEgg.NothingBehind">後面什麼都沒有了哦！</sys:String>
     <sys:String x:Key="Setup.About.EasterEgg.StillClicking">還點？</sys:String>
@@ -2544,7 +2544,7 @@
 
     <sys:String x:Key="Setup.Feedback.ErrorPrompt.Submit.Action">回饋</sys:String>
     <sys:String x:Key="Setup.Feedback.ErrorPrompt.Submit.Message">{0}&#xA;&#xA;是否回饋此問題？如果不回饋，這個問題可能永遠無法得到解決！</sys:String>
-    <sys:String x:Key="Setup.Feedback.ErrorPrompt.Update.Message">{0}&#xA;&#xA;將 PCL CE 更新至最新版或許可以解決這個問題。</sys:String>
+    <sys:String x:Key="Setup.Feedback.ErrorPrompt.Update.Message">{0}&#xA;&#xA;將 PCL Shion 更新至最新版或許可以解決這個問題。</sys:String>
     <sys:String x:Key="Setup.Feedback.Item.Submitter">提交者：{0}（{1}）</sys:String>
     <sys:String x:Key="Setup.Feedback.Item.Type">型別：{0}</sys:String>
     <sys:String x:Key="Setup.Feedback.Item.ViewDetail">檢視詳情</sys:String>
@@ -2559,7 +2559,7 @@
     <sys:String x:Key="Setup.Feedback.Unavailable.CheckFailed.Action">重新檢查更新</sys:String>
     <sys:String x:Key="Setup.Feedback.Unavailable.CheckFailed.Message">檢查更新失敗，因此無法提交回饋。&#xA;請連線網際網路，檢查更新後確認該問題在最新版中依然存在，再提交回饋。</sys:String>
     <sys:String x:Key="Setup.Feedback.Unavailable.NotLatest.Action">更新</sys:String>
-    <sys:String x:Key="Setup.Feedback.Unavailable.NotLatest.Message">目前 PCL CE 不是最新版，因此無法提交回饋。&#xA;請更新後確認該問題在最新版中依然存在，再提交回饋。</sys:String>
+    <sys:String x:Key="Setup.Feedback.Unavailable.NotLatest.Message">目前 PCL Shion 不是最新版，因此無法提交回饋。&#xA;請更新後確認該問題在最新版中依然存在，再提交回饋。</sys:String>
     <sys:String x:Key="Setup.Feedback.Unavailable.Title">無法提交回饋</sys:String>
     <sys:String x:Key="Setup.Feedback.Uncategorized">未分類</sys:String>
 
@@ -2596,7 +2596,7 @@
     <sys:String x:Key="Setup.GameLink.Protocol.Udp.ToolTip">讓 EasyTier 優先使用 UDP 進行通訊，UDP 通常能帶來更低的通訊時延</sys:String>
     <sys:String x:Key="Setup.GameLink.RestartRequired">修改此處的設定後，需要重新啟動大廳以使設定生效。</sys:String>
     <sys:String x:Key="Setup.GameLink.Username">使用者名稱</sys:String>
-    <sys:String x:Key="Setup.GameLink.Username.ToolTip">PCL CE 會盡可能使用此處的使用者名稱用於大廳資訊展示。&#xA;若留空，則使用 Natayark ID 的使用者名稱。&#xA;&#xA;部分情況下可能始終展示 Natayark ID 使用者名稱，而非此處設定的名稱。</sys:String>
+    <sys:String x:Key="Setup.GameLink.Username.ToolTip">PCL Shion 會盡可能使用此處的使用者名稱用於大廳資訊展示。&#xA;若留空，則使用 Natayark ID 的使用者名稱。&#xA;&#xA;部分情況下可能始終展示 Natayark ID 使用者名稱，而非此處設定的名稱。</sys:String>
 
     <!-- Setup.GameLink.NetworkTest -->
 
@@ -2631,7 +2631,7 @@
     <sys:String x:Key="Setup.GameManage.Accessibility.GameLanguage">遊戲語言</sys:String>
     <sys:String x:Key="Setup.GameManage.Accessibility.GameUpdateNotice">遊戲更新提示</sys:String>
     <sys:String x:Key="Setup.GameManage.Accessibility.ReadClipboard">識別跳轉剪貼簿中的社群資源連結</sys:String>
-    <sys:String x:Key="Setup.GameManage.Accessibility.ReadClipboard.ToolTip">開啟此選項後，PCL CE 將會讀取你的剪貼簿並識別其中的資源連結，並詢問你是否要跳轉到詳情頁面。</sys:String>
+    <sys:String x:Key="Setup.GameManage.Accessibility.ReadClipboard.ToolTip">開啟此選項後，PCL Shion 將會讀取你的剪貼簿並識別其中的資源連結，並詢問你是否要跳轉到詳情頁面。</sys:String>
     <sys:String x:Key="Setup.GameManage.Accessibility.ReleaseNotice">正式版更新提示</sys:String>
     <sys:String x:Key="Setup.GameManage.Accessibility.ReleaseNotice.ToolTip">在 Minecraft 正式版更新時彈出視窗提示</sys:String>
     <sys:String x:Key="Setup.GameManage.Accessibility.SnapshotNotice">開發版更新提示</sys:String>
@@ -2669,7 +2669,7 @@
 
     <sys:String x:Key="Setup.GameManage.Download.AutoSelectInstance">安裝新實例後自動選定該實例</sys:String>
     <sys:String x:Key="Setup.GameManage.Download.FixAuthlib">升級部分版本的 Authlib</sys:String>
-    <sys:String x:Key="Setup.GameManage.Download.FixAuthlib.ToolTip">部分 Minecraft 版本（如 1.16.5）存在 Bug，可能導致使用離線驗證時多人遊戲被停用。&#xA;PCL CE 可嘗試升級這些版本的 Authlib 支援庫以解決問題。&#xA;此設定僅對新安裝的實例有效。</sys:String>
+    <sys:String x:Key="Setup.GameManage.Download.FixAuthlib.ToolTip">部分 Minecraft 版本（如 1.16.5）存在 Bug，可能導致使用離線驗證時多人遊戲被停用。&#xA;PCL Shion 可嘗試升級這些版本的 Authlib 支援庫以解決問題。&#xA;此設定僅對新安裝的實例有效。</sys:String>
     <sys:String x:Key="Setup.GameManage.Download.InstallBehavior">安裝行為</sys:String>
     <sys:String x:Key="Setup.GameManage.Download.SpeedLimit">速度限制</sys:String>
     <sys:String x:Key="Setup.GameManage.Download.SpeedLimit.ToolTip">設定下載的速度上限，以避免在下載時導致其他需要連線的程式卡死</sys:String>
@@ -2711,9 +2711,9 @@
     <sys:String x:Key="Setup.Language.FormatCulture.FollowLanguage">同步介面語言</sys:String>
     <sys:String x:Key="Setup.Language.Banner.TitlePrefix">讓</sys:String>
     <sys:String x:Key="Setup.Language.Banner.TitleSuffix">走向國際化。</sys:String>
-    <sys:String x:Key="Setup.Language.Banner.DescriptionLine1">在社群的共同助力下，PCL CE 正邁向國際化的新篇章。</sys:String>
-    <sys:String x:Key="Setup.Language.Banner.DescriptionLine2">歡迎前往翻譯平台參與在地化貢獻，或向 GitHub 倉庫提交 Pull Request，與我們一同完善多語言支援，為 PCL CE 更好地服務全球使用者的目標添磚加瓦。</sys:String>
-    <sys:String x:Key="Setup.Language.Banner.DescriptionLine3">感謝每一位參與翻譯、校對與改進的貢獻者，讓 PCL CE 因你們而更加完善。</sys:String>
+    <sys:String x:Key="Setup.Language.Banner.DescriptionLine1">在社群的共同助力下，PCL Shion 正邁向國際化的新篇章。</sys:String>
+    <sys:String x:Key="Setup.Language.Banner.DescriptionLine2">歡迎前往翻譯平台參與在地化貢獻，或向 GitHub 倉庫提交 Pull Request，與我們一同完善多語言支援，為 PCL Shion 更好地服務全球使用者的目標添磚加瓦。</sys:String>
+    <sys:String x:Key="Setup.Language.Banner.DescriptionLine3">感謝每一位參與翻譯、校對與改進的貢獻者，讓 PCL Shion 因你們而更加完善。</sys:String>
     <sys:String x:Key="Setup.Language.Banner.TranslateWebsite">前往翻譯平台</sys:String>
     <sys:String x:Key="Setup.Language.Banner.SubmitPullRequest">提交 Pull Request</sys:String>
     <sys:String x:Key="Setup.Language.Reset.Success">已初始化語言頁設定！</sys:String>
@@ -2736,13 +2736,13 @@
     <sys:String x:Key="Setup.Launch.Advanced.DisableJlw">停用 Java Launch Wrapper</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.DisableJlw.Arm64Notice">在啟動遊戲時不使用 Java Wrapper 進行包裝。&#xA;由於系統為 ARM64 架構，Java Wrapper 已被強制停用。</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.DisableJlw.Arm64ToolTip">在啟動遊戲時不使用 Java Wrapper 進行包裝。&#xA;由於系統為 ARM64 架構，Java Wrapper 已被強制停用。</sys:String>
-    <sys:String x:Key="Setup.Launch.Advanced.DisableJlw.ToolTip">PCL CE 會使用 Java Launch Wrapper 來修復舊版本 Java 在中文路徑下無法啟動的問題。&#xA;如果這被反作弊攔截，或遇到其他問題，也可以將其關閉。</sys:String>
+    <sys:String x:Key="Setup.Launch.Advanced.DisableJlw.ToolTip">PCL Shion 會使用 Java Launch Wrapper 來修復舊版本 Java 在中文路徑下無法啟動的問題。&#xA;如果這被反作弊攔截，或遇到其他問題，也可以將其關閉。</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.DisableLF">停用 LegacyFix</sys:String>
-    <sys:String x:Key="Setup.Launch.Advanced.DisableLF.ToolTip">PCL CE 會在啟動 1.5.x 及以下版本時使用 LegacyFix 來改善舊版本遊戲體驗和修復相容性問題。</sys:String>
+    <sys:String x:Key="Setup.Launch.Advanced.DisableLF.ToolTip">PCL Shion 會在啟動 1.5.x 及以下版本時使用 LegacyFix 來改善舊版本遊戲體驗和修復相容性問題。</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.LockMemory">鎖定記憶體分配（-Xms = -Xmx）</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.LockMemory.ToolTip">啟用後，啟動器會額外追加 -Xms 參數並令其等於最大堆 -Xmx，從而固定堆大小。這會隱式停用堆記憶體歸還（Uncommit），減少作業系統取消對映/重新分配記憶體頁帶來的延遲抖動，也有利於 ZGC 的回收預測。代價是遊戲全程會佔用接近最大分配的記憶體。</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.DisableLwjglUnsafeAgent">停用 LWJGL Unsafe Agent</sys:String>
-    <sys:String x:Key="Setup.Launch.Advanced.DisableLwjglUnsafeAgent.ToolTip">Minecraft 26.1 使用了 LWJGL 3.4.1，LWJGL 3.4.1 使用了 FFM API 以在 JDK 25+ 上存取原生記憶體。由於 JDK 最佳化能力限制，某些情況下這會產生嚴重的效能問題。&#xA;PCL CE 會使用 LWJGL Unsafe Agent 修復這個問題，以解決可能存在的效能問題。&#xA;一般情況下沒有停用該選項的必要，但如果你遇到了額外問題，也可以嘗試暫時停用該選項以排查錯誤。&#xA;&#xA;該功能僅會在 LWJGL 版本為 3.4.1 時生效。</sys:String>
+    <sys:String x:Key="Setup.Launch.Advanced.DisableLwjglUnsafeAgent.ToolTip">Minecraft 26.1 使用了 LWJGL 3.4.1，LWJGL 3.4.1 使用了 FFM API 以在 JDK 25+ 上存取原生記憶體。由於 JDK 最佳化能力限制，某些情況下這會產生嚴重的效能問題。&#xA;PCL Shion 會使用 LWJGL Unsafe Agent 修復這個問題，以解決可能存在的效能問題。&#xA;一般情況下沒有停用該選項的必要，但如果你遇到了額外問題，也可以嘗試暫時停用該選項以排查錯誤。&#xA;&#xA;該功能僅會在 LWJGL 版本為 3.4.1 時生效。</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.GameTail">遊戲參數尾部</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.GameTail.ToolTip">文字方塊中的內容將會被直接拼合在啟動參數的末尾。&#xA;例如，輸入 --demo 則會以試玩模式啟動遊戲。&#xA;支援 Minecraft 實例 JSON 中的字串取代標記，例如 ${library_directory}。</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.GpuPreference">要求 Java 使用高效能顯示卡</sys:String>
@@ -2752,7 +2752,7 @@
     <sys:String x:Key="Setup.Launch.Advanced.JvmHead.ToolTip">啟動 Minecraft 時使用的額外 JVM 參數，除非有確定把握，否則請不要修改。&#xA;支援 Minecraft 實例 JSON 中的字串取代標記，例如 ${library_directory}。</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.MoreInInstanceSetup">你還可以在實例獨立設定中找到更多高階啟動選項。</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.PreLaunchCommand">啟動前執行指令</sys:String>
-    <sys:String x:Key="Setup.Launch.Advanced.PreLaunchCommand.ToolTip">在 Minecraft 啟動前執行特定指令或程式，語法與 Windows 的指令提示字元一致。&#xA;&#xA;可以使用以下取代標記實現相對路徑（路徑均以 \ 結尾）：&#xA; · {path}：PCL CE 的 exe 檔案所在的資料夾&#xA; · {minecraft}：.minecraft 資料夾&#xA; · {verpath}：實例資料夾（.minecraft\versions\實例名\）&#xA; · {verindie}：開啟實例隔離時等同實例資料夾，未開啟時等同 .minecraft 資料夾&#xA; · {java}：遊戲執行時的 Java 資料夾&#xA;&#xA;除此之外，也支援以下取代標記：&#xA; · {user}：玩家名字&#xA; · {login}：玩家的登入方式&#xA; · {uuid}：玩家的 UUID&#xA; · {name}：遊戲實例名&#xA; · {date}、{time}：目前的系統時間&#xA; · {version}：遊戲對應的原版版本號&#xA;&#xA;例如：&#xA; · "{verpath}test.exe" ：執行實例資料夾下的 test.exe 程式&#xA; · "{java}java.exe" -jar "{verpath}test.jar" ：用 Java 執行實例資料夾下的 test.jar&#xA; · notepad "{verindie}options.txt" ：使用記事本開啟該實例的設定檔&#xA;&#xA;涉及路徑的操作最好都打上雙引號，以避免路徑中的空格導致執行失敗。&#xA;執行指令時，指令列所在的目錄是目前的 .minecraft 資料夾。</sys:String>
+    <sys:String x:Key="Setup.Launch.Advanced.PreLaunchCommand.ToolTip">在 Minecraft 啟動前執行特定指令或程式，語法與 Windows 的指令提示字元一致。&#xA;&#xA;可以使用以下取代標記實現相對路徑（路徑均以 \ 結尾）：&#xA; · {path}：PCL Shion 的 exe 檔案所在的資料夾&#xA; · {minecraft}：.minecraft 資料夾&#xA; · {verpath}：實例資料夾（.minecraft\versions\實例名\）&#xA; · {verindie}：開啟實例隔離時等同實例資料夾，未開啟時等同 .minecraft 資料夾&#xA; · {java}：遊戲執行時的 Java 資料夾&#xA;&#xA;除此之外，也支援以下取代標記：&#xA; · {user}：玩家名字&#xA; · {login}：玩家的登入方式&#xA; · {uuid}：玩家的 UUID&#xA; · {name}：遊戲實例名&#xA; · {date}、{time}：目前的系統時間&#xA; · {version}：遊戲對應的原版版本號&#xA;&#xA;例如：&#xA; · "{verpath}test.exe" ：執行實例資料夾下的 test.exe 程式&#xA; · "{java}java.exe" -jar "{verpath}test.jar" ：用 Java 執行實例資料夾下的 test.jar&#xA; · notepad "{verindie}options.txt" ：使用記事本開啟該實例的設定檔&#xA;&#xA;涉及路徑的操作最好都打上雙引號，以避免路徑中的空格導致執行失敗。&#xA;執行指令時，指令列所在的目錄是目前的 .minecraft 資料夾。</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.PreLaunchCommand.Wait">等待指令執行完成後再繼續啟動</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.Renderer.DirectX12">DirectX12（d3d12）</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.Renderer.GameDefault">遊戲預設</sys:String>
@@ -2763,7 +2763,7 @@
     <sys:String x:Key="Setup.Launch.Advanced.Renderer.Warning.Message">修改此項會嚴重影響遊戲的穩定性與效能。如果你不知道你在做什麼，不要修改此選項！&#xA;你確認要繼續修改嗎？</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.Title">高階啟動選項</sys:String>
     <sys:String x:Key="Setup.Launch.Advanced.UseJavaExe">使用 java.exe 而不是 javaw.exe</sys:String>
-    <sys:String x:Key="Setup.Launch.Advanced.UseJavaExe.ToolTip">如果遇到遊戲視窗長時間不出現等故障可嘗試啟用此項，PCL CE 將使用 java.exe 來執行遊戲，這樣會讓遊戲程式擁有標準輸入/輸出流，以盡可能避免列印日誌時出現問題。&#xA;&#xA;取決於不同 Java 發行版的行為，java.exe 可能無法使用 HDR 顏色等依賴作業系統支援的特性。因此，如果正常使用沒有問題，請勿啟用該選項。</sys:String>
+    <sys:String x:Key="Setup.Launch.Advanced.UseJavaExe.ToolTip">如果遇到遊戲視窗長時間不出現等故障可嘗試啟用此項，PCL Shion 將使用 java.exe 來執行遊戲，這樣會讓遊戲程式擁有標準輸入/輸出流，以盡可能避免列印日誌時出現問題。&#xA;&#xA;取決於不同 Java 發行版的行為，java.exe 可能無法使用 HDR 顏色等依賴作業系統支援的特性。因此，如果正常使用沒有問題，請勿啟用該選項。</sys:String>
 
     <!-- Setup.Launch.Memory -->
 
@@ -2791,7 +2791,7 @@
     <sys:String x:Key="Setup.Launch.Options.IpStack.Ipv6">IPv6 優先</sys:String>
     <sys:String x:Key="Setup.Launch.Options.IpStack.JavaDefault">Java 預設</sys:String>
     <sys:String x:Key="Setup.Launch.Options.IpStack.Label">IP 協議偏好</sys:String>
-    <sys:String x:Key="Setup.Launch.Options.IpStack.ToolTip">透過設定 Java 虛擬機器參數來設定 Minecraft 的 IP 協議版本偏好。&#xA;一般建議設定為 "IPv4 優先"，這能確保 PCL CE 大廳正常運作。&#xA;如果有手動 IPv6 連線等需要，可以選擇其他選項。&#xA;&#xA;IPv4 優先：-Djava.net.preferIPv4Stack=true&#xA;預設：不新增額外參數&#xA;IPv6 優先：-Djava.net.preferIPv6Stack=true</sys:String>
+    <sys:String x:Key="Setup.Launch.Options.IpStack.ToolTip">透過設定 Java 虛擬機器參數來設定 Minecraft 的 IP 協議版本偏好。&#xA;一般建議設定為 "IPv4 優先"，這能確保 PCL Shion 大廳正常運作。&#xA;如果有手動 IPv6 連線等需要，可以選擇其他選項。&#xA;&#xA;IPv4 優先：-Djava.net.preferIPv4Stack=true&#xA;預設：不新增額外參數&#xA;IPv6 優先：-Djava.net.preferIPv6Stack=true</sys:String>
     <sys:String x:Key="Setup.Launch.Options.MsAuth.DeviceCode">裝置程式碼流</sys:String>
     <sys:String x:Key="Setup.Launch.Options.MsAuth.Label">微軟驗證方式</sys:String>
     <sys:String x:Key="Setup.Launch.Options.MsAuth.ToolTip">Web 帳戶管理器的微軟驗證流程更為簡單，而裝置程式碼流允許你在任意裝置上開啟網頁進行驗證。&#xA;如果使用 Web 帳戶管理器登入遇到問題，可以嘗試使用裝置程式碼流。&#xA;如果正在公用電腦上臨時登入帳戶，推薦使用裝置程式碼流。&#xA;&#xA;由於部分依賴元件存在較多問題，該選項暫時強制指定為裝置程式碼流。</sys:String>
@@ -2883,7 +2883,7 @@
     <sys:String x:Key="Setup.Log.Export">匯出日誌</sys:String>
     <sys:String x:Key="Setup.Log.ExportAll">匯出全部日誌</sys:String>
     <sys:String x:Key="Setup.Log.ExportFailed">日誌儲存失敗</sys:String>
-    <sys:String x:Key="Setup.Log.ExportFilter">PCL CE 日誌壓縮檔|*.zip</sys:String>
+    <sys:String x:Key="Setup.Log.ExportFilter">PCL Shion 日誌壓縮檔|*.zip</sys:String>
     <sys:String x:Key="Setup.Log.ExportSaveTitle">匯出日誌檔案</sys:String>
     <sys:String x:Key="Setup.Log.ExportSuccess">日誌儲存成功！</sys:String>
     <sys:String x:Key="Setup.Log.OpenDirectory">開啟日誌資料夾</sys:String>
@@ -2894,7 +2894,7 @@
     <!-- Setup.Misc -->
 
     <sys:String x:Key="Setup.Misc.Error.InitFailed">初始化啟動器-雜項頁設定失敗</sys:String>
-    <sys:String x:Key="Setup.Misc.HardwareAcceleration.RestartNotice">此項變更將在重啟 PCL CE 後生效</sys:String>
+    <sys:String x:Key="Setup.Misc.HardwareAcceleration.RestartNotice">此項變更將在重啟 PCL Shion 後生效</sys:String>
     <sys:String x:Key="Setup.Misc.Initialized">已初始化雜項頁設定！</sys:String>
 
     <!-- Setup.Misc.Debug -->
@@ -2939,23 +2939,23 @@
     <sys:String x:Key="Setup.Misc.System.Announcement.ImportantOnly">僅在有重要通知時顯示公告</sys:String>
     <sys:String x:Key="Setup.Misc.System.DisableHardwareAcceleration">停用硬體加速</sys:String>
     <sys:String x:Key="Setup.Misc.System.ExportSettings">匯出設定</sys:String>
-    <sys:String x:Key="Setup.Misc.System.ExportSettings.Filter">PCL CE 設定檔(*.json)|*.json</sys:String>
+    <sys:String x:Key="Setup.Misc.System.ExportSettings.Filter">PCL Shion 設定檔(*.json)|*.json</sys:String>
     <sys:String x:Key="Setup.Misc.System.ExportSettings.SaveTitle">選擇儲存位置</sys:String>
     <sys:String x:Key="Setup.Misc.System.ExportSettings.Success">設定匯出成功！</sys:String>
     <sys:String x:Key="Setup.Misc.System.ImportSettings">匯入設定</sys:String>
     <sys:String x:Key="Setup.Misc.System.ImportSettings.SelectTitle">選擇設定檔</sys:String>
-    <sys:String x:Key="Setup.Misc.System.ImportSettings.Success.Message">設定匯入成功！請重啟 PCL CE 以應用設定……</sys:String>
+    <sys:String x:Key="Setup.Misc.System.ImportSettings.Success.Message">設定匯入成功！請重啟 PCL Shion 以應用設定……</sys:String>
     <sys:String x:Key="Setup.Misc.System.ImportSettings.Success.Restart">重啟</sys:String>
     <sys:String x:Key="Setup.Misc.System.MaxFps">最高動畫幀率</sys:String>
     <sys:String x:Key="Setup.Misc.System.MaxFps.ToolTip">如果你停用了硬體加速，那麼建議你調低最高動畫幀率以防止過多的資源佔用</sys:String>
     <sys:String x:Key="Setup.Misc.System.MaxLogLines">即時日誌行數</sys:String>
     <sys:String x:Key="Setup.Misc.System.MaxLogLines.ToolTip">即時日誌功能中最大顯示行數，超過該值會自動刪除舊的日誌。</sys:String>
     <sys:String x:Key="Setup.Misc.System.MaxLogLines.Unlimited">無限制</sys:String>
-    <sys:String x:Key="Setup.Misc.System.StopUsingPclCe">停止使用 PCL CE</sys:String>
+    <sys:String x:Key="Setup.Misc.System.StopUsingPclCe">停止使用 PCL Shion</sys:String>
     <sys:String x:Key="Setup.Misc.System.StopUsingPclCe.ContinueAndRemove">繼續並清理實例資料夾</sys:String>
-    <sys:String x:Key="Setup.Misc.System.StopUsingPclCe.Message.Final">你確認要繼續操作嗎？這是最後警告！&#xA;與 PCL CE 有關的一切資料將被永久消除！（真的很久！）</sys:String>
-    <sys:String x:Key="Setup.Misc.System.StopUsingPclCe.Message">即將刪除此電腦上與 PCL CE 有關的全部設定、快取、已儲存的帳戶資訊及其他相關資料，並復原已接受的許可協議。完成後，軟體將自動關閉。&#xA;&#xA;但請注意，以下內容無法自動刪除或登出：&#xA;- 此電腦上其他 PCL CE 實例的本機資料&#xA;- Natayark 帳戶&#xA;&#xA;如需同時刪除 Minecraft 實例中的 PCL CE 設定檔，請選擇「繼續並清理實例資料夾」，這不會影響你的遊戲設定、模組、存檔，以及其他資料。&#xA;&#xA;此操作無法復原。您確認要繼續嗎？</sys:String>
-    <sys:String x:Key="Setup.Misc.System.StopUsingPclCe.Title">停止使用 PCL CE？</sys:String>
+    <sys:String x:Key="Setup.Misc.System.StopUsingPclCe.Message.Final">你確認要繼續操作嗎？這是最後警告！&#xA;與 PCL Shion 有關的一切資料將被永久消除！（真的很久！）</sys:String>
+    <sys:String x:Key="Setup.Misc.System.StopUsingPclCe.Message">即將刪除此電腦上與 PCL Shion 有關的全部設定、快取、已儲存的帳戶資訊及其他相關資料，並復原已接受的許可協議。PCL Shion 與此電腦上的 PCL CE 共用這些資料夾，PCL CE 的資料也會一併刪除。完成後，軟體將自動關閉。&#xA;&#xA;但請注意，以下內容無法自動刪除或登出：&#xA;- 此電腦上其他 PCL Shion 實例的本機資料&#xA;- Natayark 帳戶&#xA;&#xA;如需同時刪除 Minecraft 實例中的 PCL Shion 設定檔，請選擇「繼續並清理實例資料夾」，這不會影響你的遊戲設定、模組、存檔，以及其他資料。&#xA;&#xA;此操作無法復原。您確認要繼續嗎？</sys:String>
+    <sys:String x:Key="Setup.Misc.System.StopUsingPclCe.Title">停止使用 PCL Shion？</sys:String>
     <sys:String x:Key="Setup.Misc.System.Telemetry">啟用遙測資料收集</sys:String>
     <sys:String x:Key="Setup.Misc.System.Telemetry.ToolTip">啟用此功能後，啟動器將會收集並上報錯誤與裝置環境資訊，這可以幫助開發者修復潛在的問題、更好的進行規劃和開發。&#xA;若啟用此功能，我們將會收集以下資訊：啟動器內出現的錯誤，啟動器版本資訊與識別碼，使用的 Windows 系統版本與架構，已安裝的實體記憶體大小，NAT 與 IPv6 支援情況，是否使用過原版 PCL、HMCL 或 BakaXL。&#xA;&#xA;這些資料均不與你關聯，我們也絕不會向第三方出售資料。不啟用此功能不會影響你使用其他功能，但可能會影響開發者修復潛在 Bug。&#xA;&#xA;此項更改將在重新啟動啟動器後生效。</sys:String>
     <sys:String x:Key="Setup.Misc.System.Title">系統</sys:String>
@@ -2982,7 +2982,7 @@
     <!-- Setup.Ui.Background -->
 
     <sys:String x:Key="Setup.Ui.Background.Blur">背景模糊</sys:String>
-    <sys:String x:Key="Setup.Ui.Background.Blur.ToolTip">較強的模糊會導致啟動器嚴重掉幀，請謹慎使用。&#xD;不建議在製作模組包時開啟模糊，以確保 PCL CE 在低效能電腦上可以流暢執行。</sys:String>
+    <sys:String x:Key="Setup.Ui.Background.Blur.ToolTip">較強的模糊會導致啟動器嚴重掉幀，請謹慎使用。&#xD;不建議在製作模組包時開啟模糊，以確保 PCL Shion 在低效能電腦上可以流暢執行。</sys:String>
     <sys:String x:Key="Setup.Ui.Background.Clear">清空背景內容</sys:String>
     <sys:String x:Key="Setup.Ui.Background.Clear.Confirm.Message">即將刪除背景內容資料夾中的所有檔案。&#xA;此操作不可復原，是否確認？</sys:String>
     <sys:String x:Key="Setup.Ui.Background.Clear.Success">背景內容已清空！</sys:String>
@@ -2991,7 +2991,7 @@
     <sys:String x:Key="Setup.Ui.Background.ContentAdapt">內容自適應方式</sys:String>
     <sys:String x:Key="Setup.Ui.Background.ImageLoadFailed">圖片載入失敗，嘗試將檔案作為影片播放：{0}</sys:String>
     <sys:String x:Key="Setup.Ui.Background.NoAvailableContent">未偵測到可用背景內容！</sys:String>
-    <sys:String x:Key="Setup.Ui.Background.OpenFolder.ToolTip">將背景圖片和影片放到該資料夾，PCL CE 將會在每次開啟時隨機載入其中的一張圖片或影片&#xA;為提高播放時的流暢度，影片推薦使用H264格式編碼</sys:String>
+    <sys:String x:Key="Setup.Ui.Background.OpenFolder.ToolTip">將背景圖片和影片放到該資料夾，PCL Shion 將會在每次開啟時隨機載入其中的一張圖片或影片&#xA;為提高播放時的流暢度，影片推薦使用H264格式編碼</sys:String>
     <sys:String x:Key="Setup.Ui.Background.PauseVideo">遊戲啟動後暫停影片背景，遊戲退出後重新播放</sys:String>
     <sys:String x:Key="Setup.Ui.Background.PauseVideo.ToolTip">若啟用此項設定，遊戲時將無法重新整理背景</sys:String>
     <sys:String x:Key="Setup.Ui.Background.Refresh">重新整理背景內容</sys:String>
@@ -3035,7 +3035,7 @@
     <sys:String x:Key="Setup.Ui.Basic.LockWindow">鎖定啟動器大小</sys:String>
     <sys:String x:Key="Setup.Ui.Basic.Opacity">不透明度</sys:String>
     <sys:String x:Key="Setup.Ui.Basic.Opacity2">不透明度</sys:String>
-    <sys:String x:Key="Setup.Ui.Basic.ShowLogo">開啟啟動器時顯示 PCL CE 圖示</sys:String>
+    <sys:String x:Key="Setup.Ui.Basic.ShowLogo">開啟啟動器時顯示 PCL Shion 圖示</sys:String>
     <sys:String x:Key="Setup.Ui.Basic.ShowTriviaHint">在啟動遊戲時顯示"你知道嗎"</sys:String>
     <sys:String x:Key="Setup.Ui.Basic.Title">基礎</sys:String>
 
@@ -3146,12 +3146,12 @@
     <sys:String x:Key="Setup.Ui.Music.Clear.Confirm.Message">即將刪除背景音樂資料夾中的所有檔案。&#xA;此操作不可復原，是否確認？</sys:String>
     <sys:String x:Key="Setup.Ui.Music.Delete.Success">背景音樂已刪除！</sys:String>
     <sys:String x:Key="Setup.Ui.Music.Deleting">正在刪除背景音樂……</sys:String>
-    <sys:String x:Key="Setup.Ui.Music.OpenFolder.ToolTip">將背景音樂放到該資料夾，PCL CE 將會播放其中的所有音樂</sys:String>
+    <sys:String x:Key="Setup.Ui.Music.OpenFolder.ToolTip">將背景音樂放到該資料夾，PCL Shion 將會播放其中的所有音樂</sys:String>
     <sys:String x:Key="Setup.Ui.Music.Refresh">重新整理背景音樂</sys:String>
     <sys:String x:Key="Setup.Ui.Music.Refresh.ToolTip">重新整理播放清單，並播放清單中的音樂</sys:String>
     <sys:String x:Key="Setup.Ui.Music.Shuffle">隨機播放</sys:String>
     <sys:String x:Key="Setup.Ui.Music.Smtc">接入系統媒體傳輸控制 (SMTC) 控制項</sys:String>
-    <sys:String x:Key="Setup.Ui.Music.Smtc.ToolTip">啟用此選項後，可以使用系統控制中心和快速鍵等控制 PCL CE 的媒體播放。&#xA;可以與 Lyricify Lite 或 FluentFlyout 等軟體搭配使用。</sys:String>
+    <sys:String x:Key="Setup.Ui.Music.Smtc.ToolTip">啟用此選項後，可以使用系統控制中心和快速鍵等控制 PCL Shion 的媒體播放。&#xA;可以與 Lyricify Lite 或 FluentFlyout 等軟體搭配使用。</sys:String>
     <sys:String x:Key="Setup.Ui.Music.StartInGame">遊戲啟動後自動開始播放，遊戲結束後自動暫停播放</sys:String>
     <sys:String x:Key="Setup.Ui.Music.StopInGame">遊戲啟動後自動暫停播放，遊戲結束後自動開始播放</sys:String>
     <sys:String x:Key="Setup.Ui.Music.Title">背景音樂</sys:String>
@@ -3176,7 +3176,7 @@
 
     <sys:String x:Key="Setup.Update.Changelog.Empty">開發者似乎忘記提供更新摘要了...也許你可以點擊下方看看完整更新紀錄？</sys:String>
     <sys:String x:Key="Setup.Update.Changelog.MoreInfo">有關此更新的更多資訊...</sys:String>
-    <sys:String x:Key="Setup.Update.Changelog.Placeholder">PCL CE 2.14.0 帶來了讓人眼睛一亮的新設計和 Pigeon 智慧的多項功能，同時還帶來了令人愉快的跨實例工作方式，助你提高工作效率。</sys:String>
+    <sys:String x:Key="Setup.Update.Changelog.Placeholder">PCL Shion 2.14.0 帶來了讓人眼睛一亮的新設計和 Pigeon 智慧的多項功能，同時還帶來了令人愉快的跨實例工作方式，助你提高工作效率。</sys:String>
     <sys:String x:Key="Setup.Update.Changelog.Title">關於此更新</sys:String>
     <sys:String x:Key="Setup.Update.Changelog.Unavailable">沒有可用的更新紀錄...</sys:String>
     <sys:String x:Key="Setup.Update.Changelog.View">檢視更新紀錄</sys:String>
@@ -3191,8 +3191,8 @@
     <sys:String x:Key="Setup.Update.Latest">已是最新版本</sys:String>
     <sys:String x:Key="Setup.Update.MirrorChyanCdk.Get">取得 CDK</sys:String>
     <sys:String x:Key="Setup.Update.MirrorChyanCdk.Label">Mirror 醬 CDK</sys:String>
-    <sys:String x:Key="Setup.Update.MirrorChyanCdk.ToolTip">Mirror 醬 (mirrorchyan.com) 是一個付費的第三方應用分發平台，用於提供有償高速下載源。&#xA;這是一項可選服務，不填入 CDK 不影響正常使用與更新。&#xA;如果你有 Mirror 醬的 CDK，可以提供給 PCL CE，啟動器會優先使用他們的高速下載源下載軟體更新，也能紓解社群公益更新伺服器的一些壓力……</sys:String>
-    <sys:String x:Key="Setup.Update.OtherOptions.Placeholder">AquaCL 3 是 PCL CE 的第一個主要更新，帶來了讓人眼睛一亮的新設計，使用了最新開發技術，完全重構了基礎體驗，並更支援 macOS、Linux 等其他平台。</sys:String>
+    <sys:String x:Key="Setup.Update.MirrorChyanCdk.ToolTip">Mirror 醬 (mirrorchyan.com) 是一個付費的第三方應用分發平台，用於提供有償高速下載源。&#xA;這是一項可選服務，不填入 CDK 不影響正常使用與更新。&#xA;如果你有 Mirror 醬的 CDK，可以提供給 PCL Shion，啟動器會優先使用他們的高速下載源下載軟體更新，也能紓解社群公益更新伺服器的一些壓力……</sys:String>
+    <sys:String x:Key="Setup.Update.OtherOptions.Placeholder">AquaCL 3 是 PCL Shion 的第一個主要更新，帶來了讓人眼睛一亮的新設計，使用了最新開發技術，完全重構了基礎體驗，並更支援 macOS、Linux 等其他平台。</sys:String>
     <sys:String x:Key="Setup.Update.OtherOptions.Title">其他更新選項 - 升級到 AquaCL</sys:String>
     <sys:String x:Key="Setup.Update.RestartInstall">重啟安裝</sys:String>
 
@@ -3242,7 +3242,7 @@
 
     <!-- SystemDialog -->
 
-    <sys:String x:Key="SystemDialog.Browser.OpenFailed.Message">PCL CE 無法開啟此網頁。網址已複製到剪貼簿，可手動貼上存取。&#xA;&#xA;網址：{0}</sys:String>
+    <sys:String x:Key="SystemDialog.Browser.OpenFailed.Message">PCL Shion 無法開啟此網頁。網址已複製到剪貼簿，可手動貼上存取。&#xA;&#xA;網址：{0}</sys:String>
     <sys:String x:Key="SystemDialog.Browser.OpenFailed.Title">無法開啟網頁</sys:String>
     <sys:String x:Key="SystemDialog.Fatal.Message.WithFeedbackGuidance">{0}&#xA;&#xA;如果你認為這是啟動器的問題，請提交回饋，以便開發者調查。&#xA;匯出日誌：設定 → 檢視日誌 → 匯出全部日誌</sys:String>
     <sys:String x:Key="SystemDialog.Fatal.Title">致命錯誤</sys:String>
@@ -3252,7 +3252,7 @@
     <sys:String x:Key="SystemDialog.Folder.OpenFailed.Message">無法開啟檔案總管。請嘗試關閉安全軟體（例如 360 安全衛士）。&#xA;&#xA;路徑：{0}</sys:String>
     <sys:String x:Key="SystemDialog.Folder.SelectTitle">選擇資料夾</sys:String>
     <sys:String x:Key="SystemDialog.Startup.DotNetRuntimeOutdated.Message">你的 .NET 桌面執行時已過期或損壞。請重新安裝 .NET 10。</sys:String>
-    <sys:String x:Key="SystemDialog.Startup.InitializationTitle">PCL CE 初始化失敗</sys:String>
+    <sys:String x:Key="SystemDialog.Startup.InitializationTitle">PCL Shion 初始化失敗</sys:String>
 
     <!-- SystemDialog.Error -->
 
@@ -3295,7 +3295,7 @@
     <sys:String x:Key="Tools.GameLink.Error.NetworkTestFailed">取得網路測試結果失敗。請檢視錯誤詳情。</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.ServerExit">在伺服器退出時發生了錯誤！</sys:String>
     <sys:String x:Key="Tools.GameLink.Error.ServerMessage">與大廳伺服器的連線出現錯誤。&#xA;&#xA;原始錯誤資訊：&#xA;{0}</sys:String>
-    <sys:String x:Key="Tools.GameLink.Error.UpdateRequired">請更新到最新版 PCL CE 以使用大廳</sys:String>
+    <sys:String x:Key="Tools.GameLink.Error.UpdateRequired">請更新到最新版 PCL Shion 以使用大廳</sys:String>
     <sys:String x:Key="Tools.GameLink.Eula.Disabled">連線功能已停用！</sys:String>
     <sys:String x:Key="Tools.GameLink.Eula.RevokeConfirm">你確認要復原連線協議授權嗎？</sys:String>
     <sys:String x:Key="Tools.GameLink.Eula.RevokeTitle">復原授權確認</sys:String>
@@ -3336,13 +3336,13 @@
     <!-- Tools.GameLink.Agreement -->
 
     <sys:String x:Key="Tools.GameLink.Agreement.Accept">我已閱讀並同意</sys:String>
-    <sys:String x:Key="Tools.GameLink.Agreement.Body">使用大廳功能即代表你同意下列條款：&#xA;&#xA;我承諾嚴格遵守中國大陸相關法律法規，不會將大廳功能用於違法違規用途。&#xA;我承諾使用大廳功能帶來的一切風險自行承擔。&#xA;我已知曉並同意 PCL CE 收集經處理的本機識別碼、Natayark ID 與其他資訊並在必要時提供給執法部門。&#xA;為保護未成年人個人資訊，使用連線大廳前，我確認我已滿十四歲。&#xA;&#xA;另外，你還需要同意 PCL CE 大廳相關隱私政策及《Natayark OpenID 服務條款》。</sys:String>
-    <sys:String x:Key="Tools.GameLink.Agreement.Description">此處列出了 PCL CE 大廳使用的相關服務檔案及介紹</sys:String>
+    <sys:String x:Key="Tools.GameLink.Agreement.Body">使用大廳功能即代表你同意下列條款：&#xA;&#xA;我承諾嚴格遵守中國大陸相關法律法規，不會將大廳功能用於違法違規用途。&#xA;我承諾使用大廳功能帶來的一切風險自行承擔。&#xA;我已知曉並同意 PCL Shion 及其使用的 PCL CE 大廳服務收集經處理的本機識別碼、Natayark ID 與其他資訊並在必要時提供給執法部門。&#xA;為保護未成年人個人資訊，使用連線大廳前，我確認我已滿十四歲。&#xA;&#xA;另外，你還需要同意 PCL CE 大廳相關隱私政策及《Natayark OpenID 服務條款》。</sys:String>
+    <sys:String x:Key="Tools.GameLink.Agreement.Description">此處列出了 PCL Shion 大廳使用的相關服務檔案及介紹</sys:String>
     <sys:String x:Key="Tools.GameLink.Agreement.NatayarkTerms">Natayark OpenID 服務條款</sys:String>
     <sys:String x:Key="Tools.GameLink.Agreement.NatayarkTermsInfo">檢視 Natayark OpenID 服務條款</sys:String>
     <sys:String x:Key="Tools.GameLink.Agreement.PrivacyPolicy">PCL CE 大廳相關隱私政策</sys:String>
     <sys:String x:Key="Tools.GameLink.Agreement.PrivacyPolicyInfo">了解 PCL CE 如何處理您的個人資訊</sys:String>
-    <sys:String x:Key="Tools.GameLink.Agreement.Title">PCL CE 連線大廳說明與條款</sys:String>
+    <sys:String x:Key="Tools.GameLink.Agreement.Title">PCL Shion 連線大廳說明與條款</sys:String>
 
     <!-- Tools.GameLink.Finish -->
 
@@ -3379,7 +3379,7 @@
     <sys:String x:Key="Tools.GameLink.Natayark.Login">點擊登入 Natayark 帳戶</sys:String>
     <sys:String x:Key="Tools.GameLink.Natayark.LoginComplete">已完成登入操作</sys:String>
     <sys:String x:Key="Tools.GameLink.Natayark.LoginFailed">Naid 登入失敗，請嘗試前往設定重新登入</sys:String>
-    <sys:String x:Key="Tools.GameLink.Natayark.LoginPrompt">PCL CE 將會開啟一個登入頁面，請在瀏覽器中完成登入操作，然後回到啟動器繼續操作。</sys:String>
+    <sys:String x:Key="Tools.GameLink.Natayark.LoginPrompt">PCL Shion 將會開啟一個登入頁面，請在瀏覽器中完成登入操作，然後回到啟動器繼續操作。</sys:String>
     <sys:String x:Key="Tools.GameLink.Natayark.LoginTitle">登入至 Natayark Network</sys:String>
     <sys:String x:Key="Tools.GameLink.Natayark.LogoutComplete">已退出登入！</sys:String>
     <sys:String x:Key="Tools.GameLink.Natayark.LogoutConfirm">你確認要退出登入嗎？</sys:String>
@@ -3410,7 +3410,7 @@
 
     <!-- Tools.Test -->
 
-    <sys:String x:Key="Tools.Test.CeNotice">為便於維護，PCL CE 中不包含百寶箱功能……</sys:String>
+    <sys:String x:Key="Tools.Test.CeNotice">為便於維護，PCL Shion 中不包含百寶箱功能……</sys:String>
     <sys:String x:Key="Tools.Test.Crash.ManualCrash">手動崩潰</sys:String>
     <sys:String x:Key="Tools.Test.Crash.Title">崩潰測試</sys:String>
     <sys:String x:Key="Tools.Test.Dependency.Checking">開始環境檢查……</sys:String>
@@ -3418,7 +3418,7 @@
     <sys:String x:Key="Tools.Test.Dependency.MissingMessage">目前系統環境缺失軟體執行所需依賴"{0}"&#xA;&#xA;點擊確定開啟微軟應用商店安裝</sys:String>
     <sys:String x:Key="Tools.Test.Dependency.Title">依賴檢查</sys:String>
     <sys:String x:Key="Tools.Test.Error.OperationFailed">測試工具操作失敗。請檢視錯誤詳情。</sys:String>
-    <sys:String x:Key="Tools.Test.LaunchCount.Message">PCL CE 已經為你啟動了 {0} 次遊戲了。</sys:String>
+    <sys:String x:Key="Tools.Test.LaunchCount.Message">PCL Shion 已經為你啟動了 {0} 次遊戲了。</sys:String>
     <sys:String x:Key="Tools.Test.LaunchCount.Title">檢視啟動計數</sys:String>
     <sys:String x:Key="Tools.Test.ServerQuery.Title">看眼伺服器</sys:String>
     <sys:String x:Key="Tools.Test.Title">百寶箱</sys:String>
@@ -3454,19 +3454,19 @@
     <!-- Tools.Test.Clean -->
 
     <sys:String x:Key="Tools.Test.Clean.Cleared">快取已清理</sys:String>
-    <sys:String x:Key="Tools.Test.Clean.ClearedMessage">清理了 {0} 個檔案！&#xA;PCL CE 即將自動重啟……</sys:String>
+    <sys:String x:Key="Tools.Test.Clean.ClearedMessage">清理了 {0} 個檔案！&#xA;PCL Shion 即將自動重啟……</sys:String>
     <sys:String x:Key="Tools.Test.Clean.CloseGameFirst">請先關閉所有執行中的遊戲……</sys:String>
-    <sys:String x:Key="Tools.Test.Clean.ConfirmMessage">即將清理遊戲日誌、錯誤報告、快取等檔案。&#xA;雖然應該沒人往這些地方放重要檔案，但還是問一下，是否確認繼續？&#xA;&#xA;在完成清理後，PCL CE 將自動重啟。</sys:String>
+    <sys:String x:Key="Tools.Test.Clean.ConfirmMessage">即將清理遊戲日誌、錯誤報告、快取等檔案。&#xA;雖然應該沒人往這些地方放重要檔案，但還是問一下，是否確認繼續？&#xA;&#xA;在完成清理後，PCL Shion 將自動重啟。</sys:String>
     <sys:String x:Key="Tools.Test.Clean.ConfirmTitle">清理確認</sys:String>
     <sys:String x:Key="Tools.Test.Clean.NoFiles">沒有找到任何可以清理的檔案！</sys:String>
     <sys:String x:Key="Tools.Test.Clean.Title">清理遊戲垃圾</sys:String>
-    <sys:String x:Key="Tools.Test.Clean.ToolTip">清理 PCL CE 的快取與 Minecraft 的日誌、當機報告等垃圾檔案</sys:String>
+    <sys:String x:Key="Tools.Test.Clean.ToolTip">清理 PCL Shion 的快取與 Minecraft 的日誌、當機報告等垃圾檔案</sys:String>
     <sys:String x:Key="Tools.Test.Clean.WaitForDownload">請在所有下載任務完成後再來清理吧……</sys:String>
 
     <!-- Tools.Test.CustomDownload -->
 
     <sys:String x:Key="Tools.Test.CustomDownload.Aborted">{0}已取消！</sys:String>
-    <sys:String x:Key="Tools.Test.CustomDownload.Description">使用 PCL CE 的高速多執行緒下載引擎下載任意檔案。請注意，部分網站（例如 Google Drive、MEGA）可能會報錯 (403) 已禁止，無法正常下載。</sys:String>
+    <sys:String x:Key="Tools.Test.CustomDownload.Description">使用 PCL Shion 的高速多執行緒下載引擎下載任意檔案。請注意，部分網站（例如 Google Drive、MEGA）可能會報錯 (403) 已禁止，無法正常下載。</sys:String>
     <sys:String x:Key="Tools.Test.CustomDownload.FileName">檔名</sys:String>
     <sys:String x:Key="Tools.Test.CustomDownload.Finished">{0}完成！</sys:String>
     <sys:String x:Key="Tools.Test.CustomDownload.LoaderName">自訂下載檔案：{0} </sys:String>
@@ -3486,7 +3486,7 @@
     <sys:String x:Key="Tools.Test.Luck.MsgboxTitle">今日人品 - {0}</sys:String>
     <sys:String x:Key="Tools.Test.Luck.Rating0">（是百分制哦）</sys:String>
     <sys:String x:Key="Tools.Test.Luck.Rating10">不會吧！</sys:String>
-    <sys:String x:Key="Tools.Test.Luck.Rating100">100！100！&#xA;隱藏主題 歐皇…… 不對，社群版應該沒有這東西……</sys:String>
+    <sys:String x:Key="Tools.Test.Luck.Rating100">100！100！&#xA;隱藏主題 歐皇…… 不對，PCL Shion 應該沒有這東西……</sys:String>
     <sys:String x:Key="Tools.Test.Luck.Rating30">嗚...</sys:String>
     <sys:String x:Key="Tools.Test.Luck.Rating40">勉強還行吧...</sys:String>
     <sys:String x:Key="Tools.Test.Luck.Rating60">還行啦，還行啦</sys:String>
@@ -3499,11 +3499,11 @@
     <sys:String x:Key="Tools.Test.Shortcut.ConfirmMessage">這個捷徑不會自動移除，在刪除/移動啟動器前請手動移除捷徑。&#xA;&#xA;{0}位置: {1}&#xA;{2}位置: {3}</sys:String>
     <sys:String x:Key="Tools.Test.Shortcut.Created">已在{0}建立捷徑</sys:String>
     <sys:String x:Key="Tools.Test.Shortcut.Desktop">桌面</sys:String>
-    <sys:String x:Key="Tools.Test.Shortcut.FileName">PCL CE{0}</sys:String>
+    <sys:String x:Key="Tools.Test.Shortcut.FileName">PCL Shion{0}</sys:String>
     <sys:String x:Key="Tools.Test.Shortcut.SelectLocation">選擇捷徑位置</sys:String>
     <sys:String x:Key="Tools.Test.Shortcut.StartMenu">開始選單</sys:String>
     <sys:String x:Key="Tools.Test.Shortcut.Title">建立捷徑</sys:String>
-    <sys:String x:Key="Tools.Test.Shortcut.ToolTip">建立一個指向 PCL CE 執行檔的捷徑</sys:String>
+    <sys:String x:Key="Tools.Test.Shortcut.ToolTip">建立一個指向 PCL Shion 執行檔的捷徑</sys:String>
 
     <!-- Tools.Test.Skin -->
 
@@ -3521,17 +3521,17 @@
     <sys:String x:Key="Update.Action">更新</sys:String>
     <sys:String x:Key="Update.Available">啟動器有新版本可用（{0} -&gt; {1}）&#xA;是否立即更新？</sys:String>
     <sys:String x:Key="Update.Check.Failed">無法取得最新版本資訊，請檢查網路連線</sys:String>
-    <sys:String x:Key="Update.CommunityNotice.Body">你正在使用來自 PCL-Community 的 PCL CE，遇到問題請不要向原版儲存庫回饋！&#xA;PCL-Community 及其成員與龍騰貓躍無從屬關係，且均不會為您的使用做擔保。&#xA;&#xA;如果你是意外下載的 PCL CE，建議下載原版 PCL 使用。&#xA;如果你是意外下載的 PCL CE，建議下載原版 PCL 使用。&#xA;如果你是意外下載的 PCL CE，建議下載原版 PCL 使用。&#xA;&#xA;該版本與原版的特性區別：&#xA;- 主題切換：僅部分固定藍色系主題，沒有計劃新增其他主題。&#xA;- 百寶箱：缺失部分原版中的內容（回聲洞、千萬別點）。&#xA;&#xA;此提示會在啟動器更新後展示一次。</sys:String>
+    <sys:String x:Key="Update.CommunityNotice.Body">你正在使用 PCL 詩音（Shion），這是基於 PCL-Community 的 PCL CE 修改的第三方版本，遇到問題請向 PCL Shion 儲存庫回饋，不要向原版 PCL 或 PCL CE 的儲存庫回饋！&#xA;PCL Shion 及其維護者與 PCL-Community、龍騰貓躍均無從屬關係，PCL-Community 及其成員與龍騰貓躍也無從屬關係，且以上各方均不會為您的使用做擔保。&#xA;&#xA;如果你是意外下載的 PCL Shion，建議下載原版 PCL 使用。&#xA;如果你是意外下載的 PCL Shion，建議下載原版 PCL 使用。&#xA;如果你是意外下載的 PCL Shion，建議下載原版 PCL 使用。&#xA;&#xA;該版本與原版的特性區別：&#xA;- 主題切換：僅部分固定藍色系主題，沒有計劃新增其他主題。&#xA;- 百寶箱：缺失部分原版中的內容（回聲洞、千萬別點）。&#xA;&#xA;此提示會在啟動器更新後展示一次。</sys:String>
     <sys:String x:Key="Update.CommunityNotice.Confirm">我知道了</sys:String>
-    <sys:String x:Key="Update.CommunityNotice.Title">PCL CE 版本說明</sys:String>
+    <sys:String x:Key="Update.CommunityNotice.Title">PCL Shion 版本說明</sys:String>
     <sys:String x:Key="Update.Error.FetchFailed">取得啟動器更新失敗，請檢查網路連線</sys:String>
     <sys:String x:Key="Update.Error.FileNotFound">找不到更新檔案</sys:String>
     <sys:String x:Key="Update.Error.OperationFailed">更新操作失敗。請檢視錯誤詳情。</sys:String>
     <sys:String x:Key="Update.Error.Sha256Mismatch">更新檔案 SHA256 不正確，應該為 {0}，實際為 {1}</sys:String>
     <sys:String x:Key="Update.Error.UnableToGetUpdate">無法取得更新</sys:String>
     <sys:String x:Key="Update.Error.UpdateBlocked">更新失敗</sys:String>
-    <sys:String x:Key="Update.Error.UpdateBlockedMessage">由於被 Windows 安全中心攔截，或存在權限問題，導致 PCL CE 無法更新。&#xA;請將 PCL CE 所在資料夾加入白名單，或手動用 {0}PCL\Plain Craft Launcher Community Edition.exe 取代目前檔案！</sys:String>
-    <sys:String x:Key="Update.Service.PclCe">PCL CE 服務</sys:String>
+    <sys:String x:Key="Update.Error.UpdateBlockedMessage">由於被 Windows 安全中心攔截，或存在權限問題，導致 PCL Shion 無法更新。&#xA;請將 PCL Shion 所在資料夾加入白名單，或手動用 {0}PCL\Plain Craft Launcher Community Edition.exe 取代目前檔案！</sys:String>
+    <sys:String x:Key="Update.Service.PclCe">PCL Shion 服務</sys:String>
     <sys:String x:Key="Update.Title">啟動器更新</sys:String>
 
     <!-- Update.Task -->
@@ -3576,9 +3576,12 @@
     <sys:String x:Key="Watcher.Progress.OpenAlLoaded">日誌 4/5：OpenAL 已載入</sys:String>
     <sys:String x:Key="Watcher.Progress.TexturesLoaded">日誌 5/5：材質已載入</sys:String>
     <sys:String x:Key="Watcher.Progress.UserSet">日誌 2/5：遊戲使用者已設定</sys:String>
-    <sys:String x:Key="Watcher.SecurityBlocked">由於反作弊或安全軟體攔截，PCL CE 無法操作遊戲視窗</sys:String>
+    <sys:String x:Key="Watcher.SecurityBlocked">由於反作弊或安全軟體攔截，PCL Shion 無法操作遊戲視窗</sys:String>
     <sys:String x:Key="Watcher.Start">開始 Minecraft 日誌監控</sys:String>
     <sys:String x:Key="Watcher.WindowLoaded">Minecraft 視窗已載入：{0}（{1}）</sys:String>
     <sys:String x:Key="Watcher.WindowMaximized">已最大化 Minecraft 視窗：{0}</sys:String>
 
+    <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion 暫不提供應用程式內更新，請前往 {0} 手動下載新版本。</sys:String>
+    <sys:String x:Key="Setup.Update.Shion.OpenReleases">前往下載頁面</sys:String>
+    <sys:String x:Key="Setup.Update.Shion.Status">暫不提供應用程式內更新</sys:String>
 </ResourceDictionary>

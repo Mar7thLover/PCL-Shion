@@ -49,8 +49,8 @@ public partial class PageLaunchRight : IRefreshable
         var input = ModMain.MyMsgBoxInput(Lang.Text("Launch.Right.CommunityHint.InputTitle"));
         if (string.IsNullOrWhiteSpace(input))
             return;
-        input = new string(input.Where(char.IsAsciiLetter).ToArray()).ToLower();
-        if (input.Contains("pclcommunity"))
+        input = new string(input.Where(char.IsAsciiLetterOrDigit).ToArray()).ToLower();
+        if (input.Contains("mar7thlover"))
         {
             ModAnimation.AniDispose(PanHint, true);
             States.Hint.CEMessage = false;

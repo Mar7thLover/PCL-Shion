@@ -115,7 +115,7 @@
                                         FontSize="42"
                                         FontWeight="Bold"
                                         Foreground="{DynamicResource ColorBrush1}"
-                                        Text="PCL CE"
+                                        Text="PCL Shion"
                                         TextWrapping="Wrap" />
 
                                     <TextBlock
@@ -177,7 +177,7 @@
                             Text="{DynamicResource Setup.Language.Banner.SubmitPullRequest}"
                             SvgIcon="lucide/git-pull-request-arrow"
                             local:CustomEventService.EventType="OpenUrl"
-                            local:CustomEventService.EventData="https://github.com/PCL-Community/PCL-CE/pulls" />
+                            local:CustomEventService.EventData="https://github.com/Mar7thLover/PCL-Shion/pulls" />
                     </StackPanel>
                 </StackPanel>
             </local:MyCard>

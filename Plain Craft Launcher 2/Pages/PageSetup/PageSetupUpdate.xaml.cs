@@ -26,7 +26,12 @@ public partial class PageSetupUpdate
         ComboSystemUpdateChannel.SelectedIndex = (int)Config.Update.UpdateChannel;
         ComboSystemUpdateMode.SelectedIndex = (int)Config.Update.UpdateMode;
 
-        TextCurrentVersion.Text = "PCL CE " + VersionNameFormat(ModBase.versionBaseName);
+        TextCurrentVersion.Text = "PCL Shion " + VersionNameFormat(ModBase.versionBaseName);
+        // PCL Shion 暂不提供应用内更新：展示前往 GitHub Releases 的提示，并隐藏更新源与更新渠道等设置
+        var inAppUpdate = UpdateManager.InAppUpdateEnabled;
+        CardShionNotice.Visibility = inAppUpdate ? Visibility.Collapsed : Visibility.Visible;
+        CardUpdateSettings.Visibility = inAppUpdate ? Visibility.Visible : Visibility.Collapsed;
+        TextShionNotice.Text = Lang.Text("Setup.Update.Shion.Notice", ModBase.shionReleasesUrl);
         ModAnimation.AniControlEnabled -= 1;
         CheckUpdate();
     }
@@ -63,6 +68,16 @@ public partial class PageSetupUpdate
 
     public async void CheckUpdate()
     {
+        if (!UpdateManager.InAppUpdateEnabled)
+        {
+            // PCL Shion 不检查更新，也不访问上游更新源
+            CardUpdate.Visibility = Visibility.Collapsed;
+            CardCheck.Visibility = Visibility.Visible;
+            BtnCheckAgain.Visibility = Visibility.Collapsed;
+            TextCurrentDesc.Text = Lang.Text("Setup.Update.Shion.Status");
+            return;
+        }
+
         ModBase.Log("[Update] 开始检查更新");
         CardUpdate.Visibility = Visibility.Collapsed;
         CardCheck.Visibility = Visibility.Visible;
@@ -79,7 +94,7 @@ public partial class PageSetupUpdate
                         UpdateManager.IsCurrentVersionBeta
                             ? UpdateChannel.beta
                             : UpdateChannel.stable, SystemInfo.IsArm64System ? UpdateArch.arm64 : UpdateArch.x64);
-                    TextUpdateName.Text = "PCL CE " + VersionNameFormat(updateInfo.VersionName);
+                    TextUpdateName.Text = "PCL Shion " + VersionNameFormat(updateInfo.VersionName);
                     var summary = updateInfo.Changelog.Between("<summary>", "</summary>");
                     if (!updateInfo.Changelog.Contains("<summary>") || string.IsNullOrWhiteSpace(summary.Trim()))
                         TextChangelog.Text = Lang.Text("Setup.Update.Changelog.Empty");
@@ -256,7 +271,12 @@ public partial class PageSetupUpdate
 
     private void BtnChangelog_Click(object sender, MouseButtonEventArgs e)
     {
-        ModBase.OpenWebsite("https://github.com/PCL-Community/PCL2-CE/releases/v" + ModBase.versionBaseName);
+        ModBase.OpenWebsite(ModBase.shionReleasesUrl);
+    }
+
+    private void BtnShionReleases_Click(object sender, MouseButtonEventArgs e)
+    {
+        ModBase.OpenWebsite(ModBase.shionReleasesUrl);
     }
 
     public string VersionNameFormat(string str)

@@ -10,4 +10,7 @@
     <sys:String x:Key="Meta.Code">es-ES</sys:String>
     <sys:String x:Key="Meta.Name">Español (España)</sys:String>
 
+    <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion does not provide in-app updates yet. Please download new versions manually from {0}.</sys:String>
+    <sys:String x:Key="Setup.Update.Shion.OpenReleases">Open download page</sys:String>
+    <sys:String x:Key="Setup.Update.Shion.Status">In-app updates are not available</sys:String>
 </ResourceDictionary>

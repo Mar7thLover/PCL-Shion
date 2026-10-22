@@ -56,6 +56,13 @@ public static class ModBase
     public const string versionBranchName = "Publish";
     public const string versionBranchCode = "0";
 #endif
+
+    // PCL Shion 仓库地址（问题反馈与新版本下载均指向此处，而非官方 PCL 或 PCL CE）
+    public const string shionRepoUrl = "https://github.com/Mar7thLover/PCL-Shion";
+    public const string shionIssuesUrl = shionRepoUrl + "/issues";
+    public const string shionReleasesUrl = shionRepoUrl + "/releases";
+    public const string shionApiRepoUrl = "https://api.github.com/repos/Mar7thLover/PCL-Shion";
+
     /// <summary>
     ///     主窗口句柄。
     /// </summary>
@@ -3560,7 +3567,7 @@ public static class ModBase
                                  Lang.Text("Common.Action.OpenFolder"),
                                  Lang.Text("Setup.Feedback.Reminder.NotNeeded")) ==
                              1)) OpenExplorer(exePath + @"PCL\Log\");
-        OpenWebsite("https://github.com/PCL-Community/PCL2-CE/issues/");
+        OpenWebsite(shionIssuesUrl);
     }
 
     public static bool CanFeedback(bool showHint)
