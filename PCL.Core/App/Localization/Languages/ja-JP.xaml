@@ -22,6 +22,7 @@
     <sys:String x:Key="Application.EnvironmentWarning.TempFolder">- PCL Shion は一時ディレクトリで実行中です。PCL Shion をアーカイブから展開してからご使用ください。そうしないと、ゲームのセーブデータや設定が失われる可能性があります</sys:String>
     <sys:String x:Key="Application.EnvironmentWarning.Title">環境警報</sys:String>
     <sys:String x:Key="Application.EnvironmentWarning.WindowsVersion">- Windows 版本は推奨要件を満たしておらず、少なくともWindows 10 1809が推奨されており、Windowsシステムのアップグレードを検討することをお勧めします</sys:String>
+    <sys:String x:Key="Main.Title.NewsDetail">ニュースの詳細</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.CheckIn">毎日チェックインを表示</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.Hint">ウィンドウが狭いとき、サイドバーはホームの内容の上に移動します</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.News">Minecraft ニュースを表示</sys:String>
@@ -46,6 +47,11 @@
     <sys:String x:Key="Widget.Duration.HoursMinutes">{0} 時間 {1} 分</sys:String>
     <sys:String x:Key="Widget.Duration.LessThanMinute">1 分未満</sys:String>
     <sys:String x:Key="Widget.Duration.Minutes">{0} 分</sys:String>
+    <sys:String x:Key="Widget.News.Detail.Failed">記事の読み込みに失敗しました</sys:String>
+    <sys:String x:Key="Widget.News.Detail.Loading">記事を読み込み中…</sys:String>
+    <sys:String x:Key="Widget.News.Detail.NoContent">この記事はランチャー内で表示できません。ブラウザーで開いてお読みください。</sys:String>
+    <sys:String x:Key="Widget.News.Detail.OpenInBrowser">ブラウザーで開く</sys:String>
+    <sys:String x:Key="Widget.News.Detail.Retry">再試行</sys:String>
     <sys:String x:Key="Widget.News.Empty">ニュースはありません</sys:String>
     <sys:String x:Key="Widget.News.Failed">ニュースの取得に失敗しました</sys:String>
     <sys:String x:Key="Widget.News.Loading">ニュースを読み込み中…</sys:String>

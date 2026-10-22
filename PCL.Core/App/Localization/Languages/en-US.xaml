@@ -1922,6 +1922,7 @@
     <sys:String x:Key="Main.Title.GameLog">Launch log</sys:String>
     <sys:String x:Key="Main.Title.InstanceSelect">Selection</sys:String>
     <sys:String x:Key="Main.Title.InstanceSetup">Properties - {0}</sys:String>
+    <sys:String x:Key="Main.Title.NewsDetail">News</sys:String>
     <sys:String x:Key="Main.Title.ResourceDownload">Resource download - {0}</sys:String>
     <sys:String x:Key="Main.Title.SaveManagement">Save management - {0}</sys:String>
     <sys:String x:Key="Main.Title.TaskManager">Task manager</sys:String>
@@ -3672,6 +3673,11 @@
 
     <!-- Widget.News -->
 
+    <sys:String x:Key="Widget.News.Detail.Failed">Failed to load the article</sys:String>
+    <sys:String x:Key="Widget.News.Detail.Loading">Loading article…</sys:String>
+    <sys:String x:Key="Widget.News.Detail.NoContent">This article can't be shown in the launcher. You can read it in your browser instead.</sys:String>
+    <sys:String x:Key="Widget.News.Detail.OpenInBrowser">Open in browser</sys:String>
+    <sys:String x:Key="Widget.News.Detail.Retry">Retry</sys:String>
     <sys:String x:Key="Widget.News.Empty">No news yet</sys:String>
     <sys:String x:Key="Widget.News.Failed">Failed to load news</sys:String>
     <sys:String x:Key="Widget.News.Loading">Loading news…</sys:String>

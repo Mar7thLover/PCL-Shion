@@ -73,9 +73,43 @@ public partial class PageHomepageNewsView : MyPageRight, IRefreshable
         ModBase.OpenWebsite(url!);
     }
 
+    /// <summary>
+    ///     在启动器内打开新闻详情页，显示新闻的正文。链接不安全时只记录日志。
+    ///     详情页无法创建时，退回到在浏览器中打开。
+    /// </summary>
+    public static void OpenNewsDetail(NewsItem? item)
+    {
+        if (item is null)
+            return;
+        if (!NewsViewModel.CanOpenNewsLink(item.Url))
+        {
+            LogWrapper.Warn("Homepage", $"已拦截不安全的 Minecraft 信息流链接：{item.Url ?? "<null>"}");
+            return;
+        }
+
+        PageNewsDetail page;
+        try
+        {
+            page = new PageNewsDetail(item);
+        }
+        catch (Exception ex)
+        {
+            LogWrapper.Warn(ex, "Homepage", "创建新闻详情页失败，改为在浏览器中打开");
+            OpenNewsLink(item.Url);
+            return;
+        }
+
+        ModMain.frmMain?.PageChange(new FormMain.PageStackData
+        {
+            page = FormMain.PageType.NewsDetail,
+            newsItem = item,
+            newsPage = page
+        });
+    }
+
     private void BtnOpenRead_Click(object sender, EventArgs e)
     {
         if (sender is FrameworkElement { DataContext: NewsItem item })
-            OpenNewsLink(item.Url);
+            OpenNewsDetail(item);
     }
 }

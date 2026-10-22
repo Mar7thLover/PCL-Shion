@@ -28,11 +28,6 @@ public partial class PageLaunchRight : IRefreshable
         Loaded += (_, _) => Refresh();
         Loaded += (_, _) => RefreshWidgetsCore(true);
         Unloaded += (_, _) => _DisposeHomepageLiveWatcher();
-        SizeChanged += (_, e) =>
-        {
-            if (e.WidthChanged)
-                UpdateWidgetLayout(e.NewSize.Width);
-        };
     }
 
     private void Init()
@@ -903,28 +898,15 @@ public partial class PageLaunchRight : IRefreshable
 
     #endregion
 
-    #region 侧栏小工具
-
-    /// <summary>
-    ///     页面宽度不小于此值时，小工具位于首页内容右侧；否则位于首页内容上方。
-    /// </summary>
-    private const double widgetWideThreshold = 760d;
-
-    /// <summary>
-    ///     小工具位于首页内容右侧时的列宽。
-    /// </summary>
-    private const double widgetColumnWidth = 250d;
+    #region 首页小工具
 
     // 控件只创建一次并缓存，开关关闭时仅从 PanWidgets 移除
     private CheckInWidget? checkInWidget;
     private RecentPlayWidget? recentPlayWidget;
     private NewsWidget? newsWidget;
 
-    // 当前应用到 PanLayout 的布局：true 为内容右侧，false 为内容上方，null 为尚未应用
-    private bool? widgetLayoutWide;
-
     /// <summary>
-    ///     根据 “首页侧栏” 的显示开关刷新小工具：按开关创建、添加或移除控件，并更新侧栏布局。
+    ///     根据 “首页侧栏” 的显示开关刷新小工具：按开关创建、添加或移除控件。
     ///     可在任意线程调用。页面尚未加载（或当前不在首页）时不做任何事，页面加载时会自动同步。
     /// </summary>
     public void RefreshWidgets()
@@ -974,9 +956,8 @@ public partial class PageLaunchRight : IRefreshable
                 children.Insert(i, widget);
             }
 
-            // 全部关闭时，整个侧栏隐藏
+            // 全部关闭时，整个小工具区域隐藏
             PanWidgets.Visibility = wanted.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
-            UpdateWidgetLayout(ActualWidth);
 
             // 刷新已显示的控件
             var toRefresh = refreshContent ? wanted.Where(widget => !created.Contains(widget)).ToList() : readded;
@@ -1036,38 +1017,6 @@ public partial class PageLaunchRight : IRefreshable
         catch (Exception ex)
         {
             ModBase.Log(ex, $"刷新首页侧栏小工具失败：{widget.GetType().Name}");
-        }
-    }
-
-    /// <summary>
-    ///     按页面宽度在 “内容右侧” 与 “内容上方” 两种侧栏布局间切换。
-    /// </summary>
-    /// <param name="pageWidth">右侧页面的可用宽度。</param>
-    private void UpdateWidgetLayout(double pageWidth)
-    {
-        if (pageWidth <= 0d)
-            return; // 尚未完成布局，等待 SizeChanged
-        var wide = pageWidth >= widgetWideThreshold;
-        if (widgetLayoutWide == wide)
-            return;
-        widgetLayoutWide = wide;
-        if (wide)
-        {
-            // 内容在左，小工具在右侧单独一列
-            Grid.SetRow(PanMain, 0);
-            Grid.SetRow(PanWidgets, 0);
-            Grid.SetColumn(PanWidgets, 1);
-            PanWidgets.Width = widgetColumnWidth;
-            PanWidgets.Margin = new Thickness(15d, 0d, 0d, 0d);
-        }
-        else
-        {
-            // 小工具在内容上方，与内容同宽
-            Grid.SetRow(PanWidgets, 0);
-            Grid.SetColumn(PanWidgets, 0);
-            Grid.SetRow(PanMain, 1);
-            PanWidgets.Width = double.NaN;
-            PanWidgets.Margin = new Thickness(0d);
         }
     }
 

@@ -88,7 +88,6 @@ public partial class NewsWidget : MyCard
             var items = _viewModel.NewsItems.Take(ItemCount).ToList();
             foreach (var news in items)
             {
-                var url = news.Url;
                 var title = news.Title ?? "";
                 var row = new MyListItem
                 {
@@ -97,7 +96,7 @@ public partial class NewsWidget : MyCard
                     Type = MyListItem.CheckType.Clickable,
                     ToolTip = title
                 };
-                row.Click += (_, _) => PageHomepageNewsView.OpenNewsLink(url);
+                row.Click += (_, _) => PageHomepageNewsView.OpenNewsDetail(news);
                 PanItems.Children.Add(row);
             }
 

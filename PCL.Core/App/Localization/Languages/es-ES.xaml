@@ -10,6 +10,7 @@
     <sys:String x:Key="Meta.Code">es-ES</sys:String>
     <sys:String x:Key="Meta.Name">Español (España)</sys:String>
 
+    <sys:String x:Key="Main.Title.NewsDetail">Noticia</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.CheckIn">Mostrar registro diario</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.Hint">Cuando la ventana es estrecha, la barra lateral se mueve sobre el contenido de inicio</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.News">Mostrar noticias de Minecraft</sys:String>
@@ -34,6 +35,11 @@
     <sys:String x:Key="Widget.Duration.HoursMinutes">{0} h {1} min</sys:String>
     <sys:String x:Key="Widget.Duration.LessThanMinute">menos de 1 min</sys:String>
     <sys:String x:Key="Widget.Duration.Minutes">{0} min</sys:String>
+    <sys:String x:Key="Widget.News.Detail.Failed">No se pudo cargar el artículo</sys:String>
+    <sys:String x:Key="Widget.News.Detail.Loading">Cargando artículo…</sys:String>
+    <sys:String x:Key="Widget.News.Detail.NoContent">Este artículo no se puede mostrar en el lanzador. Puedes leerlo en tu navegador.</sys:String>
+    <sys:String x:Key="Widget.News.Detail.OpenInBrowser">Abrir en el navegador</sys:String>
+    <sys:String x:Key="Widget.News.Detail.Retry">Reintentar</sys:String>
     <sys:String x:Key="Widget.News.Empty">No hay noticias</sys:String>
     <sys:String x:Key="Widget.News.Failed">Error al cargar las noticias</sys:String>
     <sys:String x:Key="Widget.News.Loading">Cargando noticias…</sys:String>

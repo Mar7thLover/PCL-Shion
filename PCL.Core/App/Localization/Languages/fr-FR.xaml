@@ -287,6 +287,7 @@ Ce que vous pouvez essayer
     <sys:String x:Key="Download.Comp.Category.Energy">Énergie</sys:String>
     <sys:String x:Key="Download.Comp.Category.Entities">Entités</sys:String>
     <sys:String x:Key="Download.Comp.Category.Equipment">Équipement</sys:String>
+    <sys:String x:Key="Main.Title.NewsDetail">Actualité</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.CheckIn">Afficher le check-in quotidien</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.Hint">Lorsque la fenêtre est étroite, la barre latérale passe au-dessus du contenu de l'accueil</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.News">Afficher les actualités Minecraft</sys:String>
@@ -311,6 +312,11 @@ Ce que vous pouvez essayer
     <sys:String x:Key="Widget.Duration.HoursMinutes">{0} h {1} min</sys:String>
     <sys:String x:Key="Widget.Duration.LessThanMinute">moins d'1 min</sys:String>
     <sys:String x:Key="Widget.Duration.Minutes">{0} min</sys:String>
+    <sys:String x:Key="Widget.News.Detail.Failed">Échec du chargement de l'article</sys:String>
+    <sys:String x:Key="Widget.News.Detail.Loading">Chargement de l'article…</sys:String>
+    <sys:String x:Key="Widget.News.Detail.NoContent">Cet article ne peut pas être affiché dans le lanceur. Vous pouvez le lire dans votre navigateur.</sys:String>
+    <sys:String x:Key="Widget.News.Detail.OpenInBrowser">Ouvrir dans le navigateur</sys:String>
+    <sys:String x:Key="Widget.News.Detail.Retry">Réessayer</sys:String>
     <sys:String x:Key="Widget.News.Empty">Aucune actualité</sys:String>
     <sys:String x:Key="Widget.News.Failed">Échec du chargement des actualités</sys:String>
     <sys:String x:Key="Widget.News.Loading">Chargement des actualités…</sys:String>

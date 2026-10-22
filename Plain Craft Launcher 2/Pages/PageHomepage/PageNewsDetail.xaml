@@ -1,0 +1,45 @@
+<local:MyPageRight x:Class="PCL.PageNewsDetail"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:local="clr-namespace:PCL"
+                   PanScroll="{Binding ElementName=PanBack}">
+    <local:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel x:Name="PanMain" Margin="25,25,25,15">
+            <!-- 标题、作者与日期、头图直接取自新闻列表，正文加载完成后填入 PanBody -->
+            <local:MyCard x:Name="CardArticle" Margin="0,0,0,15" HasMouseAnimation="False">
+                <StackPanel Margin="25,20,25,22">
+                    <TextBlock x:Name="LabTitle" FontSize="22" FontWeight="Bold" TextWrapping="Wrap"
+                               TextTrimming="None" />
+                    <TextBlock x:Name="LabMeta" Margin="0,6,0,0" FontSize="13" TextWrapping="Wrap"
+                               TextTrimming="None" Foreground="{DynamicResource ColorBrushGray2}" />
+                    <local:MyImage x:Name="ImgHero" Margin="0,14,0,0" MaxHeight="260" HorizontalAlignment="Center"
+                                   Stretch="Uniform" StretchDirection="DownOnly" CornerRadius="6" LoadingSource=""
+                                   RenderOptions.BitmapScalingMode="HighQuality" Visibility="Collapsed" />
+
+                    <!-- 正文 -->
+                    <StackPanel x:Name="PanBody" Margin="0,16,0,0" Visibility="Collapsed" />
+
+                    <!-- 加载中 / 失败 / 没有正文 -->
+                    <StackPanel x:Name="PanState" Margin="0,12,0,0">
+                        <local:MyLoading x:Name="PanLoading" Text="{DynamicResource Widget.News.Detail.Loading}"
+                                         HorizontalAlignment="Center" Margin="0,4" />
+                        <StackPanel x:Name="PanFailed" Visibility="Collapsed">
+                            <TextBlock x:Name="LabFailed" FontSize="14" TextWrapping="Wrap" TextTrimming="None" />
+                            <TextBlock x:Name="LabFailedDetail" Margin="0,4,0,0" FontSize="12" TextWrapping="Wrap"
+                                       TextTrimming="None" Foreground="{DynamicResource ColorBrushGray2}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <WrapPanel Margin="0,16,0,0">
+                        <local:MyButton x:Name="BtnRetry" Height="35" MinWidth="110" Margin="0,0,12,0"
+                                        Text="{DynamicResource Widget.News.Detail.Retry}" ColorType="Highlight"
+                                        Visibility="Collapsed" Click="BtnRetry_Click" />
+                        <local:MyButton x:Name="BtnBrowser" Height="35" MinWidth="150"
+                                        Text="{DynamicResource Widget.News.Detail.OpenInBrowser}"
+                                        Click="BtnBrowser_Click" />
+                    </WrapPanel>
+                </StackPanel>
+            </local:MyCard>
+        </StackPanel>
+    </local:MyScrollViewer>
+</local:MyPageRight>

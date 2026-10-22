@@ -19,6 +19,7 @@ using PCL.Core.Utils;
 using PCL.Core.Utils.OS;
 using PCL.Core.Utils.Validate;
 using PCL.Network;
+using NewsItem = PCL.Core.Model.Tools.News.NewsItem;
 
 namespace PCL;
 
@@ -303,6 +304,9 @@ public partial class FormMain
         }, "Start Loader", ThreadPriority.BelowNormal);
 
         ModBase.Log($"[Start] 第三阶段加载用时：{TimeUtils.GetTimeTick() - ModBase.applicationStartTick} ms");
+#if DEBUG
+        DebugSnapshot.StartIfRequested();
+#endif
     }
 
     // 根据打开次数触发的事件
@@ -1413,6 +1417,11 @@ public partial class FormMain
         ///     存档详细管理，这是一个副页面。
         /// </summary>
         VersionSaves = 12,
+
+        /// <summary>
+        ///     Minecraft 新闻详情。这是一个副页面。
+        /// </summary>
+        NewsDetail = 13,
     }
 
     /// <summary>
@@ -1505,6 +1514,10 @@ public partial class FormMain
             case PageType.HelpDetail:
             {
                 return stack.helpPage?.Title ?? "";
+            }
+            case PageType.NewsDetail:
+            {
+                return Lang.Text("Main.Title.NewsDetail");
             }
             case PageType.VersionSaves:
             {
@@ -1617,6 +1630,16 @@ public partial class FormMain
         /// </summary>
         public PageHelpDetail? helpPage;
 
+        /// <summary>
+        ///     新闻详情页要显示的新闻。仅在 <see cref="PageType.NewsDetail"/> 中使用。
+        /// </summary>
+        public NewsItem? newsItem;
+
+        /// <summary>
+        ///     新闻详情页实例。仅在 <see cref="PageType.NewsDetail"/> 中使用；为空时会按 <see cref="newsItem"/> 创建。
+        /// </summary>
+        public PageNewsDetail? newsPage;
+
         public PageType page;
 
         public override bool Equals(object other)
@@ -1630,6 +1653,10 @@ public partial class FormMain
                     return false;
                 if (helpPage is not null || pageOther.helpPage is not null)
                     return ReferenceEquals(helpPage, pageOther.helpPage);
+                if (newsItem is not null || pageOther.newsItem is not null)
+                    return ReferenceEquals(newsItem, pageOther.newsItem) ||
+                           (newsItem is not null && pageOther.newsItem is not null &&
+                            string.Equals(newsItem.Url, pageOther.newsItem.Url, StringComparison.OrdinalIgnoreCase));
                 if (additional is null) return pageOther.additional is null;
 
                 return pageOther.additional is not null && additional.Equals(pageOther.additional);
@@ -1928,6 +1955,14 @@ public partial class FormMain
                         if (stack.helpPage is null)
                             throw new InvalidOperationException("帮助详情页面未初始化");
                         PageChangeAnim(new MyPageLeft(), stack.helpPage);
+                        break;
+                    }
+                case PageType.NewsDetail: // 新闻详情
+                    {
+                        if (stack.newsItem is null)
+                            throw new InvalidOperationException("新闻详情页面缺少新闻数据");
+                        stack.newsPage ??= new PageNewsDetail(stack.newsItem);
+                        PageChangeAnim(new MyPageLeft(), stack.newsPage);
                         break;
                     }
                 case PageType.VersionSaves: // 存档管理

@@ -3,17 +3,11 @@
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                    xmlns:local="clr-namespace:PCL"> <!-- 不知道为啥只有这个文件不能在 XAML 设置 PanScroll -->
     <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
-        <!-- 宽窗口：PanWidgets 在 PanMain 右侧（宽 250）；窄窗口：PanWidgets 移到 PanMain 上方。两者一起随 PanBack 滚动，具体切换见 UpdateWidgetLayout -->
-        <Grid x:Name="PanLayout" Margin="25,25,25,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <StackPanel Name="PanMain" Grid.Row="0" Grid.Column="0" Grid.IsSharedSizeScope="True">
+        <!-- 首页永远只有一列：小工具卡片（PanWidgets）在上，首页内容（PanMain）在下，都与页面等宽，一起随 PanBack 滚动，不会左右并排。
+             PanWidgets 里放哪些小工具由代码按设置维护，全部关闭时整个 PanWidgets 隐藏 -->
+        <StackPanel Margin="25,25,25,10">
+            <StackPanel x:Name="PanWidgets" Visibility="Collapsed" />
+            <StackPanel Name="PanMain" Grid.IsSharedSizeScope="True">
                 <StackPanel x:Name="PanCustom" />
                 <local:MyCard Margin="0,0,0,15" Title="{DynamicResource Launch.Right.CommunityHint.Title}" x:Name="PanHint">
                     <local:MyIconButton LogoScale="1.1"
@@ -30,8 +24,6 @@
                     <TextBlock x:Name="LabLog" Margin="20,38,20,18" TextTrimming="None" TextWrapping="Wrap" />
                 </local:MyCard>
             </StackPanel>
-            <StackPanel x:Name="PanWidgets" Grid.Row="0" Grid.Column="1" Width="250" Margin="15,0,0,0"
-                        VerticalAlignment="Top" Visibility="Collapsed" />
-        </Grid>
+        </StackPanel>
     </local:MyScrollViewer>
 </local:MyPageRight>
