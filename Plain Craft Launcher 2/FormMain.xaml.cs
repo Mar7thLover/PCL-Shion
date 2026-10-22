@@ -304,9 +304,6 @@ public partial class FormMain
         }, "Start Loader", ThreadPriority.BelowNormal);
 
         ModBase.Log($"[Start] 第三阶段加载用时：{TimeUtils.GetTimeTick() - ModBase.applicationStartTick} ms");
-#if DEBUG
-        DebugSnapshot.StartIfRequested();
-#endif
     }
 
     // 根据打开次数触发的事件
