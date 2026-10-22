@@ -1,0 +1,169 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sys="using:System"
+             xmlns:vm="using:PCL.Shion.ViewModels"
+             xmlns:svc="using:PCL.Shion.Services"
+             x:Class="PCL.Shion.Views.HomeView"
+             x:DataType="vm:HomeViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SurfaceBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+
+        <Style Selector="TextBlock.section">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+        </Style>
+        <Style Selector="TextBlock.caption">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+        </Style>
+        <Style Selector="TextBlock.error">
+            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+        </Style>
+
+        <Style Selector="TextBox.invalid">
+            <Setter Property="BorderBrush" Value="{DynamicResource DangerBrush}" />
+        </Style>
+        <Style Selector="TextBox.invalid:focus /template/ Border#PART_BorderElement">
+            <Setter Property="BorderBrush" Value="{DynamicResource DangerBrush}" />
+        </Style>
+
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Height" Value="44" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentHoverBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+        </Style>
+        <Style Selector="Button.primary:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentPressedBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+        </Style>
+
+        <Style Selector="ListBox.log ListBoxItem">
+            <Setter Property="Padding" Value="14,1" />
+            <Setter Property="MinHeight" Value="0" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid ColumnDefinitions="340,*">
+
+        <!-- 左侧：玩家、实例、Java、启动 -->
+        <Border Grid.Column="0" Padding="20"
+                Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource SurfaceBorderBrush}"
+                BorderThickness="0,0,1,0">
+            <Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
+
+                <StackPanel Grid.Row="0" Spacing="6">
+                    <TextBlock Classes="section" Text="{x:Static svc:Strings.PlayerName}" />
+                    <TextBox Height="38" CornerRadius="8" MaxLength="16" VerticalContentAlignment="Center"
+                             Text="{Binding PlayerName}"
+                             Classes.invalid="{Binding ShowPlayerNameError}" />
+                    <TextBlock Classes="caption" Text="{x:Static svc:Strings.PlayerNameHint}"
+                               Classes.error="{Binding ShowPlayerNameError}" />
+                </StackPanel>
+
+                <TextBlock Grid.Row="1" Classes="section" Margin="0,20,0,6"
+                           Text="{x:Static svc:Strings.Instances}" />
+
+                <Border Grid.Row="2" Classes="card" Padding="4" MinHeight="100">
+                    <Grid>
+                        <ListBox Background="Transparent" BorderThickness="0"
+                                 ItemsSource="{Binding Instances}"
+                                 SelectedItem="{Binding SelectedInstance}">
+                            <ListBox.Styles>
+                                <!-- 容器样式没有数据类型上下文，出错的实例用反射绑定置为不可选 -->
+                                <Style Selector="ListBoxItem">
+                                    <Setter Property="IsEnabled" Value="{ReflectionBinding IsSelectable}" />
+                                    <Setter Property="Padding" Value="10,6" />
+                                </Style>
+                                <Style Selector="ListBoxItem:disabled">
+                                    <Setter Property="Opacity" Value="0.75" />
+                                </Style>
+                            </ListBox.Styles>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="vm:InstanceItem">
+                                    <StackPanel Spacing="2">
+                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold"
+                                                   TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Classes="caption" Text="{Binding Description}"
+                                                   TextWrapping="Wrap"
+                                                   Classes.error="{Binding HasError}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <TextBlock Classes="caption" Margin="16" TextWrapping="Wrap" TextAlignment="Center"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   IsHitTestVisible="False"
+                                   Text="{Binding InstancesHint}"
+                                   IsVisible="{Binding HasInstancesHint}" />
+                    </Grid>
+                </Border>
+
+                <StackPanel Grid.Row="3" Margin="0,20,0,0" Spacing="6">
+                    <TextBlock Classes="section" Text="{x:Static svc:Strings.Java}" />
+                    <Border Classes="card" Padding="12,10">
+                        <StackPanel Spacing="2">
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="{Binding JavaSummary}"
+                                       Classes.error="{Binding HasJavaProblem}" />
+                            <TextBlock Classes="caption" TextTrimming="CharacterEllipsis"
+                                       Text="{Binding JavaPath}"
+                                       ToolTip.Tip="{Binding JavaPath}"
+                                       IsVisible="{Binding HasJavaPath}" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Grid.Row="4" Margin="0,20,0,0" Spacing="10">
+                    <Button Classes="primary" Content="{x:Static svc:Strings.LaunchGame}"
+                            Command="{Binding LaunchCommand}" />
+                    <TextBlock Classes="caption" TextWrapping="Wrap" MinHeight="32"
+                               Text="{Binding StatusText}" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 右侧：游戏日志 -->
+        <Grid Grid.Column="1" Margin="20" RowDefinitions="Auto,*">
+            <TextBlock Grid.Row="0" Classes="section" Margin="0,0,0,6"
+                       Text="{x:Static svc:Strings.LogTitle}" />
+            <Border Grid.Row="1" Classes="card" ClipToBounds="True"
+                    Background="{DynamicResource LogBackgroundBrush}">
+                <Grid>
+                    <ListBox x:Name="LogList" Classes="log" Background="Transparent" BorderThickness="0" Padding="0,6"
+                             FontFamily="{DynamicResource MonoFont}" FontSize="12"
+                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                             ItemsSource="{Binding Log.Lines}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="sys:String">
+                                <SelectableTextBlock Text="{Binding}" TextWrapping="NoWrap" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <TextBlock Classes="caption" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               IsHitTestVisible="False"
+                               Text="{x:Static svc:Strings.LogEmpty}"
+                               IsVisible="{Binding !Log.HasLines}" />
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

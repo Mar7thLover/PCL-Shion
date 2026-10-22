@@ -1,0 +1,30 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PCL.Shion.ViewModels"
+        xmlns:views="using:PCL.Shion.Views"
+        xmlns:svc="using:PCL.Shion.Services"
+        x:Class="PCL.Shion.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="{x:Static svc:Strings.AppName}"
+        Icon="/Assets/icon.ico"
+        Width="1080" Height="680" MinWidth="860" MinHeight="600"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource WindowBackgroundBrush}">
+
+    <Grid RowDefinitions="Auto,*">
+        <Border Grid.Row="0" Height="56"
+                Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource SurfaceBorderBrush}"
+                BorderThickness="0,0,0,1">
+            <StackPanel Margin="20,0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
+                <TextBlock Text="{x:Static svc:Strings.AppName}"
+                           FontSize="18" FontWeight="Bold"
+                           Foreground="{DynamicResource AccentBrush}" />
+                <Border Width="1" Height="18" Background="{DynamicResource SurfaceBorderBrush}" />
+                <TextBlock Text="{x:Static svc:Strings.PageLaunch}" FontSize="15" FontWeight="SemiBold" />
+            </StackPanel>
+        </Border>
+
+        <views:HomeView Grid.Row="1" DataContext="{Binding Home}" />
+    </Grid>
+</Window>

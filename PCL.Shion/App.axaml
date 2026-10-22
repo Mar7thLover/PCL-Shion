@@ -1,0 +1,46 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="PCL.Shion.App"
+             RequestedThemeVariant="Default">
+
+    <Application.Styles>
+        <FluentTheme>
+            <FluentTheme.Palettes>
+                <ColorPaletteResources x:Key="Light" Accent="#1E6FD9" />
+                <ColorPaletteResources x:Key="Dark" Accent="#3B86E8" />
+            </FluentTheme.Palettes>
+        </FluentTheme>
+    </Application.Styles>
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <FontFamily x:Key="MonoFont">Cascadia Mono, Consolas, Menlo, DejaVu Sans Mono, monospace</FontFamily>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#F3F5F9" />
+                    <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="SurfaceBorderBrush" Color="#E1E6EE" />
+                    <SolidColorBrush x:Key="LogBackgroundBrush" Color="#FBFCFE" />
+                    <SolidColorBrush x:Key="TextSecondaryBrush" Color="#5B6678" />
+                    <SolidColorBrush x:Key="AccentBrush" Color="#1E6FD9" />
+                    <SolidColorBrush x:Key="AccentHoverBrush" Color="#1A62C0" />
+                    <SolidColorBrush x:Key="AccentPressedBrush" Color="#1655A8" />
+                    <SolidColorBrush x:Key="OnAccentBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="DangerBrush" Color="#D92D20" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#121519" />
+                    <SolidColorBrush x:Key="SurfaceBrush" Color="#1A1E25" />
+                    <SolidColorBrush x:Key="SurfaceBorderBrush" Color="#2A303A" />
+                    <SolidColorBrush x:Key="LogBackgroundBrush" Color="#0F1216" />
+                    <SolidColorBrush x:Key="TextSecondaryBrush" Color="#98A3B5" />
+                    <SolidColorBrush x:Key="AccentBrush" Color="#2F7FE6" />
+                    <SolidColorBrush x:Key="AccentHoverBrush" Color="#4A91EE" />
+                    <SolidColorBrush x:Key="AccentPressedBrush" Color="#2468C4" />
+                    <SolidColorBrush x:Key="OnAccentBrush" Color="#FFFFFF" />
+                    <SolidColorBrush x:Key="DangerBrush" Color="#F97066" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
