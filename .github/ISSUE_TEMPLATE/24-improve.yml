@@ -9,9 +9,9 @@ body:
       label: "检查项 / Checklist"
       description: "请逐个检查下列项目，并勾选确认 / Please review each item below and check the boxes to confirm."
       options:
-        - label: "我已在 [Issues 页面](https://github.com/Mar7thLover/PCL-CE/issues?q=is%3Aissue+) 中搜索，确认了这一建议未在本项目被提交过 / I have searched the [Issues page](https://github.com/Mar7thLover/PCL-CE/issues?q=is%3Aissue+) and confirmed that this suggestion has not been submitted to this project yet."
+        - label: "我已在 [Issues 页面](https://github.com/Mar7thLover/PCL-Shion/issues?q=is%3Aissue+) 中搜索，确认了这一建议未在本项目被提交过 / I have searched the [Issues page](https://github.com/Mar7thLover/PCL-Shion/issues?q=is%3Aissue+) and confirmed that this suggestion has not been submitted to this project yet."
           required: true
-        - label: "我确认只是全部选中而没有[仔细确认](https://github.com/Mar7thLover/PCL-CE/issues?q=is%3Aissue+)就直接提交了这个 Issue，并且同意这个 Issue 可以直接被关闭 / I confirm that I checked all boxes without carefully reading them, and agree that this issue may be closed directly."
+        - label: "我确认只是全部选中而没有[仔细确认](https://github.com/Mar7thLover/PCL-Shion/issues?q=is%3Aissue+)就直接提交了这个 Issue，并且同意这个 Issue 可以直接被关闭 / I confirm that I checked all boxes without carefully reading them, and agree that this issue may be closed directly."
           required: false
         - label: "我确认我所描述的改进是现实的、有理有据的，而不是我临时起意的 / I confirm that the improvement I describe is realistic, reasonable, and well-justified, rather than something I came up with on a whim."
           required: true

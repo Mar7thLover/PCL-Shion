@@ -6,20 +6,20 @@
 
 # PCL Shion
 
-[![Stars](https://img.shields.io/github/stars/Mar7thLover/PCL-CE?style=for-the-badge&label=stars&labelColor=444444&color=eac54f&logo=github)](https://github.com/Mar7thLover/PCL-CE/)
-[![Last commit](https://img.shields.io/github/last-commit/Mar7thLover/PCL-CE/dev?style=for-the-badge&label=last%20commit&labelColor=444444&logo=github)](https://github.com/Mar7thLover/PCL-CE/commits/dev)
-[![Issues](https://img.shields.io/github/issues/Mar7thLover/PCL-CE?style=for-the-badge&label=issues&labelColor=444444&color=1F883D&logo=github)](https://github.com/Mar7thLover/PCL-CE/issues)
-[![Pull requests](https://img.shields.io/github/issues-pr/Mar7thLover/PCL-CE?style=for-the-badge&label=pull%20requests&labelColor=444444&color=1F883D&logo=github)](https://github.com/Mar7thLover/PCL-CE/pulls)
+[![Stars](https://img.shields.io/github/stars/Mar7thLover/PCL-Shion?style=for-the-badge&label=stars&labelColor=444444&color=eac54f&logo=github)](https://github.com/Mar7thLover/PCL-Shion/)
+[![Last commit](https://img.shields.io/github/last-commit/Mar7thLover/PCL-Shion/dev?style=for-the-badge&label=last%20commit&labelColor=444444&logo=github)](https://github.com/Mar7thLover/PCL-Shion/commits/dev)
+[![Issues](https://img.shields.io/github/issues/Mar7thLover/PCL-Shion?style=for-the-badge&label=issues&labelColor=444444&color=1F883D&logo=github)](https://github.com/Mar7thLover/PCL-Shion/issues)
+[![Pull requests](https://img.shields.io/github/issues-pr/Mar7thLover/PCL-Shion?style=for-the-badge&label=pull%20requests&labelColor=444444&color=1F883D&logo=github)](https://github.com/Mar7thLover/PCL-Shion/pulls)
 
-[Download](https://github.com/Mar7thLover/PCL-CE/releases) |
-[Report a bug or suggest a feature](https://github.com/Mar7thLover/PCL-CE/issues/new/choose) |
+[Download](https://github.com/Mar7thLover/PCL-Shion/releases) |
+[Report a bug or suggest a feature](https://github.com/Mar7thLover/PCL-Shion/issues/new/choose) |
 [Contributing](CONTRIBUTING.md)
 
 </div>
 
 PCL Shion (詩音) is a **third-party modified version**, independently developed from [PCL Community Edition (PCL CE)](https://github.com/PCL-Community/PCL-CE), which is itself based on [Plain Craft Launcher](https://github.com/Meloong-Git/PCL) by LTCat (龙腾猫跃).
 
-This project is not affiliated with the official PCL or the PCL CE community. **Please do not report issues with this project to the official repository or to the PCL CE community.** Use [this repository's Issues](https://github.com/Mar7thLover/PCL-CE/issues) instead.
+This project is not affiliated with the official PCL or the PCL CE community. **Please do not report issues with this project to the official repository or to the PCL CE community.** Use [this repository's Issues](https://github.com/Mar7thLover/PCL-Shion/issues) instead.
 
 > [!WARNING]
 > This project is under **heavy development**. Features and UI change frequently and may be unstable.
@@ -34,7 +34,7 @@ PCL Shion has removed this restriction entirely, so downloading and installing w
 
 ### 🚀 Actively developed, feature suggestions welcome
 
-Upstream PCL CE has entered maintenance mode and no longer accepts feature requests. PCL Shion keeps adding new features, and **any reasonable feature suggestion is welcome**. Just [open an issue](https://github.com/Mar7thLover/PCL-CE/issues/new/choose).
+Upstream PCL CE has entered maintenance mode and no longer accepts feature requests. PCL Shion keeps adding new features, and **any reasonable feature suggestion is welcome**. Just [open an issue](https://github.com/Mar7thLover/PCL-Shion/issues/new/choose).
 
 ## 🗺️ Roadmap
 
@@ -75,8 +75,8 @@ Upstream PCL CE has entered maintenance mode and no longer accepts feature reque
 
 ## 🌟 Statistics
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Mar7thLover/PCL-CE&type=Date)](https://www.star-history.com/#Mar7thLover/PCL-CE&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Mar7thLover/PCL-Shion&type=Date)](https://www.star-history.com/#Mar7thLover/PCL-Shion&Date)
 
 ## ❤️ Contributors
 
-[![](https://contrib.rocks/image?repo=Mar7thLover/PCL-CE)](https://github.com/Mar7thLover/PCL-CE/graphs/contributors)
+[![](https://contrib.rocks/image?repo=Mar7thLover/PCL-Shion)](https://github.com/Mar7thLover/PCL-Shion/graphs/contributors)

@@ -10,7 +10,7 @@ Wiki 页面（沿用上游 PCL CE）:
 
 ## 开始之前
 
-查看 [Issues](https://github.com/Mar7thLover/PCL-CE/issues) 寻找可以参与的任务，或创建新 Issue 讨论您的想法。
+查看 [Issues](https://github.com/Mar7thLover/PCL-Shion/issues) 寻找可以参与的任务，或创建新 Issue 讨论您的想法。
 
 ## 贡献流程
 

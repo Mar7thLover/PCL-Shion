@@ -6,20 +6,20 @@
 
 # PCL 詩音（Shion）
 
-[![Stars](https://img.shields.io/github/stars/Mar7thLover/PCL-CE?style=for-the-badge&label=stars&labelColor=444444&color=eac54f&logo=github)](https://github.com/Mar7thLover/PCL-CE/)
-[![Last commit](https://img.shields.io/github/last-commit/Mar7thLover/PCL-CE/dev?style=for-the-badge&label=last%20commit&labelColor=444444&logo=github)](https://github.com/Mar7thLover/PCL-CE/commits/dev)
-[![Issues](https://img.shields.io/github/issues/Mar7thLover/PCL-CE?style=for-the-badge&label=issues&labelColor=444444&color=1F883D&logo=github)](https://github.com/Mar7thLover/PCL-CE/issues)
-[![Pull requests](https://img.shields.io/github/issues-pr/Mar7thLover/PCL-CE?style=for-the-badge&label=pull%20requests&labelColor=444444&color=1F883D&logo=github)](https://github.com/Mar7thLover/PCL-CE/pulls)
+[![Stars](https://img.shields.io/github/stars/Mar7thLover/PCL-Shion?style=for-the-badge&label=stars&labelColor=444444&color=eac54f&logo=github)](https://github.com/Mar7thLover/PCL-Shion/)
+[![Last commit](https://img.shields.io/github/last-commit/Mar7thLover/PCL-Shion/dev?style=for-the-badge&label=last%20commit&labelColor=444444&logo=github)](https://github.com/Mar7thLover/PCL-Shion/commits/dev)
+[![Issues](https://img.shields.io/github/issues/Mar7thLover/PCL-Shion?style=for-the-badge&label=issues&labelColor=444444&color=1F883D&logo=github)](https://github.com/Mar7thLover/PCL-Shion/issues)
+[![Pull requests](https://img.shields.io/github/issues-pr/Mar7thLover/PCL-Shion?style=for-the-badge&label=pull%20requests&labelColor=444444&color=1F883D&logo=github)](https://github.com/Mar7thLover/PCL-Shion/pulls)
 
-[下载](https://github.com/Mar7thLover/PCL-CE/releases) |
-[提交问题或建议](https://github.com/Mar7thLover/PCL-CE/issues/new/choose) |
+[下载](https://github.com/Mar7thLover/PCL-Shion/releases) |
+[提交问题或建议](https://github.com/Mar7thLover/PCL-Shion/issues/new/choose) |
 [贡献指南](CONTRIBUTING.md)
 
 </div>
 
 PCL 詩音（Shion）是基于 [PCL 社区版（PCL CE）](https://github.com/PCL-Community/PCL-CE) 独立进行二次开发的**第三方修改版**，PCL CE 又源自龙腾猫跃的 [Plain Craft Launcher](https://github.com/Meloong-Git/PCL)。
 
-本项目与 PCL 官方、PCL CE 社区均无隶属关系，**请不要向官方仓库或 PCL CE 社区反馈本项目的问题**，有问题请在 [本仓库的 Issues](https://github.com/Mar7thLover/PCL-CE/issues) 提出。
+本项目与 PCL 官方、PCL CE 社区均无隶属关系，**请不要向官方仓库或 PCL CE 社区反馈本项目的问题**，有问题请在 [本仓库的 Issues](https://github.com/Mar7thLover/PCL-Shion/issues) 提出。
 
 > [!WARNING]
 > 本项目正处于**密集开发阶段**，功能和界面变动频繁，可能出现不稳定的情况。
@@ -34,7 +34,7 @@ PCL 詩音已完整移除这套限制，所有地区的用户都可以正常使�
 
 ### 🚀 锐意开发，欢迎新功能建议
 
-上游 PCL CE 已进入维护阶段，不再受理新功能请求；PCL 詩音则会持续开发新功能，**欢迎任何合理的新功能建议**，请直接 [提交 Issue](https://github.com/Mar7thLover/PCL-CE/issues/new/choose)。
+上游 PCL CE 已进入维护阶段，不再受理新功能请求；PCL 詩音则会持续开发新功能，**欢迎任何合理的新功能建议**，请直接 [提交 Issue](https://github.com/Mar7thLover/PCL-Shion/issues/new/choose)。
 
 ## 🗺️ 开发计划
 
@@ -75,8 +75,8 @@ PCL 詩音已完整移除这套限制，所有地区的用户都可以正常使�
 
 ## 🌟 统计数据
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Mar7thLover/PCL-CE&type=Date)](https://www.star-history.com/#Mar7thLover/PCL-CE&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Mar7thLover/PCL-Shion&type=Date)](https://www.star-history.com/#Mar7thLover/PCL-Shion&Date)
 
 ## ❤️ 贡献者
 
-[![](https://contrib.rocks/image?repo=Mar7thLover/PCL-CE)](https://github.com/Mar7thLover/PCL-CE/graphs/contributors)
+[![](https://contrib.rocks/image?repo=Mar7thLover/PCL-Shion)](https://github.com/Mar7thLover/PCL-Shion/graphs/contributors)
