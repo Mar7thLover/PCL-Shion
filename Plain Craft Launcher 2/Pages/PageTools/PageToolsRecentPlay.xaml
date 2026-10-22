@@ -1,0 +1,19 @@
+<local:MyPageRight x:Class="PCL.PageToolsRecentPlay"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:local="clr-namespace:PCL"
+                   PanScroll="{Binding ElementName=PanBack}">
+    <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="25,10" Grid.IsSharedSizeScope="True">
+            <local:MyCard Margin="0,15" Title="{DynamicResource Widget.RecentPlay.Title}">
+                <StackPanel Margin="12,38,12,15">
+                    <TextBlock x:Name="LabEmpty" Text="{DynamicResource Widget.RecentPlay.Empty}"
+                               TextWrapping="Wrap" Opacity="0.6" Margin="8,2,8,8" Visibility="Collapsed" />
+                    <StackPanel x:Name="PanList" />
+                    <local:MyButton x:Name="BtnClear" MinWidth="120" HorizontalAlignment="Left" Margin="8,15,0,0"
+                                    Text="{DynamicResource Widget.RecentPlay.Clear}" Click="BtnClear_Click" />
+                </StackPanel>
+            </local:MyCard>
+        </StackPanel>
+    </local:MyScrollViewer>
+</local:MyPageRight>

@@ -6,6 +6,7 @@ using System.Windows.Media;
 using PCL.Core.App;
 using PCL.Core.Logging;
 using PCL.Core.App.Localization;
+using PCL.Core.App.Widgets;
 
 namespace PCL;
 
@@ -228,6 +229,16 @@ public static class ModWatcher
         private nint windowHandle;
         private string windowTitle = "";
 
+        /// <summary>
+        ///     本次游玩的计时器，从开始监视时起算，用于最近游玩的时长统计。
+        /// </summary>
+        private readonly Stopwatch playClock = Stopwatch.StartNew();
+
+        /// <summary>
+        ///     本次游玩是否已记录过时长（GameExit 可能被多处触发，只记一次）。
+        /// </summary>
+        private int playRecorded;
+
         public Watcher(ModLoader.LoaderTask<Process, int> loader, McInstance version, string windowTitle,
             string jStackPath, bool outputRealTime = false)
         {
@@ -238,6 +249,7 @@ public static class ModWatcher
             pid = loader.input.Id;
             this.jStackPath = jStackPath;
 
+            GameExit += RecordPlayExit; // 最近游玩：游戏退出时记录时长
             WatcherLog(Lang.Text("Watcher.Start"));
             if (string.IsNullOrWhiteSpace(windowTitle))
                 WatcherLog("要求窗口标题：" + windowTitle);
@@ -327,6 +339,25 @@ public static class ModWatcher
         ///     游戏退出时触发。
         /// </summary>
         public event GameExitEventHandler? GameExit;
+
+        /// <summary>
+        ///     把本次游玩时长记录到最近游玩。只会生效一次，失败只记日志，不影响退出流程。
+        /// </summary>
+        private void RecordPlayExit()
+        {
+            if (Interlocked.Exchange(ref playRecorded, 1) != 0)
+                return;
+            try
+            {
+                if (version is null)
+                    return;
+                RecentPlayService.OnGameExited(version.PathInstance, playClock.Elapsed);
+            }
+            catch (Exception ex)
+            {
+                ModBase.Log(ex, "记录最近游玩时长失败", ModBase.LogLevel.Normal);
+            }
+        }
 
         private void LogReceived(object sender, DataReceivedEventArgs e)
         {

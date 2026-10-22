@@ -26,7 +26,13 @@ public partial class PageLaunchRight : IRefreshable
         };
         Loaded += (_, _) => Init();
         Loaded += (_, _) => Refresh();
+        Loaded += (_, _) => RefreshWidgetsCore(true);
         Unloaded += (_, _) => _DisposeHomepageLiveWatcher();
+        SizeChanged += (_, e) =>
+        {
+            if (e.WidthChanged)
+                UpdateWidgetLayout(e.NewSize.Width);
+        };
     }
 
     private void Init()
@@ -430,6 +436,7 @@ public partial class PageLaunchRight : IRefreshable
         {
             PanBack.ScrollToHome();
             Refresh();
+            RefreshWidgetsCore(true);
         }
         else
         {
@@ -892,6 +899,176 @@ public partial class PageLaunchRight : IRefreshable
         }
 
         return null;
+    }
+
+    #endregion
+
+    #region 侧栏小工具
+
+    /// <summary>
+    ///     页面宽度不小于此值时，小工具位于首页内容右侧；否则位于首页内容上方。
+    /// </summary>
+    private const double widgetWideThreshold = 760d;
+
+    /// <summary>
+    ///     小工具位于首页内容右侧时的列宽。
+    /// </summary>
+    private const double widgetColumnWidth = 250d;
+
+    // 控件只创建一次并缓存，开关关闭时仅从 PanWidgets 移除
+    private CheckInWidget? checkInWidget;
+    private RecentPlayWidget? recentPlayWidget;
+    private NewsWidget? newsWidget;
+
+    // 当前应用到 PanLayout 的布局：true 为内容右侧，false 为内容上方，null 为尚未应用
+    private bool? widgetLayoutWide;
+
+    /// <summary>
+    ///     根据 “首页侧栏” 的显示开关刷新小工具：按开关创建、添加或移除控件，并更新侧栏布局。
+    ///     可在任意线程调用。页面尚未加载（或当前不在首页）时不做任何事，页面加载时会自动同步。
+    /// </summary>
+    public void RefreshWidgets()
+    {
+        ModBase.RunInUi(() => RefreshWidgetsCore(false));
+    }
+
+    /// <summary>
+    ///     刷新小工具的实际逻辑。必须在 UI 线程调用。
+    /// </summary>
+    /// <param name="refreshContent">是否对已显示的控件调用其 Refresh。刚创建的控件会自行加载，不会再被调用。</param>
+    private void RefreshWidgetsCore(bool refreshContent)
+    {
+        try
+        {
+            if (!IsLoaded)
+                return;
+
+            var sidebar = Config.Preference.Sidebar;
+            var wanted = new List<FrameworkElement>();
+            var created = new HashSet<FrameworkElement>();
+
+            // 按固定顺序收集需要显示的控件
+            if (sidebar.ShowCheckIn)
+                CollectWidget(ref checkInWidget, "CheckInWidget", wanted, created);
+            if (sidebar.ShowRecentPlay)
+                CollectWidget(ref recentPlayWidget, "RecentPlayWidget", wanted, created);
+            if (sidebar.ShowNews)
+                CollectWidget(ref newsWidget, "NewsWidget", wanted, created);
+
+            // 移除多余的控件，并把需要显示的控件按顺序放入 PanWidgets
+            var children = PanWidgets.Children;
+            for (var i = children.Count - 1; i >= 0; i--)
+                if (children[i] is not FrameworkElement child || !wanted.Contains(child))
+                    children.RemoveAt(i);
+            var readded = new List<FrameworkElement>(); // 之前被关掉、现在重新显示的缓存控件，内容可能已过期
+            for (var i = 0; i < wanted.Count; i++)
+            {
+                var widget = wanted[i];
+                var index = children.IndexOf(widget);
+                if (index == i)
+                    continue;
+                if (index >= 0)
+                    children.RemoveAt(index);
+                else if (!created.Contains(widget))
+                    readded.Add(widget);
+                children.Insert(i, widget);
+            }
+
+            // 全部关闭时，整个侧栏隐藏
+            PanWidgets.Visibility = wanted.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+            UpdateWidgetLayout(ActualWidth);
+
+            // 刷新已显示的控件
+            var toRefresh = refreshContent ? wanted.Where(widget => !created.Contains(widget)).ToList() : readded;
+            foreach (var widget in toRefresh)
+                RefreshWidget(widget);
+        }
+        catch (Exception ex)
+        {
+            ModBase.Log(ex, "刷新首页侧栏小工具失败");
+        }
+    }
+
+    /// <summary>
+    ///     取出缓存的小工具控件，没有则创建，并按显示顺序加入列表。创建失败的控件不显示。
+    /// </summary>
+    private static void CollectWidget<T>(ref T? cache, string name, List<FrameworkElement> wanted,
+        HashSet<FrameworkElement> created) where T : FrameworkElement, new()
+    {
+        if (cache is null)
+        {
+            try
+            {
+                cache = new T();
+                // 控件自己没有设置外边距时，补上与首页卡片一致的间距
+                if (cache.Margin == default(Thickness))
+                    cache.Margin = new Thickness(0, 0, 0, 15);
+                created.Add(cache);
+            }
+            catch (Exception ex)
+            {
+                cache = null;
+                ModBase.Log(ex, $"创建首页侧栏小工具失败：{name}");
+                return;
+            }
+        }
+
+        wanted.Add(cache);
+    }
+
+    private void RefreshWidget(FrameworkElement widget)
+    {
+        try
+        {
+            switch (widget)
+            {
+                case CheckInWidget checkIn:
+                    checkIn.Refresh();
+                    break;
+                case RecentPlayWidget recentPlay:
+                    recentPlay.Refresh();
+                    break;
+                case NewsWidget news:
+                    news.Refresh(); // 距离上次成功加载较近时，控件自己会跳过联网请求
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            ModBase.Log(ex, $"刷新首页侧栏小工具失败：{widget.GetType().Name}");
+        }
+    }
+
+    /// <summary>
+    ///     按页面宽度在 “内容右侧” 与 “内容上方” 两种侧栏布局间切换。
+    /// </summary>
+    /// <param name="pageWidth">右侧页面的可用宽度。</param>
+    private void UpdateWidgetLayout(double pageWidth)
+    {
+        if (pageWidth <= 0d)
+            return; // 尚未完成布局，等待 SizeChanged
+        var wide = pageWidth >= widgetWideThreshold;
+        if (widgetLayoutWide == wide)
+            return;
+        widgetLayoutWide = wide;
+        if (wide)
+        {
+            // 内容在左，小工具在右侧单独一列
+            Grid.SetRow(PanMain, 0);
+            Grid.SetRow(PanWidgets, 0);
+            Grid.SetColumn(PanWidgets, 1);
+            PanWidgets.Width = widgetColumnWidth;
+            PanWidgets.Margin = new Thickness(15d, 0d, 0d, 0d);
+        }
+        else
+        {
+            // 小工具在内容上方，与内容同宽
+            Grid.SetRow(PanWidgets, 0);
+            Grid.SetColumn(PanWidgets, 0);
+            Grid.SetRow(PanMain, 1);
+            PanWidgets.Width = double.NaN;
+            PanWidgets.Margin = new Thickness(0d);
+        }
     }
 
     #endregion

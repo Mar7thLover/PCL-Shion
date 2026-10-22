@@ -198,6 +198,22 @@ public static partial class States
     }
 
     /// <summary>
+    /// 小工具状态。
+    /// </summary>
+    [ConfigGroup("Widget")] partial class WidgetStatesGroup
+    {
+        /// <summary>
+        /// 已打卡日期，yyyy-MM-dd，逗号分隔，本地日期。
+        /// </summary>
+        [ConfigItem<string>("WidgetCheckInDates", "")] public partial string CheckInDates { get; set; }
+
+        /// <summary>
+        /// 最近游玩记录 JSON。记录的是实例路径，因此仅保存在本地。
+        /// </summary>
+        [ConfigItem<string>("WidgetRecentPlay", "", ConfigSource.Local)] public partial string RecentPlay { get; set; }
+    }
+
+    /// <summary>
     /// 系统状态。
     /// </summary>
     [ConfigGroup("System")] partial class SystemStatesGroup

@@ -364,6 +364,18 @@
                     </Grid>
                 </StackPanel>
             </local:MyCard>
+            <local:MyCard x:Name="CardSidebar" Margin="0,0,0,15" Title="{DynamicResource Setup.UI.Sidebar.Title}">
+                <StackPanel Margin="25,40,25,15">
+                    <local:MyCheckBox Text="{DynamicResource Setup.UI.Sidebar.CheckIn}" Margin="-1,0,0,7" Height="22"
+                                      x:Name="CheckSidebarCheckIn" Tag="UiSidebarCheckIn" Change="CheckBoxChange" />
+                    <local:MyCheckBox Text="{DynamicResource Setup.UI.Sidebar.RecentPlay}" Margin="-1,0,0,7" Height="22"
+                                      x:Name="CheckSidebarRecentPlay" Tag="UiSidebarRecentPlay" Change="CheckBoxChange" />
+                    <local:MyCheckBox Text="{DynamicResource Setup.UI.Sidebar.News}" Margin="-1,0,0,7" Height="22"
+                                      x:Name="CheckSidebarNews" Tag="UiSidebarNews" Change="CheckBoxChange" />
+                    <TextBlock Text="{DynamicResource Setup.UI.Sidebar.Hint}" Margin="0,3,0,0" Opacity="0.6" FontSize="12"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </local:MyCard>
             <local:MyCard x:Name="CardSwitch" Margin="0,0,0,15" Title="{DynamicResource Setup.Ui.FeatureHide.Title}">
                 <StackPanel Margin="25,38,15,15">
                     <TextBlock Margin="0,1,0,1" Text="{DynamicResource Setup.Ui.FeatureHide.Description}" TextWrapping="Wrap" />

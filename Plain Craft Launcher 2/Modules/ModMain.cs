@@ -37,6 +37,9 @@ public static class ModMain
     public static PageToolsLeft? frmToolsLeft;
     public static PageToolsGameLink? frmToolsGameLink;
     public static PageToolsTest? frmToolsTest;
+    public static PageToolsCheckIn? frmToolsCheckIn;
+    public static PageToolsRecentPlay? frmToolsRecentPlay;
+    public static PageHomepageNewsView? frmToolsNews;
     public static PageDownloadLeft? frmDownloadLeft;
     public static PageDownloadInstall? frmDownloadInstall;
     public static PageDownloadClient? frmDownloadClient;

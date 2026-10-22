@@ -1,0 +1,13 @@
+<local:MyCard x:Class="PCL.RecentPlayWidget"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:local="clr-namespace:PCL"
+              Margin="0,0,0,15" Title="{DynamicResource Widget.RecentPlay.Title}">
+    <StackPanel Margin="12,38,12,8">
+        <TextBlock x:Name="LabEmpty" Text="{DynamicResource Widget.RecentPlay.Empty}"
+                   TextWrapping="Wrap" FontSize="12" Opacity="0.6" Margin="8,2,8,8" Visibility="Collapsed" />
+        <StackPanel x:Name="PanList" />
+        <local:MyTextButton Text="{DynamicResource Widget.Common.More}" HorizontalAlignment="Right"
+                            Margin="0,4,6,0" Click="BtnMore_Click" />
+    </StackPanel>
+</local:MyCard>

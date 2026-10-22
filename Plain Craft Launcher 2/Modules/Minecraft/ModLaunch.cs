@@ -18,6 +18,7 @@ using PCL.Core.Minecraft.Profile.Authentication;
 using PCL.Core.Minecraft.Profile.Models;
 using System.Globalization;
 using PCL.Core.Logging;
+using PCL.Core.App.Widgets;
 
 namespace PCL;
 
@@ -2587,6 +2588,7 @@ public static class ModLaunch
         gameProcess.StartInfo = startInfo;
 
         // 开始进程
+        var launchedInstance = ModInstanceList.McMcInstanceSelected; // 最近游玩以本次启动时的实例为准，之后选中的实例可能被切换
         gameProcess.Start();
         McLaunchLog("已启动游戏进程：" + startInfo.FileName);
         if (loader.IsAborted)
@@ -2598,6 +2600,16 @@ public static class ModLaunch
 
         loader.output = gameProcess;
         mcLaunchProcess = gameProcess;
+        // 记录最近游玩（失败不影响启动）
+        try
+        {
+            RecentPlayService.OnGameStarted(launchedInstance.PathInstance, launchedInstance.Name);
+        }
+        catch (Exception ex)
+        {
+            ModBase.Log(ex, "记录最近游玩失败", ModBase.LogLevel.Normal);
+        }
+
         // 进程优先级处理
         try
         {

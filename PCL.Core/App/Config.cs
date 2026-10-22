@@ -390,6 +390,27 @@ public static partial class Config
         }
 
         /// <summary>
+        /// 首页侧栏小工具。
+        /// </summary>
+        [ConfigGroup("Sidebar", ConfigSource.Local)] partial class SidebarConfigGroup
+        {
+            /// <summary>
+            /// 显示日期打卡。
+            /// </summary>
+            [ConfigItem<bool>("UiSidebarCheckIn", true)] public partial bool ShowCheckIn { get; set; }
+
+            /// <summary>
+            /// 显示最近游玩。
+            /// </summary>
+            [ConfigItem<bool>("UiSidebarRecentPlay", true)] public partial bool ShowRecentPlay { get; set; }
+
+            /// <summary>
+            /// 显示 Minecraft 新闻。
+            /// </summary>
+            [ConfigItem<bool>("UiSidebarNews", false)] public partial bool ShowNews { get; set; }
+        }
+
+        /// <summary>
         /// 背景音乐。
         /// </summary>
         [ConfigGroup("Music")] partial class MusicConfigGroup

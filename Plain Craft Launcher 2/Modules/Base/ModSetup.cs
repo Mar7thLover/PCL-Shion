@@ -20,6 +20,10 @@ public class ModSetup
         ConfigService.RegisterObserver(Config.Preference.Hide,
             new ConfigObserver(ConfigEvent.Changed, _ => PageSetupUI.HiddenRefresh()));
 
+        // === Sidebar Group ===
+        ConfigService.RegisterObserver(Config.Preference.Sidebar,
+            new ConfigObserver(ConfigEvent.Changed, _ => ModBase.RunInUi(() => ModMain.frmLaunchRight?.RefreshWidgets())));
+
         // === Launch ===
         Config.Launch.MemoryAllocationModeConfig.Observe(new ConfigObserver(ConfigEvent.Changed,
             e => LaunchRamType((int)e.Value!)));

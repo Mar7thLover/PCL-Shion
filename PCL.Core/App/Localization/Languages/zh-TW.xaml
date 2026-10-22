@@ -3158,6 +3158,14 @@
     <sys:String x:Key="Setup.Ui.Music.TitleWithCount">背景音樂（ {0} 首）</sys:String>
     <sys:String x:Key="Setup.Ui.Music.Volume">音量</sys:String>
 
+    <!-- Setup.UI.Sidebar -->
+
+    <sys:String x:Key="Setup.UI.Sidebar.CheckIn">顯示日期打卡</sys:String>
+    <sys:String x:Key="Setup.UI.Sidebar.Hint">視窗較窄時，側欄會移到首頁內容上方</sys:String>
+    <sys:String x:Key="Setup.UI.Sidebar.News">顯示 Minecraft 新聞</sys:String>
+    <sys:String x:Key="Setup.UI.Sidebar.RecentPlay">顯示最近遊玩</sys:String>
+    <sys:String x:Key="Setup.UI.Sidebar.Title">首頁側欄</sys:String>
+
     <!-- Setup.Ui.Theme -->
 
     <sys:String x:Key="Setup.Ui.Theme.Color.CatBlue">龍貓藍</sys:String>
@@ -3268,10 +3276,14 @@
     <!-- Tools -->
 
     <sys:String x:Key="Tools.Error.OperationFailed">工具頁操作失敗。請檢視錯誤詳情。</sys:String>
+    <sys:String x:Key="Tools.Left.CheckIn">日期打卡</sys:String>
     <sys:String x:Key="Tools.Left.Lobby">大廳</sys:String>
     <sys:String x:Key="Tools.Left.Multiplayer">連線</sys:String>
+    <sys:String x:Key="Tools.Left.News">Minecraft 新聞</sys:String>
+    <sys:String x:Key="Tools.Left.RecentPlay">最近遊玩</sys:String>
     <sys:String x:Key="Tools.Left.Utilities">奇妙小工具</sys:String>
     <sys:String x:Key="Tools.Left.Utilities.Title">百寶箱</sys:String>
+    <sys:String x:Key="Tools.Left.Widgets.Title">小工具</sys:String>
 
     <!-- Tools.GameLink -->
 
@@ -3580,6 +3592,51 @@
     <sys:String x:Key="Watcher.Start">開始 Minecraft 日誌監控</sys:String>
     <sys:String x:Key="Watcher.WindowLoaded">Minecraft 視窗已載入：{0}（{1}）</sys:String>
     <sys:String x:Key="Watcher.WindowMaximized">已最大化 Minecraft 視窗：{0}</sys:String>
+
+    <!-- Widget.CheckIn -->
+
+    <sys:String x:Key="Widget.CheckIn.Button">今日打卡</sys:String>
+    <sys:String x:Key="Widget.CheckIn.Calendar.Title">本月打卡</sys:String>
+    <sys:String x:Key="Widget.CheckIn.Done">今天已打卡</sys:String>
+    <sys:String x:Key="Widget.CheckIn.Hint.Success">打卡成功！已連續打卡 {0} 天</sys:String>
+    <sys:String x:Key="Widget.CheckIn.Stats">累計 {0} 天 · 最長連續 {1} 天</sys:String>
+    <sys:String x:Key="Widget.CheckIn.Streak">已連續打卡 {0} 天</sys:String>
+    <sys:String x:Key="Widget.CheckIn.Title">日期打卡</sys:String>
+    <sys:String x:Key="Widget.CheckIn.Weekdays">一,二,三,四,五,六,日</sys:String>
+
+    <!-- Widget.Common -->
+
+    <sys:String x:Key="Widget.Common.More">查看全部</sys:String>
+
+    <!-- Widget.Duration -->
+
+    <sys:String x:Key="Widget.Duration.HoursMinutes">{0} 小時 {1} 分鐘</sys:String>
+    <sys:String x:Key="Widget.Duration.LessThanMinute">不到 1 分鐘</sys:String>
+    <sys:String x:Key="Widget.Duration.Minutes">{0} 分鐘</sys:String>
+
+    <!-- Widget.News -->
+
+    <sys:String x:Key="Widget.News.Empty">暫無新聞</sys:String>
+    <sys:String x:Key="Widget.News.Failed">取得新聞失敗</sys:String>
+    <sys:String x:Key="Widget.News.Loading">正在取得新聞…</sys:String>
+    <sys:String x:Key="Widget.News.Title">Minecraft 新聞</sys:String>
+
+    <!-- Widget.RecentPlay -->
+
+    <sys:String x:Key="Widget.RecentPlay.Clear">清空紀錄</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.Clear.Confirm">確定要清空所有最近遊玩紀錄嗎？</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.Empty">還沒有遊玩紀錄，啟動一次遊戲後會顯示在這裡</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.Info">{0} · 共玩 {1}</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.Missing">實例已不存在</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.Selected">已切換到實例 {0}</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.Title">最近遊玩</sys:String>
+
+    <!-- Widget.Time -->
+
+    <sys:String x:Key="Widget.Time.DaysAgo">{0} 天前</sys:String>
+    <sys:String x:Key="Widget.Time.HoursAgo">{0} 小時前</sys:String>
+    <sys:String x:Key="Widget.Time.JustNow">剛剛</sys:String>
+    <sys:String x:Key="Widget.Time.MinutesAgo">{0} 分鐘前</sys:String>
 
     <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion 暫不提供應用程式內更新，請前往 {0} 手動下載新版本。</sys:String>
     <sys:String x:Key="Setup.Update.Shion.OpenReleases">前往下載頁面</sys:String>

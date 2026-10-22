@@ -1454,6 +1454,9 @@ public partial class FormMain
 
         ToolsGameLink = 1,
         ToolsTest = 3,
+        ToolsCheckIn = 4,
+        ToolsRecentPlay = 5,
+        ToolsNews = 6,
 
         VersionOverall = 0,
         VersionSetup = 1,
@@ -1563,6 +1566,13 @@ public partial class FormMain
                     if (ModMain.frmSetupLeft is null)
                         ModMain.frmSetupLeft = new PageSetupLeft();
                     return ModMain.frmSetupLeft.pageID;
+                }
+
+                case PageType.Tools:
+                {
+                    if (ModMain.frmToolsLeft is null)
+                        ModMain.frmToolsLeft = new PageToolsLeft();
+                    return ModMain.frmToolsLeft.pageID;
                 }
 
                 case PageType.InstanceSetup:

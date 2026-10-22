@@ -112,6 +112,12 @@ public partial class PageSetupUI
             TextCustomNet.Text = Config.Preference.Homepage.CustomUrl;
             ModSetup.UiCustomType(Config.Preference.Homepage.Type);
 
+            // 首页侧栏
+            var uiSidebar = Config.Preference.Sidebar;
+            CheckSidebarCheckIn.Checked = uiSidebar.ShowCheckIn;
+            CheckSidebarRecentPlay.Checked = uiSidebar.ShowRecentPlay;
+            CheckSidebarNews.Checked = uiSidebar.ShowNews;
+
             // 功能隐藏
             // 获取配置组引用
             var uiHidden = Config.Preference.Hide;
@@ -855,6 +861,7 @@ public partial class PageSetupUI
                     toolsCount += 1;
                 if (!conf.ToolsTest)
                     toolsCount += 1;
+                toolsCount += 3; // 小工具页（日期打卡、最近游玩、Minecraft 新闻）不可隐藏，始终计入
                 ModMain.frmToolsLeft.PanItem.Visibility =
                     toolsCount < 2 && !HiddenForceShow ? Visibility.Collapsed : Visibility.Visible;
             }
