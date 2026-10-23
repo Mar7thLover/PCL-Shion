@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -40,11 +40,20 @@ public partial class FormMain
     {
         ModBase.RunInNewThread(() =>
         {
-            var changelogFile = $"{ModBase.pathTemp}CEUpdateLog.md";
-            string changelog;
-            if (File.Exists(changelogFile))
-                changelog = ModBase.ReadFile(changelogFile);
-            else
+            var changelog = string.Empty;
+            try
+            {
+                var releases = ShionUpdate.GetReleasesAsync().GetAwaiter().GetResult();
+                var release = ShionUpdate.FindForVersion(releases, ModBase.versionBaseName)
+                              ?? ShionUpdate.FindLatest(releases);
+                changelog = release?.Body ?? string.Empty;
+            }
+            catch (Exception ex)
+            {
+                LogWrapper.Warn(ex, "从 GitHub Releases 读取更新日志失败");
+            }
+
+            if (string.IsNullOrWhiteSpace(changelog))
                 changelog = Lang.Text("Main.UpdateLog.Empty");
             if (ModMain.MyMsgBoxMarkdown(changelog,
                     Lang.Text("Main.UpdateLog.Title", ModBase.versionBranchName, ModBase.versionBaseName), Lang.Text("Common.Action.Confirm"), Lang.Text("Main.UpdateLog.FullChangelog")) ==

@@ -3646,5 +3646,10 @@
 
     <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion 暫不提供應用程式內更新，請前往 {0} 手動下載新版本。</sys:String>
     <sys:String x:Key="Setup.Update.Shion.OpenReleases">前往下載頁面</sys:String>
-    <sys:String x:Key="Setup.Update.Shion.Status">暫不提供應用程式內更新</sys:String>
+<sys:String x:Key="Setup.Update.Shion.Status">更新透過 GitHub Releases 發布</sys:String>
+<sys:String x:Key="Setup.Update.Shion.Checking">正在檢查 GitHub Releases 上的最新版本…</sys:String>
+<sys:String x:Key="Setup.Update.Shion.Latest">已是最新版本 {0}，新版本會發布在 GitHub Releases。</sys:String>
+<sys:String x:Key="Setup.Update.Shion.NewVersion">發現新版本 {0}，可前往 GitHub Releases 下載。</sys:String>
+<sys:String x:Key="Setup.Update.Shion.Failed">無法從 GitHub Releases 取得版本資訊，可手動開啟下載頁面查看。</sys:String>
+<sys:String x:Key="Setup.Update.Shion.Download">下載新版本</sys:String>
 </ResourceDictionary>

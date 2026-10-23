@@ -3702,5 +3702,10 @@
 
     <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion does not provide in-app updates yet. Please download new versions manually from {0}.</sys:String>
     <sys:String x:Key="Setup.Update.Shion.OpenReleases">Open download page</sys:String>
-    <sys:String x:Key="Setup.Update.Shion.Status">In-app updates are not available</sys:String>
+<sys:String x:Key="Setup.Update.Shion.Status">Updates are published on GitHub Releases</sys:String>
+<sys:String x:Key="Setup.Update.Shion.Checking">Checking the latest version on GitHub Releases…</sys:String>
+<sys:String x:Key="Setup.Update.Shion.Latest">You are on the latest version {0}. New versions are published on GitHub Releases.</sys:String>
+<sys:String x:Key="Setup.Update.Shion.NewVersion">New version {0} is available on GitHub Releases.</sys:String>
+<sys:String x:Key="Setup.Update.Shion.Failed">Could not get version information from GitHub Releases. Open the download page to check manually.</sys:String>
+<sys:String x:Key="Setup.Update.Shion.Download">Download new version</sys:String>
 </ResourceDictionary>

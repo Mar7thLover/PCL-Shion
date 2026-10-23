@@ -1,9 +1,10 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using PCL.Core.App;
 using PCL.Core.Utils;
 using PCL.Core.App.Localization;
+using PCL.Core.Logging;
 using PCL.Core.Utils.OS;
 
 namespace PCL;
@@ -11,6 +12,11 @@ namespace PCL;
 public partial class PageSetupUpdate
 {
     public VersionDataModel updateInfo;
+
+    /// <summary>
+    /// “前往下载”按钮要打开的地址，检查到新版本时指向该版本的发布页。
+    /// </summary>
+    private string _shionReleaseUrl = ModBase.shionReleasesUrl;
 
     public PageSetupUpdate()
     {
@@ -31,7 +37,10 @@ public partial class PageSetupUpdate
         var inAppUpdate = UpdateManager.InAppUpdateEnabled;
         CardShionNotice.Visibility = inAppUpdate ? Visibility.Collapsed : Visibility.Visible;
         CardUpdateSettings.Visibility = inAppUpdate ? Visibility.Visible : Visibility.Collapsed;
-        TextShionNotice.Text = Lang.Text("Setup.Update.Shion.Notice", ModBase.shionReleasesUrl);
+        if (inAppUpdate)
+            TextShionNotice.Text = Lang.Text("Setup.Update.Shion.Notice", ModBase.shionReleasesUrl);
+        else
+            _ = CheckShionReleaseAsync();
         ModAnimation.AniControlEnabled -= 1;
         CheckUpdate();
     }
@@ -63,6 +72,37 @@ public partial class PageSetupUpdate
                 ModBase.LogLevel.Hint,
                 userSummary: Lang.Text("Setup.Update.Error.NetworkFailed"));
             return UpdateStatus.Error;
+        }
+    }
+
+    /// <summary>
+    /// 从 GitHub Releases 检查最新版本。只更新提示文字，不下载、不安装。
+    /// </summary>
+    private async Task CheckShionReleaseAsync()
+    {
+        TextShionNotice.Text = Lang.Text("Setup.Update.Shion.Checking");
+        try
+        {
+            var releases = await ShionUpdate.GetReleasesAsync();
+            var latest = ShionUpdate.FindLatest(releases);
+            if (latest is null || !ShionUpdate.IsNewer(latest.Version, ModBase.versionBaseName))
+            {
+                _shionReleaseUrl = latest?.Url ?? ModBase.shionReleasesUrl;
+                TextShionNotice.Text = Lang.Text("Setup.Update.Shion.Latest", ModBase.versionBaseName);
+                BtnShionReleases.Text = Lang.Text("Setup.Update.Shion.OpenReleases");
+            }
+            else
+            {
+                _shionReleaseUrl = latest.Url;
+                TextShionNotice.Text = Lang.Text("Setup.Update.Shion.NewVersion", latest.Version);
+                BtnShionReleases.Text = Lang.Text("Setup.Update.Shion.Download");
+            }
+        }
+        catch (Exception ex)
+        {
+            LogWrapper.Warn(ex, "从 GitHub Releases 检查最新版本失败");
+            TextShionNotice.Text = Lang.Text("Setup.Update.Shion.Failed");
+            BtnShionReleases.Text = Lang.Text("Setup.Update.Shion.OpenReleases");
         }
     }
 
@@ -276,7 +316,7 @@ public partial class PageSetupUpdate
 
     private void BtnShionReleases_Click(object sender, MouseButtonEventArgs e)
     {
-        ModBase.OpenWebsite(ModBase.shionReleasesUrl);
+        ModBase.OpenWebsite(_shionReleaseUrl);
     }
 
     public string VersionNameFormat(string str)
