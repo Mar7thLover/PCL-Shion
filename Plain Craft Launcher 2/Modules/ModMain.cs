@@ -25,7 +25,7 @@ namespace PCL;
 public static class ModMain
 {
     public static FormMain? frmMain;
-    public static SplashScreen? frmStart;
+    public static StartupSplash? frmStart;
     public static PageLaunchLeft? frmLaunchLeft;
     public static PageLaunchRight? frmLaunchRight;
     public static PageLogLeft? frmLogLeft;
