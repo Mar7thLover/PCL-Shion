@@ -13,13 +13,13 @@ body = """
 {% endif %}\
 {% for group, commits in commits | group_by(attribute="group") %}
     ### {{ group | striptags | trim | upper_first }}
-    {% for commit in commits %}
+    {% for commit in commits %}{% if commit.author.name == "Mar7thLover" %}
         - {% if commit.scope %}*{{ commit.scope }}*: {% endif %}\
             {% if commit.breaking %}[**破坏性改动**] {% endif %}\
             {{ commit.message | upper_first }}\
             {% if commit.remote.username %} by @{{ commit.remote.username }}{%- endif %}\
             {% if commit.remote.pr_number %} in #{{ commit.remote.pr_number }}{%- endif %}
-    {% endfor %}
+    {% endif %}{% endfor %}
 {% endfor %}
 
 ---
