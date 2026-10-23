@@ -289,8 +289,6 @@ Ce que vous pouvez essayer
     <sys:String x:Key="Download.Comp.Category.Equipment">Équipement</sys:String>
     <sys:String x:Key="Main.Title.NewsDetail">Actualité</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.CheckIn">Afficher le check-in quotidien</sys:String>
-    <sys:String x:Key="Setup.UI.Sidebar.Hint">Lorsque la fenêtre est étroite, la barre latérale passe au-dessus du contenu de l'accueil</sys:String>
-    <sys:String x:Key="Setup.UI.Sidebar.News">Afficher les actualités Minecraft</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.RecentPlay">Afficher les parties récentes</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.Title">Barre latérale de l'accueil</sys:String>
     <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion does not provide in-app updates yet. Please download new versions manually from {0}.</sys:String>
@@ -325,9 +323,13 @@ Ce que vous pouvez essayer
     <sys:String x:Key="Widget.RecentPlay.Clear.Confirm">Effacer tout l'historique des parties récentes ?</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Empty">Aucun historique de jeu pour le moment. Lancez une partie et elle apparaîtra ici.</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Info">{0} · {1} de jeu</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.LastServer">Serveur : {0}</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.LastWorld">Monde : {0}</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Missing">L'instance n'existe plus</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.Rejoin">Rejoindre {0}</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Selected">Passage à l'instance {0}</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Title">Parties récentes</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.WorldMissing">Le monde {0} n'existe plus</sys:String>
     <sys:String x:Key="Widget.Time.DaysAgo">il y a {0} j</sys:String>
     <sys:String x:Key="Widget.Time.HoursAgo">il y a {0} h</sys:String>
     <sys:String x:Key="Widget.Time.JustNow">à l'instant</sys:String>

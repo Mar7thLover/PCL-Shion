@@ -1471,7 +1471,7 @@
     <sys:String x:Key="Launch.Error.Title">Launch failed</sys:String>
     <sys:String x:Key="Launch.Right.CommunityHint.HidePrompt">To permanently hide this notice, enter the PCL Shion maintainer's name.</sys:String>
     <sys:String x:Key="Launch.Right.CommunityHint.InputTitle">Enter the PCL Shion maintainer's name</sys:String>
-    <sys:String x:Key="Launch.Right.CommunityHint.Message">You are using PCL Shion! PCL Shion is a third-party modified version based on PCL CE (PCL Community Edition), which is itself based on the original PCL. It is maintained independently, is not an official version of PCL or PCL CE, and differs from both in its development path and user experience.&#xA;&#xA;If you downloaded PCL Shion by accident, we strongly recommend downloading the original PCL for long-term use, as this version may not be user-friendly for newcomers.&#xA;Additionally, please report PCL Shion issues to the PCL Shion repository, and do not report them to the official PCL or PCL CE repositories!</sys:String>
+    <sys:String x:Key="Launch.Right.CommunityHint.Message">You are using PCL Shion, a third-party version based on PCL CE. Please report issues to the PCL Shion repository, not to the original PCL or PCL CE.</sys:String>
     <sys:String x:Key="Launch.Right.CommunityHint.Title">PCL Shion notice</sys:String>
     <sys:String x:Key="Launch.Right.CommunityHint.WrongInput">Not quite right...</sys:String>
     <sys:String x:Key="Launch.Right.Log.Title">Launch log</sys:String>
@@ -2455,16 +2455,16 @@
 
     <!-- Setup -->
 
+    <sys:String x:Key="Setup.About.Community.Repo">PCL CE repository</sys:String>
     <sys:String x:Key="Setup.Error.OperationFailed">A settings operation failed. See the details below.</sys:String>
 
     <!-- Setup.About -->
 
-    <sys:String x:Key="Setup.About.Community.Info">The development team of Plain Craft Launcher Community Edition!</sys:String>
+    <sys:String x:Key="Setup.About.Community.Info">Developers of PCL CE, which PCL Shion is based on</sys:String>
     <sys:String x:Key="Setup.About.Community.Name">PCL Community</sys:String>
     <sys:String x:Key="Setup.About.Contributors.Title">Contributors</sys:String>
     <sys:String x:Key="Setup.About.Contributors.ViewMore">View more</sys:String>
     <sys:String x:Key="Setup.About.Error.LoadContributorsFailed">Failed to load contributor information</sys:String>
-    <sys:String x:Key="Setup.About.GitHubHome">GitHub page</sys:String>
     <sys:String x:Key="Setup.About.Licenses.Title">Licences and copyrights</sys:String>
     <sys:String x:Key="Setup.About.Licenses.ViewLicense">Licence document</sys:String>
     <sys:String x:Key="Setup.About.Licenses.ViewWebsite">Source website</sys:String>
@@ -2512,8 +2512,8 @@
     <!-- Setup.About.Legal -->
 
     <sys:String x:Key="Setup.About.Legal.CommunityLobbyPrivacy">Community lobby privacy policy</sys:String>
-    <sys:String x:Key="Setup.About.Legal.CommunitySource">PCL CE source code</sys:String>
-    <sys:String x:Key="Setup.About.Legal.CopyrightText">Copyright © PCL Community &amp; LTCat (龙腾猫跃) 2026.&#xD;NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.</sys:String>
+    <sys:String x:Key="Setup.About.Legal.CommunitySource">PCL Shion source code</sys:String>
+    <sys:String x:Key="Setup.About.Legal.CopyrightText">Copyright © Mar7thLover, PCL Community &amp; LTCat (龙腾猫跃) 2026.&#xD;NOT AN OFFICIAL MINECRAFT PRODUCT. NOT APPROVED BY OR ASSOCIATED WITH MOJANG OR MICROSOFT.</sys:String>
     <sys:String x:Key="Setup.About.Legal.NatayarkTerms">Natayark OpenID ToS</sys:String>
     <sys:String x:Key="Setup.About.Legal.OtherInfo">Other information</sys:String>
     <sys:String x:Key="Setup.About.Legal.PrivacyNotice">Privacy statement</sys:String>
@@ -2713,9 +2713,8 @@
     <sys:String x:Key="Setup.Language.Banner.TitlePrefix">Let</sys:String>
     <sys:String x:Key="Setup.Language.Banner.TitleSuffix">Go Internationalised.</sys:String>
     <sys:String x:Key="Setup.Language.Banner.DescriptionLine1">With the support of the community, PCL Shion is entering a new chapter in its journey towards internationalisation.</sys:String>
-    <sys:String x:Key="Setup.Language.Banner.DescriptionLine2">You can help shape that journey by contributing on our translation platform or submitting pull requests to our GitHub repository, making PCL Shion more accessible to users around the world.</sys:String>
+    <sys:String x:Key="Setup.Language.Banner.DescriptionLine2">Translation contributions are welcome as Pull Requests on the GitHub repository.</sys:String>
     <sys:String x:Key="Setup.Language.Banner.DescriptionLine3">Thank you to everyone who contributes translations, reviews, and improvements—your support makes PCL Shion better for everyone.</sys:String>
-    <sys:String x:Key="Setup.Language.Banner.TranslateWebsite">Visit translation platform</sys:String>
     <sys:String x:Key="Setup.Language.Banner.SubmitPullRequest">Submit pull request</sys:String>
     <sys:String x:Key="Setup.Language.Reset.Success">Language page settings initialised!</sys:String>
     <sys:String x:Key="Setup.Language.Title">Language</sys:String>
@@ -2975,6 +2974,8 @@
     <sys:String x:Key="Setup.Ui.Font.Motd">MOTD</sys:String>
     <sys:String x:Key="Setup.Ui.Font.Motd.ToolTip">Formatted code text font, used for server status info and similar content</sys:String>
     <sys:String x:Key="Setup.Ui.Font.Title">Font</sys:String>
+    <sys:String x:Key="Setup.Ui.Homepage.PresetAtLeastOne">Keep at least one homepage preset</sys:String>
+    <sys:String x:Key="Setup.Ui.Homepage.PresetHint">Select several to switch between them as tabs on the homepage</sys:String>
     <sys:String x:Key="Setup.Ui.ImageFile.Filter">Common image files (*.png;*.jpg;*.gif;*.webp)|*.png;*.jpg;*.gif;*.webp</sys:String>
     <sys:String x:Key="Setup.Ui.ImageFile.SelectTitle">Select image</sys:String>
     <sys:String x:Key="Setup.Ui.Initialized">The personalisation settings have been initialised.</sys:String>
@@ -3162,8 +3163,6 @@
     <!-- Setup.UI.Sidebar -->
 
     <sys:String x:Key="Setup.UI.Sidebar.CheckIn">Show daily check-in</sys:String>
-    <sys:String x:Key="Setup.UI.Sidebar.Hint">When the window is narrow, the sidebar moves above the homepage content</sys:String>
-    <sys:String x:Key="Setup.UI.Sidebar.News">Show Minecraft news</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.RecentPlay">Show recently played</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.Title">Home sidebar</sys:String>
 
@@ -3534,7 +3533,7 @@
     <sys:String x:Key="Update.Action">Update</sys:String>
     <sys:String x:Key="Update.Available">A new launcher version is available ({0} -&gt; {1})&#xA;Update now?</sys:String>
     <sys:String x:Key="Update.Check.Failed">Unable to get latest version information. Please check your network connection.</sys:String>
-    <sys:String x:Key="Update.CommunityNotice.Body">You are using PCL Shion, a third-party modified version based on PCL CE by PCL-Community, which is itself based on the original PCL by LTCat (龙腾猫跃). Please report issues to the PCL Shion repository, and DO NOT report them to the official PCL or PCL CE repositories!&#xA;PCL Shion and its maintainer are not affiliated with LTCat or PCL-Community, and do not guarantee your usage.&#xA;&#xA;If you downloaded PCL Shion by mistake, we recommend using the original PCL instead.&#xA;If you downloaded PCL Shion by mistake, we recommend using the original PCL instead.&#xA;If you downloaded PCL Shion by mistake, we recommend using the original PCL instead.&#xA;&#xA;Differences from the original version:&#xA;- Themes: only some fixed blue themes; no plans to add new themes.&#xA;- Toolbox: some content from the original version is missing (Echo Cave, Don't Click).&#xA;&#xA;This message will be shown once after a launcher update.</sys:String>
+    <sys:String x:Key="Update.CommunityNotice.Body">You are using PCL Shion, a third-party version based on PCL CE, not affiliated with PCL Community or LTCat (龙腾猫跃). Please report issues to the PCL Shion repository.</sys:String>
     <sys:String x:Key="Update.CommunityNotice.Confirm">I understand</sys:String>
     <sys:String x:Key="Update.CommunityNotice.Title">PCL Shion notice</sys:String>
     <sys:String x:Key="Update.Error.FetchFailed">Failed to get launcher update. Please check your network connection.</sys:String>
@@ -3633,12 +3632,16 @@
     <sys:String x:Key="Widget.RecentPlay.Clear.Confirm">Clear all recently played history?</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Empty">No play history yet. Launch a game and it will show up here.</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Info">{0} · played {1}</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.LastServer">Server: {0}</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.LastWorld">World: {0}</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Missing">Instance no longer exists</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.Rejoin">Rejoin {0}</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Selected">Switched to instance {0}</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Title">Recently Played</sys:String>
 
     <!-- Widget.Time -->
 
+    <sys:String x:Key="Widget.RecentPlay.WorldMissing">World {0} no longer exists</sys:String>
     <sys:String x:Key="Widget.Time.DaysAgo">{0} days ago</sys:String>
     <sys:String x:Key="Widget.Time.HoursAgo">{0} h ago</sys:String>
     <sys:String x:Key="Widget.Time.JustNow">just now</sys:String>

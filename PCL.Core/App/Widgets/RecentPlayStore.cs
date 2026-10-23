@@ -29,6 +29,16 @@ public sealed class RecentPlayEntry
     /// 累计游玩时长（秒）。
     /// </summary>
     public long TotalSeconds { get; set; }
+
+    /// <summary>
+    /// 最近一次进入的单人世界（存档文件夹名）。与 <see cref="LastServer"/> 至多有一个不为空。
+    /// </summary>
+    public string? LastWorld { get; set; }
+
+    /// <summary>
+    /// 最近一次进入的服务器地址（host:port）。与 <see cref="LastWorld"/> 至多有一个不为空。
+    /// </summary>
+    public string? LastServer { get; set; }
 }
 
 /// <summary>
@@ -115,7 +125,11 @@ public static class RecentPlayStore
                 Path = item.Path.Trim(),
                 Name = string.IsNullOrWhiteSpace(item.Name) ? _NameFromPath(key) : item.Name,
                 LastPlayedUtc = _ToUtc(item.LastPlayedUtc),
-                TotalSeconds = Math.Max(0, item.TotalSeconds)
+                TotalSeconds = Math.Max(0, item.TotalSeconds),
+                LastWorld = string.IsNullOrWhiteSpace(item.LastWorld) ? null : item.LastWorld,
+                LastServer = string.IsNullOrWhiteSpace(item.LastWorld) && !string.IsNullOrWhiteSpace(item.LastServer)
+                    ? item.LastServer
+                    : null
             };
             if (merged.TryGetValue(key, out var existing))
             {
@@ -190,6 +204,24 @@ public static class RecentPlayStore
         if (entry is null) return;
         var seconds = (long)Math.Min(Math.Floor(duration.TotalSeconds), MaxSessionSeconds);
         entry.TotalSeconds += seconds;
+    }
+
+    /// <summary>
+    /// 记录本次游玩进入的世界或服务器，覆盖之前的记录。找不到对应记录或目标为空时忽略。
+    /// </summary>
+    /// <param name="list">记录列表，会被原地修改。</param>
+    /// <param name="path">实例路径。</param>
+    /// <param name="target">进入的世界或服务器。</param>
+    public static void RecordTarget(List<RecentPlayEntry> list, string path, RecentPlayTarget target)
+    {
+        ArgumentNullException.ThrowIfNull(list);
+        if (string.IsNullOrWhiteSpace(target.Value)) return;
+        var key = NormalizePath(path);
+        if (key.Length == 0) return;
+        var entry = _Find(list, key);
+        if (entry is null) return;
+        entry.LastWorld = target.IsServer ? null : target.Value;
+        entry.LastServer = target.IsServer ? target.Value : null;
     }
 
     /// <summary>

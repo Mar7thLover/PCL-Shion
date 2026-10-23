@@ -99,14 +99,7 @@ public partial class PageSetupUI
             MusicRefreshUI();
 
             // 主页
-            try
-            {
-                ComboCustomPreset.SelectedIndex = Config.Preference.Homepage.SelectedPreset;
-            }
-            catch
-            {
-                Config.Preference.Homepage.SelectedPresetConfig.Reset();
-            }
+            RefreshPresetList();
 
             ((MyRadioBox)FindName("RadioCustomType" + Config.Preference.Homepage.Type)).Checked = true;
             TextCustomNet.Text = Config.Preference.Homepage.CustomUrl;
@@ -116,7 +109,6 @@ public partial class PageSetupUI
             var uiSidebar = Config.Preference.Sidebar;
             CheckSidebarCheckIn.Checked = uiSidebar.ShowCheckIn;
             CheckSidebarRecentPlay.Checked = uiSidebar.ShowRecentPlay;
-            CheckSidebarNews.Checked = uiSidebar.ShowNews;
 
             // 功能隐藏
             // 获取配置组引用
@@ -213,6 +205,44 @@ public partial class PageSetupUI
         var sender = (MyComboBox)senderRaw;
         if (ModAnimation.AniControlEnabled == 0)
             SetByTag(sender.Tag?.ToString(), sender.SelectedIndex);
+    }
+
+    /// <summary>
+    ///     按预设列表生成主页预设的勾选框，并勾上已选的预设。
+    /// </summary>
+    private void RefreshPresetList()
+    {
+        var selected = HomepagePresets.GetSelected();
+        if (PanCustomPresetList.Children.Count == 0)
+        {
+            foreach (var preset in HomepagePresets.All)
+            {
+                var check = new MyCheckBox { Height = 22, Margin = new Thickness(-1, 0, 0, 7), Tag = preset.Id };
+                check.SetResourceReference(MyCheckBox.TextProperty, preset.NameKey);
+                check.Change += PresetCheckChange;
+                PanCustomPresetList.Children.Add(check);
+            }
+        }
+
+        foreach (MyCheckBox check in PanCustomPresetList.Children)
+            check.Checked = selected.Contains((int)check.Tag);
+    }
+
+    private void PresetCheckChange(object senderRaw, bool user)
+    {
+        if (!user || ModAnimation.AniControlEnabled != 0)
+            return;
+        var selected = PanCustomPresetList.Children.OfType<MyCheckBox>()
+            .Where(check => check.Checked == true).Select(check => (int)check.Tag).ToList();
+        if (selected.Count == 0)
+        {
+            // 至少保留一个预设
+            ((MyCheckBox)senderRaw).Checked = true;
+            HintService.Hint(Lang.Text("Setup.Ui.Homepage.PresetAtLeastOne"));
+            return;
+        }
+
+        HomepagePresets.SetSelected(selected);
     }
 
     private void CheckBoxChange(object senderRaw, bool user)

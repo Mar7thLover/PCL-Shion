@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Globalization;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -94,8 +96,6 @@ public partial class PageLaunchRight : IRefreshable
     private void RefreshReal()
     {
         var content = "";
-        string url = null;
-
         var uiCustomType = (int)Config.Preference.Homepage.Type;
 
         if (uiCustomType == 1)
@@ -107,148 +107,106 @@ public partial class PageLaunchRight : IRefreshable
         else if (uiCustomType == 2)
         {
             // 网络文件
-            url = (string)Config.Preference.Homepage.CustomUrl;
-            content = LoadFromNetwork(url);
+            content = LoadFromNetwork((string)Config.Preference.Homepage.CustomUrl);
         }
         else if (uiCustomType == 3)
         {
-            // 预设主页
-            var preset = (int)Config.Preference.Homepage.SelectedPreset;
-            switch (preset)
+            // 预设主页：勾选了多个预设时显示上次打开的选项卡
+            var presets = HomepagePresets.GetSelected();
+            var active = presets.Contains(States.UI.HomepagePresetTab) ? States.UI.HomepagePresetTab : presets[0];
+            ModBase.RunInUi(() => RefreshPresetTabs(presets, active));
+            var preset = HomepagePresets.Find(active)!;
+            LogWrapper.Info($"[Page] 主页预设：{preset.NameKey}");
+            if (preset.Id == HomepagePresets.Trivia)
             {
-                case 0:
-                    LogWrapper.Info("[Page] 主页预设：你知道吗");
-                    var hintText = GetRandomHint();
-                    content = $@"
+                var hintText = GetRandomHint();
+                content = $@"
     <local:MyCard Title=""{{DynamicResource Launch.Status.Trivia}}"" Margin=""0,0,0,15"">
         <TextBlock Margin=""25,38,23,15"" FontSize=""13.5"" IsHitTestVisible=""False"" Text=""{hintText}"" TextWrapping=""Wrap"" Foreground=""{{DynamicResource ColorBrush1}}"" />
-        <local:MyIconButton Height=""22"" Width=""22"" Margin=""9"" VerticalAlignment=""Top"" HorizontalAlignment=""Right"" 
+        <local:MyIconButton Height=""22"" Width=""22"" Margin=""9"" VerticalAlignment=""Top"" HorizontalAlignment=""Right""
             EventType=""刷新主页"" EventData=""/""
             SvgIcon=""lucide/refresh-cw"" />
     </local:MyCard>";
-                    break;
-
-                case 1:
-                    LogWrapper.Info("[Page] 主页预设：回声洞 已被移除");
-                    ModMain.MyMsgBox(Lang.Text("Launch.Homepage.Preset.EchoCave.Removed"));
-                    return;
-
-                case 2:
-                    LogWrapper.Info("[Page] 主页预设：Minecraft 新闻");
-                    url = "https://news.bugjump.net";
-                    content = LoadFromNetwork(url);
-                    break;
-
-                // case 3:
-                //     LogWrapper.Info("[Page] 主页预设：简单主页");
-                //     url = "https://pclhomeplazaoss.lingyunawa.top:26994/d/Homepages/MFn233/Custom.xaml";
-                //     content = LoadFromNetwork(url);
-                //     break;
-
-                case 3:
-                    LogWrapper.Info("[Page] 主页预设：每日整合包推荐");
-                    url = "https://pclsub.sodamc.com/";
-                    content = LoadFromNetwork(url);
-                    break;
-
-                case 4:
-                    LogWrapper.Info("[Page] 主页预设：Minecraft 皮肤推荐");
-                    url = "https://forgepixel.com/pcl_sub_file";
-                    content = LoadFromNetwork(url);
-                    break;
-
-                case 5:
-                    LogWrapper.Info("[Page] 主页预设：OpenBMCLAPI 仪表盘 Lite");
-                    url = "https://pcl-bmcl.milu.ink/";
-                    content = LoadFromNetwork(url);
-                    break;
-
-                // case 7:
-                //     LogWrapper.Info("[Page] 主页预设：主页市场");
-                //     url = "https://pclhomeplazaoss.lingyunawa.top:26994/d/Homepages/JingHai-Lingyun/Custom.xaml";
-                //     content = LoadFromNetwork(url);
-                //     break;
-
-                // case 8:
-                //     LogWrapper.Info("[Page] 主页预设：更新日志");
-                //     url = "https://pclhomeplazaoss.lingyunawa.top:26994/d/Homepages/Joker2184/UpdateHomepage.xaml";
-                //     content = LoadFromNetwork(url);
-                //     break;
-
-                case 6:
-                    LogWrapper.Info("[Page] 主页预设：PCL 新功能说明书");
-                    url = "https://raw.gitcode.com/WForst-Breeze/WhatsNewPCL/raw/main/Custom.xaml";
-                    content = LoadFromNetwork(url);
-                    break;
-
-                // case 10:
-                //     LogWrapper.Info("[Page] 主页预设：OpenMCIM Dashboard");
-                //     url = "https://files.mcimirror.top/PCL";
-                //     content = LoadFromNetwork(url);
-                //     break;
-
-                case 7:
-                    LogWrapper.Info("[Page] 主页预设：杂志主页");
-                    url = "https://pclhomeplazaoss.lingyunawa.top:26994/d/Homepages/Ext1nguisher/Custom.xaml";
-                    content = LoadFromNetwork(url);
-                    break;
-
-                case 8:
-                    LogWrapper.Info("[Page] 主页预设：PCL GitHub 仪表盘");
-                    url = "https://ddf.pcl-community.org/Custom.xaml";
-                    content = LoadFromNetwork(url);
-                    break;
-
-                case 9:
-                    LogWrapper.Info("[Page] 主页预设：Minecraft 更新摘要");
-                    url = "https://raw.gitcode.com/ENC_Euphony/PCL-AI-Summary-HomePage/raw/master/Custom.xaml";
-                    content = LoadFromNetwork(url);
-                    break;
-                
-                case 10:
-                    LogWrapper.Info("[Page] 主页预设：今日新闻热点");
-                    url = "https://pcl.wyc-w.top/index.xaml";
-                    content = LoadFromNetwork(url);
-                    break;
-                
-                case 11:
-                    LogWrapper.Info("[Page] 主页预设：Minecraft 芝士站");
-                    url = "https://www.xxag.top/mkss";
-                    content = LoadFromNetwork(url);
-                    break;
-                
-                case 12:
-                    LogWrapper.Info("[Page] 主页预设：整合包推荐引擎");
-                    url = "https://qawsedrftgyhujiko.fun/pcl2/Custom.xaml";
-                    content = LoadFromNetwork(url);
-                    break;
-
-                case 13:
-                    LogWrapper.Info("[Page] 主页预设：Bangumi 番剧主页");
-                    url = "https://bangumi.p.kaphia.qzz.io";
-                    content = LoadFromNetwork(url);
-                    break;
-                
-                case 14:
-                    LogWrapper.Info("[Page] 主页预设：PCL CE 公告栏");
-                    url = "https://s3.pysio.online/pcl2-ce/apiv2/pages/announce.xaml";
-                    content = LoadFromNetwork(url);
-                    break;
-                
-                case 15:
-                    LogWrapper.Info("[Page] 主页预设：Minecraft 信息流");
-                    Dispatcher.Invoke(() =>
-                    {
-                        if (ModMain.frmHomepageNews is null)
-                            ModMain.frmHomepageNews = new PageHomepageNewsView();
-                        PanCustom.Children.Clear();
-                        PanCustom.Children.Add(ModMain.frmHomepageNews);
-                    });
-                    return;
+            }
+            else if (preset.Id == HomepagePresets.McOfficialFeed)
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    if (ModMain.frmHomepageNews is null)
+                        ModMain.frmHomepageNews = new PageHomepageNewsView();
+                    PanCustom.Children.Clear();
+                    PanCustom.Children.Add(ModMain.frmHomepageNews);
+                    loadedContentHash = -1; // 切回其他选项卡时需要重新加载内容
+                });
+                return;
+            }
+            else
+            {
+                content = LoadFromNetwork(preset.Url!);
             }
         }
 
+        if (uiCustomType != 3)
+            ModBase.RunInUi(() => RefreshPresetTabs([], -1));
         ModBase.RunInUi(() => LoadContent(content));
+    }
+
+    /// <summary>
+    ///     当前选项卡对应的预设编号，用于判断选项卡是否需要重建。
+    /// </summary>
+    private string presetTabsKey = "";
+
+    /// <summary>
+    ///     按勾选的预设刷新顶部选项卡，只有一个预设时不显示。必须在 UI 线程调用。
+    /// </summary>
+    private void RefreshPresetTabs(List<int> presets, int active)
+    {
+        if (presets.Count <= 1)
+        {
+            CardPresetTabs.Visibility = Visibility.Collapsed;
+            return;
+        }
+
+        var key = string.Join(",", presets);
+        if (key != presetTabsKey)
+        {
+            presetTabsKey = key;
+            PanPresetTabs.Children.Clear();
+            foreach (var id in presets)
+            {
+                var tab = new MyRadioButton
+                {
+                    ColorType = MyRadioButton.ColorState.Highlight,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness(2, 0, 2, 0),
+                    Tag = id
+                };
+                tab.SetResourceReference(MyRadioButton.TextProperty, HomepagePresets.Find(id)!.NameKey);
+                tab.Check += (sender, raiseByMouse) =>
+                {
+                    if (!raiseByMouse)
+                        return;
+                    States.UI.HomepagePresetTab = (int)sender.Tag;
+                    PanBack.ScrollToHome();
+                    Refresh();
+                };
+                PanPresetTabs.Children.Add(tab);
+            }
+        }
+
+        foreach (MyRadioButton tab in PanPresetTabs.Children)
+            if ((int)tab.Tag == active && !tab.Checked)
+                tab.SetChecked(true, false, false);
+        CardPresetTabs.Visibility = Visibility.Visible;
+    }
+
+    /// <summary>
+    ///     联网主页的缓存文件路径。每个地址单独缓存，切换选项卡时不会互相覆盖。
+    /// </summary>
+    private static string GetCachePath(string url)
+    {
+        var hash = Convert.ToHexStringLower(SHA1.HashData(Encoding.UTF8.GetBytes(url)))[..16];
+        return Path.Combine(ModBase.pathTemp, "Cache", "Homepage", hash + ".xaml");
     }
 
     /// <summary>
@@ -258,10 +216,8 @@ public partial class PageLaunchRight : IRefreshable
     {
         if (string.IsNullOrWhiteSpace(url)) return "";
 
-        var cachePath = Path.Combine(ModBase.pathTemp, "Cache", "Custom.xaml");
-        var cachedUrl = (string)States.UI.SavedHomepageUrl;
-
-        if (url == cachedUrl && File.Exists(cachePath))
+        var cachePath = GetCachePath(url);
+        if (File.Exists(cachePath))
         {
             LogWrapper.Info("[Page] 主页自定义数据来源：联网缓存文件");
             // 后台更新缓存
@@ -272,7 +228,6 @@ public partial class PageLaunchRight : IRefreshable
         LogWrapper.Info("[Page] 主页自定义数据来源：联网全新下载");
         HintWrapper.Show(Lang.Text("Launch.Homepage.Loading"));
         ModBase.RunInUiWait(() => LoadContent("")); // 先清空页面
-        States.UI.SavedHomepageVersion = "";
         onlineLoader.Start(url); // 下载完成后将会再次触发更新
         return "";
     }
@@ -375,7 +330,10 @@ public partial class PageLaunchRight : IRefreshable
                 version = Requester.FetchString(versionAddress);
                 if (version.Length > 1000)
                     throw new Exception($"获取的主页版本过长（{version.Length} 字符）");
-                var currentVersion = States.UI.SavedHomepageVersion;
+                var versionPath = GetCachePath(address) + ".ver";
+                var currentVersion = File.Exists(GetCachePath(address)) && File.Exists(versionPath)
+                    ? ModBase.ReadFile(versionPath)
+                    : "";
                 if (!string.IsNullOrEmpty(version) && !string.IsNullOrEmpty(currentVersion) &&
                     (version ?? "") == (currentVersion ?? ""))
                 {
@@ -398,9 +356,8 @@ public partial class PageLaunchRight : IRefreshable
             {
                 var fileContent = Requester.FetchString(address);
                 ModBase.Log($"[Page] 已联网下载主页，内容长度：{fileContent.Length}，来源：{address}");
-                States.UI.SavedHomepageUrl = address;
-                States.UI.SavedHomepageVersion = version;
-                ModBase.WriteFile(ModBase.pathTemp + @"Cache\Custom.xaml", fileContent);
+                ModBase.WriteFile(GetCachePath(address), fileContent);
+                ModBase.WriteFile(GetCachePath(address) + ".ver", version ?? "");
             }
 
             // 要求刷新
@@ -451,8 +408,16 @@ public partial class PageLaunchRight : IRefreshable
     {
         loadedContentHash = -1;
         onlineLoader.input = "";
-        States.UI.SavedHomepageUrl = "";
-        States.UI.SavedHomepageVersion = "";
+        try
+        {
+            var cacheFolder = Path.Combine(ModBase.pathTemp, "Cache", "Homepage");
+            if (Directory.Exists(cacheFolder))
+                Directory.Delete(cacheFolder, true);
+        }
+        catch (Exception ex)
+        {
+            ModBase.Log(ex, "[Page] 清空主页缓存文件失败", ModBase.LogLevel.Developer);
+        }
         ModBase.Log("[Page] 已清空主页缓存");
     }
 
@@ -903,7 +868,6 @@ public partial class PageLaunchRight : IRefreshable
     // 控件只创建一次并缓存，开关关闭时仅从 PanWidgets 移除
     private CheckInWidget? checkInWidget;
     private RecentPlayWidget? recentPlayWidget;
-    private NewsWidget? newsWidget;
 
     /// <summary>
     ///     根据 “首页侧栏” 的显示开关刷新小工具：按开关创建、添加或移除控件。
@@ -934,8 +898,6 @@ public partial class PageLaunchRight : IRefreshable
                 CollectWidget(ref checkInWidget, "CheckInWidget", wanted, created);
             if (sidebar.ShowRecentPlay)
                 CollectWidget(ref recentPlayWidget, "RecentPlayWidget", wanted, created);
-            if (sidebar.ShowNews)
-                CollectWidget(ref newsWidget, "NewsWidget", wanted, created);
 
             // 移除多余的控件，并把需要显示的控件按顺序放入 PanWidgets
             var children = PanWidgets.Children;
@@ -1008,9 +970,6 @@ public partial class PageLaunchRight : IRefreshable
                     break;
                 case RecentPlayWidget recentPlay:
                     recentPlay.Refresh();
-                    break;
-                case NewsWidget news:
-                    news.Refresh(); // 距离上次成功加载较近时，控件自己会跳过联网请求
                     break;
             }
         }

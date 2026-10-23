@@ -91,9 +91,9 @@
                         Grid.Row="1"
                         Grid.Column="2"
                         Height="35"
-                        local:CustomEventService.EventData="https://github.com/PCL-Community"
+                        local:CustomEventService.EventData="https://github.com/PCL-Community/PCL2-CE"
                         local:CustomEventService.EventType="OpenUrl"
-                        Text="{DynamicResource Setup.About.GitHubHome}" />
+                        Text="{DynamicResource Setup.About.Community.Repo}" />
                     <local:MyButton
                         Grid.Row="2"
                         Grid.Column="2"
@@ -375,7 +375,7 @@
                         <local:MyButton
                             Margin="0,0,20,0"
                             ColorType="Highlight"
-                            local:CustomEventService.EventData="https://github.com/PCL-Community/PCL2-CE"
+                            local:CustomEventService.EventData="https://github.com/Mar7thLover/PCL-Shion"
                             local:CustomEventService.EventType="OpenUrl"
                             Padding="13,0"
                             Text="{DynamicResource Setup.About.Legal.CommunitySource}" />

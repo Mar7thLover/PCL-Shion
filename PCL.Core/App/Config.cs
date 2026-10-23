@@ -384,6 +384,11 @@ public static partial class Config
             [ConfigItem<int>("UiCustomPreset", 0, ConfigSource.Local)] public partial int SelectedPreset { get; set; }
 
             /// <summary>
+            /// 勾选的多个预设（逗号分隔的预设编号），首页以选项卡切换显示。为空时沿用 <see cref="SelectedPreset"/>。
+            /// </summary>
+            [ConfigItem<string>("UiCustomPresets", "", ConfigSource.Local)] public partial string SelectedPresets { get; set; }
+
+            /// <summary>
             /// 自定义 URL。
             /// </summary>
             [ConfigItem<string>("UiCustomNet", "", ConfigSource.Local)] public partial string CustomUrl { get; set; }
@@ -403,11 +408,6 @@ public static partial class Config
             /// 显示最近游玩。
             /// </summary>
             [ConfigItem<bool>("UiSidebarRecentPlay", true)] public partial bool ShowRecentPlay { get; set; }
-
-            /// <summary>
-            /// 显示 Minecraft 新闻。
-            /// </summary>
-            [ConfigItem<bool>("UiSidebarNews", false)] public partial bool ShowNews { get; set; }
         }
 
         /// <summary>
