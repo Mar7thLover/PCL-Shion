@@ -163,19 +163,11 @@
                         Orientation="Horizontal">
 
                         <local:MyIconTextButton
-                            x:Name="BtnTranslateWebsite"
-                            Margin="0,0,7,0"
-                            Text="{DynamicResource Setup.Language.Banner.TranslateWebsite}"
-                            SvgIcon="lucide/globe"
-                            ColorType="Highlight"
-                            local:CustomEventService.EventType="OpenUrl"
-                            local:CustomEventService.EventData="https://translate.pclc.cc/projects/pcl-ce/" />
-
-                        <local:MyIconTextButton
                             x:Name="BtnSubmitPullRequest"
                             Margin="0,0,7,0"
                             Text="{DynamicResource Setup.Language.Banner.SubmitPullRequest}"
                             SvgIcon="lucide/git-pull-request-arrow"
+                            ColorType="Highlight"
                             local:CustomEventService.EventType="OpenUrl"
                             local:CustomEventService.EventData="https://github.com/Mar7thLover/PCL-Shion/pulls" />
                     </StackPanel>

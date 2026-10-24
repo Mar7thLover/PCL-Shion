@@ -12,8 +12,6 @@
 
     <sys:String x:Key="Main.Title.NewsDetail">Noticia</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.CheckIn">Mostrar registro diario</sys:String>
-    <sys:String x:Key="Setup.UI.Sidebar.Hint">Cuando la ventana es estrecha, la barra lateral se mueve sobre el contenido de inicio</sys:String>
-    <sys:String x:Key="Setup.UI.Sidebar.News">Mostrar noticias de Minecraft</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.RecentPlay">Mostrar jugado recientemente</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.Title">Barra lateral de inicio</sys:String>
     <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion does not provide in-app updates yet. Please download new versions manually from {0}.</sys:String>
@@ -48,9 +46,13 @@
     <sys:String x:Key="Widget.RecentPlay.Clear.Confirm">¿Borrar todo el historial de juego reciente?</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Empty">Aún no hay historial de juego. Inicia una partida y aparecerá aquí.</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Info">{0} · {1} de juego</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.LastServer">Servidor: {0}</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.LastWorld">Mundo: {0}</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Missing">La instancia ya no existe</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.Rejoin">Volver a entrar en {0}</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Selected">Cambiado a la instancia {0}</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Title">Jugado recientemente</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.WorldMissing">El mundo {0} ya no existe</sys:String>
     <sys:String x:Key="Widget.Time.DaysAgo">hace {0} días</sys:String>
     <sys:String x:Key="Widget.Time.HoursAgo">hace {0} h</sys:String>
     <sys:String x:Key="Widget.Time.JustNow">justo ahora</sys:String>

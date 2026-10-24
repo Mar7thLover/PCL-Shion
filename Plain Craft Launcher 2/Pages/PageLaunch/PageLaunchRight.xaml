@@ -8,6 +8,10 @@
         <StackPanel Margin="25,25,25,10">
             <StackPanel x:Name="PanWidgets" Visibility="Collapsed" />
             <StackPanel Name="PanMain" Grid.IsSharedSizeScope="True">
+                <!-- 勾选了多个主页预设时，用选项卡切换 -->
+                <local:MyCard x:Name="CardPresetTabs" Margin="0,0,0,15" Title=" " MinHeight="55" Visibility="Collapsed">
+                    <WrapPanel x:Name="PanPresetTabs" Margin="15,13,15,13" />
+                </local:MyCard>
                 <StackPanel x:Name="PanCustom" />
                 <local:MyCard Margin="0,0,0,15" Title="{DynamicResource Launch.Right.CommunityHint.Title}" x:Name="PanHint">
                     <local:MyIconButton LogoScale="1.1"

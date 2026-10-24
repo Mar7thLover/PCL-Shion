@@ -38,6 +38,16 @@ public static class RecentPlayService
     }
 
     /// <summary>
+    /// 游戏日志中识别到进入世界或服务器时调用：记录下来，供之后一键重新进入。
+    /// </summary>
+    /// <param name="path">实例文件夹路径。</param>
+    /// <param name="target">进入的世界或服务器。</param>
+    public static void OnTargetJoined(string path, RecentPlayTarget target)
+    {
+        _Update("记录进入的世界或服务器", list => RecentPlayStore.RecordTarget(list, path, target));
+    }
+
+    /// <summary>
     /// 按最近游玩时间倒序取前 <paramref name="n"/> 条记录。读取失败时返回空列表。
     /// </summary>
     public static IReadOnlyList<RecentPlayEntry> GetRecent(int n)

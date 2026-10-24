@@ -176,14 +176,9 @@ public static partial class States
     [ConfigGroup("UI")] partial class UiStatesGroup
     {
         /// <summary>
-        /// 当前自定义主页 URL。
+        /// 首页上次打开的预设选项卡（预设编号）。
         /// </summary>
-        [ConfigItem<string>("CacheSavedPageUrl", "")] public partial string SavedHomepageUrl { get; set; }
-
-        /// <summary>
-        /// 当前自定义主页版本。
-        /// </summary>
-        [ConfigItem<string>("CacheSavedPageVersion", "")] public partial string SavedHomepageVersion { get; set; }
+        [ConfigItem<int>("HomepagePresetTab", -1, ConfigSource.Local)] public partial int HomepagePresetTab { get; set; }
 
         /// <summary>
         /// 窗口高度。

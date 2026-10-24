@@ -332,35 +332,19 @@
                             </local:MyTextBox.ValidateRules>
                         </local:MyTextBox>
                     </Grid>
-                    <Grid x:Name="PanCustomPreset" Visibility="Collapsed" Margin="0,12,10,5" Height="28">
+                    <Grid x:Name="PanCustomPreset" Visibility="Collapsed" Margin="0,12,10,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{DynamicResource Setup.Ui.Homepage.PresetLabel}" Margin="0,0,25,0" />
-                        <local:MyComboBox x:Name="ComboCustomPreset" Grid.ColumnSpan="2" Tag="UiCustomPreset"
-                                          Grid.Column="1" SelectionChanged="ComboChange">
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.Trivia}" />
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.EchoCave}" Visibility="Collapsed" />
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.McNews}" />
-                            <!-- <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.SimpleHomepage}" /> -->
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.DailyModpack}" />
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.McSkin}" />
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.OpenBmclapi}" />
-                            <!-- <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.PclMarket}" /> -->
-                            <!-- <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.PclNews}" /> -->
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.PclManual}" />
-                            <!-- <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.OpenMcim}" Visibility="Collapsed" /> -->
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.Magazine}" />
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.GitHub}" />
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.McUpdateSummary}" />
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.NewsToday}" />
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.MinecraftKnowledge}" />
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.ModpackRecommendation}" />
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.Bangumi}" />
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.PclAnnouncement}"/>
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Ui.Homepage.Preset.McOfficialFeed}"/>
-                        </local:MyComboBox>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Text="{DynamicResource Setup.Ui.Homepage.PresetLabel}" Margin="0,3,25,0" />
+                        <WrapPanel x:Name="PanCustomPresetList" Grid.Column="1" ItemWidth="190" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{DynamicResource Setup.Ui.Homepage.PresetHint}" Margin="0,1,0,0"
+                                   Opacity="0.6" FontSize="12" TextWrapping="Wrap" />
                     </Grid>
                 </StackPanel>
             </local:MyCard>
@@ -368,12 +352,8 @@
                 <StackPanel Margin="25,40,25,15">
                     <local:MyCheckBox Text="{DynamicResource Setup.UI.Sidebar.CheckIn}" Margin="-1,0,0,7" Height="22"
                                       x:Name="CheckSidebarCheckIn" Tag="UiSidebarCheckIn" Change="CheckBoxChange" />
-                    <local:MyCheckBox Text="{DynamicResource Setup.UI.Sidebar.RecentPlay}" Margin="-1,0,0,7" Height="22"
+                    <local:MyCheckBox Text="{DynamicResource Setup.UI.Sidebar.RecentPlay}" Margin="-1,0,0,0" Height="22"
                                       x:Name="CheckSidebarRecentPlay" Tag="UiSidebarRecentPlay" Change="CheckBoxChange" />
-                    <local:MyCheckBox Text="{DynamicResource Setup.UI.Sidebar.News}" Margin="-1,0,0,7" Height="22"
-                                      x:Name="CheckSidebarNews" Tag="UiSidebarNews" Change="CheckBoxChange" />
-                    <TextBlock Text="{DynamicResource Setup.UI.Sidebar.Hint}" Margin="0,3,0,0" Opacity="0.6" FontSize="12"
-                               TextWrapping="Wrap" />
                 </StackPanel>
             </local:MyCard>
             <local:MyCard x:Name="CardSwitch" Margin="0,0,0,15" Title="{DynamicResource Setup.Ui.FeatureHide.Title}">

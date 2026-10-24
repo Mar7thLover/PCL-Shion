@@ -24,8 +24,6 @@
     <sys:String x:Key="Application.EnvironmentWarning.WindowsVersion">- Windows 版本は推奨要件を満たしておらず、少なくともWindows 10 1809が推奨されており、Windowsシステムのアップグレードを検討することをお勧めします</sys:String>
     <sys:String x:Key="Main.Title.NewsDetail">ニュースの詳細</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.CheckIn">毎日チェックインを表示</sys:String>
-    <sys:String x:Key="Setup.UI.Sidebar.Hint">ウィンドウが狭いとき、サイドバーはホームの内容の上に移動します</sys:String>
-    <sys:String x:Key="Setup.UI.Sidebar.News">Minecraft ニュースを表示</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.RecentPlay">最近プレイしたゲームを表示</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.Title">ホームのサイドバー</sys:String>
     <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion does not provide in-app updates yet. Please download new versions manually from {0}.</sys:String>
@@ -60,9 +58,13 @@
     <sys:String x:Key="Widget.RecentPlay.Clear.Confirm">最近プレイした履歴をすべて消去しますか？</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Empty">プレイ履歴はまだありません。ゲームを起動するとここに表示されます。</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Info">{0} · プレイ時間 {1}</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.LastServer">サーバー：{0}</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.LastWorld">ワールド：{0}</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Missing">インスタンスが存在しません</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.Rejoin">{0} に再び入る</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Selected">インスタンス {0} に切り替えました</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Title">最近プレイしたゲーム</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.WorldMissing">ワールド {0} は存在しません</sys:String>
     <sys:String x:Key="Widget.Time.DaysAgo">{0} 日前</sys:String>
     <sys:String x:Key="Widget.Time.HoursAgo">{0} 時間前</sys:String>
     <sys:String x:Key="Widget.Time.JustNow">たった今</sys:String>

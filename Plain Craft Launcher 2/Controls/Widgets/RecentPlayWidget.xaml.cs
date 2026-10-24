@@ -7,7 +7,8 @@ using PCL.Core.App.Widgets;
 namespace PCL;
 
 /// <summary>
-///     首页侧栏的「最近游玩」卡片：显示最近玩过的 3 个实例，点击即可切换为当前实例。
+///     首页侧栏的「最近游玩」卡片：显示最近玩过的 3 个实例，点击即可切换为当前实例，
+///     也可以直接重新进入上次玩的世界或服务器。
 /// </summary>
 public partial class RecentPlayWidget
 {
@@ -73,39 +74,136 @@ public partial class RecentPlayWidget
     #region 列表项（卡片与完整页面共用）
 
     /// <summary>
-    ///     为一条记录创建列表项。实例仍存在时可点击切换；否则显示「实例已不存在」且不可点击。
+    ///     为一条记录创建列表项。实例仍存在时可点击切换，记录过世界或服务器时右侧有重新进入的按钮；
+    ///     实例不存在时显示「实例已不存在」且不可点击。
     /// </summary>
     /// <param name="entry">记录。</param>
     /// <param name="refresh">点击时发现实例已不可用，需要刷新所在列表时调用。</param>
     public static MyListItem CreateRow(RecentPlayEntry entry, Action refresh)
     {
         var available = IsInstanceAvailable(entry.Path);
+        var target = DescribeTarget(entry);
+        var info = Lang.Text("Widget.RecentPlay.Info", WidgetFormat.RelativeTime(entry.LastPlayedUtc),
+            WidgetFormat.Duration(TimeSpan.FromSeconds(entry.TotalSeconds)));
         var item = new MyListItem
         {
             Title = string.IsNullOrWhiteSpace(entry.Name) ? entry.Path : entry.Name,
             Info = available
-                ? Lang.Text("Widget.RecentPlay.Info", WidgetFormat.RelativeTime(entry.LastPlayedUtc),
-                    WidgetFormat.Duration(TimeSpan.FromSeconds(entry.TotalSeconds)))
+                ? target is null ? info : $"{info} · {target}"
                 : Lang.Text("Widget.RecentPlay.Missing"),
             Type = available ? MyListItem.CheckType.Clickable : MyListItem.CheckType.None,
             Tag = entry,
             ToolTip = entry.Path
         };
         if (available)
+        {
             item.Click += (_, _) =>
             {
-                if (!SelectInstance(entry))
+                if (!SelectInstance(entry, true))
                     refresh();
             };
+            if (CanRejoin(entry))
+            {
+                var btnRejoin = new MyIconButton
+                {
+                    SvgIcon = "lucide/play",
+                    ToolTip = Lang.Text("Widget.RecentPlay.Rejoin", TargetName(entry))
+                };
+                btnRejoin.Click += (_, _) =>
+                {
+                    if (!Rejoin(entry))
+                        refresh();
+                };
+                item.Buttons = new[] { btnRejoin };
+            }
+        }
         else
             item.isMouseOverAnimationEnabled = false;
         return item;
     }
 
     /// <summary>
+    ///     记录的世界或服务器的显示名称。服务器使用默认端口时省略端口。
+    /// </summary>
+    private static string TargetName(RecentPlayEntry entry)
+    {
+        if (!string.IsNullOrWhiteSpace(entry.LastWorld))
+            return entry.LastWorld;
+        var server = entry.LastServer ?? "";
+        return server.EndsWith(":25565") ? server[..^":25565".Length] : server;
+    }
+
+    /// <summary>
+    ///     列表项上显示的「世界：…」或「服务器：…」，没有记录时为 null。
+    /// </summary>
+    private static string? DescribeTarget(RecentPlayEntry entry)
+    {
+        if (!string.IsNullOrWhiteSpace(entry.LastWorld))
+            return Lang.Text("Widget.RecentPlay.LastWorld", TargetName(entry));
+        if (!string.IsNullOrWhiteSpace(entry.LastServer))
+            return Lang.Text("Widget.RecentPlay.LastServer", TargetName(entry));
+        return null;
+    }
+
+    /// <summary>
+    ///     能否一键重新进入。服务器总是可以；单人世界需要游戏支持 Quick Play（23w14a 及以后）。
+    /// </summary>
+    private static bool CanRejoin(RecentPlayEntry entry)
+    {
+        if (!string.IsNullOrWhiteSpace(entry.LastServer))
+            return true;
+        if (string.IsNullOrWhiteSpace(entry.LastWorld))
+            return false;
+        var listed = ModInstanceList.mcInstanceList.Values.SelectMany(list => list)
+            .FirstOrDefault(i => RecentPlayStore.IsSamePath(i.PathInstance, entry.Path));
+        return listed is not null && listed.releaseTime > new DateTime(2023, 4, 4);
+    }
+
+    /// <summary>
+    ///     切换到记录的实例，并直接进入上次的世界或服务器。返回 false 表示实例已不可用（已提示），调用方应刷新列表。
+    /// </summary>
+    private static bool Rejoin(RecentPlayEntry entry)
+    {
+        try
+        {
+            var world = entry.LastWorld;
+            if (!string.IsNullOrWhiteSpace(world))
+            {
+                var instance = ResolveInstance(entry.Path);
+                if (instance is not null && !Directory.Exists(Path.Combine(instance.PathIndie, "saves", world)))
+                {
+                    HintService.Hint(Lang.Text("Widget.RecentPlay.WorldMissing", world), HintType.Error);
+                    return true;
+                }
+            }
+
+            if (!SelectInstance(entry, false))
+                return false;
+            if (ModLaunch.mcLaunchLoader.State == ModBase.LoadState.Loading)
+                return true;
+            ModLaunch.McLaunchStart(new ModLaunch.McLaunchOptions
+            {
+                WorldName = string.IsNullOrWhiteSpace(world) ? null : world,
+                ServerIp = string.IsNullOrWhiteSpace(world) ? entry.LastServer : null,
+                instance = ModInstanceList.McMcInstanceSelected
+            });
+            if (ModMain.frmMain?.pageCurrent.page != FormMain.PageType.Launch)
+                ModMain.frmMain?.PageChange(FormMain.PageType.Launch);
+        }
+        catch (Exception ex)
+        {
+            ModBase.Log(ex, "[Widget] 重新进入最近游玩的世界或服务器失败：" + entry.Path, ModBase.LogLevel.Hint);
+        }
+
+        return true;
+    }
+
+    /// <summary>
     ///     把记录对应的实例设为当前选中的实例。返回 false 表示实例已不可用（已提示），调用方应刷新列表。
     /// </summary>
-    private static bool SelectInstance(RecentPlayEntry entry)
+    /// <param name="entry">记录。</param>
+    /// <param name="showHint">切换成功后是否提示。</param>
+    private static bool SelectInstance(RecentPlayEntry entry, bool showHint)
     {
         try
         {
@@ -128,7 +226,8 @@ public partial class RecentPlayWidget
             States.Game.SelectedInstance = instance.Name;
             ModMain.frmLaunchLeft?.RefreshButtonsUI();
             ModMain.frmLaunchLeft?.RefreshPage(false);
-            HintService.Hint(Lang.Text("Widget.RecentPlay.Selected", instance.Name), HintType.Success);
+            if (showHint)
+                HintService.Hint(Lang.Text("Widget.RecentPlay.Selected", instance.Name), HintType.Success);
         }
         catch (Exception ex)
         {

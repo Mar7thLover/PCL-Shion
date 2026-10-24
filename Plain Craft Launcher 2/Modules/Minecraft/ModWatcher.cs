@@ -239,6 +239,11 @@ public static class ModWatcher
         /// </summary>
         private int playRecorded;
 
+        /// <summary>
+        ///     本次游玩最近一次进入的世界或服务器，避免重复记录。
+        /// </summary>
+        private RecentPlayTarget? lastTarget;
+
         public Watcher(ModLoader.LoaderTask<Process, int> loader, McInstance version, string windowTitle,
             string jStackPath, bool outputRealTime = false)
         {
@@ -530,6 +535,13 @@ public static class ModWatcher
             {
                 WatcherLog(Lang.Text("Watcher.Progress.TexturesLoaded")); // 仅确保支持 Minecraft 1.7+
                 logProgress = 5;
+            }
+
+            // 最近游玩：记下进入的世界或服务器，供之后一键重新进入
+            if (version is not null && RecentPlayTarget.TryParse(text, out var target) && target != lastTarget)
+            {
+                lastTarget = target;
+                RecentPlayService.OnTargetJoined(version.PathInstance, target);
             }
 
             // 输出日志

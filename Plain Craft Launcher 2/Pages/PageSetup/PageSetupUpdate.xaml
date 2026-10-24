@@ -82,7 +82,7 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <!-- <Image Source="/Images/Icons/Tahoe.png" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="50" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" /> -->
-                        <local:MyImage x:Name="ImgUpdateIcon" Source="https://www.pclc.cc/img/pcl-ce/icon.webp"
+                        <Image x:Name="ImgUpdateIcon" Source="pack://application:,,,/Images/icon.png"
                                        Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="50" Width="50"
                                        HorizontalAlignment="Left" VerticalAlignment="Center" />
                         <TextBlock x:Name="TextUpdateName" Text="PCL Shion" FontWeight="Bold" FontSize="20"

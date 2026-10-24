@@ -1515,7 +1515,7 @@
     <sys:String x:Key="Launch.Error.Title">启动失败</sys:String>
     <sys:String x:Key="Launch.Right.CommunityHint.HidePrompt">若要永久隐藏此提示，请输入正确的 PCL Shion 维护者名称。</sys:String>
     <sys:String x:Key="Launch.Right.CommunityHint.InputTitle">输入 PCL Shion 维护者名称</sys:String>
-    <sys:String x:Key="Launch.Right.CommunityHint.Message">你正在使用 PCL 詩音（Shion）！这是基于 PCL CE（PCL 社区版）修改的第三方版本，并非原版 PCL 或 PCL CE 官方发布的版本。此版本为独立开发和维护，与原版 PCL 及 PCL CE 的维护路线不同，体验有所出入。&#xA;&#xA;如果你是意外下载到了 PCL Shion，我们十分建议您下载原版 PCL 长期使用，此发行版本对新手用户体验可能不友好。&#xA;此外，PCL Shion 的问题请向 PCL Shion 的仓库提交 Issue，不要向原版 PCL 或 PCL CE 的仓库反馈 PCL Shion 的问题哦！</sys:String>
+    <sys:String x:Key="Launch.Right.CommunityHint.Message">你正在使用 PCL 詩音（Shion），一个基于 PCL CE 的第三方版本。遇到问题请到 PCL Shion 的仓库反馈，不要反馈给原版 PCL 或 PCL CE。</sys:String>
     <sys:String x:Key="Launch.Right.CommunityHint.Title">PCL Shion 提示</sys:String>
     <sys:String x:Key="Launch.Right.CommunityHint.WrongInput">不太对哦……</sys:String>
     <sys:String x:Key="Launch.Right.Log.Title">启动日志</sys:String>
@@ -2502,16 +2502,16 @@
 
     <!-- Setup -->
 
+    <sys:String x:Key="Setup.About.Community.Repo">PCL CE 仓库</sys:String>
     <sys:String x:Key="Setup.Error.OperationFailed">设置操作失败。请查看错误详情。</sys:String>
 
     <!-- Setup.About -->
 
-    <sys:String x:Key="Setup.About.Community.Info">Plain Craft Launcher Community Edition 的开发团队！</sys:String>
+    <sys:String x:Key="Setup.About.Community.Info">PCL CE 的开发团队，PCL Shion 基于 PCL CE 开发</sys:String>
     <sys:String x:Key="Setup.About.Community.Name">PCL Community</sys:String>
     <sys:String x:Key="Setup.About.Contributors.Title">贡献者们</sys:String>
     <sys:String x:Key="Setup.About.Contributors.ViewMore">查看更多</sys:String>
     <sys:String x:Key="Setup.About.Error.LoadContributorsFailed">加载贡献者信息失败</sys:String>
-    <sys:String x:Key="Setup.About.GitHubHome">GitHub 主页</sys:String>
     <sys:String x:Key="Setup.About.Licenses.Title">许可与版权声明</sys:String>
     <sys:String x:Key="Setup.About.Licenses.ViewLicense">查看许可文档</sys:String>
     <sys:String x:Key="Setup.About.Licenses.ViewWebsite">查看来源网站</sys:String>
@@ -2559,8 +2559,8 @@
     <!-- Setup.About.Legal -->
 
     <sys:String x:Key="Setup.About.Legal.CommunityLobbyPrivacy">PCL CE 联机大厅隐私政策</sys:String>
-    <sys:String x:Key="Setup.About.Legal.CommunitySource">PCL CE 开源代码</sys:String>
-    <sys:String x:Key="Setup.About.Legal.CopyrightText">Copyright © 2026 PCL Community &amp; 龙腾猫跃.&#xD;非 MINECRAFT 官方产品。未经 MOJANG 或 MICROSOFT 批准，也不与 MOJANG 或 MICROSOFT 关联。</sys:String>
+    <sys:String x:Key="Setup.About.Legal.CommunitySource">PCL Shion 开源代码</sys:String>
+    <sys:String x:Key="Setup.About.Legal.CopyrightText">Copyright © 2026 Mar7thLover, PCL Community &amp; 龙腾猫跃.&#xD;非 MINECRAFT 官方产品。未经 MOJANG 或 MICROSOFT 批准，也不与 MOJANG 或 MICROSOFT 关联。</sys:String>
     <sys:String x:Key="Setup.About.Legal.NatayarkTerms">Natayark OpenID 服务条款</sys:String>
     <sys:String x:Key="Setup.About.Legal.OtherInfo">其他信息</sys:String>
     <sys:String x:Key="Setup.About.Legal.PrivacyNotice">隐私说明</sys:String>
@@ -2769,9 +2769,8 @@
     <sys:String x:Key="Setup.Language.Banner.TitlePrefix">让</sys:String>
     <sys:String x:Key="Setup.Language.Banner.TitleSuffix">走向国际化。</sys:String>
     <sys:String x:Key="Setup.Language.Banner.DescriptionLine1">在社区的共同助力下，PCL Shion 正迈向国际化的新篇章。</sys:String>
-    <sys:String x:Key="Setup.Language.Banner.DescriptionLine2">欢迎前往翻译平台参与本地化贡献，或向 GitHub 仓库提交 Pull Request，与我们一同完善多语言支持，为 PCL Shion 更好地服务全球用户的目标添砖加瓦。</sys:String>
+    <sys:String x:Key="Setup.Language.Banner.DescriptionLine2">欢迎向 GitHub 仓库提交 Pull Request，与我们一同完善多语言支持。</sys:String>
     <sys:String x:Key="Setup.Language.Banner.DescriptionLine3">感谢每一位参与翻译、校对与改进的贡献者，让 PCL Shion 因你们而更加完善。</sys:String>
-    <sys:String x:Key="Setup.Language.Banner.TranslateWebsite">前往翻译平台</sys:String>
     <sys:String x:Key="Setup.Language.Banner.SubmitPullRequest">提交 Pull Request</sys:String>
     <sys:String x:Key="Setup.Language.Reset.Success">已初始化语言页设置！</sys:String>
     <sys:String x:Key="Setup.Language.Title">语言</sys:String>
@@ -3031,6 +3030,8 @@
     <sys:String x:Key="Setup.Ui.Font.Motd">MOTD</sys:String>
     <sys:String x:Key="Setup.Ui.Font.Motd.ToolTip">格式化代码文本字体，用于服务器状态信息等内容</sys:String>
     <sys:String x:Key="Setup.Ui.Font.Title">字体</sys:String>
+    <sys:String x:Key="Setup.Ui.Homepage.PresetAtLeastOne">至少保留一个主页预设</sys:String>
+    <sys:String x:Key="Setup.Ui.Homepage.PresetHint">可勾选多个，首页会以选项卡切换显示</sys:String>
     <sys:String x:Key="Setup.Ui.ImageFile.Filter">常用图片文件(*.png;*.jpg;*.gif;*.webp)|*.png;*.jpg;*.gif;*.webp</sys:String>
     <sys:String x:Key="Setup.Ui.ImageFile.SelectTitle">选择图片</sys:String>
     <sys:String x:Key="Setup.Ui.Initialized">已初始化个性化设置</sys:String>
@@ -3218,8 +3219,6 @@
     <!-- Setup.UI.Sidebar -->
 
     <sys:String x:Key="Setup.UI.Sidebar.CheckIn">显示日期打卡</sys:String>
-    <sys:String x:Key="Setup.UI.Sidebar.Hint">窗口较窄时，侧栏会移到首页内容上方</sys:String>
-    <sys:String x:Key="Setup.UI.Sidebar.News">显示 Minecraft 新闻</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.RecentPlay">显示最近游玩</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.Title">首页侧栏</sys:String>
 
@@ -3590,7 +3589,7 @@
     <sys:String x:Key="Update.Action">更新</sys:String>
     <sys:String x:Key="Update.Available">启动器有新版本可用（{0} -&gt; {1}）&#xA;是否立即更新？</sys:String>
     <sys:String x:Key="Update.Check.Failed">无法获取最新版本信息，请检查网络连接</sys:String>
-    <sys:String x:Key="Update.CommunityNotice.Body">你正在使用 PCL 詩音（Shion），这是基于 PCL-Community 的 PCL CE 修改的第三方版本，遇到问题请向 PCL Shion 仓库反馈，不要向原版 PCL 或 PCL CE 的仓库反馈！&#xA;PCL Shion 及其维护者与 PCL-Community、龙腾猫跃均无从属关系，PCL-Community 及其成员与龙腾猫跃也无从属关系，且以上各方均不会为您的使用做担保。&#xA;&#xA;如果你是意外下载的 PCL Shion，建议下载原版 PCL 使用。&#xA;如果你是意外下载的 PCL Shion，建议下载原版 PCL 使用。&#xA;如果你是意外下载的 PCL Shion，建议下载原版 PCL 使用。&#xA;&#xA;该版本与原版的特性区别：&#xA;- 主题切换：仅部分固定蓝色系主题，没有计划新增其它主题。&#xA;- 百宝箱：缺失部分原版中的内容（回声洞、千万别点）。&#xA;&#xA;此提示会在启动器更新后展示一次。</sys:String>
+    <sys:String x:Key="Update.CommunityNotice.Body">你正在使用 PCL 詩音（Shion），一个基于 PCL CE 的第三方版本，与 PCL Community 及龙腾猫跃均无从属关系。遇到问题请到 PCL Shion 的仓库反馈。</sys:String>
     <sys:String x:Key="Update.CommunityNotice.Confirm">我知道了</sys:String>
     <sys:String x:Key="Update.CommunityNotice.Title">PCL Shion 版本说明</sys:String>
     <sys:String x:Key="Update.Error.FetchFailed">获取启动器更新失败，请检查网络连接</sys:String>
@@ -3689,12 +3688,16 @@
     <sys:String x:Key="Widget.RecentPlay.Clear.Confirm">确定要清空所有最近游玩记录吗？</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Empty">还没有游玩记录，启动一次游戏后会显示在这里</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Info">{0} · 共玩 {1}</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.LastServer">服务器：{0}</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.LastWorld">世界：{0}</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Missing">实例已不存在</sys:String>
+    <sys:String x:Key="Widget.RecentPlay.Rejoin">重新进入 {0}</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Selected">已切换到实例 {0}</sys:String>
     <sys:String x:Key="Widget.RecentPlay.Title">最近游玩</sys:String>
 
     <!-- Widget.Time -->
 
+    <sys:String x:Key="Widget.RecentPlay.WorldMissing">存档 {0} 已不存在</sys:String>
     <sys:String x:Key="Widget.Time.DaysAgo">{0} 天前</sys:String>
     <sys:String x:Key="Widget.Time.HoursAgo">{0} 小时前</sys:String>
     <sys:String x:Key="Widget.Time.JustNow">刚刚</sys:String>

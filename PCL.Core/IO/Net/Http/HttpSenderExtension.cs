@@ -26,7 +26,7 @@ public static class HttpSenderExtension
             if(addMetedata)
             {
                 request
-                    .WithHeader("User-Agent", $"PCL-Community/PCL2-CE/{Basics.VersionName} (pclc.cc)")
+                    .WithHeader("User-Agent", $"Mar7thLover/PCL-Shion/{Basics.VersionName} (based on PCL2-CE)")
                     .WithHeader("Referer", $"https://{Basics.VersionCode}.ce.open.pcl2.server/");
             }
 
