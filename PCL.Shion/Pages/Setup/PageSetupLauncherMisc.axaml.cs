@@ -60,7 +60,11 @@ public partial class PageSetupLauncherMisc : MyPageRight
 
         // 系统设置
         ComboSystemActivity.SelectedIndex = extra.SystemSystemActivity;
-        CheckSystemDisableHardwareAcceleration.Checked = extra.SystemDisableHardwareAcceleration;
+        // 只有 Windows 可以自行选择渲染后端，其他平台锁定为自动
+        ComboSystemRenderBackend.IsEnabled = RenderBackendExtensions.IsSelectable;
+        ComboSystemRenderBackend.SelectedIndex = RenderBackendExtensions.IsSelectable ? (int)settings.SystemRenderBackend : 0;
+        if (!RenderBackendExtensions.IsSelectable)
+            ToolTip.SetTip(ComboSystemRenderBackend, Lang.Text("Setup.Misc.System.RenderBackend.Locked"));
         SliderAniFPS.Value = settings.UiAniFPS;
         SliderMaxLog.Value = settings.SystemMaxLog;
         CheckSystemTelemetry.Checked = extra.SystemTelemetry;
@@ -172,9 +176,12 @@ public partial class PageSetupLauncherMisc : MyPageRight
         });
     }
 
-    // 硬件加速
-    private void Check_DisableHardwareAcceleration(object? _, bool __)
+    // 渲染后端
+    private void ComboSystemRenderBackend_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
+        if (ModAnimation.AniControlEnabled != 0 || !RenderBackendExtensions.IsSelectable)
+            return;
+        ComboChange(sender, e);
         HintService.Hint(Lang.Text("Setup.Misc.HardwareAcceleration.RestartNotice"));
     }
 
@@ -205,12 +212,6 @@ public partial class PageSetupLauncherMisc : MyPageRight
     {
         CheckBoxChange(sender, user);
         CheckDebugMode_Change(sender, user);
-    }
-
-    private void CheckSystemDisableHardwareAcceleration_OnChange(object? sender, bool user)
-    {
-        CheckBoxChange(sender, user);
-        Check_DisableHardwareAcceleration(sender, user);
     }
 
     private void ComboSystemActivity_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)

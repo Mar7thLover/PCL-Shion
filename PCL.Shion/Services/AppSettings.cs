@@ -256,6 +256,11 @@ public sealed class AppSettings
     /// <summary>更新分支，与设置界面下拉框的选项序号一致（对应 WPF 的 UpdateChannel）。</summary>
     public int SystemUpdateChannel { get; set; }
 
+    /// <summary>
+    ///     渲染后端，与设置界面下拉框的选项序号一致，重启后生效。只在 Windows 上生效，其他平台始终由 Avalonia 自动选择。
+    /// </summary>
+    public RenderBackend SystemRenderBackend { get; set; }
+
     /// <summary>Mirror 酱 CDK。</summary>
     public string MirrorChyanKey { get; set; } = "";
 
