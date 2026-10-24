@@ -38,7 +38,7 @@ PCL 詩音已完整移除这套限制，所有地区的用户都可以正常使�
 
 ## 🗺️ 开发计划
 
-- **跨平台 UI 框架**：准备用新的跨平台 UI 框架逐步取代现有仅支持 Windows 的 WPF。迁移会渐进进行，新界面先作为实验性功能提供，成熟后再成为默认。
+- **跨平台 UI 框架**：基于 Avalonia 的新界面已作为 macOS 与 Linux 平台的正式界面提供，Windows 平台暂时继续使用 WPF 界面。之后会继续补齐 Avalonia 界面的功能，成熟后再逐步取代 WPF。
 - **主题与个性化**：引入更丰富的主题与个性化选项。
 - **有趣的小工具**：加入更多实用又好玩的小工具。
 - **新的联机方案**：考虑引入不依赖 Natayark OpenID 的联机方案，作为现有方案的替代选择。
@@ -51,7 +51,9 @@ PCL 詩音已完整移除这套限制，所有地区的用户都可以正常使�
 | Windows 10 1809 (17763) 或更高 | ✅ 完整支持 | [.NET 10 Desktop Runtime](https://get.dot.net/10) |
 | Windows 8 - Windows 10 1809 (17763) | ⚠️ 理论能跑，不保证可用 | [.NET 10 Desktop Runtime](https://get.dot.net/10) |
 | Windows 7 或更低版本 | ❌ 不支持 | / |
-| macOS / Linux / 其他操作系统 | ⚠️ 仅跨平台开发支持（交叉编译） | [.NET 10 SDK](https://get.dot.net/10) |
+| macOS 12 或更高（Intel / Apple 芯片） | 🧪 Avalonia 界面，持续完善中 | 无（发布包已自带 .NET 运行时） |
+| Linux（x64 / ARM64） | 🧪 Avalonia 界面，持续完善中 | 无（发布包已自带 .NET 运行时） |
+| 其他操作系统 | ❌ 不支持 | / |
 
 **✅ 完整支持**：尽可能提供一切相关支持，但必须确保启动器为最新版本。
 
@@ -59,7 +61,7 @@ PCL 詩音已完整移除这套限制，所有地区的用户都可以正常使�
 
 **❌ 不支持**：PCL 詩音在这些平台的可用性较低，甚至压根打不开。请升级操作系统后使用。
 
-**⚠️ 仅跨平台开发支持（交叉编译）**：源代码可以在 macOS 与 Linux 平台编译，但无法直接运行。你可以在这些平台上开发，再把编译产物转移到 Windows 系统测试。随着跨平台 UI 框架的引入，这一情况会逐步改变。
+**🧪 Avalonia 界面，持续完善中**：macOS 与 Linux 使用基于 Avalonia 的跨平台界面，可以在 [Releases](https://github.com/Mar7thLover/PCL-Shion/releases) 下载对应平台的 `PCL_Shion_*_osx-*.tar.gz` 或 `PCL_Shion_*_linux-*.tar.gz`。这套界面由 WPF 版移植而来，部分功能可能尚未完全对齐 Windows 版，遇到问题欢迎反馈。macOS 版没有经过 Apple 公证，首次打开时需要在 Finder 中右键选择“打开”。
 
 **注**：仅对最新版本的启动器提供支持。
 

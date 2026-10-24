@@ -113,8 +113,92 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  build_shion:
+    name: Build PCL Shion (${{ matrix.rid }})
+    needs: [changelog]
+    permissions:
+      contents: write
+      id-token: write
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - rid: linux-x64
+            os: ubuntu-latest
+          - rid: linux-arm64
+            os: ubuntu-latest
+          - rid: osx-x64
+            os: macos-latest
+          - rid: osx-arm64
+            os: macos-latest
+      fail-fast: false
+    env:
+      PACKAGE: PCL_Shion_${{ inputs.configuration }}_${{ matrix.rid }}.tar.gz
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.0.x
+
+      # 非 Windows 平台使用 Avalonia 界面，自包含发布，用户无需另装 .NET 运行时
+      - name: Publish
+        run: |
+          dotnet publish PCL.Shion/PCL.Shion.csproj -c ${{ inputs.configuration }} -r ${{ matrix.rid }}           --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true           -p:DebugType=none -o ./publish
+
+      - name: Package (Linux)
+        if: startsWith(matrix.rid, 'linux-')
+        run: |
+          chmod +x ./publish/PCL.Shion
+          mkdir -p "./package/PCL Shion"
+          cp -R ./publish/. "./package/PCL Shion/"
+          tar -czf "$PACKAGE" -C ./package "PCL Shion"
+
+      - name: Package (macOS)
+        if: startsWith(matrix.rid, 'osx-')
+        run: |
+          app="./package/PCL Shion.app"
+          mkdir -p "$app/Contents/MacOS" "$app/Contents/Resources"
+          cp -R ./publish/. "$app/Contents/MacOS/"
+          chmod +x "$app/Contents/MacOS/PCL.Shion"
+          sed "s/@VERSION@/${{ inputs.version }}/g" PCL.Shion/Packaging/macOS/Info.plist > "$app/Contents/Info.plist"
+          iconset=./icon.iconset
+          mkdir -p "$iconset"
+          for size in 16 32 64 128 256; do
+            sips -z $size $size PCL.Shion/Assets/Images/icon.png --out "$iconset/icon_${size}x${size}.png" > /dev/null
+          done
+          for size in 16 32 64 128; do
+            cp "$iconset/icon_$((size * 2))x$((size * 2)).png" "$iconset/icon_${size}x${size}@2x.png"
+          done
+          iconutil -c icns "$iconset" -o "$app/Contents/Resources/icon.icns"
+          # 没有开发者证书，做一次临时签名，否则 Apple 芯片上无法启动
+          codesign --force --deep --sign - "$app"
+          tar -czf "$PACKAGE" -C ./package "PCL Shion.app"
+
+      - name: Sign the package
+        uses: sigstore/gh-action-sigstore-python@790bc6befb9d733738f18d8f895854b453640ec9 # v3.5.0
+        with:
+          inputs: ${{ env.PACKAGE }}
+          verify: true
+          verify-cert-identity: https://github.com/Mar7thLover/PCL-Shion/.github/workflows/release-publish.yml@refs/heads/dev
+          verify-oidc-issuer: https://token.actions.githubusercontent.com
+
+      - name: Upload package and signature to Release
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
+        with:
+          draft: true
+          tag_name: v${{ inputs.version }}
+          files: |
+            ${{ env.PACKAGE }}
+            ${{ env.PACKAGE }}.sigstore.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   publish_draft:
-    needs: [rename_and_release]
+    needs: [rename_and_release, build_shion]
     runs-on: ubuntu-latest
     steps:
       - name: Publish Draft

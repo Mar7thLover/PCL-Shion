@@ -38,7 +38,7 @@ Upstream PCL CE has entered maintenance mode and no longer accepts feature reque
 
 ## 🗺️ Roadmap
 
-- **Cross-platform UI framework**: gradually replace the current Windows-only WPF with a new cross-platform UI framework. The migration will be incremental: the new UI ships first as an experimental feature and becomes the default once it is mature.
+- **Cross-platform UI framework**: the new Avalonia-based UI now ships as the official UI on macOS and Linux, while Windows keeps the WPF UI for now. The Avalonia UI will keep catching up on features and gradually replace WPF once it is mature.
 - **Themes and personalization**: richer themes and personalization options.
 - **Fun little tools**: more handy and fun built-in tools.
 - **A new multiplayer solution**: an alternative online multiplayer solution that does not depend on Natayark OpenID.
@@ -51,7 +51,9 @@ Upstream PCL CE has entered maintenance mode and no longer accepts feature reque
 | Windows 10 1809 (17763) or later | ✅ Fully supported | [.NET 10 Desktop Runtime](https://get.dot.net/10) |
 | Windows 8 - Windows 10 1809 (17763) | ⚠️ Should work, not guaranteed | [.NET 10 Desktop Runtime](https://get.dot.net/10) |
 | Windows 7 or earlier | ❌ Not supported | / |
-| macOS / Linux / other operating systems | ⚠️ Cross-platform development only (cross-compilation) | [.NET 10 SDK](https://get.dot.net/10) |
+| macOS 12 or later (Intel / Apple silicon) | 🧪 Avalonia UI, under active development | None (the package bundles the .NET runtime) |
+| Linux (x64 / ARM64) | 🧪 Avalonia UI, under active development | None (the package bundles the .NET runtime) |
+| Other operating systems | ❌ Not supported | / |
 
 **✅ Fully supported**: we provide as much support as possible, but you must be on the latest version of the launcher.
 
@@ -59,7 +61,7 @@ Upstream PCL CE has entered maintenance mode and no longer accepts feature reque
 
 **❌ Not supported**: PCL Shion works poorly on these platforms, or may not start at all. Please upgrade your operating system.
 
-**⚠️ Cross-platform development only (cross-compilation)**: the source code builds on macOS and Linux but cannot run there directly. You can develop on these platforms and test the build output on Windows. This will gradually change as the cross-platform UI framework lands.
+**🧪 Avalonia UI, under active development**: macOS and Linux use the cross-platform Avalonia UI. Download `PCL_Shion_*_osx-*.tar.gz` or `PCL_Shion_*_linux-*.tar.gz` for your platform from [Releases](https://github.com/Mar7thLover/PCL-Shion/releases). This UI is ported from the WPF version, so some features may not yet match the Windows version; please report any problems you run into. The macOS build is not notarized by Apple, so the first time you open it, right-click it in Finder and choose Open.
 
 **Note**: only the latest version of the launcher is supported.
 
