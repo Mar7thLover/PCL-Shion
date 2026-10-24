@@ -117,13 +117,18 @@ jobs:
   build_shion:
     name: Build PCL Shion (${{ matrix.rid }})
     needs: [changelog]
-    permissions:
-      contents: write
-      id-token: write
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     strategy:
       matrix:
         include:
+          # Windows 版与 WPF 版一同发布；在 Windows 上构建，才能把图标写入可执行文件
+          - rid: win-x64
+            os: windows-latest
+          - rid: win-arm64
+            os: windows-latest
           - rid: linux-x64
             os: ubuntu-latest
           - rid: linux-arm64
@@ -134,7 +139,9 @@ jobs:
             os: macos-latest
       fail-fast: false
     env:
-      PACKAGE: PCL_Shion_${{ inputs.configuration }}_${{ matrix.rid }}.tar.gz
+      # Windows 版是单个可执行文件，其他平台打包为 tar.gz 以保留可执行权限。
+      # 文件名中平台与架构用连字符连接（如 win-x64），不会被 WPF 版的应用内更新误当作 _x64.exe 选中
+      PACKAGE: PCL_Shion_${{ inputs.configuration }}_${{ matrix.rid }}${{ startsWith(matrix.rid, 'win-') && '.exe' || '.tar.gz' }}
 
     steps:
       - name: Checkout
@@ -145,7 +152,7 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
-      # 非 Windows 平台使用 Avalonia 界面，自包含发布，用户无需另装 .NET 运行时
+      # Avalonia 界面，自包含发布，用户无需另装 .NET 运行时
       # 设置 PCL_WRITE_SECRET 后，PCL_ 开头的环境变量会在构建时写入 PCL.Shion.Core 的 BuildSecrets
       - name: Publish
         env:
@@ -161,6 +168,10 @@ jobs:
           dotnet publish PCL.Shion/PCL.Shion.csproj -c ${{ inputs.configuration }} -r ${{ matrix.rid }} \
           --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true \
           -p:DebugType=none -p:Version=${{ inputs.version }} -p:UseSharedCompilation=false -o ./publish
+
+      - name: Package (Windows)
+        if: startsWith(matrix.rid, 'win-')
+        run: mv ./publish/PCL.Shion.exe "$PACKAGE"
 
       - name: Package (Linux)
         if: startsWith(matrix.rid, 'linux-')
@@ -191,27 +202,47 @@ jobs:
           codesign --force --deep --sign - "$app"
           tar -czf "$PACKAGE" -C ./package "PCL Shion.app"
 
-      - name: Sign the package
+      - name: Upload the Build Artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: PCL_Shion_${{ inputs.configuration }}_${{ matrix.rid }}
+          path: ${{ env.PACKAGE }}
+
+  # 签名统一在 Linux 上进行，与 WPF 版的签名方式一致
+  release_shion:
+    needs: [build_shion, changelog]
+    permissions:
+      actions: read
+      contents: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: PCL_Shion_${{ inputs.configuration }}_*-*
+          path: ./dist
+          merge-multiple: true
+
+      - name: Sign the packages
         uses: sigstore/gh-action-sigstore-python@790bc6befb9d733738f18d8f895854b453640ec9 # v3.5.0
         with:
-          inputs: ${{ env.PACKAGE }}
+          inputs: ./dist/*
           verify: true
           verify-cert-identity: https://github.com/Mar7thLover/PCL-Shion/.github/workflows/release-publish.yml@refs/heads/dev
           verify-oidc-issuer: https://token.actions.githubusercontent.com
 
-      - name: Upload package and signature to Release
+      - name: Upload packages and signatures to Release
         uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
           draft: true
           tag_name: v${{ inputs.version }}
-          files: |
-            ${{ env.PACKAGE }}
-            ${{ env.PACKAGE }}.sigstore.json
+          files: ./dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish_draft:
-    needs: [rename_and_release, build_shion]
+    needs: [rename_and_release, release_shion]
     runs-on: ubuntu-latest
     steps:
       - name: Publish Draft

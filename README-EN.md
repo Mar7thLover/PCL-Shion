@@ -61,7 +61,7 @@ Upstream PCL CE has entered maintenance mode and no longer accepts feature reque
 
 **❌ Not supported**: PCL Shion works poorly on these platforms, or may not start at all. Please upgrade your operating system.
 
-**🧪 Avalonia UI, under active development**: macOS and Linux use the cross-platform Avalonia UI. Download `PCL_Shion_*_osx-*.tar.gz` or `PCL_Shion_*_linux-*.tar.gz` for your platform from [Releases](https://github.com/Mar7thLover/PCL-Shion/releases). This UI is ported from the WPF version, so some features may not yet match the Windows version; please report any problems you run into. The macOS build is not notarized by Apple, so the first time you open it, right-click it in Finder and choose Open.
+**🧪 Avalonia UI, under active development**: macOS and Linux use the cross-platform Avalonia UI. Download `PCL_Shion_*_osx-*.tar.gz` or `PCL_Shion_*_linux-*.tar.gz` for your platform from [Releases](https://github.com/Mar7thLover/PCL-Shion/releases). This UI is ported from the WPF version, so some features may not yet match the Windows version; please report any problems you run into. Windows users can also try the Avalonia UI with `PCL_Shion_*_win-*.exe`; it does not conflict with the WPF `PCL_Shion_*_x64.exe` / `PCL_Shion_*_ARM64.exe`. The macOS build is not notarized by Apple, so the first time you open it, right-click it in Finder and choose Open.
 
 **Note**: only the latest version of the launcher is supported.
 

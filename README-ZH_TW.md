@@ -61,7 +61,7 @@ PCL 詩音已完整移除這套限制，所有地區的使用者都可以正常�
 
 **❌ 不支援**：PCL 詩音在這些平台的可用性較低，甚至根本無法開啟。請升級作業系統後使用。
 
-**🧪 Avalonia 介面，持續完善中**：macOS 與 Linux 使用基於 Avalonia 的跨平台介面，可以在 [Releases](https://github.com/Mar7thLover/PCL-Shion/releases) 下載對應平台的 `PCL_Shion_*_osx-*.tar.gz` 或 `PCL_Shion_*_linux-*.tar.gz`。這套介面由 WPF 版移植而來，部分功能可能尚未完全對齊 Windows 版，遇到問題歡迎回報。macOS 版沒有經過 Apple 公證，首次開啟時需要在 Finder 中按右鍵選擇「打開」。
+**🧪 Avalonia 介面，持續完善中**：macOS 與 Linux 使用基於 Avalonia 的跨平台介面，可以在 [Releases](https://github.com/Mar7thLover/PCL-Shion/releases) 下載對應平台的 `PCL_Shion_*_osx-*.tar.gz` 或 `PCL_Shion_*_linux-*.tar.gz`。這套介面由 WPF 版移植而來，部分功能可能尚未完全對齊 Windows 版，遇到問題歡迎回報。Windows 使用者也可以下載 `PCL_Shion_*_win-*.exe` 體驗 Avalonia 介面，它與 WPF 版的 `PCL_Shion_*_x64.exe` / `PCL_Shion_*_ARM64.exe` 互不衝突。macOS 版沒有經過 Apple 公證，首次開啟時需要在 Finder 中按右鍵選擇「打開」。
 
 **註**：僅對最新版本的啟動器提供支援。
 
