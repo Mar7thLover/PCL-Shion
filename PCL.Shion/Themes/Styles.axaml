@@ -302,6 +302,18 @@
             </ControlTemplate>
         </Setter>
     </Style>
+    <!-- 对应 WPF 中 MyComboBoxItem 在构造时套用的 MyComboBoxItem 样式：带内边距，必须写在通用 ComboBoxItem 样式之后才能覆盖它 -->
+    <Style Selector=":is(local|MyComboBoxItem)">
+        <Setter Property="Background" Value="{DynamicResource ColorBrushTransparent}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="ItemBorder" Padding="6,4" Background="{TemplateBinding Background}">
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
 
     <!-- ContextMenu -->
     <Style Selector="ContextMenu">
