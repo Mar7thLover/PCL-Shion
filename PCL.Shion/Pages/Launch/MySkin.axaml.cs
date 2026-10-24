@@ -19,6 +19,7 @@ using Avalonia.Platform;
 using Avalonia.Platform.Storage;
 using PCL.Shion.Controls;
 using PCL.Shion.Core.Accounts;
+using PCL.Shion.Core.Platform;
 using PCL.Shion.Localization;
 using PCL.Shion.Navigation;
 using PCL.Shion.Services;
@@ -441,7 +442,7 @@ public partial class MySkin : Grid
 
     /// <summary>应用临时文件夹，对应 WPF 的 ModBase.pathTemp。</summary>
     private static string TempRoot { get; } = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PCL Shion", "Temp");
+        SpecialFolders.Get(Environment.SpecialFolder.ApplicationData), "PCL Shion", "Temp");
 
     /// <summary>取 <paramref name="text" /> 中位于 <paramref name="start" /> 之后、<paramref name="end" /> 之前的部分。</summary>
     private static string Between(string text, string start, string end)
@@ -545,7 +546,7 @@ internal static class SkinNetwork
     private static readonly HttpClient Http = new();
 
     private static string CacheRoot { get; } = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PCL Shion", "Temp", "Cache");
+        SpecialFolders.Get(Environment.SpecialFolder.ApplicationData), "PCL Shion", "Temp", "Cache");
 
     /// <summary>
     ///     取得玩家皮肤的地址。已记录过的皮肤直接返回记录的地址；否则查询会话服务，未设置自定义皮肤时抛出异常。

@@ -73,7 +73,7 @@ internal static class JavaSearchPaths
 
         if (PlatformInfo.Os != OsKind.Windows) yield break;
         var storeRuntimeRoot = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            SpecialFolders.Get(Environment.SpecialFolder.LocalApplicationData),
             "Packages", StoreLauncherPackage, "LocalCache", "Local", "runtime");
         foreach (var home in EnumerateRuntimeHomes(storeRuntimeRoot))
         {

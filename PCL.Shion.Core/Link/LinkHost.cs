@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using PCL.Shion.Core.Platform;
 
 namespace PCL.Shion.Core.Link;
 
@@ -48,7 +49,7 @@ public static class LinkHost
 
     /// <summary>联机组件的共享数据目录，EasyTier 解压在其下的 EasyTier 子目录。</summary>
     public static string DataDirectory { get; set; } = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PCL Shion", "Link");
+        SpecialFolders.Get(Environment.SpecialFolder.LocalApplicationData), "PCL Shion", "Link");
 
     /// <summary>机器识别码，用作联机时的设备标识。</summary>
     public static Func<string> LauncherIdProvider { get; set; } = static () => Identify.Fallback();

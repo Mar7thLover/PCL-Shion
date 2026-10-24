@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using PCL.Shion.Core.Link;
+using PCL.Shion.Core.Platform;
 using PCL.Shion.Localization;
 using Lang = PCL.Shion.Localization.Lang;
 using PCL.Shion.UI;
@@ -27,7 +28,7 @@ public static class LinkEnvironment
         LinkHost.Settings = new LinkSettingsAdapter(settings);
         LinkHost.VersionName = AppInfo.VersionText;
         LinkHost.DataDirectory = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PCL Shion", "Link");
+            SpecialFolders.Get(Environment.SpecialFolder.LocalApplicationData), "PCL Shion", "Link");
         LinkHost.Text = static (key, args) => args.Length == 0 ? Lang.Text(key) : Lang.Text(key, args);
         LinkHost.Hint = static (text, theme) => Dispatcher.UIThread.Post(() => HintService.Hint(text, theme switch
         {

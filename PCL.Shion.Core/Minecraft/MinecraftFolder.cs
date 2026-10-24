@@ -9,10 +9,10 @@ public static class MinecraftFolder
 {
     public static string GetDefault()
     {
-        var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        var home = SpecialFolders.Get(Environment.SpecialFolder.UserProfile);
         return PlatformInfo.Os switch
         {
-            OsKind.Windows => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".minecraft"),
+            OsKind.Windows => Path.Combine(SpecialFolders.Get(Environment.SpecialFolder.ApplicationData), ".minecraft"),
             OsKind.MacOs => Path.Combine(home, "Library", "Application Support", "minecraft"),
             _ => Path.Combine(home, ".minecraft")
         };

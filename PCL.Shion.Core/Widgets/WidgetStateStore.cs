@@ -1,4 +1,5 @@
 using System.Text.Json;
+using PCL.Shion.Core.Platform;
 
 namespace PCL.Shion.Core.Widgets;
 
@@ -20,7 +21,7 @@ internal static class WidgetStateStore
     };
 
     private static string FilePath { get; } = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PCL Shion", "widgets.json");
+        SpecialFolders.Get(Environment.SpecialFolder.ApplicationData), "PCL Shion", "widgets.json");
 
     /// <summary>
     /// 已打卡日期，格式见 <see cref="CheckInCalculator.DateFormat" />。
