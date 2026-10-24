@@ -32,8 +32,7 @@
                         <c:MyComboBox x:Name="ComboDownloadSource" Grid.ColumnSpan="2" Grid.Column="1"
                                       SelectionChanged="ComboChange">
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Source.UseMirror}" />
-                            <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Source.PreferOfficialThenMirror}"
-                                              IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Source.PreferOfficialThenMirror}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Source.UseOfficial}" />
                         </c:MyComboBox>
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="2"
@@ -41,8 +40,7 @@
                         <c:MyComboBox x:Name="ComboDownloadVersion" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="2"
                                       SelectionChanged="ComboChange">
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Source.Version.Mirror}" />
-                            <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Source.PreferOfficialThenMirror}"
-                                              IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Source.PreferOfficialThenMirror}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Source.UseOfficial}" />
                         </c:MyComboBox>
                         <TextBlock VerticalAlignment="Center" Grid.Row="4" HorizontalAlignment="Left"
@@ -116,8 +114,7 @@
                         <c:MyComboBox x:Name="ComboDownloadMod" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1"
                                       SelectionChanged="ComboChange">
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Source.UseMirror}" />
-                            <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.Source.PreferOfficialWithFallback}"
-                                              IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.Source.PreferOfficialWithFallback}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Source.UseOfficial}" />
                         </c:MyComboBox>
                         <TextBlock Grid.Row="2" x:Name="TextFilenameFormat" VerticalAlignment="Center"
@@ -127,8 +124,7 @@
                                       SelectionChanged="ComboChange"
                                       ToolTip.Tip="{loc:L Setup.GameManage.Community.FilenameFormat.ToolTip}">
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.FilenameFormat.Style0}" />
-                            <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.FilenameFormat.Style1}"
-                                              IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.FilenameFormat.Style1}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.FilenameFormat.Style2}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.FilenameFormat.Style3}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.FilenameFormat.Style4}" />
@@ -139,8 +135,7 @@
                         <c:MyComboBox Grid.Row="4" x:Name="ComboModLocalNameStyle" Grid.ColumnSpan="2" Grid.Column="1"
                                       SelectionChanged="ComboChange"
                                       ToolTip.Tip="{loc:L Setup.GameManage.Community.ModManageStyle.ToolTip}">
-                            <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.ModManageStyle.TitleTranslation}"
-                                              IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.ModManageStyle.TitleTranslation}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.ModManageStyle.TitleFilename}" />
                         </c:MyComboBox>
                         <TextBlock Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Left"
@@ -148,8 +143,7 @@
                         <c:MyComboBox Grid.Row="6" x:Name="ComboDownloadQuickBehavior" Grid.ColumnSpan="2" Grid.Column="1"
                                       SelectionChanged="ComboChange"
                                       ToolTip.Tip="{loc:L Setup.GameManage.Community.QuickDownload.ToolTip}">
-                            <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.QuickDownload.AlwaysAsk}"
-                                              IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.QuickDownload.AlwaysAsk}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.QuickDownload.CurrentInstance}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.QuickDownload.AskInstance}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.GameManage.Community.QuickDownload.AskPath}" />

@@ -41,7 +41,6 @@
                             <c:MyComboBoxItem Content="{loc:L Common.Action.Close}"
                                               ToolTip.Tip="{loc:L Setup.Launch.Options.InstanceIsolation.None.ToolTip}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.InstanceIsolation.ModdedOnly}"
-                                              IsSelected="True"
                                               ToolTip.Tip="{loc:L Setup.Launch.Options.InstanceIsolation.ModdedOnly.ToolTip}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.InstanceIsolation.NonRelease}"
                                               ToolTip.Tip="{loc:L Setup.Launch.Options.InstanceIsolation.NonRelease.ToolTip}" />
@@ -72,8 +71,7 @@
                             <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Visibility.HideAndCloseOnExit}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Visibility.HideAndReopenOnExit}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Visibility.Minimize}" />
-                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Visibility.KeepUnchanged}"
-                                              IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Visibility.KeepUnchanged}" />
                         </c:MyComboBox>
                         <TextBlock Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Left"
                                    Text="{loc:L Setup.Launch.Options.Priority.Label}" Margin="0,0,25,0" />
@@ -83,7 +81,7 @@
                             <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Priority.RealTime}" Tag="4" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Priority.High}" Tag="3" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Priority.AboveNormal}" Tag="0" />
-                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Priority.Normal}" IsSelected="True"
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Priority.Normal}"
                                               Tag="1" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Priority.BelowNormal}" Tag="2" />
                         </c:MyComboBox>
@@ -100,7 +98,7 @@
                                           SelectionChanged="ComboArgumentWindowType_SelectionChanged"
                                           ToolTip.Tip="{loc:L Setup.Launch.Options.WindowSize.ModernUiWarning}">
                                 <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.WindowSize.Fullscreen}" />
-                                <c:MyComboBoxItem Content="{loc:L Common.Option.Default}" IsSelected="True" />
+                                <c:MyComboBoxItem Content="{loc:L Common.Option.Default}" />
                                 <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.WindowSize.SameAsLauncher}" />
                                 <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.WindowSize.Custom}"
                                                   ToolTip.Tip="{loc:L Setup.Launch.Options.WindowSize.CustomHeightBug.ToolTip}" />
@@ -125,7 +123,7 @@
                                       SelectionChanged="ComboMsAuthType_SelectionChanged"
                                       ToolTip.Tip="{loc:L Setup.Launch.Options.MsAuth.ToolTip}"
                                       IsEnabled="False">
-                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.MsAuth.WebManager}" IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.MsAuth.WebManager}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.MsAuth.DeviceCode}" />
                         </c:MyComboBox>
                         <TextBlock Grid.Row="14" VerticalAlignment="Center" HorizontalAlignment="Left"
@@ -133,7 +131,7 @@
                         <c:MyComboBox x:Name="ComboPreferredIpStack" Grid.Row="14" Grid.ColumnSpan="2" Grid.Column="1"
                                       SelectionChanged="ComboPreferredIpStack_SelectionChanged"
                                       ToolTip.Tip="{loc:L Setup.Launch.Options.IpStack.ToolTip}">
-                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.IpStack.Ipv4}" IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.IpStack.Ipv4}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.IpStack.JavaDefault}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.IpStack.Ipv6}" />
                         </c:MyComboBox>
@@ -241,7 +239,7 @@
                                Text="{loc:L Setup.Launch.Advanced.Renderer.Label}" Margin="0,0,25,0" />
                     <c:MyComboBox x:Name="ComboAdvanceRenderer" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
                                   SelectionChanged="ComboAdvanceRenderer_OnSelectionChanged">
-                        <c:MyComboBoxItem Content="{loc:L Setup.Launch.Advanced.Renderer.GameDefault}" IsSelected="True" />
+                        <c:MyComboBoxItem Content="{loc:L Setup.Launch.Advanced.Renderer.GameDefault}" />
                         <c:MyComboBoxItem Content="{loc:L Setup.Launch.Advanced.Renderer.Software}" />
                         <c:MyComboBoxItem Content="{loc:L Setup.Launch.Advanced.Renderer.DirectX12}" />
                         <c:MyComboBoxItem Content="{loc:L Setup.Launch.Advanced.Renderer.Vulkan}" />

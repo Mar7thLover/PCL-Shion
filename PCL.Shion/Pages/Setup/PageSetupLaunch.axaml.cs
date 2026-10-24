@@ -250,7 +250,7 @@ public partial class PageSetupLaunch : MyPageRight
 
     private void ComboArgumentIndie_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        // Avalonia 会在控件加载后同步 XAML 中的 IsSelected，此时值并未改变，不应弹出提示
+        // 选项未实际改变时（如 Reload 回填）不保存也不弹出提示；初始选中项由 Reload 根据设置决定，XAML 中不得再写 IsSelected
         if (ModAnimation.AniControlEnabled != 0 || ComboArgumentIndieV2.SelectedIndex == Settings.LaunchArgumentIndieV2)
             return;
         Settings.LaunchArgumentIndieV2 = ComboArgumentIndieV2.SelectedIndex;

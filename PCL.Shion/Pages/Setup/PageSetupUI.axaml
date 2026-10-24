@@ -141,7 +141,7 @@
                                    Margin="0,0,25,0" />
                         <c:MyComboBox x:Name="ComboBackgroundSuit" Tag="UiBackgroundSuit" Grid.Column="1"
                                       SelectionChanged="ComboChange">
-                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.Smart}" IsSelected="True" ToolTip.Tip="{loc:L Setup.Ui.Background.Suit.Smart.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.Smart}" ToolTip.Tip="{loc:L Setup.Ui.Background.Suit.Smart.ToolTip}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.Center}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.Fit}" ToolTip.Tip="{loc:L Setup.Ui.Background.Suit.Fit.ToolTip}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.Stretch}" ToolTip.Tip="{loc:L Setup.Ui.Background.Suit.Stretch.ToolTip}" />
