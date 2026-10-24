@@ -1,0 +1,30 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:c="using:PCL.Shion.Controls"
+                   xmlns:loc="using:PCL.Shion.Localization"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   xmlns:comp="using:PCL.Shion.Pages.Download.Comp"
+                   x:Class="PCL.Shion.Pages.Download.Comp.PageDownloadPack">
+    <comp:PageComp x:Name="PackList" PageType="ModPack">
+        <c:MyComboBoxItem Tag="" Content="{loc:L Common.Option.All}" IsSelected="True" />
+        <c:MyComboBoxItem Tag="4484/" Content="{loc:L Download.Comp.Category.Multiplayer}" />
+        <c:MyComboBoxItem Tag="/optimization" Content="{loc:L Download.Comp.Category.Optimization}" />
+        <c:MyComboBoxItem Tag="4479/challenging" Content="{loc:L Download.Comp.Category.Modpack.Hardcore}" />
+        <c:MyComboBoxItem Tag="4483/combat" Content="{loc:L Download.Comp.Category.Combat}" />
+        <c:MyComboBoxItem Tag="4478/quests" Content="{loc:L Download.Comp.Category.Modpack.Quests}" />
+        <c:MyComboBoxItem Tag="4472/technology" Content="{loc:L Download.Comp.Category.Technology}" />
+        <c:MyComboBoxItem Tag="4473/magic" Content="{loc:L Download.Comp.Category.Magic}" />
+        <c:MyComboBoxItem Tag="4475/adventure" Content="{loc:L Download.Comp.Category.Adventure}" />
+        <c:MyComboBoxItem Tag="/kitchen-sink" Content="{loc:L Download.Comp.Category.Modpack.KitchenSink}" />
+        <c:MyComboBoxItem Tag="4476/" Content="{loc:L Download.Comp.Category.Modpack.Exploration}" />
+        <c:MyComboBoxItem Tag="4477/" Content="{loc:L Download.Comp.Category.Modpack.MiniGame}" />
+        <c:MyComboBoxItem Tag="4471/" Content="{loc:L Download.Comp.Category.Modpack.SciFi}" />
+        <c:MyComboBoxItem Tag="4736/" Content="{loc:L Download.Comp.Category.Modpack.Skyblock}" />
+        <c:MyComboBoxItem Tag="5128/" Content="{loc:L Download.Comp.Category.Modpack.VanillaPlus}" />
+        <c:MyComboBoxItem Tag="4487/" Content="{loc:L Download.Comp.Category.Modpack.Ftb}"
+                          ToolTip.Tip="{loc:L Download.Comp.Category.Modpack.Ftb.ToolTip}" />
+        <c:MyComboBoxItem Tag="4480/" Content="{loc:L Download.Comp.Category.Modpack.MapBased}" />
+        <c:MyComboBoxItem Tag="4481/lightweight" Content="{loc:L Download.Comp.Category.Modpack.SmallLight}" />
+        <c:MyComboBoxItem Tag="4482/" Content="{loc:L Download.Comp.Category.Modpack.ExtraLarge}" />
+    </comp:PageComp>
+</pages:MyPageRight>

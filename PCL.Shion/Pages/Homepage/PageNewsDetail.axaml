@@ -1,0 +1,86 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:c="using:PCL.Shion.Controls"
+                   xmlns:loc="using:PCL.Shion.Localization"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   x:Class="PCL.Shion.Pages.Homepage.PageNewsDetail">
+    <pages:MyPageRight.Styles>
+        <Style Selector="TextBlock.error">
+            <Setter Property="Foreground" Value="{DynamicResource ColorBrushRedLight}" />
+        </Style>
+        <Style Selector="TextBlock.caption">
+            <Setter Property="Foreground" Value="{DynamicResource ColorBrushGray2}" />
+        </Style>
+    </pages:MyPageRight.Styles>
+    <c:MyScrollViewer x:Name="PanBack"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="25,25,25,15">
+            <!-- 标题、作者与日期、头图直接取自新闻列表，正文加载完成后填入 PanBody -->
+            <c:MyCard Margin="0,0,0,15" HasMouseAnimation="False">
+                <StackPanel Margin="25,20,25,22">
+                    <TextBlock x:Name="LabTitle"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               TextTrimming="None"
+                               TextWrapping="Wrap" />
+                    <TextBlock x:Name="LabMeta"
+                               Margin="0,6,0,0"
+                               FontSize="13"
+                               Foreground="{DynamicResource ColorBrushGray2}"
+                               TextTrimming="None"
+                               TextWrapping="Wrap" />
+                    <c:MyImage x:Name="ImgHero"
+                               MaxHeight="260"
+                               Margin="0,14,0,0"
+                               HorizontalAlignment="Center"
+                               CornerRadius="6"
+                               IsVisible="False"
+                               LoadingSource=""
+                               RenderOptions.BitmapInterpolationMode="HighQuality"
+                               Stretch="Uniform"
+                               StretchDirection="DownOnly" />
+
+                    <!-- 正文 -->
+                    <StackPanel x:Name="PanBody" Margin="0,16,0,0" IsVisible="False" />
+
+                    <!-- 加载中 / 失败 / 没有正文 -->
+                    <StackPanel x:Name="PanState" Margin="0,12,0,0">
+                        <c:MyLoading x:Name="PanLoading"
+                                     Margin="0,4"
+                                     HorizontalAlignment="Center"
+                                     Text="{loc:L Widget.News.Detail.Loading}" />
+                        <StackPanel x:Name="PanFailed" IsVisible="False">
+                            <TextBlock x:Name="LabFailed"
+                                       FontSize="14"
+                                       TextTrimming="None"
+                                       TextWrapping="Wrap" />
+                            <TextBlock x:Name="LabFailedDetail"
+                                       Margin="0,4,0,0"
+                                       FontSize="12"
+                                       Foreground="{DynamicResource ColorBrushGray2}"
+                                       TextTrimming="None"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <WrapPanel Margin="0,16,0,0">
+                        <c:MyButton x:Name="BtnRetry"
+                                    Height="35"
+                                    MinWidth="110"
+                                    Margin="0,0,12,0"
+                                    Click="BtnRetry_Click"
+                                    ColorType="Highlight"
+                                    IsVisible="False"
+                                    Text="{loc:L Widget.News.Detail.Retry}" />
+                        <c:MyButton x:Name="BtnBrowser"
+                                    Height="35"
+                                    MinWidth="150"
+                                    Click="BtnBrowser_Click"
+                                    Text="{loc:L Widget.News.Detail.OpenInBrowser}" />
+                    </WrapPanel>
+                </StackPanel>
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

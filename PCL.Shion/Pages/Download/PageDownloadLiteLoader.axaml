@@ -1,0 +1,44 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:c="using:PCL.Shion.Controls"
+                   xmlns:loc="using:PCL.Shion.Localization"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   x:Class="PCL.Shion.Pages.Download.PageDownloadLiteLoader"
+                   PanScroll="{Binding #PanBack}">
+    <c:MyScrollViewer x:Name="PanBack"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Vertical" Margin="5">
+            <c:MyCard x:Name="CardTip"
+                      Margin="20,20,20,0"
+                      Title="{loc:L Download.Version.LiteLoader.Intro.Title}">
+                <StackPanel Margin="25,40,15,20">
+                    <TextBlock x:Name="LabConnect"
+                               Margin="0,0,0,11"
+                               Text="{loc:L Download.Version.LiteLoader.Intro.Description}"
+                               TextWrapping="Wrap" />
+                    <Grid Height="35">
+                        <c:MyButton x:Name="BtnWeb"
+                                    MinWidth="140"
+                                    Margin="0,0,20,0"
+                                    Padding="13,0"
+                                    HorizontalAlignment="Left"
+                                    ColorType="Highlight"
+                                    Text="{loc:L Download.Version.OpenWebsite}" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <StackPanel x:Name="PanMain" Margin="20,15,20,5" />
+            <c:MyCard x:Name="PanLoad"
+                      Margin="40,50"
+                      HorizontalAlignment="Center"
+                      UseAnimation="False">
+                <c:MyLoading x:Name="Load"
+                             Margin="20,20,20,17"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Text="{loc:L Download.Version.LiteLoader.LoadingList}" />
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <LangVersion>14.0</LangVersion>
+        <Nullable>enable</Nullable>
+        <AssemblyName>PCL.Shion</AssemblyName>
+        <RootNamespace>PCL.Shion</RootNamespace>
+        <Product>PCL Shion</Product>
+        <Version>0.3.0</Version>
+        <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <Configurations>Debug;CI;Release;Beta</Configurations>
+        <Platforms>AnyCPU;x64;ARM64</Platforms>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="12.1.4" />
+        <PackageReference Include="Avalonia.Desktop" Version="12.1.4" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.4" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+        <PackageReference Include="FluentValidation" Version="12.1.1" />
+        <PackageReference Include="Humanizer.Core" Version="3.0.10" />
+        <PackageReference Include="Humanizer.Core.zh-CN" Version="3.0.10" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\PCL.Shion.Core\PCL.Shion.Core.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**" Exclude="Assets\Strings\**;Assets\Lang\**" />
+        <EmbeddedResource Include="Assets\Strings\**\*.json" LogicalName="PCL.Shion.Strings.%(Filename).json" WithCulture="false" />
+        <!-- 语言文件是 WPF 格式的 ResourceDictionary，由 Lang 按 XML 读取，不能交给 Avalonia 编译：核心文件直接取自 PCL.Core，各页面的补充文件放在 Assets\Lang -->
+        <EmbeddedResource Include="..\PCL.Core\App\Localization\Languages\*.xaml" Link="Assets\Lang\Core\%(Filename)%(Extension)" LogicalName="PCL.Shion.Lang.Core.%(Filename).xaml" WithCulture="false" />
+        <EmbeddedResource Include="Assets\Lang\*.xaml" LogicalName="PCL.Shion.Lang.%(Filename).xaml" WithCulture="false" />
+    </ItemGroup>
+</Project>

@@ -1,0 +1,105 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="using:PCL.Shion.Controls">
+
+    <!-- Window -->
+    <ControlTheme x:Key="MyWindow" TargetType="Window">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <VisualLayerManager>
+                    <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" />
+                </VisualLayerManager>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <!-- TextBlock -->
+    <ControlTheme x:Key="BasedOnTextBlock" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{DynamicResource ColorBrush1}" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        <Setter Property="FontFamily" Value="{DynamicResource LaunchFontFamily}" />
+    </ControlTheme>
+
+    <!-- Thumb -->
+    <ControlTheme x:Key="MyThumb" TargetType="Thumb">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{DynamicResource ColorBrushSemiTransparent}">
+                    <Border Background="{TemplateBinding Foreground}" CornerRadius="3" Margin="2" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <!-- ScrollViewer -->
+    <ControlTheme x:Key="ScrollViewerFullMargin" TargetType="ScrollViewer">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid Margin="{TemplateBinding Padding}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ScrollContentPresenter Name="PART_ContentPresenter"
+                                            Grid.Column="0"
+                                            Content="{TemplateBinding Content}"
+                                            CanHorizontallyScroll="False"
+                                            CanVerticallyScroll="False" />
+                    <local:MyScrollBar Name="PART_VerticalScrollBar"
+                                       Grid.Column="1"
+                                       Margin="2,1,1,1"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Background="{TemplateBinding Background}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="ScrollViewerNoMargin" TargetType="ScrollViewer">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid Margin="{TemplateBinding Padding}" Cursor="Arrow">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ScrollContentPresenter Name="PART_ContentPresenter"
+                                            Grid.Column="0"
+                                            Content="{TemplateBinding Content}"
+                                            Cursor="{TemplateBinding Cursor}"
+                                            CanHorizontallyScroll="False"
+                                            CanVerticallyScroll="False" />
+                    <local:MyScrollBar Name="PART_VerticalScrollBar"
+                                       Grid.Column="1"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Background="{TemplateBinding Background}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <!-- ComboBoxItem -->
+    <ControlTheme x:Key="MyComboBoxItem" TargetType="ComboBoxItem">
+        <Setter Property="Background" Value="{DynamicResource ColorBrushTransparent}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="ItemBorder" Padding="6,4" Background="{TemplateBinding Background}">
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <!-- ComboBox 可编辑项的删除按钮列表 -->
+    <DataTemplate x:Key="ComboBoxItemTemplateWithDelete" x:CompileBindings="False">
+        <local:MyListItem Title="{Binding}" FontSize="13" MaxHeight="26" IsScaleAnimationEnabled="False"
+                          Margin="-3,0,0,0">
+            <local:MyListItem.Buttons>
+                <local:MyIconButton Height="20" Width="20" VerticalAlignment="Center" Tag="{Binding}"
+                                    SvgIcon="lucide/x" />
+            </local:MyListItem.Buttons>
+        </local:MyListItem>
+    </DataTemplate>
+</ResourceDictionary>

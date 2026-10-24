@@ -1,0 +1,50 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:PCL.Shion.Controls"
+                    xmlns:loc="using:PCL.Shion.Localization"
+                    xmlns:pages="using:PCL.Shion.Pages"
+                    x:Class="PCL.Shion.Pages.Launch.PageLaunchRight"> <!-- 不知道为啥只有这个文件不能在 XAML 设置 PanScroll -->
+    <c:MyScrollViewer x:Name="PanBack"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+        <!-- 首页永远只有一列：小工具卡片（PanWidgets）在上，首页内容（PanMain）在下，都与页面等宽，一起随 PanBack 滚动，不会左右并排。
+             PanWidgets 里放哪些小工具由代码按设置维护，全部关闭时整个 PanWidgets 隐藏 -->
+        <StackPanel Margin="25,25,25,10">
+            <StackPanel x:Name="PanWidgets" IsVisible="False" />
+            <StackPanel x:Name="PanMain" Grid.IsSharedSizeScope="True">
+                <StackPanel x:Name="PanCustom" />
+                <c:MyCard x:Name="PanHint"
+                          Margin="0,0,0,15"
+                          Title="{DynamicResource Launch.Right.CommunityHint.Title}">
+                    <c:MyIconButton x:Name="BtnHintClose"
+                                    Width="20"
+                                    Height="20"
+                                    Margin="10"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Click="BtnHintClose_Click"
+                                    LogoScale="1.1"
+                                    SvgIcon="lucide/x" />
+                    <StackPanel Margin="25,38,23,15">
+                        <TextBlock x:Name="LabHint1"
+                                   Margin="0,0,0,2"
+                                   FontSize="13.5"
+                                   TextWrapping="Wrap" />
+                        <TextBlock x:Name="LabHint2"
+                                   Margin="0,0,0,2"
+                                   FontSize="13.5"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+                </c:MyCard>
+                <c:MyCard x:Name="PanLog"
+                          Margin="0,0,0,15"
+                          Title="{DynamicResource Launch.Right.Log.Title}">
+                    <TextBlock x:Name="LabLog"
+                               Margin="20,38,20,18"
+                               TextTrimming="None"
+                               TextWrapping="Wrap" />
+                </c:MyCard>
+            </StackPanel>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

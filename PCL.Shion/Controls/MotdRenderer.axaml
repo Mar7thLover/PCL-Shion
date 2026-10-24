@@ -1,0 +1,5 @@
+<UserControl x:Class="PCL.Shion.Controls.MotdRenderer"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Canvas x:Name="MotdCanvas" IsHitTestVisible="False" HorizontalAlignment="Center" Width="350" Height="34" />
+</UserControl>

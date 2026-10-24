@@ -1,0 +1,50 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:c="using:PCL.Shion.Controls"
+                   xmlns:loc="using:PCL.Shion.Localization"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   x:Class="PCL.Shion.Pages.Download.Comp.PageDownloadCompDetail">
+    <c:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+        <Grid Margin="25,25,25,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <c:MyCard Margin="0,0,0,25" x:Name="CardIntro">
+                <StackPanel Margin="22,20,2,20" x:Name="PanIntro">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <c:MyIconTextButton x:Name="BtnIntroWeb" Text="CurseForge"
+                                            BorderBrush="{DynamicResource ColorBrush6}" BorderThickness="1"
+                                            SvgIcon="lucide/globe" Margin="0,0,3,0" HorizontalAlignment="Left" />
+                        <c:MyIconTextButton x:Name="BtnIntroCopy" Text="{loc:L Download.Comp.Detail.CopyName}"
+                                            BorderBrush="{DynamicResource ColorBrush6}" BorderThickness="1"
+                                            SvgIcon="lucide/copy" Margin="0,0,3,0" HorizontalAlignment="Left" />
+                        <c:MyIconTextButton x:Name="BtnIntroLinkCopy" Text="{loc:L Download.Comp.Detail.CopyLink}"
+                                            BorderBrush="{DynamicResource ColorBrush6}" BorderThickness="1"
+                                            SvgIcon="lucide/copy" Margin="0,0,3,0" HorizontalAlignment="Left" />
+                        <c:MyIconTextButton x:Name="BtnFavorites" Text="{loc:L Download.Comp.Detail.Favorite}"
+                                            BorderBrush="{DynamicResource ColorBrush6}" BorderThickness="1"
+                                            SvgIcon="lucide/heart" Margin="0,0,2,0" HorizontalAlignment="Left" />
+                    </StackPanel>
+                </StackPanel>
+            </c:MyCard>
+            <StackPanel Grid.Row="1" x:Name="PanMain">
+                <c:MyCard Margin="0,0,0,15" x:Name="CardFilter">
+                    <StackPanel>
+                        <StackPanel x:Name="PanInstanceFilter" Margin="10,10,0,5" Orientation="Horizontal"
+                                    VerticalAlignment="Top" HorizontalAlignment="Left" />
+                        <StackPanel x:Name="PanModLoaderFilter" Margin="10,5,0,10" Orientation="Horizontal"
+                                    VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    </StackPanel>
+                </c:MyCard>
+                <StackPanel x:Name="PanResults" />
+            </StackPanel>
+            <c:MyCard Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                      x:Name="PanLoad" UseAnimation="False" Margin="0,0,0,8">
+                <c:MyLoading Text="{loc:L Download.Version.LoadingList}" Margin="20,20,20,17" x:Name="Load"
+                             HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </c:MyCard>
+        </Grid>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

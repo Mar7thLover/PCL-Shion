@@ -1,0 +1,107 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:local="using:PCL.Shion.Controls"
+                   xmlns:loc="using:PCL.Shion.Localization"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   x:Class="PCL.Shion.Pages.Instance.PageInstanceExport">
+    <pages:MyPageRight.Styles>
+        <Style Selector="local|MyCheckBox">
+            <Setter Property="Height" Value="26" />
+        </Style>
+    </pages:MyPageRight.Styles>
+    <Grid x:Name="PanAllBack" DragDrop.AllowDrop="True">
+        <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                              x:Name="PanBack">
+            <StackPanel Margin="25,10,25,65">
+                <local:MyHint Margin="0,15,0,0" Text="{loc:L Instance.Export.ModrinthWarning}" Theme="Yellow"
+                              x:Name="HintOptiFine" />
+                <local:MyCard Margin="0,15">
+                    <Grid Margin="22,15,25,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="0.3*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Instance.Export.PackName}" Margin="0,0,20,0" />
+                        <local:MyTextBox Grid.Row="0" Grid.Column="1" x:Name="TextExportName" MaxLength="100" />
+                        <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Instance.Export.PackVersion}" Margin="30,0,20,0" />
+                        <local:MyTextBox Grid.Row="0" Grid.Column="3" x:Name="TextExportVersion" MaxLength="100" />
+                    </Grid>
+                </local:MyCard>
+                <local:MyCard Margin="0,0,0,15" x:Name="CardOptions" MinHeight="39">
+                    <local:MyIconTextButton x:Name="BtnOverrideCancel" Height="24" HorizontalAlignment="Right"
+                                            VerticalAlignment="Center" Margin="0,0,5,0"
+                                            IsHitTestVisible="False" Opacity="0.5"
+                                            Text="{loc:L Common.Action.Reset}"
+                                            SvgIcon="lucide/rotate-ccw"
+                                            LogoScale="0.9" />
+                    <StackPanel Margin="25,38,15,15" Name="PanOptions">
+                        <local:MyCheckBox IsEnabled="False" x:Name="CheckOptionsBasic" />
+                        <local:MyCheckBox Margin="30,0,0,0" x:Name="CheckOptionsOptions" />
+                        <local:MyCheckBox Margin="30,0,0,0" x:Name="CheckOptionsGameProfile" />
+                        <local:MyCheckBox Margin="30,0,0,0" x:Name="CheckOptionsOptiFine" />
+                        <local:MyCheckBox x:Name="CheckOptionsMod" />
+                        <StackPanel Margin="30,0,0,0" x:Name="PanOptionsMod">
+                            <local:MyCheckBox x:Name="CheckOptionsDisabledMod" />
+                            <local:MyCheckBox x:Name="CheckOptionsImportantData" />
+                            <local:MyCheckBox x:Name="CheckOptionsModSettings" />
+                            <local:MyCheckBox x:Name="CheckOptionsMaps" />
+                            <local:MyCheckBox x:Name="CheckOptionsJei" />
+                            <local:MyCheckBox x:Name="CheckOptionsEmi" />
+                            <local:MyCheckBox x:Name="CheckOptionsPatchouli" />
+                        </StackPanel>
+                        <local:MyCheckBox x:Name="CheckOptionsResourcePacks" />
+                        <StackPanel Margin="30,0,0,0" x:Name="PanOptionsResourcePacks" />
+                        <local:MyCheckBox x:Name="CheckOptionsShaderPacks" />
+                        <StackPanel Margin="30,0,0,0" x:Name="PanOptionsShaderPacks" />
+                        <local:MyCheckBox x:Name="CheckOptionsScreenshots" />
+                        <local:MyCheckBox x:Name="CheckOptionsStructures" />
+                        <local:MyCheckBox x:Name="CheckOptionsReplay" />
+                        <local:MyCheckBox x:Name="CheckOptionsSaves" />
+                        <StackPanel Margin="30,0,0,0" x:Name="PanOptionsSaves" />
+                        <local:MyCheckBox x:Name="CheckOptionsServers" />
+                        <local:MyCheckBox x:Name="CheckOptionsOtherFolders" />
+                        <StackPanel Margin="30,0,0,0" x:Name="PanOptionsOtherFolders" />
+                        <local:MyCheckBox x:Name="CheckOptionsPcl" />
+                        <StackPanel Margin="30,0,0,0" x:Name="PanOptionsPcl">
+                            <local:MyCheckBox x:Name="CheckOptionsPclCustom" />
+                        </StackPanel>
+                    </StackPanel>
+                </local:MyCard>
+                <local:MyCard Title="{loc:L Instance.Export.Advanced.Title}" Margin="0,0,0,15" CanSwap="True"
+                              IsSwapped="True" x:Name="CardAdvanced">
+                    <StackPanel Margin="25,37,23,20">
+                        <local:MyHint Theme="Yellow" Margin="0,2,0,8" x:Name="HintBundle" />
+                        <local:MyCheckBox x:Name="CheckAdvancedInclude" />
+                        <local:MyCheckBox x:Name="CheckAdvancedModrinth" />
+                        <local:MyHint Theme="Blue" RelativeSetup="HintExportConfig" CanClose="True" Margin="0,20,0,2"
+                                      Text="{loc:L Instance.Export.Advanced.ConfigHint}" />
+                        <Grid Height="35" Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <local:MyButton Grid.Column="0" x:Name="BtnAdvancedImport" MinWidth="140"
+                                            Text="{loc:L Instance.Export.Advanced.ImportConfig}"
+                                            Padding="13,0" Margin="0,0,20,0" ColorType="Highlight" />
+                            <local:MyButton Grid.Column="1" x:Name="BtnAdvancedExport" MinWidth="140"
+                                            Text="{loc:L Instance.Export.Advanced.ExportConfig}"
+                                            Padding="13,0" Margin="0,0,20,0" />
+                        </Grid>
+                    </StackPanel>
+                </local:MyCard>
+            </StackPanel>
+        </local:MyScrollViewer>
+        <local:MyExtraTextButton HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                 x:Name="BtnExport" Text="{loc:L Instance.Export.StartExport}"
+                                 LogoScale="1.1"
+                                 SvgIcon="lucide/package" />
+    </Grid>
+</pages:MyPageRight>

@@ -1,0 +1,79 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:c="using:PCL.Shion.Controls"
+                       xmlns:loc="using:PCL.Shion.Localization"
+                       xmlns:pages="using:PCL.Shion.Pages"
+                       x:Class="PCL.Shion.Pages.Tools.PageToolsCheckIn"
+                       PanScroll="{Binding #PanBack}">
+    <c:MyScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="25,10">
+            <!-- 打卡与统计 -->
+            <c:MyCard Margin="0,15" Title="{loc:L Widget.CheckIn.Title}">
+                <StackPanel Margin="25,40,25,20">
+                    <Grid Height="35" HorizontalAlignment="Left">
+                        <c:MyButton x:Name="BtnCheckIn"
+                                    Width="140"
+                                    ColorType="Highlight"
+                                    Click="BtnCheckIn_Click"
+                                    Text="{loc:L Widget.CheckIn.Button}" />
+                        <StackPanel x:Name="PanDone"
+                                    HorizontalAlignment="Left"
+                                    IsHitTestVisible="False"
+                                    IsVisible="False"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <Path Data="M1,6 L5,10 L13,2"
+                                  Height="12"
+                                  Margin="0,1,8,0"
+                                  StrokeLineCap="Round"
+                                  StrokeJoin="Round"
+                                  StrokeThickness="2"
+                                  VerticalAlignment="Center"
+                                  Width="14"
+                                  Stroke="{DynamicResource ColorBrush3}" />
+                            <TextBlock FontSize="15"
+                                       FontWeight="Bold"
+                                       Foreground="{DynamicResource ColorBrush3}"
+                                       Text="{loc:L Widget.CheckIn.Done}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock x:Name="LabStreak"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Margin="0,16,0,0"
+                               TextWrapping="Wrap" />
+                    <TextBlock x:Name="LabStats"
+                               FontSize="13"
+                               Margin="0,4,0,0"
+                               Opacity="0.6"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </c:MyCard>
+            <!-- 本月日历 -->
+            <c:MyCard Margin="0,0,0,15" Title="{loc:L Widget.CheckIn.Calendar.Title}">
+                <Grid MaxWidth="420" Margin="25,40,25,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="LabMonth"
+                               FontSize="14"
+                               Grid.Row="0"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,10" />
+                    <UniformGrid x:Name="PanWeekdays"
+                                 Columns="7"
+                                 Grid.Row="1"
+                                 Margin="0,0,0,2" />
+                    <UniformGrid x:Name="PanDays"
+                                 Columns="7"
+                                 Grid.Row="2" />
+                </Grid>
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

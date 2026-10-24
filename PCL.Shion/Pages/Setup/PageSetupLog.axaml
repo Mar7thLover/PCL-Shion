@@ -1,0 +1,25 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:PCL.Shion.Controls"
+                    xmlns:loc="using:PCL.Shion.Localization"
+                    xmlns:pages="using:PCL.Shion.Pages"
+                    x:Class="PCL.Shion.Pages.Setup.PageSetupLog">
+    <c:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <DockPanel>
+            <c:MyCard DockPanel.Dock="Top" Title="{loc:L Setup.Log.Operations}" Margin="25,25,25,5">
+                <WrapPanel ItemHeight="35" Margin="25,40,20,20">
+                    <c:MyButton MinWidth="100" Text="{loc:L Setup.Log.Export}" ColorType="Highlight" Margin="0,0,15,0"
+                                Click="ButtonExport_OnClick" />
+                    <c:MyButton MinWidth="120" Text="{loc:L Setup.Log.ExportAll}" ColorType="Normal" Margin="0,0,15,0"
+                                Click="ButtonExportAll_OnClick" />
+                    <c:MyButton MinWidth="120" Text="{loc:L Setup.Log.OpenDirectory}" ColorType="Normal" Margin="0,0,15,0"
+                                Click="ButtonOpenDir_OnClick" />
+                    <c:MyButton MinWidth="120" Text="{loc:L Setup.Log.ClearHistory}" ColorType="Red" Click="ButtonClean_OnClick" />
+                </WrapPanel>
+            </c:MyCard>
+            <c:MyCard Title="{loc:L Setup.Log.AllLogs}" Margin="25,10,25,25" x:Name="PanContent">
+                <StackPanel x:Name="PanList" Orientation="Vertical" Margin="20,36,18,18" />
+            </c:MyCard>
+        </DockPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

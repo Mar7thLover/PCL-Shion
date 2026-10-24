@@ -1,0 +1,87 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:PCL.Shion.Controls"
+                    xmlns:loc="using:PCL.Shion.Localization"
+                    xmlns:pages="using:PCL.Shion.Pages"
+                    x:Class="PCL.Shion.Pages.Setup.PageSetupGameLink">
+    <c:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="25,10">
+            <c:MyCard Margin="0,15" Title="EasyTier">
+                <StackPanel Margin="25,40,25,15" Orientation="Vertical">
+                    <c:MyHint Text="{loc:L Setup.GameLink.RestartRequired}" Theme="Yellow" Margin="0,0,0,10" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="TextBlock" />
+                            <ColumnDefinition Width="8" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="8" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="4" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="28" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.GameLink.Username}"
+                                   Margin="0,0,25,0" />
+                        <c:MyTextBox x:Name="TextLinkUsername" Grid.Row="0" Grid.ColumnSpan="2" Tag="LinkUsername"
+                                     Grid.Column="2" TextChanged="TextBoxChange"
+                                     ToolTip.Tip="{loc:L Setup.GameLink.Username.ToolTip}" />
+                        <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.GameLink.Protocol.Preference}" />
+                        <c:MyComboBox x:Name="ComboPreferProtocol" Tag="LinkProtocolPreference" Grid.Row="2"
+                                      SelectionChanged="LinkProtocolPerferenceChange"
+                                      Grid.Column="2">
+                            <c:MyComboBoxItem Content="{loc:L Setup.GameLink.Protocol.Tcp}" ToolTip.Tip="{loc:L Setup.GameLink.Protocol.Tcp.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.GameLink.Protocol.Udp}" ToolTip.Tip="{loc:L Setup.GameLink.Protocol.Udp.ToolTip}" />
+                        </c:MyComboBox>
+                        <c:MyCheckBox x:Name="CheckLatencyFirstMode" Tag="LinkLatencyFirstMode" Grid.Row="4"
+                                      Grid.ColumnSpan="3" Text="{loc:L Setup.GameLink.LatencyFirstMode}" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.GameLink.LatencyFirstMode.ToolTip}" />
+                        <c:MyCheckBox x:Name="CheckTryPunchSym" Tag="LinkTryPunchSym" Grid.Row="5"
+                                      Grid.ColumnSpan="3" Text="{loc:L Setup.GameLink.PortGuessNat}" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.GameLink.PortGuessNat.ToolTip}" />
+                        <c:MyCheckBox x:Name="CheckEnableIPv6" Tag="LinkEnableIPv6" Grid.Row="6"
+                                      Grid.ColumnSpan="3" Text="{loc:L Setup.GameLink.EnableIPv6}" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.GameLink.EnableIPv6.ToolTip}" />
+                        <c:MyCheckBox x:Name="CheckEnableCliOutput" Tag="LinkEnableCliOutput" Grid.Row="7"
+                                      Grid.ColumnSpan="3" Text="{loc:L Setup.GameLink.CliDebugOutput}" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.GameLink.CliDebugOutput.ToolTip}" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard Margin="10" Title="{loc:L Setup.GameLink.NetworkTest.Title}" IsVisible="False">
+                <StackPanel Margin="25,40,25,15" Orientation="Vertical">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="8" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="8" />
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Name="TextUdpNatType"
+                                   Text="{loc:L Setup.GameLink.NetworkTest.UdpNatType.NotTested}"
+                                   Grid.Row="0" />
+                        <TextBlock x:Name="TextTcpNatType"
+                                   Text="{loc:L Setup.GameLink.NetworkTest.TcpNatType.NotTested}"
+                                   Grid.Row="1" />
+                        <TextBlock x:Name="TextIpv6Status"
+                                   Text="{loc:L Setup.GameLink.NetworkTest.Ipv6Status.NotTested}"
+                                   Grid.Row="2" />
+                        <c:MyButton x:Name="BtnNetTest" Text="{loc:L Setup.GameLink.NetworkTest.Start}" Grid.Row="4" ColorType="Highlight"
+                                    Click="BtnNetTest_Click"
+                                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

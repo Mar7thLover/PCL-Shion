@@ -1,0 +1,140 @@
+<c:MyScrollViewer xmlns="https://github.com/avaloniaui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:c="using:PCL.Shion.Controls"
+                  xmlns:loc="using:PCL.Shion.Localization"
+                  xmlns:online="using:PCL.Shion.Core.Online"
+                  x:Class="PCL.Shion.Pages.Download.Comp.PageComp"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+    <c:MyScrollViewer.Content>
+        <StackPanel Orientation="Vertical" Margin="25">
+            <StackPanel x:Name="PanAlways">
+                <c:MySearchBox x:Name="PanSearchBox" Margin="0,0,0,15" SearchButtonVisibility="True"
+                               HintText="{loc:L Download.Comp.Search.Hint}" />
+                <c:MyCard Margin="0,0,0,15">
+                    <Grid Margin="7" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="1.0*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="1.3*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="1.0*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="8" />
+                            <RowDefinition Height="28" />
+                        </Grid.RowDefinitions>
+                        <!-- 来源 -->
+                        <TextBlock x:Name="LabSource" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"
+                                   HorizontalAlignment="Left" Text="{loc:L Download.Comp.Filter.Source}"
+                                   Margin="5,0,5,0" />
+                        <c:MyComboBox x:Name="ComboSearchSource" Grid.Row="0" Grid.Column="1">
+                            <c:MyComboBoxItem x:Name="ItemSourceAll" Content="{loc:L Common.Option.All}" Tag="3"
+                                              IsSelected="True" />
+                            <c:MyComboBoxItem x:Name="ItemSourceCurseForge" Content="CurseForge" Tag="1" />
+                            <c:MyComboBoxItem x:Name="ItemSourceModrinth" Content="Modrinth" Tag="2" />
+                        </c:MyComboBox>
+                        <!-- Tags -->
+                        <TextBlock x:Name="LabTag" VerticalAlignment="Center" Grid.Column="2" HorizontalAlignment="Left"
+                                   Text="{loc:L Download.Comp.Filter.Tag}" Margin="5,0,5,0" />
+                        <c:MyComboBox x:Name="ComboSearchTag" Grid.Column="3" MaxDropDownHeight="320" />
+                        <!-- 排序方式 -->
+                        <TextBlock x:Name="LabSort" VerticalAlignment="Center" Grid.Row="0" Grid.Column="4"
+                                   HorizontalAlignment="Left" Text="{loc:L Download.Comp.Filter.Sort}"
+                                   Margin="5,0,5,0" />
+                        <c:MyComboBox x:Name="ComboSearchSort" Grid.Row="0" Grid.Column="5" MaxDropDownHeight="320">
+                            <c:MyComboBoxItem Content="{loc:L Common.Option.Default}" Tag="1" IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Download.Comp.Sort.Relevance}" Tag="2" />
+                            <c:MyComboBoxItem Content="{loc:L Download.Comp.Sort.Downloads}" Tag="3" />
+                            <c:MyComboBoxItem Content="{loc:L Download.Comp.Sort.Follows}" Tag="4" />
+                            <c:MyComboBoxItem Content="{loc:L Download.Comp.Sort.Latest}" Tag="5" />
+                            <c:MyComboBoxItem Content="{loc:L Download.Comp.Sort.Updated}" Tag="6" />
+                        </c:MyComboBox>
+                        <!-- 版本 -->
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Download.Comp.Filter.Version}" Margin="5,0,5,0"
+                                   Grid.Row="2" />
+                        <c:MyComboBox x:Name="TextSearchVersion" Grid.Row="2" Grid.Column="1" IsEditable="True"
+                                      MaxDropDownHeight="320">
+                            <c:MyComboBoxItem Content="{loc:L Download.Comp.Filter.Version.Any}" IsSelected="True" />
+                            <c:MyComboBoxItem Content="1.21.11" />
+                            <c:MyComboBoxItem Content="1.21.1" />
+                            <c:MyComboBoxItem Content="1.20.6" />
+                            <c:MyComboBoxItem Content="1.20.1" />
+                            <c:MyComboBoxItem Content="1.19.4" />
+                            <c:MyComboBoxItem Content="1.19.2" />
+                            <c:MyComboBoxItem Content="1.18.2" />
+                            <c:MyComboBoxItem Content="1.16.5" />
+                            <c:MyComboBoxItem Content="1.12.2" />
+                            <c:MyComboBoxItem Content="1.10.2" />
+                            <c:MyComboBoxItem Content="1.8.9" />
+                            <c:MyComboBoxItem Content="1.7.10" />
+                        </c:MyComboBox>
+                        <!-- 加载器 -->
+                        <TextBlock x:Name="LabLoader" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Download.Comp.Filter.Loader}"
+                                   Margin="5,0,5,0" Grid.Row="2" Grid.Column="2" />
+                        <c:MyComboBox x:Name="ComboSearchLoader" Grid.Row="2" Grid.Column="3" MaxDropDownHeight="320">
+                            <c:MyComboBoxItem Content="{loc:L Download.Comp.Filter.Loader.Any}" IsSelected="True" Tag="0" />
+                            <c:MyComboBoxItem Content="{loc:L Common.Installation.Forge}" Tag="1" />
+                            <c:MyComboBoxItem Content="{loc:L Common.Installation.NeoForge}" Tag="6" />
+                            <c:MyComboBoxItem Content="{loc:L Common.Installation.Fabric}" Tag="4" />
+                            <c:MyComboBoxItem Content="{loc:L Common.Installation.Quilt}" Tag="5" />
+                        </c:MyComboBox>
+                        <c:MyComboBox x:Name="ComboSearchShaderLoader" IsVisible="False" Grid.Row="2"
+                                      Grid.Column="3" MaxDropDownHeight="320">
+                            <c:MyComboBoxItem Content="{loc:L Download.Comp.Filter.Loader.AnyShader}" Tag=""
+                                              IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Download.Comp.Filter.Loader.VanillaAvailable}"
+                                              Tag="/vanilla"
+                                              ToolTip.Tip="{loc:L Download.Comp.Filter.Loader.VanillaAvailable.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Common.Installation.Iris}" Tag="/iris" />
+                            <c:MyComboBoxItem Content="{loc:L Common.Installation.OptiFine}" Tag="/optifine" />
+                        </c:MyComboBox>
+                        <!-- 按钮 -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="6">
+                            <c:MyIconButton x:Name="BtnSearchReset"
+                                            SvgIcon="lucide/rotate-ccw"
+                                            ToolTip.Tip="{loc:L Download.Comp.Filter.Reset}" LogoScale="0.9"
+                                            Margin="3,0,0,0" />
+                            <c:MyIconButton x:Name="BtnSearchInstallModPack"
+                                            SvgIcon="lucide/download"
+                                            IsVisible="False"
+                                            ToolTip.Tip="{loc:L Download.Comp.Filter.InstallModpack.ToolTip}"
+                                            LogoScale="0.9" />
+                        </StackPanel>
+                    </Grid>
+                </c:MyCard>
+            </StackPanel>
+            <StackPanel x:Name="PanContent">
+                <c:MyHint x:Name="HintError" HasBorder="True"
+                          Text="{loc:L Download.Comp.Hint.ModrinthUnreachable}"
+                          Theme="Yellow" Margin="0,0,0,15" IsVisible="False" />
+                <c:MyCard x:Name="CardProjects" UseAnimation="False">
+                    <StackPanel x:Name="PanProjects" Margin="12" />
+                </c:MyCard>
+                <c:MyCard Margin="0,15,0,0" x:Name="CardPages" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Height="23" Margin="10,7">
+                        <c:MyIconButton x:Name="BtnPageFirst" IsEnabled="False" Opacity="0.2" Margin="0,0.5,5,0.5"
+                                        SvgIcon="lucide/chevrons-left" />
+                        <c:MyIconButton x:Name="BtnPageLeft" IsEnabled="False" Opacity="0.2" Margin="0,0,5,0"
+                                        SvgIcon="lucide/chevron-left" />
+                        <TextBlock x:Name="LabPage" Text="1"
+                                   Margin="8,0,13,0" FontSize="15" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource ColorBrush3}" />
+                        <c:MyIconButton x:Name="BtnPageRight" Margin="0,0,30,0"
+                                        SvgIcon="lucide/chevron-right" />
+                    </StackPanel>
+                </c:MyCard>
+            </StackPanel>
+            <c:MyCard HorizontalAlignment="Center" VerticalAlignment="Center"
+                      x:Name="PanLoad" UseAnimation="False" Margin="40,50">
+                <c:MyLoading Margin="20,20,20,17" x:Name="Load" HorizontalAlignment="Center"
+                             VerticalAlignment="Center" />
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer.Content>
+</c:MyScrollViewer>

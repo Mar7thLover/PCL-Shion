@@ -1,0 +1,64 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:PCL.Shion.Controls"
+                    xmlns:loc="using:PCL.Shion.Localization"
+                    xmlns:pages="using:PCL.Shion.Pages"
+                    x:Class="PCL.Shion.Pages.Setup.PageSetupFeedback">
+    <c:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="25,25,25,25">
+            <c:MyCard Title="{loc:L Setup.Feedback.Submit.Title}" x:Name="PanInfo">
+                <StackPanel Orientation="Vertical" Margin="20,40,18,22">
+                    <TextBlock
+                        Text="{loc:L Setup.Feedback.Submit.Description}"
+                        TextWrapping="Wrap" />
+                    <Grid Margin="0,15,0,0" Height="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                        </Grid.ColumnDefinitions>
+                        <c:MyButton x:Name="BtnManageOpen" Grid.Column="0" MinWidth="140" Text="{loc:L Setup.Feedback.Submit.Open}"
+                                    Padding="13,0" Margin="0,0,20,0" HorizontalAlignment="Left"
+                                    ColorType="Highlight" Click="Feedback_Click" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <StackPanel x:Name="PanContent" Margin="0,15,0,0">
+                <c:MyCard Title="{loc:L Setup.Feedback.Status.Processing}" Margin="0,0,0,15" x:Name="PanContentProcessing" CanSwap="True">
+                    <StackPanel x:Name="PanListProcessing" Orientation="Vertical" Margin="20,36,18,18" />
+                </c:MyCard>
+                <c:MyCard Title="{loc:L Setup.Feedback.Status.WaitingProcess}" Margin="0,0,0,15" x:Name="PanContentWaitingProcess" CanSwap="True">
+                    <StackPanel x:Name="PanListWaitingProcess" Orientation="Vertical" Margin="20,36,18,18" />
+                </c:MyCard>
+                <c:MyCard Title="{loc:L Setup.Feedback.Status.Waiting}" Margin="0,0,0,15" x:Name="PanContentWait" CanSwap="True">
+                    <StackPanel x:Name="PanListWait" Orientation="Vertical" Margin="20,36,18,18" />
+                </c:MyCard>
+                <c:MyCard Title="{loc:L Setup.Feedback.Status.Paused}" Margin="0,0,0,15" x:Name="PanContentPause" CanSwap="True">
+                    <StackPanel x:Name="PanListPause" Orientation="Vertical" Margin="20,36,18,18" />
+                </c:MyCard>
+                <c:MyCard Title="{loc:L Setup.Feedback.Status.UpNext}" Margin="0,0,0,15" x:Name="PanContentUpnext" CanSwap="True">
+                    <StackPanel x:Name="PanListUpnext" Orientation="Vertical" Margin="20,36,18,18" />
+                </c:MyCard>
+                <c:MyCard Title="{loc:L Setup.Feedback.Status.Completed}" Margin="0,0,0,15" x:Name="PanContentCompleted" CanSwap="True"
+                          IsSwapped="True">
+                    <StackPanel x:Name="PanListCompleted" Orientation="Vertical" Margin="20,36,18,18" />
+                </c:MyCard>
+                <c:MyCard Title="{loc:L Setup.Feedback.Status.Declined}" Margin="0,0,0,15" x:Name="PanContentDecline" CanSwap="True" IsSwapped="True">
+                    <StackPanel x:Name="PanListDecline" Orientation="Vertical" Margin="20,36,18,18" />
+                </c:MyCard>
+                <c:MyCard Title="{loc:L Setup.Feedback.Status.Ignored}" Margin="0,0,0,15" x:Name="PanContentIgnored" CanSwap="True" IsSwapped="True">
+                    <StackPanel x:Name="PanListIgnored" Orientation="Vertical" Margin="20,36,18,18" />
+                </c:MyCard>
+                <c:MyCard Title="{loc:L Setup.Feedback.Status.Duplicate}" Margin="0,0,0,15" x:Name="PanContentDuplicate" CanSwap="True" IsSwapped="True">
+                    <StackPanel x:Name="PanListDuplicate" Orientation="Vertical" Margin="20,36,18,18" />
+                </c:MyCard>
+            </StackPanel>
+            <c:MyCard HorizontalAlignment="Center" VerticalAlignment="Center"
+                      x:Name="PanLoad" UseAnimation="False" Margin="40,50">
+                <c:MyLoading Text="{loc:L Setup.Feedback.Loading}" Margin="20,20,20,17" x:Name="Load" HorizontalAlignment="Center"
+                             VerticalAlignment="Center" />
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

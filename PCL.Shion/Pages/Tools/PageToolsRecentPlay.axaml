@@ -1,0 +1,31 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:c="using:PCL.Shion.Controls"
+                       xmlns:loc="using:PCL.Shion.Localization"
+                       xmlns:pages="using:PCL.Shion.Pages"
+                       x:Class="PCL.Shion.Pages.Tools.PageToolsRecentPlay"
+                       PanScroll="{Binding #PanBack}">
+    <c:MyScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="25,10">
+            <c:MyCard Margin="0,15" Title="{loc:L Widget.RecentPlay.Title}">
+                <StackPanel Margin="12,38,12,15">
+                    <TextBlock x:Name="LabEmpty"
+                               IsVisible="False"
+                               Margin="8,2,8,8"
+                               Opacity="0.6"
+                               Text="{loc:L Widget.RecentPlay.Empty}"
+                               TextWrapping="Wrap" />
+                    <StackPanel x:Name="PanList" />
+                    <c:MyButton x:Name="BtnClear"
+                                HorizontalAlignment="Left"
+                                Margin="8,15,0,0"
+                                MinWidth="120"
+                                Click="BtnClear_Click"
+                                Text="{loc:L Widget.RecentPlay.Clear}" />
+                </StackPanel>
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

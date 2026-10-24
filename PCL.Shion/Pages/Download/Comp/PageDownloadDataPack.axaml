@@ -1,0 +1,27 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:c="using:PCL.Shion.Controls"
+                   xmlns:loc="using:PCL.Shion.Localization"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   xmlns:comp="using:PCL.Shion.Pages.Download.Comp"
+                   x:Class="PCL.Shion.Pages.Download.Comp.PageDownloadDataPack">
+    <comp:PageComp x:Name="DataPackList" PageType="DataPack">
+        <c:MyComboBoxItem Tag="" Content="{loc:L Common.Option.All}" IsSelected="True" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.WorldGen}" Tag="/worldgen" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Technology}" Tag="6951/technology" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.GameMechanics}" Tag="/game-mechanics" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Transportation}" Tag="/transportation" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Storage}" Tag="/storage" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Magic}" Tag="6952/magic" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Adventure}" Tag="6948/adventure" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.DataPack.Fantasy}" Tag="6949/" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Decoration}" Tag="/decoration" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Mobs}" Tag="/mobs" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Utility}" Tag="6953/utility" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Equipment}" Tag="/equipment" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Optimization}" Tag="/optimization" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Server}" Tag="/social" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Library}" Tag="6950/library" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Mod.ModRelated}" Tag="6946/" />
+    </comp:PageComp>
+</pages:MyPageRight>

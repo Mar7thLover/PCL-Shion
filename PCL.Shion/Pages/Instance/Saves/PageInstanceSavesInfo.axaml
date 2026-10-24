@@ -1,0 +1,32 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:c="using:PCL.Shion.Controls"
+                   xmlns:loc="using:PCL.Shion.Localization"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   x:Class="PCL.Shion.Pages.Instance.Saves.PageInstanceSavesInfo">
+    <c:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="25,10,25,10" x:Name="PanMain">
+            <c:MyHint x:Name="Hintversion1_9" Theme="Yellow" IsVisible="False" Margin="0,5,0,0" />
+            <c:MyHint x:Name="Hintversion1_8" Theme="Yellow" IsVisible="False" Margin="0,5,0,0" />
+            <c:MyHint x:Name="Hintversion1_3" Theme="Yellow" IsVisible="False" Margin="0,5,0,0" />
+            <c:MyCard x:Name="PanContent" Margin="0,15,0,0" Title="{loc:L Instance.Saves.Info.Details.Title}">
+                <Grid x:Name="PanList" Margin="15,35,15,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </c:MyCard>
+            <c:MyCard x:Name="PanSettings" Margin="0,15,0,0" Title="{loc:L Instance.Saves.Info.Settings.Title}" IsVisible="False">
+                <Grid x:Name="PanSettingsList" Margin="15,35,15,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

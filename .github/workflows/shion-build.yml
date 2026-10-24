@@ -1,0 +1,40 @@
+name: Shion Build (CI)
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [dev]
+    paths:
+      - 'PCL.Shion*/**'
+      - '.github/workflows/shion-build.yml'
+  pull_request:
+    paths:
+      - 'PCL.Shion*/**'
+      - '.github/workflows/shion-build.yml'
+  workflow_dispatch:
+
+jobs:
+  build-test:
+    name: Build and Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+      fail-fast: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build
+        run: dotnet build PCL.Shion/PCL.Shion.csproj -c Release
+
+      - name: Test
+        run: dotnet test PCL.Shion.Core.Test/PCL.Shion.Core.Test.csproj -c Release

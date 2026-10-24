@@ -1,0 +1,19 @@
+<Grid x:Class="PCL.Shion.Controls.MinecraftServerQuery"
+      xmlns="https://github.com/avaloniaui"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:PCL.Shion.Controls"
+      xmlns:loc="using:PCL.Shion.Localization"
+      RowDefinitions="Auto,Auto"
+      ColumnDefinitions="*,Auto">
+    <local:MyTextBox x:Name="LabServerIp" HintText="{loc:L Tools.ServerQuery.Address.Hint}" Margin="0,0,15,0"
+                     Grid.Column="0" />
+    <local:MyButton x:Name="BtnServerQuery" Text="{loc:L Tools.ServerQuery.Action.Query}" Width="60" Grid.Column="1" />
+    <Border x:Name="ServerInfo" Margin="0,7,0,0" IsVisible="False" Grid.Row="1" Grid.ColumnSpan="2"
+            CornerRadius="5" BorderThickness="2" BorderBrush="{DynamicResource ColorBrush5}">
+        <Border.Background>
+            <ImageBrush Source="avares://PCL.Shion/Assets/Images/Backgrounds/server_bg.png"
+                        Stretch="Uniform" TileMode="Tile" DestinationRect="0,0,124,124" />
+        </Border.Background>
+        <local:MinecraftServer x:Name="PanMcServer" />
+    </Border>
+</Grid>

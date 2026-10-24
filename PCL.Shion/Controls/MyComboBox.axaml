@@ -1,0 +1,57 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="using:PCL.Shion.Controls"
+                    xmlns:conv="using:Avalonia.Data.Converters">
+    <ControlTheme x:Key="{x:Type local:MyComboBox}" TargetType="local:MyComboBox">
+        <Setter Property="Foreground" Value="{DynamicResource ColorBrushBg0}" />
+        <Setter Property="Background" Value="{DynamicResource ColorBrushHalfWhite}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="MaxDropDownHeight" Value="160" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid>
+                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="3"
+                            BorderThickness="1" BorderBrush="{TemplateBinding Foreground}" />
+                    <ToggleButton Margin="0,0,1.5,0" Foreground="{TemplateBinding Foreground}"
+                                  IsTabStop="False" Focusable="False"
+                                  IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                  ClickMode="Press" />
+                    <ContentPresenter x:Name="PART_Content" Margin="8.5,0,21.5,0" IsHitTestVisible="False"
+                                      VerticalAlignment="Center"
+                                      IsVisible="{Binding IsEditable, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static conv:BoolConverters.Not}}"
+                                      Content="{TemplateBinding SelectionBoxItem}"
+                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" />
+                    <local:MyTextBox x:Name="PART_EditableTextBox" BorderThickness="0"
+                                     Margin="1.5,0,21.5,0" Padding="0" Background="{x:Null}"
+                                     IsVisible="{Binding IsEditable, RelativeSource={RelativeSource TemplatedParent}}" />
+                    <Popup x:Name="PART_Popup" VerticalOffset="-1.5"
+                           IsLightDismissEnabled="True" Placement="Bottom"
+                           IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                        <Grid x:Name="PanPopup">
+                            <Border Background="{DynamicResource ColorBrushWhite}" CornerRadius="3" />
+                            <Border x:Name="dropDownBorder" CornerRadius="3"
+                                    BorderBrush="{TemplateBinding Foreground}" BorderThickness="1"
+                                    Width="{TemplateBinding Width}"
+                                    MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                <local:MyScrollViewer x:Name="DropDownScrollViewer"
+                                                      Theme="{DynamicResource ScrollViewerFullMargin}"
+                                                      VerticalScrollBarVisibility="Auto">
+                                    <ItemsPresenter x:Name="ItemsPresenter"
+                                                    ItemsPanel="{TemplateBinding ItemsPanel}"
+ />
+                                </local:MyScrollViewer>
+                            </Border>
+                        </Grid>
+                    </Popup>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:empty /template/ Border#dropDownBorder">
+            <Setter Property="Height" Value="26" />
+        </Style>
+        <Style Selector="^[IsEditable=True]">
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="ItemTemplate" Value="{DynamicResource ComboBoxItemTemplateWithDelete}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

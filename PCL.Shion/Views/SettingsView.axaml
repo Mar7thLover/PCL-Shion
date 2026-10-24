@@ -1,0 +1,246 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PCL.Shion.ViewModels"
+             x:Class="PCL.Shion.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SurfaceBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+        <Style Selector="Border.divider">
+            <Setter Property="Height" Value="1" />
+            <Setter Property="Background" Value="{DynamicResource SurfaceBorderBrush}" />
+        </Style>
+        <Style Selector="Border.badge">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="6,1" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="TextBlock.section">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+        </Style>
+        <Style Selector="TextBlock.title">
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="TextBlock.caption">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style Selector="TextBlock.error">
+            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+        </Style>
+        <!-- 复选框下方的说明，与复选框文字左对齐 -->
+        <Style Selector="TextBlock.hint">
+            <Setter Property="Margin" Value="28,0,0,0" />
+        </Style>
+
+        <Style Selector="Button.action">
+            <Setter Property="Padding" Value="14,6" />
+            <Setter Property="CornerRadius" Value="8" />
+        </Style>
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentHoverBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+        </Style>
+        <Style Selector="Button.primary:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentPressedBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24" MaxWidth="760" Spacing="24">
+
+            <!-- 游戏 -->
+            <StackPanel Spacing="8">
+                <TextBlock Classes="section" Text="{x:Static vm:SettingsStrings.GameTitle}" />
+                <Border Classes="card" Padding="20">
+                    <StackPanel Spacing="20">
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Classes="title" Text="{x:Static vm:SettingsStrings.FoldersTitle}" />
+                            <TextBlock Classes="caption" Text="{x:Static vm:SettingsStrings.FoldersHint}" />
+                            <Border Classes="card" Padding="4" ClipToBounds="True">
+                                <ListBox Background="Transparent" BorderThickness="0" MaxHeight="190"
+                                         ItemsSource="{Binding Folders}"
+                                         SelectedItem="{Binding SelectedFolder}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:SettingsFolderItem">
+                                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                                <TextBlock VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                                           Text="{Binding Path}"
+                                                           ToolTip.Tip="{Binding Path}" />
+                                                <Border Grid.Column="1" Classes="badge" IsVisible="{Binding IsCurrent}">
+                                                    <TextBlock FontSize="12"
+                                                               Foreground="{DynamicResource OnAccentBrush}"
+                                                               Text="{x:Static vm:SettingsStrings.CurrentFolder}" />
+                                                </Border>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Border>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Button Classes="action" Content="{x:Static vm:SettingsStrings.AddFolder}"
+                                        Click="OnAddFolderClick" />
+                                <Button Classes="action" Content="{x:Static vm:SettingsStrings.SetCurrentFolder}"
+                                        Command="{Binding SetCurrentFolderCommand}" />
+                                <Button Classes="action" Content="{x:Static vm:SettingsStrings.MoveFolderUp}"
+                                        Command="{Binding MoveFolderUpCommand}" />
+                                <Button Classes="action" Content="{x:Static vm:SettingsStrings.RemoveFolder}"
+                                        Command="{Binding RemoveFolderCommand}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <Border Classes="divider" />
+
+                        <StackPanel Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBlock Classes="title" Text="{x:Static vm:SettingsStrings.MemoryTitle}" />
+                                <TextBlock Grid.Column="1" Classes="title"
+                                           Foreground="{DynamicResource AccentBrush}"
+                                           Text="{Binding MemoryText}" />
+                            </Grid>
+                            <!-- Value 必须排在 Minimum 和 Maximum 之后，否则初始值会先被默认范围截断 -->
+                            <Slider IsSnapToTickEnabled="True"
+                                    Minimum="{x:Static vm:SettingsViewModel.MemoryMinimumMb}"
+                                    Maximum="{Binding MemoryMaximumMb}"
+                                    TickFrequency="{x:Static vm:SettingsViewModel.MemoryStepMb}"
+                                    SmallChange="{x:Static vm:SettingsViewModel.MemoryStepMb}"
+                                    LargeChange="{x:Static vm:SettingsViewModel.MemoryStepMb}"
+                                    Value="{Binding MemoryMb}" />
+                            <TextBlock Classes="caption" Text="{x:Static vm:SettingsStrings.MemoryHint}" />
+                        </StackPanel>
+
+                        <Border Classes="divider" />
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Classes="title" Text="{x:Static vm:SettingsStrings.JavaTitle}" />
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                <ComboBox HorizontalAlignment="Stretch"
+                                          ItemsSource="{Binding JavaOptions}"
+                                          SelectedItem="{Binding SelectedJava}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:SettingsJavaOption">
+                                            <TextBlock TextTrimming="CharacterEllipsis"
+                                                       Text="{Binding Label}"
+                                                       ToolTip.Tip="{Binding Label}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Button Grid.Column="1" Classes="action"
+                                        Content="{x:Static vm:SettingsStrings.JavaRescan}"
+                                        Command="{Binding ScanJavaCommand}" />
+                            </Grid>
+                            <ProgressBar Height="4" IsIndeterminate="True" IsVisible="{Binding IsScanningJava}" />
+                            <TextBlock Classes="caption" Text="{x:Static vm:SettingsStrings.JavaHint}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- 下载 -->
+            <StackPanel Spacing="8">
+                <TextBlock Classes="section" Text="{x:Static vm:SettingsStrings.DownloadTitle}" />
+                <Border Classes="card" Padding="20">
+                    <StackPanel Spacing="20">
+
+                        <StackPanel Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                                <TextBlock Classes="title" VerticalAlignment="Center"
+                                           Text="{x:Static vm:SettingsStrings.SourceTitle}" />
+                                <ComboBox Grid.Column="1" Width="200"
+                                          ItemsSource="{Binding SourceOptions}"
+                                          SelectedItem="{Binding SelectedSource}" />
+                            </Grid>
+                            <TextBlock Classes="caption" Text="{x:Static vm:SettingsStrings.SourceHint}" />
+                        </StackPanel>
+
+                        <Border Classes="divider" />
+
+                        <StackPanel Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBlock Classes="title" Text="{x:Static vm:SettingsStrings.ConcurrencyTitle}" />
+                                <TextBlock Grid.Column="1" Classes="title"
+                                           Foreground="{DynamicResource AccentBrush}"
+                                           Text="{Binding ConcurrencyText}" />
+                            </Grid>
+                            <Slider IsSnapToTickEnabled="True" TickFrequency="1" SmallChange="1" LargeChange="4"
+                                    Minimum="{x:Static vm:SettingsViewModel.ConcurrencyMinimum}"
+                                    Maximum="{x:Static vm:SettingsViewModel.ConcurrencyMaximum}"
+                                    Value="{Binding Concurrency}" />
+                            <TextBlock Classes="caption" Text="{x:Static vm:SettingsStrings.ConcurrencyHint}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- 通知 -->
+            <StackPanel Spacing="8">
+                <TextBlock Classes="section" Text="{x:Static vm:SettingsStrings.NotificationsTitle}" />
+                <Border Classes="card" Padding="20">
+                    <StackPanel Spacing="16">
+                        <StackPanel Spacing="2">
+                            <CheckBox Content="{x:Static vm:SettingsStrings.NotificationsEnabled}"
+                                      IsChecked="{Binding NotificationsEnabled}" />
+                            <TextBlock Classes="caption hint" Text="{x:Static vm:SettingsStrings.NotificationsHint}" />
+                        </StackPanel>
+                        <StackPanel Spacing="2" IsVisible="{x:Static vm:SettingsViewModel.IsSoundSupported}">
+                            <CheckBox Content="{x:Static vm:SettingsStrings.CompletionSound}"
+                                      IsChecked="{Binding CompletionSound}" />
+                            <TextBlock Classes="caption hint" Text="{x:Static vm:SettingsStrings.CompletionSoundHint}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- 更新 -->
+            <StackPanel Spacing="8">
+                <TextBlock Classes="section" Text="{x:Static vm:SettingsStrings.UpdatesTitle}" />
+                <Border Classes="card" Padding="20">
+                    <StackPanel Spacing="16">
+                        <CheckBox Content="{x:Static vm:SettingsStrings.CheckUpdates}"
+                                  IsChecked="{Binding CheckUpdates}" />
+                        <CheckBox Content="{x:Static vm:SettingsStrings.IncludePrerelease}"
+                                  IsChecked="{Binding IncludePrereleaseUpdates}" />
+
+                        <Border Classes="divider" />
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
+                            <StackPanel VerticalAlignment="Center" Spacing="2">
+                                <TextBlock Classes="title" Text="{Binding VersionText}" />
+                                <TextBlock Classes="caption"
+                                           Text="{Binding UpdateText}"
+                                           Classes.error="{Binding UpdateFailed}" />
+                                <TextBlock Classes="caption error"
+                                           Text="{Binding OpenError}"
+                                           IsVisible="{Binding HasOpenError}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8">
+                                <Button Classes="action" Content="{x:Static vm:SettingsStrings.CheckNow}"
+                                        Command="{Binding CheckUpdateCommand}" />
+                                <Button Classes="action primary" Content="{x:Static vm:SettingsStrings.OpenRelease}"
+                                        Command="{Binding OpenReleaseCommand}"
+                                        IsVisible="{Binding HasUpdate}" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

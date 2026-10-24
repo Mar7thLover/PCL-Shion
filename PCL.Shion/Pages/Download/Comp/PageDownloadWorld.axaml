@@ -1,0 +1,19 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:c="using:PCL.Shion.Controls"
+                   xmlns:loc="using:PCL.Shion.Localization"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   xmlns:comp="using:PCL.Shion.Pages.Download.Comp"
+                   x:Class="PCL.Shion.Pages.Download.Comp.PageDownloadWorld">
+    <comp:PageComp x:Name="WorldList" PageType="World" SupportModrinth="False">
+        <c:MyComboBoxItem Tag="" Content="{loc:L Common.Option.All}" IsSelected="True" />
+
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.World.Adventure}" Tag="248/" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.World.Creative}" Tag="249/" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Modpack.MiniGame}" Tag="250/" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.World.Parkour}" Tag="251/" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.World.Puzzle}" Tag="252/" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.World.Survival}" Tag="253/" />
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.World.ModWorld}" Tag="4464/" />
+    </comp:PageComp>
+</pages:MyPageRight>

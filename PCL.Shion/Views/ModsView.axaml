@@ -1,0 +1,196 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sys="using:System"
+             xmlns:vm="using:PCL.Shion.ViewModels"
+             x:Class="PCL.Shion.Views.ModsView"
+             x:DataType="vm:ModsViewModel">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="ModsWarningBackgroundBrush" Color="#FFF6E0" />
+                    <SolidColorBrush x:Key="ModsWarningBorderBrush" Color="#F2C26B" />
+                    <SolidColorBrush x:Key="ModsOnDangerBrush" Color="#FFFFFF" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="ModsWarningBackgroundBrush" Color="#2B2411" />
+                    <SolidColorBrush x:Key="ModsWarningBorderBrush" Color="#6B5314" />
+                    <SolidColorBrush x:Key="ModsOnDangerBrush" Color="#1A1E25" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SurfaceBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+        <Style Selector="Border.warning">
+            <Setter Property="Background" Value="{DynamicResource ModsWarningBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ModsWarningBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+
+        <Style Selector="TextBlock.caption">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+        </Style>
+        <Style Selector="TextBlock.error">
+            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+        </Style>
+
+        <!-- 已禁用的 Mod 淡化文字，开关仍保持清晰 -->
+        <Style Selector="StackPanel.off">
+            <Setter Property="Opacity" Value="0.55" />
+        </Style>
+
+        <Style Selector="Button.toolbar">
+            <Setter Property="Height" Value="38" />
+            <Setter Property="Padding" Value="14,0" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="Button.row">
+            <Setter Property="Padding" Value="12,6" />
+            <Setter Property="CornerRadius" Value="8" />
+        </Style>
+
+        <!-- 删除入口：红色文字按钮 -->
+        <Style Selector="Button.remove">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+        </Style>
+        <Style Selector="Button.remove:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+        </Style>
+        <Style Selector="Button.remove:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+        </Style>
+
+        <!-- 确认删除：实心红色按钮 -->
+        <Style Selector="Button.danger">
+            <Setter Property="Background" Value="{DynamicResource DangerBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ModsOnDangerBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="Button.danger:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource DangerBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ModsOnDangerBrush}" />
+            <Setter Property="Opacity" Value="0.85" />
+        </Style>
+        <Style Selector="Button.danger:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource DangerBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource ModsOnDangerBrush}" />
+            <Setter Property="Opacity" Value="0.7" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*">
+
+        <!-- 工具栏：搜索、刷新、打开 Mod 文件夹 -->
+        <DockPanel Grid.Row="0">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
+                <Button Classes="toolbar" Content="{x:Static vm:ModsStrings.Refresh}"
+                        Command="{Binding RefreshCommand}" />
+                <Button Classes="toolbar" Content="{x:Static vm:ModsStrings.OpenFolder}"
+                        Command="{Binding OpenFolderCommand}" />
+            </StackPanel>
+            <TextBox Width="300" Height="38" HorizontalAlignment="Left"
+                     CornerRadius="8" VerticalContentAlignment="Center"
+                     PlaceholderText="{x:Static vm:ModsStrings.SearchPlaceholder}"
+                     Text="{Binding SearchText}" />
+        </DockPanel>
+
+        <TextBlock Grid.Row="1" Classes="caption" Margin="2,10,0,0"
+                   Text="{Binding SummaryText}" />
+
+        <TextBlock Grid.Row="2" Classes="error" Margin="2,10,0,0" TextWrapping="Wrap"
+                   Text="{Binding ErrorText}"
+                   IsVisible="{Binding HasError}" />
+
+        <!-- 重复的 Mod 与缺少的前置 -->
+        <Border Grid.Row="3" Classes="warning" Margin="0,12,0,0" Padding="14,10"
+                IsVisible="{Binding HasIssues}">
+            <StackPanel Spacing="6">
+                <TextBlock FontWeight="SemiBold" Text="{Binding IssuesTitle}" />
+                <ScrollViewer MaxHeight="120" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Issues}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="4" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="sys:String">
+                                <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </StackPanel>
+        </Border>
+
+        <!-- Mod 列表 -->
+        <Border Grid.Row="4" Classes="card" Margin="0,12,0,0" MinHeight="160" ClipToBounds="True">
+            <Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding VisibleMods}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="vm:ModItem">
+                                <Border Padding="14,10"
+                                        BorderBrush="{DynamicResource SurfaceBorderBrush}"
+                                        BorderThickness="0,0,0,1">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14"
+                                          IsEnabled="{Binding !IsBusy}">
+                                        <ToggleSwitch Grid.Column="0" VerticalAlignment="Center"
+                                                      OnContent="{x:Null}" OffContent="{x:Null}"
+                                                      IsChecked="{Binding Enabled, Mode=TwoWay}" />
+
+                                        <StackPanel Grid.Column="1" Spacing="2" VerticalAlignment="Center"
+                                                    Classes.off="{Binding !Enabled}">
+                                            <TextBlock FontWeight="SemiBold" TextTrimming="CharacterEllipsis"
+                                                       Text="{Binding DisplayName}" />
+                                            <TextBlock Classes="caption" TextTrimming="CharacterEllipsis"
+                                                       Text="{Binding Description}"
+                                                       ToolTip.Tip="{Binding Description}" />
+                                        </StackPanel>
+
+                                        <Panel Grid.Column="2" VerticalAlignment="Center">
+                                            <Button Classes="row remove"
+                                                    Content="{x:Static vm:ModsStrings.Delete}"
+                                                    Command="{Binding RequestDeleteCommand}"
+                                                    IsVisible="{Binding !IsDeletePending}" />
+                                            <StackPanel Orientation="Horizontal" Spacing="8"
+                                                        IsVisible="{Binding IsDeletePending}">
+                                                <TextBlock Classes="caption" VerticalAlignment="Center"
+                                                           Text="{x:Static vm:ModsStrings.DeleteQuestion}" />
+                                                <Button Classes="row danger"
+                                                        Content="{x:Static vm:ModsStrings.DeleteConfirm}"
+                                                        Command="{Binding ConfirmDeleteCommand}" />
+                                                <Button Classes="row"
+                                                        Content="{x:Static vm:ModsStrings.Cancel}"
+                                                        Command="{Binding CancelDeleteCommand}" />
+                                            </StackPanel>
+                                        </Panel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <TextBlock Classes="caption" Margin="16" TextWrapping="Wrap" TextAlignment="Center"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           IsHitTestVisible="False"
+                           Text="{Binding ListHint}"
+                           IsVisible="{Binding HasListHint}" />
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

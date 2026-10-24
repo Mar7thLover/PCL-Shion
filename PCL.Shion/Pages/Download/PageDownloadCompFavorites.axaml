@@ -1,0 +1,20 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:c="using:PCL.Shion.Controls"
+                   xmlns:loc="using:PCL.Shion.Localization"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   x:Class="PCL.Shion.Pages.Download.PageDownloadCompFavorites">
+    <c:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="25">
+            <StackPanel x:Name="PanContent">
+                <StackPanel x:Name="PanFolders" />
+            </StackPanel>
+            <c:MyCard x:Name="PanLoad" HorizontalAlignment="Center" VerticalAlignment="Center"
+                      UseAnimation="False" Margin="40,50">
+                <c:MyLoading x:Name="Load" Margin="20,20,20,17" HorizontalAlignment="Center"
+                             VerticalAlignment="Center" Text="{loc:L Download.Version.LoadingList}" />
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

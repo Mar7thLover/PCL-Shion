@@ -1,0 +1,433 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PCL.Shion.ViewModels"
+             xmlns:views="using:PCL.Shion.Views"
+             x:Class="PCL.Shion.Views.InstanceView"
+             x:DataType="vm:InstanceViewModel">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="InstanceOnDangerBrush" Color="#FFFFFF" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="InstanceOnDangerBrush" Color="#1A1E25" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SurfaceBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+
+        <Style Selector="TextBlock.section">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+        </Style>
+        <Style Selector="TextBlock.field">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="Medium" />
+        </Style>
+        <Style Selector="TextBlock.caption">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+        </Style>
+        <Style Selector="TextBlock.error">
+            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+        </Style>
+
+        <Style Selector="TextBox.input">
+            <Setter Property="Height" Value="38" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style Selector="TextBox.invalid">
+            <Setter Property="BorderBrush" Value="{DynamicResource DangerBrush}" />
+        </Style>
+        <Style Selector="TextBox.invalid:focus /template/ Border#PART_BorderElement">
+            <Setter Property="BorderBrush" Value="{DynamicResource DangerBrush}" />
+        </Style>
+        <Style Selector="ComboBox.input">
+            <Setter Property="Height" Value="38" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="Button.action">
+            <Setter Property="Height" Value="38" />
+            <Setter Property="Padding" Value="16,0" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentHoverBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+        </Style>
+        <Style Selector="Button.primary:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource AccentPressedBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource OnAccentBrush}" />
+        </Style>
+
+        <!-- 删除入口：红色文字按钮 -->
+        <Style Selector="Button.remove">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+        </Style>
+        <Style Selector="Button.remove:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+        </Style>
+        <Style Selector="Button.remove:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+        </Style>
+
+        <!-- 确认删除：实心红色按钮 -->
+        <Style Selector="Button.danger">
+            <Setter Property="Background" Value="{DynamicResource DangerBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource InstanceOnDangerBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="Button.danger:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource DangerBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource InstanceOnDangerBrush}" />
+            <Setter Property="Opacity" Value="0.85" />
+        </Style>
+        <Style Selector="Button.danger:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource DangerBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource InstanceOnDangerBrush}" />
+            <Setter Property="Opacity" Value="0.7" />
+        </Style>
+
+        <!-- 分区页签：文字加底部指示线，选中时用强调色 -->
+        <Style Selector="Button.sectionTab">
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Template">
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Indicator" Padding="14,0"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            BorderThickness="0,0,0,2">
+                        <ContentPresenter VerticalAlignment="Center" Content="{TemplateBinding Content}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+        <Style Selector="Button.sectionTab:pointerover:not(.selected)">
+            <Setter Property="Foreground" Value="{DynamicResource AccentHoverBrush}" />
+        </Style>
+        <Style Selector="Button.sectionTab.selected">
+            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" />
+        </Style>
+        <Style Selector="Button.sectionTab.selected /template/ Border#Indicator">
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- 顶部：返回、实例名与分区页签 -->
+        <Border Grid.Row="0"
+                Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource SurfaceBorderBrush}"
+                BorderThickness="0,0,0,1">
+            <StackPanel>
+                <Grid Margin="20,12,20,4" ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                    <Button Classes="action" Content="{x:Static vm:InstanceStrings.Back}"
+                            Command="{Binding BackCommand}" />
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center"
+                               FontSize="20" FontWeight="Bold" TextTrimming="CharacterEllipsis"
+                               Text="{Binding Name}" />
+                </Grid>
+                <StackPanel Margin="12,0" Orientation="Horizontal" Spacing="4"
+                            IsEnabled="{Binding IsLoaded}">
+                    <Button Classes="sectionTab" Classes.selected="{Binding IsOverviewSection}"
+                            Content="{x:Static vm:InstanceStrings.SectionOverview}"
+                            Command="{Binding ShowSectionCommand}"
+                            CommandParameter="{x:Static vm:InstanceSection.Overview}" />
+                    <Button Classes="sectionTab" Classes.selected="{Binding IsSettingsSection}"
+                            Content="{x:Static vm:InstanceStrings.SectionSettings}"
+                            Command="{Binding ShowSectionCommand}"
+                            CommandParameter="{x:Static vm:InstanceSection.Settings}" />
+                    <Button Classes="sectionTab" Classes.selected="{Binding IsModsSection}"
+                            Content="{x:Static vm:InstanceStrings.SectionMods}"
+                            Command="{Binding ShowSectionCommand}"
+                            CommandParameter="{x:Static vm:InstanceSection.Mods}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Row="1">
+
+            <TextBlock Classes="caption" Margin="20" TextWrapping="Wrap" TextAlignment="Center"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Text="{Binding LoadHint}"
+                       Classes.error="{Binding LoadFailed}"
+                       IsVisible="{Binding HasLoadHint}" />
+
+            <!-- 三个分区常驻，切换页签只改显隐，设置里未保存的输入和 Mod 列表不会丢 -->
+            <Grid IsVisible="{Binding IsLoaded}">
+
+                <!-- 概览：基本信息、重命名、删除 -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" IsVisible="{Binding IsOverviewSection}">
+                    <StackPanel Margin="20" MaxWidth="820" Spacing="20">
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="section" Text="{x:Static vm:InstanceStrings.InfoTitle}" />
+                            <Border Classes="card" Padding="16,12">
+                                <StackPanel Spacing="10">
+                                    <TextBlock Classes="error" TextWrapping="Wrap"
+                                               Text="{Binding InstanceError}"
+                                               IsVisible="{Binding HasInstanceError}" />
+                                    <ItemsControl ItemsSource="{Binding Facts}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="vm:InstanceFact">
+                                                <Grid Margin="0,4" ColumnDefinitions="130,*">
+                                                    <TextBlock Classes="caption" Margin="0,2,0,0" VerticalAlignment="Top"
+                                                               Text="{Binding Label}" />
+                                                    <SelectableTextBlock Grid.Column="1" TextWrapping="Wrap"
+                                                                         Text="{Binding Value}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Button Classes="action" Content="{x:Static vm:InstanceStrings.OpenInstanceFolder}"
+                                                Command="{Binding OpenInstanceFolderCommand}" />
+                                        <Button Classes="action" Content="{x:Static vm:InstanceStrings.OpenGameFolder}"
+                                                Command="{Binding OpenGameFolderCommand}"
+                                                IsVisible="{Binding ShowOpenGameFolder}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="section" Text="{x:Static vm:InstanceStrings.RenameTitle}" />
+                            <Border Classes="card" Padding="16,14">
+                                <StackPanel Spacing="8">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                        <TextBox Classes="input" Text="{Binding NewName}"
+                                                 Classes.invalid="{Binding HasRenameError}" />
+                                        <Button Grid.Column="1" Classes="action"
+                                                Content="{x:Static vm:InstanceStrings.RenameButton}"
+                                                Command="{Binding RenameCommand}" />
+                                    </Grid>
+                                    <TextBlock Classes="caption error" TextWrapping="Wrap"
+                                               Text="{Binding RenameError}"
+                                               IsVisible="{Binding HasRenameError}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="section" Text="{x:Static vm:InstanceStrings.DeleteTitle}" />
+                            <Border Classes="card" Padding="16,14">
+                                <StackPanel Spacing="10">
+                                    <TextBlock Classes="caption" TextWrapping="Wrap"
+                                               Text="{x:Static vm:InstanceStrings.DeleteDescription}" />
+                                    <Button Classes="action remove" HorizontalAlignment="Left"
+                                            Content="{x:Static vm:InstanceStrings.DeleteButton}"
+                                            Command="{Binding RequestDeleteCommand}"
+                                            IsVisible="{Binding !IsConfirmingDelete}" />
+                                    <StackPanel Spacing="10" IsVisible="{Binding IsConfirmingDelete}">
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding DeleteConfirmText}" />
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <Button Classes="action danger"
+                                                    Content="{x:Static vm:InstanceStrings.DeleteConfirmButton}"
+                                                    Command="{Binding ConfirmDeleteCommand}" />
+                                            <Button Classes="action"
+                                                    Content="{x:Static vm:InstanceStrings.DeleteCancel}"
+                                                    Command="{Binding CancelDeleteCommand}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <TextBlock TextWrapping="Wrap"
+                                   Text="{Binding ManageMessage}"
+                                   Classes.error="{Binding ManageMessageIsError}"
+                                   IsVisible="{Binding HasManageMessage}" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- 设置：表单在上，保存栏固定在底部 -->
+                <Grid RowDefinitions="*,Auto" IsVisible="{Binding IsSettingsSection}">
+                    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="20" MaxWidth="820" Spacing="20">
+
+                            <StackPanel Spacing="6">
+                                <TextBlock Classes="section" Text="{x:Static vm:InstanceStrings.GroupRuntime}" />
+                                <Border Classes="card" Padding="16,14">
+                                    <StackPanel Spacing="14">
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="field" Text="{x:Static vm:InstanceStrings.JavaLabel}" />
+                                            <ComboBox Classes="input"
+                                                      ItemsSource="{Binding JavaOptions}"
+                                                      SelectedItem="{Binding SelectedJava}" />
+                                        </StackPanel>
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="field" Text="{x:Static vm:InstanceStrings.MemoryLabel}" />
+                                            <TextBox Classes="input"
+                                                     PlaceholderText="{Binding MemoryPlaceholder}"
+                                                     Text="{Binding MemoryText}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+
+                            <StackPanel Spacing="6">
+                                <TextBlock Classes="section" Text="{x:Static vm:InstanceStrings.GroupGame}" />
+                                <Border Classes="card" Padding="16,14">
+                                    <StackPanel Spacing="14">
+                                        <StackPanel Spacing="4">
+                                            <CheckBox Content="{x:Static vm:InstanceStrings.IsolatedLabel}"
+                                                      IsChecked="{Binding IsIsolated}" />
+                                            <TextBlock Classes="caption" Margin="28,0,0,0" TextWrapping="Wrap"
+                                                       Text="{x:Static vm:InstanceStrings.IsolatedHint}" />
+                                        </StackPanel>
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="field" Text="{x:Static vm:InstanceStrings.WindowSizeLabel}" />
+                                            <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="10">
+                                                <TextBox Classes="input"
+                                                         PlaceholderText="{x:Static vm:InstanceStrings.WidthPlaceholder}"
+                                                         Text="{Binding WidthText}" />
+                                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="×" />
+                                                <TextBox Grid.Column="2" Classes="input"
+                                                         PlaceholderText="{x:Static vm:InstanceStrings.HeightPlaceholder}"
+                                                         Text="{Binding HeightText}" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="field" Text="{x:Static vm:InstanceStrings.ExtraJvmLabel}" />
+                                            <TextBox Classes="input" Text="{Binding ExtraJvmArguments}" />
+                                        </StackPanel>
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="field" Text="{x:Static vm:InstanceStrings.ExtraGameLabel}" />
+                                            <TextBox Classes="input" Text="{Binding ExtraGameArguments}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+
+                            <StackPanel Spacing="6">
+                                <TextBlock Classes="section" Text="{x:Static vm:InstanceStrings.GroupQuickPlay}" />
+                                <Border Classes="card" Padding="16,14">
+                                    <StackPanel Spacing="14">
+                                        <TextBlock Classes="caption" TextWrapping="Wrap"
+                                                   Text="{x:Static vm:InstanceStrings.QuickPlayHint}" />
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="field" Text="{x:Static vm:InstanceStrings.QuickPlayModeLabel}" />
+                                            <ComboBox Classes="input"
+                                                      ItemsSource="{Binding QuickPlayModes}"
+                                                      SelectedItem="{Binding SelectedQuickPlayMode}" />
+                                        </StackPanel>
+
+                                        <StackPanel Spacing="6" IsVisible="{Binding IsSingleplayerQuickPlay}">
+                                            <TextBlock Classes="field" Text="{x:Static vm:InstanceStrings.WorldLabel}" />
+                                            <ComboBox Classes="input"
+                                                      PlaceholderText="{x:Static vm:InstanceStrings.WorldPlaceholder}"
+                                                      ItemsSource="{Binding Worlds}"
+                                                      SelectedItem="{Binding SelectedWorld}"
+                                                      IsVisible="{Binding HasWorlds}" />
+                                            <TextBlock Classes="caption" TextWrapping="Wrap"
+                                                       Text="{x:Static vm:InstanceStrings.WorldsEmpty}"
+                                                       IsVisible="{Binding !HasWorlds}" />
+                                        </StackPanel>
+
+                                        <StackPanel Spacing="6" IsVisible="{Binding IsMultiplayerQuickPlay}">
+                                            <TextBlock Classes="field" Text="{x:Static vm:InstanceStrings.ServerLabel}" />
+                                            <TextBox Classes="input"
+                                                     PlaceholderText="{x:Static vm:InstanceStrings.ServerAddressPlaceholder}"
+                                                     Text="{Binding ServerAddress}" />
+                                            <ComboBox Classes="input"
+                                                      PlaceholderText="{x:Static vm:InstanceStrings.ServerListPlaceholder}"
+                                                      ItemsSource="{Binding Servers}"
+                                                      SelectedItem="{Binding SelectedServer}"
+                                                      IsVisible="{Binding HasServers}" />
+                                            <TextBlock Classes="caption" TextWrapping="Wrap"
+                                                       Text="{x:Static vm:InstanceStrings.ServersEmpty}"
+                                                       IsVisible="{Binding !HasServers}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+
+                            <StackPanel Spacing="6">
+                                <TextBlock Classes="section" Text="{x:Static vm:InstanceStrings.GroupAdvanced}" />
+                                <Border Classes="card" Padding="16,14">
+                                    <StackPanel Spacing="14">
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="field" Text="{x:Static vm:InstanceStrings.WrapperLabel}" />
+                                            <TextBox Classes="input" Text="{Binding WrapperText}" />
+                                            <TextBlock Classes="caption" TextWrapping="Wrap"
+                                                       Text="{x:Static vm:InstanceStrings.WrapperHint}" />
+                                        </StackPanel>
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="field" Text="{x:Static vm:InstanceStrings.PreLaunchLabel}" />
+                                            <TextBox Classes="input" Text="{Binding PreLaunchText}" />
+                                            <TextBlock Classes="caption" TextWrapping="Wrap"
+                                                       Text="{x:Static vm:InstanceStrings.PreLaunchHint}" />
+                                        </StackPanel>
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="field" Text="{x:Static vm:InstanceStrings.PostExitLabel}" />
+                                            <TextBox Classes="input" Text="{Binding PostExitText}" />
+                                            <TextBlock Classes="caption" TextWrapping="Wrap"
+                                                       Text="{x:Static vm:InstanceStrings.PostExitHint}" />
+                                        </StackPanel>
+                                        <StackPanel Spacing="6">
+                                            <TextBlock Classes="field" Text="{x:Static vm:InstanceStrings.EnvironmentLabel}" />
+                                            <TextBox MinHeight="96" CornerRadius="8"
+                                                     AcceptsReturn="True" TextWrapping="NoWrap"
+                                                     FontFamily="{DynamicResource MonoFont}"
+                                                     Text="{Binding EnvironmentText}" />
+                                            <TextBlock Classes="caption" TextWrapping="Wrap"
+                                                       Text="{x:Static vm:InstanceStrings.EnvironmentHint}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <Border Grid.Row="1" Padding="20,12"
+                            Background="{DynamicResource SurfaceBrush}"
+                            BorderBrush="{DynamicResource SurfaceBorderBrush}"
+                            BorderThickness="0,1,0,0">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                            <Button Classes="action primary" Content="{x:Static vm:InstanceStrings.Save}"
+                                    Command="{Binding SaveCommand}" />
+                            <TextBlock Grid.Column="1" Classes="caption" VerticalAlignment="Center"
+                                       TextWrapping="Wrap"
+                                       Text="{Binding SettingsMessage}"
+                                       Classes.error="{Binding SettingsMessageIsError}"
+                                       IsVisible="{Binding HasSettingsMessage}" />
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- Mod：占满分区，列表自己滚动 -->
+                <Panel Margin="20" IsVisible="{Binding IsModsSection}">
+                    <views:ModsView DataContext="{Binding Mods}" />
+                </Panel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,70 @@
+<pages:MyPageLeft xmlns="https://github.com/avaloniaui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:loc="using:PCL.Shion.Localization"
+                  xmlns:pages="using:PCL.Shion.Pages"
+                  x:Class="PCL.Shion.Pages.Speed.PageSpeedLeft"
+                  Width="200"
+                  HorizontalAlignment="Left"
+                  RowDefinitions="1*,Auto,Auto,Auto,0.6*,Auto,Auto,Auto,0.6*,Auto,Auto,Auto,0.6*,Auto,Auto,Auto,1*">
+    <pages:MyPageLeft.Styles>
+        <Style Selector="TextBlock.split">
+            <Setter Property="UseLayoutRounding" Value="True" />
+            <Setter Property="Height" Value="2" />
+            <Setter Property="Margin" Value="25,7" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                        <GradientStop Color="{DynamicResource ColorObjectBg1}" Offset="0" />
+                        <GradientStop Color="{DynamicResource ColorObject3}" Offset="0.02" />
+                        <GradientStop Color="{DynamicResource ColorObject3}" Offset="0.98" />
+                        <GradientStop Color="{DynamicResource ColorObjectBg1}" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </pages:MyPageLeft.Styles>
+    <TextBlock Grid.Row="1"
+               Text="{loc:L Speed.Progress.Total}"
+               HorizontalAlignment="Center"
+               FontSize="14"
+               Foreground="{DynamicResource ColorBrush3}" />
+    <TextBlock Grid.Row="2" Classes="split" />
+    <TextBlock x:Name="LabProgress"
+               Grid.Row="3"
+               Text="00.00 %"
+               HorizontalAlignment="Center"
+               FontSize="20" />
+    <TextBlock Grid.Row="5"
+               Text="{loc:L Speed.Progress.Speed}"
+               HorizontalAlignment="Center"
+               FontSize="14"
+               Foreground="{DynamicResource ColorBrush3}" />
+    <TextBlock Grid.Row="6" Classes="split" />
+    <TextBlock x:Name="LabSpeed"
+               Grid.Row="7"
+               Text="0 B/s"
+               HorizontalAlignment="Center"
+               FontSize="20" />
+    <TextBlock Grid.Row="9"
+               Text="{loc:L Speed.Progress.RemainingFiles}"
+               HorizontalAlignment="Center"
+               FontSize="14"
+               Foreground="{DynamicResource ColorBrush3}" />
+    <TextBlock Grid.Row="10" Classes="split" />
+    <TextBlock x:Name="LabFile"
+               Grid.Row="11"
+               Text="123456789"
+               HorizontalAlignment="Center"
+               FontSize="20" />
+    <TextBlock Grid.Row="13"
+               Text="{loc:L Speed.Progress.RemainingThreads}"
+               HorizontalAlignment="Center"
+               FontSize="14"
+               Foreground="{DynamicResource ColorBrush3}" />
+    <TextBlock Grid.Row="14" Classes="split" />
+    <TextBlock x:Name="LabThread"
+               Grid.Row="15"
+               Text="123456789"
+               HorizontalAlignment="Center"
+               FontSize="20" />
+</pages:MyPageLeft>

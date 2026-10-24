@@ -1,0 +1,12 @@
+<ContentControl x:Class="PCL.Shion.Controls.FontSelector"
+                xmlns="https://github.com/avaloniaui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:local="using:PCL.Shion.Controls">
+    <local:MyComboBox x:Name="ComboFont" MaxDropDownHeight="300" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <local:MyComboBox.ItemTemplate>
+            <DataTemplate x:CompileBindings="False">
+                <TextBlock Text="{Binding Name}" TextAlignment="Center" FontFamily="{Binding Font}" />
+            </DataTemplate>
+        </local:MyComboBox.ItemTemplate>
+    </local:MyComboBox>
+</ContentControl>

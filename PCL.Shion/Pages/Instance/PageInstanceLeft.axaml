@@ -1,0 +1,158 @@
+<pages:MyPageLeft xmlns="https://github.com/avaloniaui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:c="using:PCL.Shion.Controls"
+                  xmlns:loc="using:PCL.Shion.Localization"
+                  xmlns:pages="using:PCL.Shion.Pages"
+                  x:Class="PCL.Shion.Pages.Instance.PageInstanceLeft">
+    <c:MyScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+                      Theme="{StaticResource ScrollViewerFullMargin}">
+        <StackPanel Margin="0,12,0,0" x:Name="PanItem">
+            <TextBlock Text="{loc:L Instance.Left.Game}" Margin="13,6,5,4" Opacity="0.6" FontSize="12" />
+            <c:MyListItem x:Name="ItemOverall" IsScaleAnimationEnabled="False" Checked="True" Type="RadioBox"
+                          Check="PageCheck"
+                          Tag="0" MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                          Title="{loc:L Instance.Left.Overview}"
+                          SvgIcon="lucide/layout-dashboard" />
+            <c:MyListItem x:Name="ItemSetup" IsScaleAnimationEnabled="False" Tag="1" MinPaddingRight="35"
+                          Check="PageCheck"
+                          Height="36" VerticalAlignment="Top" Title="{loc:L Instance.Left.Settings}"
+                          Type="RadioBox"
+                          SvgIcon="lucide/settings">
+                <c:MyListItem.ButtonList>
+                        <c:MyIconButton Tag="1" ToolTip.Tip="{loc:L Common.Action.Initialize}"
+                                        ToolTip.Placement="Right"
+                                        ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                        Click="Reset"
+                                        SvgIcon="lucide/rotate-ccw"
+                                        LogoScale="0.9" />
+                    </c:MyListItem.ButtonList>
+            </c:MyListItem>
+            <c:MyListItem x:Name="ItemInstall" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="10"
+                          Check="PageCheck"
+                          MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                          Title="{loc:L Instance.Left.Install}"
+                          LogoScale="0.87"
+                          SvgIcon="lucide/wrench">
+                <c:MyListItem.ButtonList>
+                        <c:MyIconButton Tag="10" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                        ToolTip.Placement="Right"
+                                        ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                        LogoScale="0.85" Click="RefreshButton_Click"
+                                        SvgIcon="lucide/refresh-cw" />
+                    </c:MyListItem.ButtonList>
+            </c:MyListItem>
+            <c:MyListItem x:Name="ItemExport" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="2"
+                          Check="PageCheck"
+                          MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                          Title="{loc:L Instance.Left.Export}"
+                          SvgIcon="lucide/package">
+                <c:MyListItem.ButtonList>
+                        <c:MyIconButton Tag="2" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                        ToolTip.Placement="Right"
+                                        ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                        Click="RefreshButton_Click" LogoScale="0.85"
+                                        SvgIcon="lucide/refresh-cw" />
+                    </c:MyListItem.ButtonList>
+            </c:MyListItem>
+            <TextBlock x:Name="TextResource" Text="{loc:L Instance.Left.Resources}" Margin="13,6,5,4"
+                       Opacity="0.6" FontSize="12" />
+            <c:MyListItem x:Name="ItemWorld" LogoScale="0.95" IsScaleAnimationEnabled="False" Type="RadioBox"
+                          Check="PageCheck"
+                          MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                          Title="{loc:L Instance.Left.Saves}" Tag="3"
+                          SvgIcon="lucide/globe">
+                <c:MyListItem.ButtonList>
+                        <c:MyIconButton Tag="3" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                        ToolTip.Placement="Right"
+                                        ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                        Click="RefreshButton_Click" LogoScale="0.85"
+                                        SvgIcon="lucide/refresh-cw" />
+                    </c:MyListItem.ButtonList>
+            </c:MyListItem>
+            <c:MyListItem x:Name="ItemScreenshot" LogoScale="0.95" IsScaleAnimationEnabled="False" Type="RadioBox"
+                          Check="PageCheck"
+                          MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                          Title="{loc:L Instance.Left.Screenshots}" Tag="4"
+                          SvgIcon="lucide/image">
+                <c:MyListItem.ButtonList>
+                        <c:MyIconButton Tag="4" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                        ToolTip.Placement="Right"
+                                        ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                        Click="RefreshButton_Click" LogoScale="0.85"
+                                        SvgIcon="lucide/refresh-cw" />
+                    </c:MyListItem.ButtonList>
+            </c:MyListItem>
+            <c:MyListItem x:Name="ItemMod" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="5"
+                          Check="PageCheck"
+                          MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                          Title="{loc:L Instance.Left.Mod}"
+                          SvgIcon="lucide/puzzle">
+                <c:MyListItem.ButtonList>
+                        <c:MyIconButton Tag="5" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                        ToolTip.Placement="Right"
+                                        ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                        Click="RefreshButton_Click" LogoScale="0.85"
+                                        SvgIcon="lucide/refresh-cw" />
+                    </c:MyListItem.ButtonList>
+            </c:MyListItem>
+            <c:MyListItem x:Name="ItemModDisabled" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="6"
+                          Check="PageCheck"
+                          MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                          Title="{loc:L Instance.Left.Mod}"
+                          SvgIcon="lucide/puzzle" />
+            <c:MyListItem x:Name="ItemResourcePack" LogoScale="0.85" IsScaleAnimationEnabled="False"
+                          Check="PageCheck"
+                          Type="RadioBox" MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                          Title="{loc:L Instance.Left.ResourcePacks}"
+                          Tag="7"
+                          SvgIcon="lucide/layers">
+                <c:MyListItem.ButtonList>
+                        <c:MyIconButton Tag="7" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                        ToolTip.Placement="Right"
+                                        ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                        Click="RefreshButton_Click" LogoScale="0.85"
+                                        SvgIcon="lucide/refresh-cw" />
+                    </c:MyListItem.ButtonList>
+            </c:MyListItem>
+            <c:MyListItem x:Name="ItemShader" LogoScale="1.15" IsScaleAnimationEnabled="False" Type="RadioBox"
+                          Check="PageCheck"
+                          MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                          Title="{loc:L Instance.Left.Shaders}" Tag="8"
+                          SvgIcon="lucide/sparkles">
+                <c:MyListItem.ButtonList>
+                        <c:MyIconButton Tag="8" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                        ToolTip.Placement="Right"
+                                        ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                        Click="RefreshButton_Click" LogoScale="0.85"
+                                        SvgIcon="lucide/refresh-cw" />
+                    </c:MyListItem.ButtonList>
+            </c:MyListItem>
+            <c:MyListItem x:Name="ItemSchematic" LogoScale="0.85" IsScaleAnimationEnabled="False" Type="RadioBox"
+                          Check="PageCheck"
+                          MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                          Title="{loc:L Instance.Left.Schematics}" Tag="9"
+                          SvgIcon="lucide/file-box">
+                <c:MyListItem.ButtonList>
+                        <c:MyIconButton Tag="9" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                        ToolTip.Placement="Right"
+                                        ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                        Click="RefreshButton_Click" LogoScale="0.85"
+                                        SvgIcon="lucide/refresh-cw" />
+                    </c:MyListItem.ButtonList>
+            </c:MyListItem>
+            <c:MyListItem x:Name="ItemServer" LogoScale="0.85" IsScaleAnimationEnabled="False" Type="RadioBox"
+                          Check="PageCheck"
+                          MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                          Title="{loc:L Instance.Left.Servers}" Tag="11"
+                          SvgIcon="lucide/server">
+                <c:MyListItem.ButtonList>
+                        <c:MyIconButton Tag="11" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                        ToolTip.Placement="Right"
+                                        ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                        Click="RefreshButton_Click" LogoScale="0.85"
+                                        SvgIcon="lucide/refresh-cw" />
+                    </c:MyListItem.ButtonList>
+            </c:MyListItem>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageLeft>

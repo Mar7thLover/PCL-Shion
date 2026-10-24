@@ -1,0 +1,89 @@
+<pages:MyPageLeft xmlns="https://github.com/avaloniaui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:local="using:PCL.Shion.Controls"
+                       xmlns:loc="using:PCL.Shion.Localization"
+                       xmlns:pages="using:PCL.Shion.Pages"
+                       x:Class="PCL.Shion.Pages.Tools.PageToolsLeft">
+    <StackPanel Name="PanItem" Margin="0,12,0,0" Orientation="Vertical">
+
+        <TextBlock x:Name="TextGameLinkCategory"
+                   Margin="13,5,5,3"
+                   FontSize="12"
+                   Opacity="0.6"
+                   Text="{loc:L Tools.Left.Multiplayer}" />
+
+        <local:MyListItem x:Name="ItemGameLink"
+                          Height="36"
+                          IsScaleAnimationEnabled="False"
+                          LogoScale="0.85"
+                          MinPaddingRight="35"
+                          SvgIcon="lucide/link-2"
+                          Tag="1"
+                          Title="{loc:L Tools.Left.Lobby}"
+                          Type="RadioBox"
+                          VerticalAlignment="Top">
+            <local:MyListItem.ButtonList>
+                    <local:MyIconButton Tag="1"
+                                        ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                        ToolTip.Placement="Right"
+                                        ToolTip.ShowDelay="200"
+                                        ToolTip.VerticalOffset="-1"
+                                        LogoScale="0.85"
+                                        SvgIcon="lucide/refresh-cw" />
+                </local:MyListItem.ButtonList>
+        </local:MyListItem>
+
+        <TextBlock x:Name="TextToolsCategory"
+                   Margin="13,5,5,3"
+                   FontSize="12"
+                   Opacity="0.6"
+                   Text="{loc:L Tools.Left.Utilities}" />
+        <local:MyListItem x:Name="ItemTest"
+                          Height="36"
+                          IsScaleAnimationEnabled="False"
+                          LogoScale="0.9"
+                          MinPaddingRight="35"
+                          SvgIcon="lucide/tool-case"
+                          Tag="3"
+                          Title="{loc:L Tools.Left.Utilities.Title}"
+                          Type="RadioBox"
+                          VerticalAlignment="Top" />
+
+        <TextBlock x:Name="TextWidgetsCategory"
+                   Margin="13,5,5,3"
+                   FontSize="12"
+                   Opacity="0.6"
+                   Text="{loc:L Tools.Left.Widgets.Title}" />
+        <local:MyListItem x:Name="ItemCheckIn"
+                          Height="36"
+                          IsScaleAnimationEnabled="False"
+                          LogoScale="0.9"
+                          MinPaddingRight="35"
+                          SvgIcon="lucide/circle-check"
+                          Tag="4"
+                          Title="{loc:L Tools.Left.CheckIn}"
+                          Type="RadioBox"
+                          VerticalAlignment="Top" />
+        <local:MyListItem x:Name="ItemRecentPlay"
+                          Height="36"
+                          IsScaleAnimationEnabled="False"
+                          LogoScale="0.9"
+                          MinPaddingRight="35"
+                          SvgIcon="lucide/play"
+                          Tag="5"
+                          Title="{loc:L Tools.Left.RecentPlay}"
+                          Type="RadioBox"
+                          VerticalAlignment="Top" />
+        <local:MyListItem x:Name="ItemNews"
+                          Height="36"
+                          IsScaleAnimationEnabled="False"
+                          LogoScale="0.9"
+                          MinPaddingRight="35"
+                          SvgIcon="lucide/scroll-text"
+                          Tag="6"
+                          Title="{loc:L Tools.Left.News}"
+                          Type="RadioBox"
+                          VerticalAlignment="Top" />
+
+    </StackPanel>
+</pages:MyPageLeft>

@@ -1,0 +1,14 @@
+<local:MyCard x:Class="PCL.Shion.Controls.RecentPlayWidget"
+              xmlns="https://github.com/avaloniaui"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:local="using:PCL.Shion.Controls"
+              xmlns:loc="using:PCL.Shion.Localization"
+              Margin="0,0,0,15" Title="{loc:L Widget.RecentPlay.Title}">
+    <StackPanel Margin="12,38,12,8">
+        <TextBlock x:Name="LabEmpty" Text="{loc:L Widget.RecentPlay.Empty}"
+                   TextWrapping="Wrap" FontSize="12" Opacity="0.6" Margin="8,2,8,8" IsVisible="False" />
+        <StackPanel x:Name="PanList" />
+        <local:MyTextButton Text="{loc:L Widget.Common.More}" HorizontalAlignment="Right"
+                            Margin="0,4,6,0" Click="BtnMore_Click" />
+    </StackPanel>
+</local:MyCard>

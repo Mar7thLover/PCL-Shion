@@ -14,4 +14,9 @@
     <Build Solution="*|*" Project="false" />
     </Project>
     <Project Path="Plain Craft Launcher 2\Plain Craft Launcher 2.csproj" Type="C#" />
+  <Project Path="PCL.Shion.Core\PCL.Shion.Core.csproj" Type="C#" />
+  <Project Path="PCL.Shion\PCL.Shion.csproj" Type="C#" />
+  <Project Path="PCL.Shion.Core.Test\PCL.Shion.Core.Test.csproj" Type="C#">
+    <Build Solution="*|*" Project="false" />
+  </Project>
 </Solution>

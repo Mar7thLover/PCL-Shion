@@ -1,0 +1,42 @@
+<Grid x:Class="PCL.Shion.Controls.MyExtraTextButton"
+      xmlns="https://github.com/avaloniaui"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:svgIcon="using:PCL.Shion.Controls"
+      x:Name="PanBack"
+      RenderTransformOrigin="0.5,0.5" ToolTip.Placement="Left" Height="52" Margin="20">
+    <Grid.RenderTransform>
+        <ScaleTransform ScaleX="0" ScaleY="0" />
+    </Grid.RenderTransform>
+    <Grid.Children>
+        <Border x:Name="PanClick" BorderThickness="0.001" Background="{DynamicResource ColorBrushSemiTransparent}"
+                CornerRadius="{Binding #PanBack.Bounds.Height, Converter={StaticResource MultiplicationConverter}, ConverterParameter=0.4, Mode=OneWay}" />
+        <Grid x:Name="PanScale" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5" Margin="0,10,0,0">
+            <Grid.RenderTransform>
+                <ScaleTransform />
+            </Grid.RenderTransform>
+            <Border x:Name="PanColor" BorderThickness="0.001" Background="{DynamicResource ColorBrush3}"
+                    CornerRadius="{Binding #PanBack.Bounds.Height, Converter={StaticResource MultiplicationConverter}, ConverterParameter=0.4, Mode=OneWay}">
+                <Border.Effect>
+                    <DropShadowDirectionEffect ShadowDepth="0" Direction="0" BlurRadius="10" Opacity="0.2" Color="Black" />
+                </Border.Effect>
+            </Border>
+            <StackPanel Orientation="Horizontal" Margin="20,0" UseLayoutRounding="False">
+                <Grid x:Name="IconHost" Width="16" Margin="2,12,0,12" RenderTransformOrigin="0.5,0.5">
+                    <Grid.RenderTransform>
+                        <ScaleTransform />
+                    </Grid.RenderTransform>
+                    <Path x:Name="Path"
+                          Stretch="Uniform"
+                          Fill="{DynamicResource ColorBrush8}" />
+                    <svgIcon:SvgIcon x:Name="ShapeSvgIcon"
+                                     Stretch="Uniform"
+                                     IsVisible="False"
+                                     IconBrush="{Binding #Path.Fill}" />
+                </Grid>
+                <TextBlock x:Name="LabText" VerticalAlignment="Center" Foreground="{DynamicResource ColorBrush8}"
+                           FontSize="16"
+                           Margin="12,0,0,0.8" />
+            </StackPanel>
+        </Grid>
+    </Grid.Children>
+</Grid>

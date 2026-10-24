@@ -1,0 +1,16 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:c="using:PCL.Shion.Controls"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   x:Class="PCL.Shion.Pages.Help.PageHelpDetail">
+    <pages:MyPageRight.Styles>
+        <Style Selector="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+    </pages:MyPageRight.Styles>
+    <c:MyScrollViewer x:Name="PanBack"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+        <StackPanel x:Name="PanCustom" Margin="25,25,25,10" />
+    </c:MyScrollViewer>
+</pages:MyPageRight>

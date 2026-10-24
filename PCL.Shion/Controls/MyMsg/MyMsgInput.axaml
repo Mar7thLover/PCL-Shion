@@ -1,0 +1,42 @@
+<Grid x:Class="PCL.Shion.Controls.MyMsgInput"
+      xmlns="https://github.com/avaloniaui"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:my="using:PCL.Shion.Controls"
+      RenderTransformOrigin="0,0.5" UseLayoutRounding="True" MinWidth="400"
+      HorizontalAlignment="Center" VerticalAlignment="Center" Margin="25">
+    <!-- TODO(shion): WPF 版阴影颜色取自 ColorObjectMsgBoxShadow，BoxShadow 不支持资源引用，这里使用固定颜色 -->
+    <Border x:Name="PanBorder" CornerRadius="7" Background="{DynamicResource ColorBrushBackground}"
+            BoxShadow="0 2 20 0 #CC000000">
+        <Grid x:Name="PanMain" VerticalAlignment="Top" Margin="22,22,22,23">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="2" />
+                <RowDefinition Height="13" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" FontSize="23" TextTrimming="None" Foreground="{DynamicResource ColorBrush2}"
+                       HorizontalAlignment="Left" x:Name="LabTitle" Margin="7,-1,70,9" Text="测试标题文本"
+                       VerticalAlignment="Top" UseLayoutRounding="False" />
+            <Rectangle x:Name="ShapeLine" Grid.Row="1" Height="2" Fill="{Binding Foreground, ElementName=LabTitle}" />
+            <my:MyScrollViewer Grid.Row="3" VerticalAlignment="Top" x:Name="PanText" Margin="0,0,0,7"
+                               Padding="7,0,15,0"
+                               VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                               DeltaMult="0.7">
+                <TextBlock VerticalAlignment="Top" TextTrimming="None" TextWrapping="Wrap" x:Name="LabText" FontSize="15"
+                           LineHeight="18"
+                           Foreground="{DynamicResource ColorBrush1}" FontWeight="Normal" Padding="1" />
+            </my:MyScrollViewer>
+            <my:MyTextBox Grid.Row="4" Margin="7,0,7,12" x:Name="TextArea" UseLayoutRounding="False" MaxLength="1000"
+                          MinWidth="450" />
+            <StackPanel Grid.Row="5" x:Name="PanBtn" VerticalAlignment="Top" HorizontalAlignment="Right"
+                        Margin="150,0,8,0" Orientation="Horizontal">
+                <my:MyButton ColorType="Normal" Text="测试按钮1" x:Name="Btn1" Margin="12,0,0,0"
+                             TextPadding="7" Padding="5,0" UseLayoutRounding="False" />
+                <my:MyButton ColorType="Normal" Text="测试按钮2" x:Name="Btn2" Margin="12,0,0,0"
+                             TextPadding="7" Padding="5,0" UseLayoutRounding="False" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Grid>

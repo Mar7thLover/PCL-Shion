@@ -1,0 +1,131 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:PCL.Shion.Controls"
+                    xmlns:loc="using:PCL.Shion.Localization"
+                    xmlns:pages="using:PCL.Shion.Pages"
+                    x:Class="PCL.Shion.Pages.Instance.PageInstanceOverall">
+    <c:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="25,10">
+            <c:MyCard Margin="0,15" Title="">
+                <Grid Margin="10,7" Name="PanDisplayItem" />
+            </c:MyCard>
+            <c:MyCard Margin="0,0,0,15" Title="{loc:L Instance.Overall.Info.Title}">
+                <StackPanel x:Name="PanInfo" Margin="15,40,25,5">
+                    <c:MyLoading x:Name="LabInfoLoading" Text="{loc:L Instance.Overall.Info.Loading}" Margin="0,0,0,10" />
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard Margin="0,0,0,15" Title="{loc:L Instance.Overall.Personalization.Title}" x:Name="PanDisplay">
+                <StackPanel Margin="25,40,25,15">
+                    <Grid x:Name="PanDisplayIcon" HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="9" />
+                            <RowDefinition Height="28" />
+                        </Grid.RowDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Instance.Overall.Icon.Title}" Margin="0,0,25,0" />
+                        <c:MyComboBox Grid.Column="1" x:Name="ComboDisplayLogo">
+                            <c:MyComboBoxItem Content="{loc:L Common.Option.Auto}" IsSelected="True" Tag="" />
+                            <c:MyComboBoxItem Content="{loc:L Common.Option.Customize}" x:Name="ItemDisplayLogoCustom" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.Cobblestone}"
+                                              Tag="avares://PCL.Shion/Assets/Images/Blocks/CobbleStone.png" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.CommandBlock}"
+                                              Tag="avares://PCL.Shion/Assets/Images/Blocks/CommandBlock.png" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.GoldBlock}" Tag="avares://PCL.Shion/Assets/Images/Blocks/GoldBlock.png" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.GrassBlock}" Tag="avares://PCL.Shion/Assets/Images/Blocks/Grass.png" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.DirtPath}" Tag="avares://PCL.Shion/Assets/Images/Blocks/GrassPath.png" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.Anvil}" Tag="avares://PCL.Shion/Assets/Images/Blocks/Anvil.png" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.RedstoneBlock}"
+                                              Tag="avares://PCL.Shion/Assets/Images/Blocks/RedstoneBlock.png" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.RedstoneLampOn}"
+                                              Tag="avares://PCL.Shion/Assets/Images/Blocks/RedstoneLampOn.png" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.RedstoneLampOff}"
+                                              Tag="avares://PCL.Shion/Assets/Images/Blocks/RedstoneLampOff.png" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.Egg}" Tag="avares://PCL.Shion/Assets/Images/Blocks/Egg.png" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.Fabric}"
+                                              Tag="avares://PCL.Shion/Assets/Images/Blocks/Fabric.png" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.Quilt}"
+                                              Tag="avares://PCL.Shion/Assets/Images/Blocks/Quilt.png" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.NeoForgeFox}"
+                                              Tag="avares://PCL.Shion/Assets/Images/Blocks/NeoForge.png" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Icon.Cleanroom}"
+                                              Tag="avares://PCL.Shion/Assets/Images/Blocks/Cleanroom.png" />
+                        </c:MyComboBox>
+                        <TextBlock VerticalAlignment="Center" Grid.Row="2" HorizontalAlignment="Left" Text="{loc:L Instance.Overall.Category.Title}"
+                                   Margin="0,0,25,0" />
+                        <c:MyComboBox Grid.Column="1" Grid.Row="2" x:Name="ComboDisplayType">
+                            <c:MyComboBoxItem Content="{loc:L Common.Option.Auto}" IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Category.Hidden}"
+                                              ToolTip.Tip="{loc:L Instance.Overall.Category.Hidden.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Category.Modable}" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Category.Regular}" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Category.LessUsed}" />
+                            <c:MyComboBoxItem Content="{loc:L Instance.Overall.Category.AprilFools}" />
+                        </c:MyComboBox>
+                    </Grid>
+                    <Grid Margin="0,15,0,7" Height="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <c:MyButton x:Name="BtnDisplayRename" Text="{loc:L Instance.Overall.Rename}"
+                                    MinWidth="140" Padding="13,0"
+                                    Margin="0,0,20,0" />
+                        <c:MyButton x:Name="BtnDisplayDesc" Text="{loc:L Instance.Overall.EditDescription}"
+                                    MinWidth="140" Padding="13,0"
+                                    Margin="0,0,20,0" Grid.Column="1" />
+                        <c:MyButton x:Name="BtnDisplayStar" Text="{loc:L Instance.Overall.Favorite}"
+                                    MinWidth="140" Padding="13,0"
+                                    Margin="0,0,20,0" Grid.Column="2" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard Margin="0,0,0,15" Title="{loc:L Instance.Overall.Shortcuts.Title}" x:Name="PanFolder">
+                <StackPanel Margin="25,40,25,15">
+                    <Grid Margin="0,2,0,7" Height="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <c:MyButton x:Name="BtnFolderVersion" Text="{loc:L Instance.Overall.Shortcuts.InstanceFolder}" MinWidth="140" Padding="13,0"
+                                    Margin="0,0,20,0" />
+                        <c:MyButton x:Name="BtnFolderSaves" Text="{loc:L Instance.Overall.Shortcuts.SavesFolder}" MinWidth="140" Padding="13,0"
+                                    Margin="0,0,20,0" Grid.Column="1" />
+                        <c:MyButton x:Name="BtnFolderMods" Text="{loc:L Instance.Overall.Shortcuts.ModsFolder}" MinWidth="140" Padding="13,0"
+                                    Margin="0,0,20,0" Grid.Column="2" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard Margin="0,0,0,15" Title="{loc:L Instance.Overall.Manage.Title}" x:Name="PanManage">
+                <StackPanel Margin="25,40,25,15">
+                    <WrapPanel Margin="0,-5,-20,7">
+                        <c:MyButton x:Name="BtnManageScript" Text="{loc:L Instance.Overall.Manage.ExportLaunchScript}" MinWidth="140" Padding="13,0"
+                                    Margin="0,7,20,0" Height="35" />
+                        <c:MyButton x:Name="BtnManageTest" Text="{loc:L Instance.Overall.Manage.TestGame}" MinWidth="140" Padding="13,0"
+                                    Margin="0,7,20,0"
+                                    Height="35" />
+                        <c:MyButton x:Name="BtnManageCheck" Text="{loc:L Instance.Overall.Manage.RepairFiles}" MinWidth="140" Padding="13,0"
+                                    Margin="0,7,20,0"
+                                    ToolTip.Tip="{loc:L Instance.Overall.Manage.RepairFiles.ToolTip}"
+                                    Height="35" />
+                        <c:MyButton x:Name="BtnManageRestore" Text="{loc:L Common.Action.Reset}" MinWidth="140" Padding="13,0"
+                                    Margin="0,7,20,0"
+                                    ToolTip.Tip="{loc:L Instance.Overall.Manage.Reinstall.ToolTip}"
+                                    Height="35" />
+                        <c:MyButton x:Name="BtnManageDelete" Text="{loc:L Instance.Overall.Manage.Delete}" MinWidth="140" Padding="13,0"
+                                    Margin="0,7,20,0"
+                                    ColorType="Red" Height="35" />
+                        <c:MyButton x:Name="BtnManagePatch" Text="{loc:L Instance.Overall.Manage.PatchCore}" MinWidth="140" Padding="13,0"
+                                    Margin="0,7,20,0"
+                                    Height="35" />
+                    </WrapPanel>
+                </StackPanel>
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

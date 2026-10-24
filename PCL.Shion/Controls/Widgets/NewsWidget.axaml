@@ -1,0 +1,15 @@
+<local:MyCard x:Class="PCL.Shion.Controls.NewsWidget"
+              xmlns="https://github.com/avaloniaui"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:local="using:PCL.Shion.Controls"
+              xmlns:loc="using:PCL.Shion.Localization"
+              Margin="0,0,0,15" Title="{loc:L Widget.News.Title}">
+    <StackPanel Margin="12,38,12,12">
+        <!-- 加载中 / 失败 / 暂无新闻 的提示 -->
+        <TextBlock x:Name="LabState" Margin="8,6,8,10" FontSize="12" Opacity="0.6" TextWrapping="Wrap" />
+        <!-- 最新的几条新闻 -->
+        <StackPanel x:Name="PanItems" />
+        <local:MyTextButton x:Name="BtnMore" Text="{loc:L Widget.Common.More}" FontSize="12"
+                            HorizontalAlignment="Right" Margin="0,6,4,0" Click="BtnMore_Click" />
+    </StackPanel>
+</local:MyCard>

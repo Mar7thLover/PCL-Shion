@@ -1,0 +1,56 @@
+<Grid x:Class="PCL.Shion.Pages.Launch.MySkin"
+      xmlns="https://github.com/avaloniaui"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:c="using:PCL.Shion.Controls"
+      xmlns:loc="using:PCL.Shion.Localization"
+      Width="64"
+      Height="64"
+      Background="{DynamicResource ColorBrushSemiTransparent}"
+      RenderTransformOrigin="0.5,0.5"
+      UseLayoutRounding="True"
+      ToolTip.HorizontalOffset="2"
+      ToolTip.ShowDelay="100"
+      ToolTip.Placement="Center"
+      ToolTip.VerticalOffset="-50">
+    <Grid.Effect>
+        <DropShadowEffect
+                          BlurRadius="10"
+                          Color="{DynamicResource ColorObject2}"
+                          Opacity="0.2"
+                          OffsetX="0"
+                          OffsetY="0" />
+    </Grid.Effect>
+    <Grid.RenderTransform>
+        <ScaleTransform />
+    </Grid.RenderTransform>
+    <Grid.ContextMenu>
+        <ContextMenu>
+            <c:MyMenuItem x:Name="BtnSkinSave"
+                          Padding="0,2"
+                          Header="{loc:L Launch.Skin.SaveAs}"
+                          SvgIcon="lucide/save" />
+            <c:MyMenuItem x:Name="BtnSkinRefresh"
+                          Padding="0,2"
+                          Header="{loc:L Common.Action.Refresh}"
+                          SvgIcon="lucide/refresh-cw" />
+            <c:MyMenuItem x:Name="BtnSkinCape"
+                          Padding="0,2"
+                          Header="{loc:L Launch.Skin.ChangeCape}"
+                          SvgIcon="lucide/shirt" />
+        </ContextMenu>
+    </Grid.ContextMenu>
+    <Image x:Name="ImgBack"
+           Width="48"
+           Height="48"
+           HorizontalAlignment="Center"
+           VerticalAlignment="Center"
+           RenderOptions.BitmapInterpolationMode="None"
+           Stretch="Fill" />
+    <Image x:Name="ImgFore"
+           Width="56"
+           Height="56"
+           HorizontalAlignment="Center"
+           VerticalAlignment="Center"
+           RenderOptions.BitmapInterpolationMode="None"
+           Stretch="Fill" />
+</Grid>

@@ -1,0 +1,392 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:PCL.Shion.Controls"
+                    xmlns:loc="using:PCL.Shion.Localization"
+                    xmlns:pages="using:PCL.Shion.Pages"
+                    x:Class="PCL.Shion.Pages.Setup.PageSetupAbout">
+    <c:MyScrollViewer
+        x:Name="PanBack"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            x:Name="PanMain"
+            Margin="25,10"
+            Grid.IsSharedSizeScope="True">
+            <c:MyCard Margin="0,15" Title="{loc:L Setup.About.Title}">
+                <Grid Margin="21,40,21,16" x:Name="GridAuthor">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <c:MyListItem
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="-5,0,15,0"
+                        Info="{loc:L Setup.About.OriginalAuthor.Info}"
+                        IsHitTestVisible="False"
+                        Title="{loc:L Setup.About.OriginalAuthor.Name}" />
+                    <c:MyListItem
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="-5,0,15,0"
+                        Info="{loc:L Setup.About.Community.Info}"
+                        IsHitTestVisible="False"
+                        Title="{loc:L Setup.About.Community.Name}" />
+                    <c:MyListItem
+                        x:Name="ItemAboutPcl"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="-5,0,15,0"
+                        Info="{loc:L Setup.About.Version.Info}"
+                        IsHitTestVisible="False"
+                        Title="PCL Shion" />
+                    <Image
+                        x:Name="ImgPCLLogo"
+                        Grid.Row="2"
+                        Margin="3"
+                        PointerPressed="ImgPCLLogo_Click"
+                        Source="avares://PCL.Shion/Assets/Images/Heads/Logo-CE.png">
+                        <Image.Clip>
+                            <EllipseGeometry Rect="0,0,34,34" />
+                        </Image.Clip>
+                    </Image>
+                    <Image
+                        Grid.Row="0"
+                        Margin="3"
+                        Source="avares://PCL.Shion/Assets/Images/Heads/LTCat.jpg">
+                        <Image.Clip>
+                            <EllipseGeometry Rect="0,0,34,34" />
+                        </Image.Clip>
+                    </Image>
+                    <Image
+                        x:Name="ImgPCLCommunity"
+                        Grid.Row="1"
+                        PointerPressed="ImgPCLCommunity_Click"
+                        Margin="3"
+                        Source="avares://PCL.Shion/Assets/Images/Heads/PCL-Community.png" />
+                    <c:MyButton
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Height="35"
+                        Tag="https://ifdian.net/a/LTCat"
+                        Click="OpenUrlButton_Click"
+                        Text="{loc:L Setup.About.SponsorOriginalAuthor}" />
+                    <c:MyButton
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Height="35"
+                        Tag="https://github.com/PCL-Community"
+                        Click="OpenUrlButton_Click"
+                        Text="{loc:L Setup.About.GitHubHome}" />
+                    <c:MyButton
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        Height="35"
+                        Tag="https://github.com/Mar7thLover/PCL-Shion"
+                        Click="OpenUrlButton_Click"
+                        Text="{loc:L Setup.About.SourceCode}" />
+                </Grid>
+            </c:MyCard>
+            <c:MyCard Margin="0,0,0,15" Title="{loc:L Setup.About.SpecialThanks.Title}">
+                <Grid Margin="21,40,21,16" x:Name="GridSpecialThanks">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                        <RowDefinition Height="45" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <c:MyListItem
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="-5,0,15,0"
+                        Info="{loc:L Setup.About.SpecialThanks.Info.Bmclapi}"
+                        IsHitTestVisible="False"
+                        Title="{loc:L Setup.About.SpecialThanks.Name.Bangbang93}" />
+                    <c:MyButton
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Height="35"
+                        Tag="https://afdian.com/a/bangbang93"
+                        Click="OpenUrlButton_Click"
+                        Text="{loc:L Setup.About.SpecialThanks.SponsorMirror}" />
+                    <c:MyListItem
+                        x:Name="ItemMcmod"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="-5,0,0,0"
+                        Info="{loc:L Setup.About.SpecialThanks.Info.Mcmod}"
+                        IsHitTestVisible="False"
+                        Title="{loc:L Setup.About.SpecialThanks.Name.Mcmod}" />
+                    <c:MyButton
+                        x:Name="BtnMcmod"
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Height="35"
+                        Tag="https://www.mcmod.cn"
+                        Click="OpenUrlButton_Click"
+                        Text="{loc:L Setup.About.SpecialThanks.OpenMcmod}" />
+                    <c:MyListItem
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="-5,0,0,0"
+                        Info="{loc:L Setup.About.SpecialThanks.Info.Cloud}"
+                        IsHitTestVisible="False"
+                        Title="{loc:L Setup.About.SpecialThanks.Name.Pysio}" />
+                    <c:MyButton
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        Height="35"
+                        Tag="https://www.pysio.online"
+                        Click="OpenUrlButton_Click"
+                        Text="{loc:L Setup.About.SpecialThanks.GoBlog}" />
+                    <c:MyListItem
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="-5,0,0,0"
+                        Info="{loc:L Setup.About.SpecialThanks.Info.Cloud}"
+                        IsHitTestVisible="False"
+                        Title="{loc:L Setup.About.SpecialThanks.Name.Yunmoan}" />
+                    <c:MyButton
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Height="35"
+                        Tag="https://www.zyghit.cn"
+                        Click="OpenUrlButton_Click"
+                        Text="{loc:L Setup.About.SpecialThanks.OpenWebsite}" />
+                    <c:MyListItem
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="-5,0,0,0"
+                        Info="{loc:L Setup.About.SpecialThanks.Info.LinkModule}"
+                        IsHitTestVisible="False"
+                        Title="{loc:L Setup.About.SpecialThanks.Name.EasyTier}" />
+                    <c:MyButton
+                        Grid.Row="4"
+                        Grid.Column="2"
+                        Height="35"
+                        Tag="https://easytier.cn"
+                        Click="OpenUrlButton_Click"
+                        Text="{loc:L Setup.About.SpecialThanks.OpenWebsite}" />
+                    <c:MyListItem
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="-5,0,0,0"
+                        Info="{loc:L Setup.About.SpecialThanks.Info.Mcim}"
+                        IsHitTestVisible="False"
+                        Title="{loc:L Setup.About.SpecialThanks.Name.Z0z0r4}" />
+                    <c:MyListItem
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="-5,0,0,0"
+                        Info="{loc:L Setup.About.SpecialThanks.Info.IconDesign}"
+                        IsHitTestVisible="False"
+                        Title="{loc:L Setup.About.SpecialThanks.Name.Emperormummy}" />
+                    <Image
+                        Grid.Row="0"
+                        Margin="3"
+                        Source="avares://PCL.Shion/Assets/Images/Heads/bangbang93.png">
+                        <Image.Clip>
+                            <EllipseGeometry Rect="0,0,34,34" />
+                        </Image.Clip>
+                    </Image>
+                    <Image
+                        x:Name="ImgMcmod"
+                        Grid.Row="1"
+                        Margin="3"
+                        Source="avares://PCL.Shion/Assets/Images/Heads/wiki.png">
+                        <Image.Clip>
+                            <EllipseGeometry Rect="0,0,34,34" />
+                        </Image.Clip>
+                    </Image>
+                    <Image
+                        Grid.Row="2"
+                        Margin="3"
+                        Source="avares://PCL.Shion/Assets/Images/Heads/Pysio.jpg">
+                        <Image.Clip>
+                            <EllipseGeometry Rect="0,0,34,34" />
+                        </Image.Clip>
+                    </Image>
+                    <Image
+                        Grid.Row="3"
+                        Margin="3"
+                        Source="avares://PCL.Shion/Assets/Images/Heads/Yunmoan.jpg">
+                        <Image.Clip>
+                            <EllipseGeometry Rect="0,0,34,34" />
+                        </Image.Clip>
+                    </Image>
+                    <Image
+                        Grid.Row="4"
+                        Margin="3"
+                        Source="avares://PCL.Shion/Assets/Images/Heads/EasyTier.png">
+                        <Image.Clip>
+                            <EllipseGeometry Rect="0,0,34,34" />
+                        </Image.Clip>
+                    </Image>
+                    <Image
+                        Grid.Row="5"
+                        Margin="3"
+                        Source="avares://PCL.Shion/Assets/Images/Heads/z0z0r4.png">
+                        <Image.Clip>
+                            <EllipseGeometry Rect="0,0,34,34" />
+                        </Image.Clip>
+                    </Image>
+                    <Image
+                        Grid.Row="6"
+                        Margin="3"
+                        Source="avares://PCL.Shion/Assets/Images/Heads/Emperormummy.png">
+                        <Image.Clip>
+                            <EllipseGeometry Rect="0,0,34,34" />
+                        </Image.Clip>
+                    </Image>
+                </Grid>
+            </c:MyCard>
+            <c:MyCard
+                Margin="0,0,0,15"
+                Title="{loc:L Setup.About.Contributors.Title}">
+                <Grid Margin="17,42,15,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <WrapPanel x:Name="PanContributors" Orientation="Horizontal" />
+                    <c:MyTextButton
+                        Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        Tag="https://github.com/Mar7thLover/PCL-Shion/graphs/contributors"
+                        Click="OpenUrlTextButton_Click"
+                        Text="{loc:L Setup.About.Contributors.ViewMore}" />
+                </Grid>
+            </c:MyCard>
+
+            <c:MyCard
+                Margin="0,0,0,15"
+                CanSwap="True"
+                Title="{loc:L Setup.About.Legal.Title}">
+                <StackPanel Margin="25,39,23,20">
+                    <TextBlock
+                        Margin="0,6,0,4"
+                        FontWeight="Bold"
+                        Text="{loc:L Setup.About.Legal.PrivacyNotice}"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Margin="0,0,0,2"
+                        LineHeight="17"
+                        Text="{loc:L Setup.About.Legal.PrivacyText}"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Margin="0,12,0,4"
+                        FontWeight="Bold"
+                        Text="{loc:L Setup.About.Legal.OtherInfo}"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Margin="0,0,0,2"
+                        LineHeight="17"
+                        Text="{loc:L Setup.About.Legal.CopyrightText}"
+                        TextWrapping="Wrap" />
+                    <StackPanel
+                        Height="35"
+                        Margin="0,12,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                        <c:MyButton
+                            Margin="0,0,20,0"
+                            ColorType="Highlight"
+                            Tag="https://github.com/PCL-Community/PCL2-CE"
+                            Click="OpenUrlButton_Click"
+                            Padding="13,0"
+                            Text="{loc:L Setup.About.Legal.CommunitySource}" />
+                        <c:MyButton
+                            Margin="0,0,20,0"
+                            Tag="https://www.pclc.cc/privacy/personal-info-brief.html"
+                            Click="OpenUrlButton_Click"
+                            Padding="13,0"
+                            Text="{loc:L Setup.About.Legal.CommunityLobbyPrivacy}" />
+                        <c:MyButton
+                            Margin="0,0,20,0"
+                            Tag="https://account.naids.com/policy"
+                            Click="OpenUrlButton_Click"
+                            Padding="13,0"
+                            Text="{loc:L Setup.About.Legal.NatayarkTerms}" />
+                    </StackPanel>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard
+                Margin="0,0,0,15"
+                CanSwap="True"
+                IsSwapped="True"
+                Title="{loc:L Setup.About.UpstreamLegal.Title}">
+                <StackPanel Margin="25,39,23,20">
+                    <TextBlock
+                        Margin="0,6,0,4"
+                        FontWeight="Bold"
+                        Text="{loc:L Setup.About.Legal.PrivacyNotice}"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Margin="0,0,0,2"
+                        LineHeight="17"
+                        Text="{loc:L Setup.About.UpstreamLegal.PrivacyText}"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Margin="0,12,0,4"
+                        FontWeight="Bold"
+                        Text="{loc:L Setup.About.Legal.OtherInfo}"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Margin="0,0,0,2"
+                        LineHeight="17"
+                        Text="{loc:L Setup.About.UpstreamLegal.CopyrightText}"
+                        TextWrapping="Wrap" />
+                    <StackPanel
+                        Height="35"
+                        Margin="0,12,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                        <c:MyButton
+                            Width="160"
+                            Margin="0,0,20,0"
+                            ColorType="Highlight"
+                            Tag="https://shimo.im/docs/rGrd8pY8xWkt6ryW"
+                            Click="OpenUrlButton_Click"
+                            Padding="13,0"
+                            Text="{loc:L Setup.About.UpstreamLegal.TermsAndDisclaimer}" />
+                        <c:MyButton
+                            Width="120"
+                            Margin="0,0,20,0"
+                            Tag="https://github.com/Meloong-Git/PCL"
+                            Click="OpenUrlButton_Click"
+                            Padding="13,0"
+                            Text="{loc:L Setup.About.UpstreamLegal.OpenSource}" />
+                    </StackPanel>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard
+                Margin="0,0,0,15"
+                CanSwap="True"
+                IsSwapped="True"
+                Title="{loc:L Setup.About.Licenses.Title}">
+                <StackPanel Margin="25,42,23,4" x:Name="PanLicenses" />
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

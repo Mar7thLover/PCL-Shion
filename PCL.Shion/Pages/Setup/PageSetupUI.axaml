@@ -1,0 +1,486 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:PCL.Shion.Controls"
+                    xmlns:loc="using:PCL.Shion.Localization"
+                    xmlns:pages="using:PCL.Shion.Pages"
+                    x:Class="PCL.Shion.Pages.Setup.PageSetupUI">
+    <c:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="25,10">
+            <c:MyCard Margin="0,15" Title="{loc:L Setup.Ui.Basic.Title}" x:Name="CardLauncher">
+                <Grid Margin="25,40,25,10">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Name1" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.Basic.Opacity}"
+                                       Margin="0,0,20,0" />
+                            <c:MySlider Grid.ColumnSpan="5" x:Name="SliderLauncherOpacity"
+                                        Tag="UiLauncherTransparent" MaxValue="600" ValueByKey="10" Grid.Column="1"
+                                        Change="SliderChange" />
+                        </Grid>
+                        <Border Background="{DynamicResource ColorBrushToolTip}" Margin="0,5,0,12" CornerRadius="4"
+                                x:Name="PanLauncherHide" IsVisible="False">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
+                                <TextBlock Text="{loc:L Setup.Ui.Basic.BlueHint}" FontSize="13" Margin="0,0,0,0"
+                                           TextWrapping="Wrap" />
+                                <c:MyButton Height="35" x:Name="BtnLauncherDonate" MinWidth="140" Text="{loc:L Setup.Ui.Basic.GetSnapshot}"
+                                            Padding="13,0" HorizontalAlignment="Center" Margin="0,9,0,0"
+                                            ColorType="Highlight" Click="BtnLauncherDonate_Click" />
+                            </StackPanel>
+                        </Border>
+                        <Grid Height="28" Margin="0,0,0,7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Name1" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="92" SharedSizeGroup="SubName" />
+                                <ColumnDefinition />
+                                <ColumnDefinition SharedSizeGroup="SubName" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.Theme.Title}" />
+                            <c:MyComboBox Grid.Column="1" x:Name="ComboDarkMode" Tag="ColorMode"
+                                          SelectionChanged="ComboChange">
+                                <c:MyComboBoxItem Content="{loc:L Setup.Ui.Theme.Light}" />
+                                <c:MyComboBoxItem Content="{loc:L Setup.Ui.Theme.Dark}" />
+                                <c:MyComboBoxItem Content="{loc:L Setup.Ui.Theme.FollowSystem}" /> <!-- default -->
+                            </c:MyComboBox>
+                            <TextBlock Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{loc:L Setup.Ui.Theme.LightColor}" />
+                            <c:MyComboBox Grid.Column="3" x:Name="ComboLightColor" Tag="LightColor" SelectionChanged="ThemeColor_Change" />
+                            <TextBlock Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{loc:L Setup.Ui.Theme.DarkColor}" />
+                            <c:MyComboBox Grid.Column="5" x:Name="ComboDarkColor" Tag="DarkColor" SelectionChanged="ThemeColor_Change" />
+
+                        </Grid>
+                        <c:MyCheckBox Text="{loc:L Setup.Ui.Basic.ShowLogo}" Margin="-1,0,0,7" Height="22"
+                                      x:Name="CheckLauncherLogo" Tag="UiLauncherLogo" Change="CheckBoxChange" />
+                        <c:MyCheckBox Text="{loc:L Setup.Ui.Basic.LockWindow}" Margin="-1,0,0,7" Height="22" x:Name="CheckLockWindowSize"
+                                      Tag="UiLockWindowSize" Change="CheckBoxChange" />
+                        <c:MyCheckBox Text="{loc:L Setup.Ui.Basic.ShowTriviaHint}" Margin="-1,0,0,7" Height="22"
+                                      x:Name="CheckShowLaunchingHint" Tag="UiShowLaunchingHint"
+                                      Change="CheckBoxChange" />
+                        <StackPanel x:Name="PanelBlur" Margin="0,0,0,10">
+                            <c:MyCheckBox Text="{loc:L Setup.Ui.Basic.AdvancedMaterial}" Height="22" x:Name="CheckBlur" Tag="UiBlur"
+                                          ToolTip.Tip="{loc:L Setup.Ui.Basic.AdvancedMaterial.ToolTip}"
+                                          Change="CheckBoxChange" />
+                            <Grid x:Name="PanBlurValue" Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Name1" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="SubName" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" Text="{loc:L Setup.Ui.Basic.BlurRadius}" />
+                                <c:MySlider Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3"
+                                            x:Name="SliderBlurValue" Tag="UiBlurValue" MaxValue="40"
+                                            ValueByKey="10" Change="SliderChange"
+                                            ToolTip.Tip="{loc:L Setup.Ui.Basic.BlurRadius.ToolTip}" />
+                                <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"
+                                           HorizontalAlignment="Center" Text="{loc:L Setup.Ui.Basic.BlurSamplingRate}" />
+                                <c:MySlider Grid.Row="2" Grid.Column="3" x:Name="SliderBlurSamplingRate"
+                                            Tag="UiBlurSamplingRate" MaxValue="100" ValueByKey="5"
+                                            Change="SliderChange"
+                                            ToolTip.Tip="{loc:L Setup.Ui.Basic.BlurSamplingRate.ToolTip}" />
+                                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
+                                           HorizontalAlignment="Left" Text="{loc:L Setup.Ui.Basic.BlurMethod}" />
+                                <c:MyComboBox Grid.Row="2" Grid.Column="1" x:Name="ComboBlurType" Tag="UiBlurType"
+                                              Height="28" MinWidth="100" ToolTip.Tip="{loc:L Setup.Ui.Basic.BlurMethod.ToolTip}"
+                                              SelectionChanged="ComboChange">
+                                    <c:MyComboBoxItem Content="{loc:L Setup.Ui.Basic.BlurMethod.Gaussian}"
+                                                      ToolTip.Tip="{loc:L Setup.Ui.Basic.BlurMethod.Gaussian.ToolTip}" />
+                                    <c:MyComboBoxItem Content="{loc:L Setup.Ui.Basic.BlurMethod.Box}"
+                                                      ToolTip.Tip="{loc:L Setup.Ui.Basic.BlurMethod.Box.ToolTip}" />
+                                </c:MyComboBox>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </c:MyCard>
+            <c:MyCard x:Name="CardFont" Margin="0,0,0,15" Title="{loc:L Setup.Ui.Font.Title}">
+                <Grid Margin="25,40,25,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="25" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition SharedSizeGroup="FontSelector" Height="30" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition SharedSizeGroup="FontSelector" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{loc:L Setup.Ui.Font.Global}" />
+                    <c:FontSelector Grid.Row="0" Grid.Column="2" x:Name="ComboUiFont" Tooltip="{loc:L Setup.Ui.Font.Global.ToolTip}"
+                                    SelectionChanged="ComboFontChange" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{loc:L Setup.Ui.Font.Motd}" />
+                    <c:FontSelector Grid.Row="2" Grid.Column="2" x:Name="ComboUiMotdFont"
+                                    Tooltip="{loc:L Setup.Ui.Font.Motd.ToolTip}" SelectionChanged="ComboMotdFontChange" />
+                </Grid>
+            </c:MyCard>
+            <c:MyCard x:Name="CardBackground" Margin="0,0,0,15" Title="{loc:L Setup.Ui.Background.TitleDefault}">
+                <StackPanel Margin="25,40,25,20">
+                    <Grid x:Name="PanBackgroundSuit" Height="28" Margin="0,0,0,10" IsVisible="False">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.Background.ContentAdapt}"
+                                   Margin="0,0,25,0" />
+                        <c:MyComboBox x:Name="ComboBackgroundSuit" Tag="UiBackgroundSuit" Grid.Column="1"
+                                      SelectionChanged="ComboChange">
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.Smart}" IsSelected="True" ToolTip.Tip="{loc:L Setup.Ui.Background.Suit.Smart.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.Center}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.Fit}" ToolTip.Tip="{loc:L Setup.Ui.Background.Suit.Fit.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.Stretch}" ToolTip.Tip="{loc:L Setup.Ui.Background.Suit.Stretch.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.Tile}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.TopLeft}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.TopRight}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.BottomLeft}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Background.Suit.BottomRight}" />
+                        </c:MyComboBox>
+                    </Grid>
+                    <Grid x:Name="PanBackgroundOpacity" Height="22" Margin="0,0,0,7" IsVisible="False">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.Basic.Opacity2}" Margin="0,0,25,0" />
+                        <c:MySlider x:Name="SliderBackgroundOpacity" Tag="UiBackgroundOpacity" MaxValue="1000"
+                                    ValueByKey="10" Grid.Column="1" Change="SliderChange" />
+                    </Grid>
+                    <Grid x:Name="PanBackgroundBlur" Height="22" Margin="0,0,0,10" IsVisible="False">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.Background.Blur}" Margin="0,0,25,0" />
+                        <c:MySlider x:Name="SliderBackgroundBlur" Tag="UiBackgroundBlur" MaxValue="40"
+                                    Grid.Column="1" Change="SliderChange"
+                                    ToolTip.Tip="{loc:L Setup.Ui.Background.Blur.ToolTip}" />
+                    </Grid>
+                    <c:MyCheckBox Text="{loc:L Setup.Ui.Background.PauseVideo}" Margin="-1,0,0,8" Height="22"
+                                  x:Name="CheckAutoPauseVideo" Tag="UiAutoPauseVideo" Change="CheckBoxChange"
+                                  ToolTip.Tip="{loc:L Setup.Ui.Background.PauseVideo.ToolTip}" IsEnabled="True" />
+                    <c:MyCheckBox Text="{loc:L Setup.Ui.Background.ColorOverlay}" Margin="-1,0,0,8" Height="22" x:Name="CheckBackgroundColorful"
+                                  Tag="BackgroundColorful" Change="CheckBoxChange" />
+                    <Grid Height="35" Margin="0,2,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                        </Grid.ColumnDefinitions>
+                        <c:MyButton x:Name="BtnBackgroundOpen" MinWidth="140" Text="{loc:L Common.Action.OpenFolder}" Padding="13,0"
+                                    Margin="0,0,20,0" Click="BtnUIBgOpen_Click"
+                                    ToolTip.Tip="{loc:L Setup.Ui.Background.OpenFolder.ToolTip}" />
+                        <c:MyButton x:Name="BtnBackgroundRefresh" MinWidth="140" Text="{loc:L Setup.Ui.Background.Refresh}" Padding="13,0"
+                                    Margin="0,0,20,0" Click="BtnBackgroundRefresh_Click"
+                                    ToolTip.Tip="{loc:L Setup.Ui.Background.Refresh.ToolTip}"
+                                    Grid.Column="1" />
+                        <c:MyButton x:Name="BtnBackgroundClear" MinWidth="140" Text="{loc:L Setup.Ui.Background.Clear}" IsVisible="False"
+                                    Padding="13,0" Margin="0,0,20,0" ColorType="Red"
+                                    Click="BtnBackgroundClear_Click" Grid.Column="2" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard x:Name="CardMusic" Margin="0,0,0,15" Title="{loc:L Setup.Ui.Music.Title}">
+                <StackPanel Margin="25,42,25,20">
+                    <Grid x:Name="PanMusicVolume" IsVisible="False" Height="22" Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.Music.Volume}" Margin="0,0,25,0" />
+                        <c:MySlider x:Name="SliderMusicVolume" Tag="UiMusicVolume" MaxValue="1000" ValueByKey="10"
+                                    Grid.Column="1" Change="SliderChange" />
+                    </Grid>
+                    <StackPanel x:Name="PanMusicDetail" IsVisible="False" Margin="-1,0,0,3">
+                        <c:MyCheckBox Text="{loc:L Setup.Ui.Music.Shuffle}" Margin="0,0,0,5" Height="22" x:Name="CheckMusicRandom"
+                                      Tag="UiMusicRandom" Change="CheckBoxChange" />
+                        <c:MyCheckBox Text="{loc:L Setup.Ui.Music.AutoStart}" Margin="0,0,0,5" Height="22" x:Name="CheckMusicAuto"
+                                      Tag="UiMusicAuto" Change="CheckBoxChange" />
+                        <c:MyCheckBox Text="{loc:L Setup.Ui.Music.StartInGame}" Margin="0,0,0,5" Height="22"
+                                      x:Name="CheckMusicStart" Tag="UiMusicStart" Change="CheckMusicStart_OnChange" />
+                        <c:MyCheckBox Text="{loc:L Setup.Ui.Music.StopInGame}" Margin="0,0,0,5" Height="22"
+                                      x:Name="CheckMusicStop" Tag="UiMusicStop" Change="CheckMusicStop_OnChange" />
+                        <c:MyCheckBox Text="{loc:L Setup.Ui.Music.Smtc}" Margin="0,0,0,5" Height="22"
+                                      x:Name="CheckMusicSMTC" Tag="UiMusicSMTC" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.Ui.Music.Smtc.ToolTip}" />
+                    </StackPanel>
+                    <Grid Height="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                        </Grid.ColumnDefinitions>
+                        <c:MyButton x:Name="BtnMusicOpen" Text="{loc:L Common.Action.OpenFolder}" MinWidth="140" Padding="13,0"
+                                    Margin="0,0,20,0" Click="BtnMusicOpen_Click"
+                                    ToolTip.Tip="{loc:L Setup.Ui.Music.OpenFolder.ToolTip}" />
+                        <c:MyButton x:Name="BtnMusicRefresh" Text="{loc:L Setup.Ui.Music.Refresh}" MinWidth="140" Padding="13,0"
+                                    Margin="0,0,20,0" Click="BtnMusicRefresh_Click"
+                                    ToolTip.Tip="{loc:L Setup.Ui.Music.Refresh.ToolTip}" Grid.Column="1" />
+                        <c:MyButton x:Name="BtnMusicClear" Text="{loc:L Setup.Ui.Music.Clear}" MinWidth="140" IsVisible="False"
+                                    Padding="13,0" Margin="0,0,20,0" ColorType="Red" Click="BtnMusicClear_Click"
+                                    Grid.Column="2" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard x:Name="CardLogo" Margin="0,0,0,15" Title="{loc:L Setup.Ui.Logo.Title}">
+                <StackPanel Margin="25,40,25,15">
+                    <Grid Margin="-1,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="0.2*" />
+                        </Grid.ColumnDefinitions>
+                        <c:MyRadioBox Text="{loc:L Setup.Ui.Logo.None}" x:Name="RadioLogoType0" Height="22" Tag="UiLogoType/0"
+                                      Grid.Column="0" Check="RadioBoxChange" />
+                        <c:MyRadioBox Text="{loc:L Common.Option.Default}" x:Name="RadioLogoType1" Height="22" Tag="UiLogoType/1"
+                                      Grid.Column="1" Check="RadioBoxChange" />
+                        <c:MyRadioBox Text="{loc:L Setup.Ui.Logo.Text}" x:Name="RadioLogoType2" Height="22" Tag="UiLogoType/2"
+                                      Grid.Column="2" Check="RadioBoxChange" />
+                        <c:MyRadioBox Text="{loc:L Setup.Ui.Logo.Image}" x:Name="RadioLogoType3" Height="22" Tag="UiLogoType/3"
+                                      Grid.Column="3" Check="RadioBoxChange" PreviewCheck="RadioLogoType3_Check" />
+                    </Grid>
+                    <c:MyCheckBox Text="{loc:L Setup.Ui.Logo.LeftAlign}" Margin="-1,8,0,3" Height="22" x:Name="CheckLogoLeft"
+                                  Tag="UiLogoLeft" IsVisible="False" Change="CheckBoxChange" />
+                    <Grid x:Name="PanLogoText" Margin="0,14,0,5" IsVisible="False">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.Logo.TextLabel}" Margin="0,0,25,0" />
+                        <c:MyTextBox x:Name="TextLogoText" Tag="UiLogoText" Grid.Column="1" MaxLength="100"
+                                     ValidatedTextChanged="TextBoxChange" />
+                    </Grid>
+                    <Grid x:Name="PanLogoChange" Margin="0,14,0,5" Height="35" IsVisible="False">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                        </Grid.ColumnDefinitions>
+                        <c:MyButton x:Name="BtnLogoChange" Text="{loc:L Setup.Ui.Logo.ChangeImage}" MinWidth="140" Padding="13,0"
+                                    Margin="0,0,20,0" Click="BtnLogoChange_Click" />
+                        <c:MyButton x:Name="BtnLogoDelete" Text="{loc:L Setup.Ui.Logo.ClearImage}" MinWidth="140" Padding="13,0"
+                                    Margin="0,0,20,0" ColorType="Red" Click="BtnLogoDelete_Click" Grid.Column="1" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard Margin="0,0,0,15" Title="{loc:L Setup.Ui.Homepage.Title}" x:Name="CardCustom">
+                <StackPanel Margin="25,40,25,15">
+                    <Grid Margin="-1,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="0.2*" />
+                        </Grid.ColumnDefinitions>
+                        <c:MyRadioBox Text="{loc:L Setup.Ui.Homepage.Blank}" x:Name="RadioCustomType0" Height="22" Tag="UiCustomType/0"
+                                      Grid.Column="0" Check="RadioBoxChange" />
+                        <c:MyRadioBox Text="{loc:L Setup.Ui.Homepage.Preset}" x:Name="RadioCustomType3" Height="22" Tag="UiCustomType/3"
+                                      Grid.Column="1" Check="RadioBoxChange" />
+                        <c:MyRadioBox Text="{loc:L Setup.Ui.Homepage.LocalFile}" x:Name="RadioCustomType1" Height="22" Tag="UiCustomType/1"
+                                      Grid.Column="2" Check="RadioBoxChange" />
+                        <c:MyRadioBox Text="{loc:L Setup.Ui.Homepage.NetUpdate}" x:Name="RadioCustomType2" Height="22" Tag="UiCustomType/2"
+                                      Grid.Column="3" Check="RadioBoxChange" />
+                    </Grid>
+                    <c:MyHint Margin="0,15,0,-4" Text="{loc:L Setup.Ui.Homepage.HintReferToModSetup}" Theme="Blue" x:Name="HintCustom" />
+                    <c:MyHint Margin="0,15,0,6" Text="{loc:L Setup.Ui.Homepage.NetWarning}" Theme="Yellow"
+                              x:Name="HintCustomWarn"
+                              CanClose="True" RelativeSetup="HintCustomWarn" />
+                    <Grid Height="35" x:Name="PanCustomLocal" IsVisible="False" Margin="0,10,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+                        </Grid.ColumnDefinitions>
+                        <c:MyButton x:Name="BtnCustomRefresh" Grid.Column="0" MinWidth="140" Text="{loc:L Setup.Ui.Homepage.Refresh}"
+                                    Padding="13,0" Margin="0,0,20,0" HorizontalAlignment="Left"
+                                    ColorType="Highlight" Click="BtnCustomRefresh_Click" />
+                        <c:MyButton x:Name="BtnCustomTutorial" Grid.Column="1" MinWidth="140" Text="{loc:L Setup.Ui.Homepage.Tutorial}"
+                                    Padding="13,0" Margin="0,0,20,0" HorizontalAlignment="Left"
+                                    Click="BtnCustomTutorial_Click" />
+                    </Grid>
+                    <Grid x:Name="PanCustomNet" IsVisible="False" Margin="0,10,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.Homepage.DownloadUrl}" Margin="0,0,25,0" />
+                        <c:MyTextBox x:Name="TextCustomNet" Tag="UiCustomNet" Grid.Column="1" MaxHeight="28"
+                                     ValidatedTextChanged="TextBoxChange" />
+                    </Grid>
+                    <Grid x:Name="PanCustomPreset" IsVisible="False" Margin="0,12,10,5" Height="28">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.Homepage.PresetLabel}" Margin="0,0,25,0" />
+                        <c:MyComboBox x:Name="ComboCustomPreset" Grid.ColumnSpan="2" Tag="UiCustomPreset"
+                                      Grid.Column="1" SelectionChanged="ComboChange">
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.Trivia}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.EchoCave}" IsVisible="False" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.McNews}" />
+                            <!-- <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.SimpleHomepage}" /> -->
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.DailyModpack}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.McSkin}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.OpenBmclapi}" />
+                            <!-- <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.PclMarket}" /> -->
+                            <!-- <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.PclNews}" /> -->
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.PclManual}" />
+                            <!-- <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.OpenMcim}" IsVisible="False" /> -->
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.Magazine}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.GitHub}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.McUpdateSummary}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.NewsToday}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.MinecraftKnowledge}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.ModpackRecommendation}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.Bangumi}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.PclAnnouncement}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Ui.Homepage.Preset.McOfficialFeed}" />
+                        </c:MyComboBox>
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard x:Name="CardSidebar" Margin="0,0,0,15" Title="{loc:L Setup.UI.Sidebar.Title}">
+                <StackPanel Margin="25,40,25,15">
+                    <c:MyCheckBox Text="{loc:L Setup.UI.Sidebar.CheckIn}" Margin="-1,0,0,7" Height="22"
+                                  x:Name="CheckSidebarCheckIn" Tag="UiSidebarCheckIn" Change="CheckBoxChange" />
+                    <c:MyCheckBox Text="{loc:L Setup.UI.Sidebar.RecentPlay}" Margin="-1,0,0,7" Height="22"
+                                  x:Name="CheckSidebarRecentPlay" Tag="UiSidebarRecentPlay" Change="CheckBoxChange" />
+                    <c:MyCheckBox Text="{loc:L Setup.UI.Sidebar.News}" Margin="-1,0,0,7" Height="22"
+                                  x:Name="CheckSidebarNews" Tag="UiSidebarNews" Change="CheckBoxChange" />
+                    <TextBlock Text="{loc:L Setup.UI.Sidebar.Hint}" Margin="0,3,0,0" Opacity="0.6" FontSize="12"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard x:Name="CardSwitch" Margin="0,0,0,15" Title="{loc:L Setup.Ui.FeatureHide.Title}">
+                <StackPanel Margin="25,38,15,15">
+                    <TextBlock Margin="0,1,0,1" Text="{loc:L Setup.Ui.FeatureHide.Description}" TextWrapping="Wrap" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="18" />
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.9*" />
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="0.8*" />
+                            <ColumnDefinition Width="1.0*" />
+                            <ColumnDefinition Width="1.0*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="4" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.FeatureHide.MainPage}" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" Text="{loc:L Setup.Ui.FeatureHide.Item.Download}"
+                                      x:Name="CheckHiddenPageDownload" Tag="UiHiddenPageDownload"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" Text="{loc:L Setup.Ui.FeatureHide.Item.Settings}"
+                                      x:Name="CheckHiddenPageSetup" Tag="UiHiddenPageSetup" Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="1" Grid.Column="4" Text="{loc:L Setup.Ui.FeatureHide.Item.Tools}"
+                                      x:Name="CheckHiddenPageTools" Tag="UiHiddenPageTools" Change="CheckBoxChange" />
+                        <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.FeatureHide.SubSetup}" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" Text="{loc:L Setup.Ui.FeatureHide.Item.Launch}"
+                                      x:Name="CheckHiddenSetupLaunch" Tag="UiHiddenSetupLaunch"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="2" Grid.Column="3"
+                                      Text="Java" x:Name="CheckHiddenSetupJava" Tag="UiHiddenSetupJava"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="2" Grid.Column="4" Text="{loc:L Setup.Ui.FeatureHide.Item.GameManage}"
+                                      x:Name="CheckHiddenSetupGameManage" Tag="UiHiddenSetupGameManage"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="2" Grid.Column="5" Text="{loc:L Setup.Ui.FeatureHide.Item.GameLink}"
+                                      x:Name="CheckHiddenSetupGameLink" Tag="UiHiddenSetupGameLink"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="2" Grid.Column="6"
+                                      Text="{loc:L Setup.Ui.FeatureHide.Item.Ui}" x:Name="CheckHiddenSetupUI" Tag="UiHiddenSetupUi"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="3" Grid.Column="2" Text="{loc:L Setup.Ui.FeatureHide.Item.Language}"
+                                      x:Name="CheckHiddenSetupLauncherLanguage" Tag="UiHiddenSetupLauncherLanguage"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="3" Grid.Column="3" Text="{loc:L Setup.Ui.FeatureHide.Item.Misc}"
+                                      x:Name="CheckHiddenLauncherMisc" Tag="UiHiddenSetupLauncherMisc"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="3" Grid.Column="4"
+                                      Text="{loc:L Setup.Ui.FeatureHide.Item.Update}" x:Name="CheckHiddenSetupUpdate" Tag="UiHiddenSetupUpdate"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="3" Grid.Column="5" Text="{loc:L Setup.Ui.FeatureHide.Item.About}"
+                                      x:Name="CheckHiddenSetupAbout" Tag="UiHiddenSetupAbout"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="3" Grid.Column="6" Text="{loc:L Setup.Ui.FeatureHide.Item.Feedback}"
+                                      x:Name="CheckHiddenSetupFeedback" Tag="UiHiddenSetupFeedback"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="3" Grid.Column="7"
+                                      Text="{loc:L Setup.Ui.FeatureHide.Item.Log}" x:Name="CheckHiddenSetupLog" Tag="UiHiddenSetupLog"
+                                      Change="CheckBoxChange" />
+                        <TextBlock Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.FeatureHide.SubTools}" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="4" Grid.Column="2" Text="{loc:L Setup.Ui.FeatureHide.Item.Lobby}" x:Name="CheckHiddenToolsGameLink" Tag="UiHiddenToolsGameLink" Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="4" Grid.Column="3" Text="{loc:L Setup.Ui.FeatureHide.Item.Toolbox}" x:Name="CheckHiddenToolsTest" Tag="UiHiddenToolsTest" Change="CheckBoxChange" />
+                        <TextBlock Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.FeatureHide.SubInstance}" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="5" Grid.Column="2" Text="{loc:L Setup.Ui.FeatureHide.Item.Edit}"
+                                      x:Name="CheckHiddenVersionEdit" Tag="UiHiddenVersionEdit"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="5" Grid.Column="3" Text="{loc:L Setup.Ui.FeatureHide.Item.Export}"
+                                      x:Name="CheckHiddenVersionExport" Tag="UiHiddenVersionExport"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="5" Grid.Column="4" Text="{loc:L Setup.Ui.FeatureHide.Item.Save}"
+                                      x:Name="CheckHiddenVersionSave" Tag="UiHiddenVersionSave"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="5" Grid.Column="5" Text="{loc:L Setup.Ui.FeatureHide.Item.Screenshot}"
+                                      x:Name="CheckHiddenVersionScreenshot" Tag="UiHiddenVersionScreenshot"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="5" Grid.Column="6"
+                                      Text="Mod" x:Name="CheckHiddenVersionMod" Tag="UiHiddenVersionMod"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="6" Grid.Column="2"
+                                      Text="{loc:L Setup.Ui.FeatureHide.Item.ResourcePack}" x:Name="CheckHiddenVersionResourcePack"
+                                      Tag="UiHiddenVersionResourcePack" Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="6" Grid.Column="3"
+                                      Text="{loc:L Setup.Ui.FeatureHide.Item.Shader}" x:Name="CheckHiddenVersionShader" Tag="UiHiddenVersionShader"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="6" Grid.Column="4"
+                                      Grid.ColumnSpan="2" Text="{loc:L Setup.Ui.FeatureHide.Item.Schematic}" x:Name="CheckHiddenVersionSchematic"
+                                      Tag="UiHiddenVersionSchematic" Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="6" Grid.Column="6"
+                                      Text="{loc:L Setup.Ui.FeatureHide.Item.Server}" x:Name="CheckHiddenVersionServer" Tag="UiHiddenVersionServer"
+                                      Change="CheckBoxChange" />
+                        <TextBlock Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{loc:L Setup.Ui.FeatureHide.SpecificFeature}" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="7" Grid.Column="2"
+                                      Text="{loc:L Setup.Ui.FeatureHide.Item.InstanceSelect}" x:Name="CheckHiddenFunctionSelect" Tag="UiHiddenFunctionSelect"
+                                      ToolTip.Tip="{loc:L Setup.Ui.FeatureHide.Item.InstanceSelect.ToolTip}" Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="7" Grid.Column="3"
+                                      Text="{loc:L Setup.Ui.FeatureHide.Item.ModUpdate}" x:Name="CheckHiddenFunctionModUpdate"
+                                      Tag="UiHiddenFunctionModUpdate" ToolTip.Tip="{loc:L Setup.Ui.FeatureHide.Item.ModUpdate.ToolTip}"
+                                      Change="CheckBoxChange" />
+                        <c:MyCheckBox Height="22" VerticalAlignment="Center" Grid.Row="7" Grid.Column="4"
+                                      Text="{loc:L Setup.Ui.FeatureHide.Item.FeatureHide}" x:Name="CheckHiddenFunctionHidden" Tag="UiHiddenFunctionHidden"
+                                      ToolTip.Tip="{loc:L Setup.Ui.FeatureHide.Item.FeatureHide.ToolTip}"
+                                      Change="CheckBoxChange" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

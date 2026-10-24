@@ -1,0 +1,29 @@
+<local:MyCard x:Class="PCL.Shion.Controls.CheckInWidget"
+              xmlns="https://github.com/avaloniaui"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:local="using:PCL.Shion.Controls"
+              xmlns:loc="using:PCL.Shion.Localization"
+              Margin="0,0,0,15" Title="{loc:L Widget.CheckIn.Title}">
+    <StackPanel Margin="20,38,20,12">
+        <!-- 打卡按钮 / 已打卡状态 -->
+        <Grid Height="35">
+            <local:MyButton x:Name="BtnCheckIn" Text="{loc:L Widget.CheckIn.Button}"
+                            ColorType="Highlight" Click="BtnCheckIn_Click" />
+            <StackPanel x:Name="PanDone" Orientation="Horizontal" HorizontalAlignment="Center"
+                        VerticalAlignment="Center" IsVisible="False" IsHitTestVisible="False">
+                <Path Data="M1,6 L5,10 L13,2" StrokeThickness="2" StrokeLineCap="Round"
+                      StrokeJoin="Round" Width="14" Height="12"
+                      Margin="0,1,7,0" VerticalAlignment="Center"
+                      Stroke="{DynamicResource ColorBrush3}" />
+                <TextBlock Text="{loc:L Widget.CheckIn.Done}" FontSize="14" FontWeight="Bold"
+                           VerticalAlignment="Center" Foreground="{DynamicResource ColorBrush3}" />
+            </StackPanel>
+        </Grid>
+        <!-- 统计 -->
+        <TextBlock x:Name="LabStreak" Margin="0,12,0,0" FontSize="13" FontWeight="Bold"
+                   TextWrapping="Wrap" />
+        <TextBlock x:Name="LabStats" Margin="0,3,0,0" FontSize="12" Opacity="0.6" TextWrapping="Wrap" />
+        <local:MyTextButton x:Name="BtnMore" Text="{loc:L Widget.Common.More}" FontSize="12"
+                            HorizontalAlignment="Right" Margin="0,6,-4,0" Click="BtnMore_Click" />
+    </StackPanel>
+</local:MyCard>

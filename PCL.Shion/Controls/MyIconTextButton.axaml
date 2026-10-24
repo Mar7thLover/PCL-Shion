@@ -1,0 +1,35 @@
+<Border x:Name="PanBack" x:Class="PCL.Shion.Controls.MyIconTextButton"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:PCL.Shion.Controls"
+        HorizontalAlignment="Center" VerticalAlignment="Center" Background="{DynamicResource ColorBrushSemiTransparent}"
+        CornerRadius="13.5" MinHeight="27" MaxHeight="27">
+    <Border.Child>
+        <StackPanel Orientation="Horizontal">
+            <Grid x:Name="LogoHost"
+                  Width="16" Height="16"
+                  Margin="12,0,0,0"
+                  RenderTransformOrigin="0.5,0.5"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Left">
+                <Grid.RenderTransform>
+                    <ScaleTransform />
+                </Grid.RenderTransform>
+                <Path x:Name="ShapeLogo"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Stretch="Uniform"
+                      Fill="White" />
+                <local:SvgIcon x:Name="ShapeSvgIcon"
+                               Stretch="Uniform"
+                               IsVisible="False"
+                               IconBrush="{Binding #ShapeLogo.Fill}" />
+            </Grid>
+            <TextBlock x:Name="LabText"
+                       VerticalAlignment="Center"
+                       Foreground="White"
+                       Margin="7,0,12,1"
+                       UseLayoutRounding="False" />
+        </StackPanel>
+    </Border.Child>
+</Border>

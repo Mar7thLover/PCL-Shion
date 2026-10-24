@@ -1,0 +1,21 @@
+{
+    "Mods.SearchPlaceholder": "搜索名称、ID 或文件名",
+    "Mods.Refresh": "刷新",
+    "Mods.OpenFolder": "打开 Mod 文件夹",
+    "Mods.Summary": "共 {0} 个 Mod，已启用 {1} 个",
+    "Mods.Loading": "正在读取 Mod…",
+    "Mods.LoadFailed": "无法读取 Mod：{0}",
+    "Mods.Empty": "这个实例还没有 Mod，把 .jar 文件放进 Mod 文件夹即可",
+    "Mods.NoMatch": "没有匹配的 Mod",
+    "Mods.IssuesTitle": "发现 {0} 个问题",
+    "Mods.IssueDuplicate": "{0} 有多个副本：{1}",
+    "Mods.IssueMissingDependency": "{0} 缺少前置 Mod：{1}",
+    "Mods.FileSeparator": "、",
+    "Mods.Delete": "删除",
+    "Mods.DeleteQuestion": "移到回收站？",
+    "Mods.DeleteConfirm": "确认删除",
+    "Mods.Cancel": "取消",
+    "Mods.EnableFailed": "无法启用 {0}：{1}",
+    "Mods.DisableFailed": "无法禁用 {0}：{1}",
+    "Mods.DeleteFailed": "无法删除 {0}：{1}"
+}

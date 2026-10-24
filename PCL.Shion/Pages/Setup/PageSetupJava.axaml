@@ -1,0 +1,26 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:PCL.Shion.Controls"
+                    xmlns:loc="using:PCL.Shion.Localization"
+                    xmlns:pages="using:PCL.Shion.Pages"
+                    x:Class="PCL.Shion.Pages.Setup.PageSetupJava"
+                    PanScroll="{Binding #PanBack, Mode=OneWay}">
+    <c:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <Grid>
+            <StackPanel x:Name="PanMain" Margin="25,25,25,10">
+                <c:MyCard Margin="0,0,0,15">
+                    <StackPanel Margin="8" Orientation="Horizontal">
+                        <c:MyIconTextButton x:Name="BtnAdd" Text="{loc:L Setup.Java.Add}" LogoScale="0.9"
+                                            Click="BtnAdd_Click" SvgIcon="lucide/circle-plus" />
+                    </StackPanel>
+                </c:MyCard>
+                <c:MyCard Margin="0,0,0,15">
+                    <StackPanel Margin="15" Orientation="Vertical" x:Name="PanContent" />
+                </c:MyCard>
+            </StackPanel>
+            <c:MyCard x:Name="CardLoad" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <c:MyLoading Text="{loc:L Setup.Java.Loading}" x:Name="PanLoad" Margin="12" />
+            </c:MyCard>
+        </Grid>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

@@ -1,0 +1,46 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:c="using:PCL.Shion.Controls"
+                   xmlns:loc="using:PCL.Shion.Localization"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   xmlns:comp="using:PCL.Shion.Pages.Download.Comp"
+                   x:Class="PCL.Shion.Pages.Download.Comp.PageDownloadResourcePack">
+    <comp:PageComp x:Name="ResourcePackList" PageType="ResourcePack">
+        <c:MyComboBoxItem Tag="" Content="{loc:L Common.Option.All}" IsSelected="True" />
+
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Style}" IsEnabled="False" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.VanillaLike}" Tag="403/vanilla-like" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Realistic}" Tag="400/realistic" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Modern}" Tag="401/" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Medieval}" Tag="402/" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Steampunk}" Tag="399/" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Themed}" Tag="/themed" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Simplistic}" Tag="/simplistic" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Decoration}" Tag="/decoration" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Combat}" Tag="/combat" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Utility}" Tag="/utility" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Tweaks}" Tag="/tweaks" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Cursed}" Tag="/cursed" />
+
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Feature}" IsEnabled="False" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Entities}" Tag="/entities" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Audio}" Tag="/audio" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Fonts}" Tag="5244/fonts" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Models}" Tag="/models" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Locale}" Tag="/locale" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Gui}" Tag="/gui" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.CoreShaders}" Tag="/core-shaders" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Animated}" Tag="404/" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.ModSupport}" Tag="4465/modded" />
+
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Resolution}" IsEnabled="False" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.ResourcePack.Resolution8xOrLower}" Tag="/8x-" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.ResourcePack.Resolution16x}" Tag="393/16x" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.ResourcePack.Resolution32x}" Tag="394/32x" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.ResourcePack.Resolution48x}" Tag="/48x" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.ResourcePack.Resolution64x}" Tag="395/64x" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.ResourcePack.Resolution128x}" Tag="396/128x" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.ResourcePack.Resolution256x}" Tag="397/256x" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.ResourcePack.Resolution512xOrHigher}" Tag="398/512x+" />
+    </comp:PageComp>
+</pages:MyPageRight>

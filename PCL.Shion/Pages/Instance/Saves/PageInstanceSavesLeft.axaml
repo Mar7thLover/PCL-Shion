@@ -1,0 +1,29 @@
+<pages:MyPageLeft xmlns="https://github.com/avaloniaui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:c="using:PCL.Shion.Controls"
+                       xmlns:loc="using:PCL.Shion.Localization"
+                       xmlns:pages="using:PCL.Shion.Pages"
+                       x:Class="PCL.Shion.Pages.Instance.Saves.PageInstanceSavesLeft"
+                       HorizontalAlignment="Left">
+    <StackPanel x:Name="PanItem" Margin="0,12,0,0">
+        <c:MyListItem x:Name="ItemInfo" IsScaleAnimationEnabled="False" Checked="True" Type="RadioBox" Tag="0"
+                      MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                      Title="{loc:L Instance.Saves.Left.Info}"
+                      LogoScale="1"
+                      SvgIcon="lucide/info" />
+        <c:MyListItem x:Name="ItemDatapack" Title="{loc:L Instance.Saves.Left.Datapack}" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="1"
+                      MinPaddingRight="35" Height="36" VerticalAlignment="Top" LogoScale="0.91"
+                      SvgIcon="lucide/file-archive">
+            <c:MyListItem.ButtonList>
+                    <c:MyIconButton Tag="2" ToolTip.Tip="{loc:L Common.Action.Refresh}" ToolTip.Placement="Right"
+                                    ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                    Click="RefreshButton_Click" LogoScale="0.85"
+                                    SvgIcon="lucide/refresh-cw" />
+                </c:MyListItem.ButtonList>
+        </c:MyListItem>
+        <TextBlock Text="{loc:L Instance.Saves.Left.QuickActions}" Margin="13,6,5,4" Opacity="0.6" FontSize="12" />
+        <c:MyListItem x:Name="BtnOpenFolder" Title="{loc:L Common.Action.OpenFolder}" IsScaleAnimationEnabled="False" Type="RadioBox"
+                      MinPaddingRight="35" Height="36" VerticalAlignment="Top" LogoScale="0.8"
+                      SvgIcon="lucide/folder-open" />
+    </StackPanel>
+</pages:MyPageLeft>

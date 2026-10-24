@@ -1,0 +1,238 @@
+<pages:MyPageLeft xmlns="https://github.com/avaloniaui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:local="using:PCL.Shion.Controls"
+                       xmlns:loc="using:PCL.Shion.Localization"
+                       xmlns:pages="using:PCL.Shion.Pages"
+                       x:Class="PCL.Shion.Pages.Download.PageDownloadLeft">
+    <local:MyScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+                          Theme="{DynamicResource ScrollViewerFullMargin}">
+        <StackPanel Margin="0,12,0,0" Name="PanItem">
+
+            <local:MyListItem x:Name="ItemInstall" Checked="True" IsScaleAnimationEnabled="False" Type="RadioBox"
+                              Tag="1" MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.Minecraft}"
+                              SvgIcon="lucide/boxes">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="1" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+
+            <TextBlock Text="{loc:L Download.Left.CommunityResources}" Margin="13,10,5,4" Opacity="0.6"
+                       FontSize="12" />
+            <local:MyListItem x:Name="ItemMod" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="2"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.Mod}"
+                              LogoScale="0.97"
+                              SvgIcon="lucide/puzzle">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="2" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+
+            <local:MyListItem x:Name="ItemPack" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="3"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.Modpack}"
+                              LogoScale="0.98"
+                              SvgIcon="lucide/package">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="3" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+            <local:MyListItem x:Name="ItemDataPack" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="4"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.DataPack}"
+                              LogoScale="0.96"
+                              SvgIcon="lucide/file-archive">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="4" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+            <local:MyListItem x:Name="ItemResourcePack" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="5"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.ResourcePack}"
+                              LogoScale="0.81"
+                              SvgIcon="lucide/layers">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="5" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+            <local:MyListItem x:Name="ItemShader" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="6"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.Shader}"
+                              LogoScale="1.04"
+                              SvgIcon="lucide/sparkles">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="6" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+            <local:MyListItem x:Name="ItemWorld" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="7"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.World}"
+                              LogoScale="0.85"
+                              SvgIcon="lucide/globe">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="7" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+            <local:MyListItem x:Name="ItemFavorites" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="8"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.Favorites}"
+                              SvgIcon="lucide/heart">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="8" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+
+            <TextBlock Text="{loc:L Download.Left.Installation}" Margin="13,10,5,4" Opacity="0.6" FontSize="12" />
+            <local:MyListItem x:Name="ItemClient" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="9"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.Minecraft}"
+                              LogoScale="0.98"
+                              SvgIcon="lucide/package">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="9" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+            <local:MyListItem x:Name="ItemOptiFine" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="10"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.Optifine}"
+                              LogoScale="1.00"
+                              SvgIcon="lucide/gauge">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="10" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+            <local:MyListItem x:Name="ItemForge" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="11"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.Forge}"
+                              LogoScale="1.00"
+                              SvgIcon="lucide/anvil">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="11" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+            <local:MyListItem x:Name="ItemNeoForge" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="12"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.NeoForge}"
+                              LogoScale="0.95"
+                              SvgIcon="lucide/cat">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="12" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+            <local:MyListItem x:Name="ItemCleanroom" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="13"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.Cleanroom}"
+                              LogoScale="0.95"
+                              SvgIcon="lucide/flask-conical">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="13" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+            <local:MyListItem x:Name="ItemFabric" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="14"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.Fabric}"
+                              LogoScale="1.02"
+                              SvgIcon="lucide/scroll">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="14" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+            <local:MyListItem x:Name="ItemLegacyFabric" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="18"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.LegacyFabric}"
+                              LogoScale="1.02"
+                              SvgIcon="lucide/scroll">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="18" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+            <local:MyListItem x:Name="ItemLabyMod" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="17"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.LabyMod}"
+                              LogoScale="1.02"
+                              SvgIcon="lucide/box">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="17" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+            <local:MyListItem x:Name="ItemLiteLoader" Type="RadioBox" IsScaleAnimationEnabled="False" Tag="16"
+                              MinPaddingRight="35" Height="36" VerticalAlignment="Top"
+                              Title="{loc:L Download.Left.LiteLoader}"
+                              LogoScale="1.06"
+                              SvgIcon="lucide/egg">
+                <local:MyListItem.ButtonList>
+                        <local:MyIconButton Tag="16" ToolTip.Tip="{loc:L Common.Action.Refresh}"
+                                            ToolTip.Placement="Right"
+                                            ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                            LogoScale="0.85"
+                                            SvgIcon="lucide/refresh-cw" />
+                    </local:MyListItem.ButtonList>
+            </local:MyListItem>
+        </StackPanel>
+    </local:MyScrollViewer>
+</pages:MyPageLeft>

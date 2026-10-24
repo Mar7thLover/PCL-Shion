@@ -1,0 +1,24 @@
+<Border x:Class="PCL.Shion.Controls.MyHint" x:Name="PanBack"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:PCL.Shion.Controls"
+        xmlns:loc="using:PCL.Shion.Localization"
+        UseLayoutRounding="True" HorizontalAlignment="Stretch" BorderThickness="3,0,0,0"
+        BorderBrush="#99FF4444" CornerRadius="2">
+    <Border.Child>
+        <Grid UseLayoutRounding="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock IsHitTestVisible="False" x:Name="LabText" LineHeight="16" Margin="0,0,0,-1" Padding="12,9"
+                       VerticalAlignment="Center" TextWrapping="Wrap" />
+            <local:MyIconButton x:Name="BtnClose" IsVisible="False" Theme="Custom" Margin="0,0,8,0" Grid.Column="1"
+                                Height="20" Width="20" VerticalAlignment="Center"
+                                SvgIcon="lucide/x"
+                                ToolTip.Tip="{loc:L Common.Hint.DoNotShowAgain}" ToolTip.Placement="Center"
+                                ToolTip.VerticalOffset="29"
+                                ToolTip.HorizontalOffset="2" />
+        </Grid>
+    </Border.Child>
+</Border>

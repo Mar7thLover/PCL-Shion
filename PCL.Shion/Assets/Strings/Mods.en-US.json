@@ -1,0 +1,21 @@
+{
+    "Mods.SearchPlaceholder": "Search by name, ID or file name",
+    "Mods.Refresh": "Refresh",
+    "Mods.OpenFolder": "Open mods folder",
+    "Mods.Summary": "{0} mods in total, {1} enabled",
+    "Mods.Loading": "Reading mods…",
+    "Mods.LoadFailed": "Could not read mods: {0}",
+    "Mods.Empty": "This instance has no mods yet. Put .jar files into the mods folder.",
+    "Mods.NoMatch": "No matching mods",
+    "Mods.IssuesTitle": "Issues found: {0}",
+    "Mods.IssueDuplicate": "{0} has multiple copies: {1}",
+    "Mods.IssueMissingDependency": "{0} is missing a required mod: {1}",
+    "Mods.FileSeparator": ", ",
+    "Mods.Delete": "Delete",
+    "Mods.DeleteQuestion": "Move to trash?",
+    "Mods.DeleteConfirm": "Delete",
+    "Mods.Cancel": "Cancel",
+    "Mods.EnableFailed": "Could not enable {0}: {1}",
+    "Mods.DisableFailed": "Could not disable {0}: {1}",
+    "Mods.DeleteFailed": "Could not delete {0}: {1}"
+}

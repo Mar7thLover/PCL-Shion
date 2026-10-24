@@ -1,0 +1,30 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:c="using:PCL.Shion.Controls"
+                   xmlns:loc="using:PCL.Shion.Localization"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   xmlns:comp="using:PCL.Shion.Pages.Download.Comp"
+                   x:Class="PCL.Shion.Pages.Download.Comp.PageDownloadShader">
+    <comp:PageComp x:Name="ShaderList" PageType="Shader">
+        <c:MyComboBoxItem Tag="" Content="{loc:L Common.Option.All}" IsSelected="True" />
+
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Style}" IsEnabled="False" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.VanillaLike}" Tag="6555/vanilla-like" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Fantasy}" Tag="6554/fantasy" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Realistic}" Tag="6553/realistic" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.SemiRealistic}" Tag="/semi-realistic" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Cartoon}" Tag="/cartoon" />
+
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Feature}" IsEnabled="False" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.ColoredLighting}" Tag="/colored-lighting" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.PathTracing}" Tag="/path-tracing" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Pbr}" Tag="/pbr" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.Reflections}" Tag="/reflections" />
+
+        <c:MyComboBoxItem Content="{loc:L Download.Comp.Category.Performance}" IsEnabled="False" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.PerformancePotato}" Tag="/potato" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.PerformanceLow}" Tag="/low" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.PerformanceMedium}" Tag="/medium" />
+        <c:MyComboBoxItem Margin="15,0,0,0" Content="{loc:L Download.Comp.Category.PerformanceHigh}" Tag="/high" />
+    </comp:PageComp>
+</pages:MyPageRight>

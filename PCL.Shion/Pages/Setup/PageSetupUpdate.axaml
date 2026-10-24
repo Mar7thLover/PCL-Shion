@@ -1,0 +1,175 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:PCL.Shion.Controls"
+                    xmlns:loc="using:PCL.Shion.Localization"
+                    xmlns:pages="using:PCL.Shion.Pages"
+                    x:Class="PCL.Shion.Pages.Setup.PageSetupUpdate">
+    <c:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="25,25,25,10">
+            <c:MyCard x:Name="CardShionNotice" Margin="0,0,0,15">
+                <StackPanel Margin="20,20,20,20">
+                    <TextBlock x:Name="TextShionNotice" FontSize="14" LineHeight="23" TextWrapping="Wrap" />
+                    <c:MyButton x:Name="BtnShionReleases" Text="{loc:L Setup.Update.Shion.OpenReleases}" ColorType="Highlight" Height="35" Padding="13,0" HorizontalAlignment="Left" Margin="0,15,0,0" Click="BtnShionReleases_Click" />
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard x:Name="CardUpdateSettings" IsVisible="False">
+                <StackPanel Margin="20,15,20,15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="8" />
+                            <ColumnDefinition Width="75" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="7" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="7" />
+                            <RowDefinition Height="28" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{loc:L Setup.Update.Channel.Title}" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Margin="0,0,25,0" />
+                        <c:MyComboBox x:Name="ComboSystemUpdateChannel" Tag="SystemUpdateChannel" Grid.Column="1"
+                                      Grid.ColumnSpan="3" Grid.Row="0"
+                                      SelectionChanged="ComboSystemUpdateBranch_SelectionChanged">
+                            <c:MyComboBoxItem Content="{loc:L Setup.Update.Channel.Release}"
+                                              ToolTip.Tip="{loc:L Setup.Update.Channel.Release.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Update.Channel.Beta}"
+                                              ToolTip.Tip="{loc:L Setup.Update.Channel.Beta.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Update.Channel.Dev}"
+                                              ToolTip.Tip="{loc:L Setup.Update.Channel.Dev.ToolTip}"
+                                              IsVisible="False" />
+                        </c:MyComboBox>
+                        <TextBlock Text="{loc:L Setup.Update.Auto.Title}" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Margin="0,0,25,0" />
+                        <c:MyComboBox x:Name="ComboSystemUpdateMode" Tag="SystemUpdateMode" Grid.Column="1"
+                                      Grid.ColumnSpan="3" Grid.Row="2"
+                                      SelectionChanged="ComboSystemUpdateMode_SelectionChanged">
+                            <c:MyComboBoxItem Content="{loc:L Setup.Update.Auto.DownloadAndInstall}" ToolTip.Tip="{loc:L Setup.Update.Auto.DownloadAndInstall.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Update.Auto.DownloadAndNotify}" ToolTip.Tip="{loc:L Setup.Update.Auto.DownloadAndNotify.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Update.Auto.NotifyOnly}" ToolTip.Tip="{loc:L Setup.Update.Auto.NotifyOnly.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Update.Auto.Disabled}" ToolTip.Tip="{loc:L Setup.Update.Auto.Disabled.ToolTip}" />
+                        </c:MyComboBox>
+                        <TextBlock Text="{loc:L Setup.Update.MirrorChyanCdk.Label}" Grid.Row="4" VerticalAlignment="Center"
+                                   HorizontalAlignment="Left" Margin="0,0,25,0" />
+                        <TextBox x:Name="TextMirrorCDK"
+                                 PasswordChar="●"
+                                 ToolTip.Tip="{loc:L Setup.Update.MirrorChyanCdk.ToolTip}"
+                                 Grid.Row="4" Grid.Column="1"
+                                 TextChanged="TextMirrorCDK_PasswordChanged" />
+                        <c:MyButton x:Name="BtnGetMirrorCDK" Text="{loc:L Setup.Update.MirrorChyanCdk.Get}" Grid.Column="3" Grid.Row="4"
+                                    ColorType="Highlight" Click="BtnGetMirrorCDK_Click" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard x:Name="CardUpdate" Margin="0,15" IsVisible="False">
+                <StackPanel Margin="20,20,20,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="85" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="29" />
+                            <RowDefinition Height="1" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="8" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <c:MyImage x:Name="ImgUpdateIcon" Source="https://www.pclc.cc/img/pcl-ce/icon.webp"
+                                   Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="50" Width="50"
+                                   HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock x:Name="TextUpdateName" Text="PCL Shion" FontWeight="Bold" FontSize="20"
+                                   Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                        <TextBlock x:Name="TextUpdateDesc" Text="by Mar7thLover" FontSize="14" Grid.Row="2"
+                                   Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <c:MyButton x:Name="BtnUpdate" Text="{loc:L Setup.Update.Install}" ColorType="Highlight" Grid.Row="0"
+                                    Grid.RowSpan="2" Grid.Column="3" HorizontalAlignment="Center"
+                                    VerticalAlignment="Center" Width="85" Height="30"
+                                    Click="BtnUpdate_Click" />
+                        <TextBlock x:Name="TextChangelog"
+                                   Text="{loc:L Setup.Update.Changelog.Placeholder}"
+                                   Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" TextWrapping="Wrap" />
+                        <c:MyTextButton x:Name="BtnChangelogDetail" Text="{loc:L Setup.Update.Changelog.MoreInfo}" FontWeight="Thin"
+                                        Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Left"
+                                        VerticalAlignment="Center" Click="BtnChangelogDetail_Click" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard x:Name="CardCheck" Margin="0,15" IsVisible="False">
+                <StackPanel Margin="20,20,20,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="29" />
+                            <RowDefinition Height="1" />
+                            <RowDefinition Height="20" />
+                        </Grid.RowDefinitions>
+                        <Image Source="avares://PCL.Shion/Assets/Images/icon.png" Grid.Column="0" Grid.Row="0"
+                               Grid.RowSpan="3" Height="50" Width="50" HorizontalAlignment="Left"
+                               VerticalAlignment="Center" />
+                        <TextBlock x:Name="TextCurrentVersion" Text="PCL Shion" FontWeight="Bold" FontSize="20"
+                                   Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                        <TextBlock x:Name="TextCurrentDesc" Text="{loc:L Setup.Update.Shion.Status}" FontSize="14" Grid.Row="2" Grid.Column="2"
+                                   HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <c:MyButton x:Name="BtnCheckAgain" Text="{loc:L Setup.Update.CheckAgain}" ColorType="Highlight" Grid.Row="0"
+                                    Grid.RowSpan="2" Grid.Column="3" HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch" Click="BtnCheckAgain_OnClick" />
+                        <c:MyButton x:Name="BtnChangelog" Text="{loc:L Setup.Update.Changelog.View}" ColorType="Normal" Grid.Row="0"
+                                    Grid.RowSpan="2" Grid.Column="5" HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch" Click="BtnChangelog_Click" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard x:Name="CardOtherOption" Title="{loc:L Setup.Update.OtherOptions.Title}" CanSwap="True" IsSwapped="True"
+                      IsVisible="False">
+                <StackPanel Margin="20,40,20,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="85" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="29" />
+                            <RowDefinition Height="1" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="8" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Image Source="avares://PCL.Shion/Assets/Images/icon.png" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
+                               Height="50" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock x:Name="TextOptionalUpdateName" Text="AquaCL 3.0.0" FontWeight="Bold" FontSize="20"
+                                   Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                        <TextBlock x:Name="TextOptionalUpdateDesc" Text="20.0 MiB" FontSize="14" Grid.Row="2"
+                                   Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <c:MyButton x:Name="BtnOptionalUpdate" Text="{loc:L Setup.Update.Install}" ColorType="Highlight" Grid.Row="0"
+                                    Grid.RowSpan="2" Grid.Column="3" HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch" />
+                        <TextBlock x:Name="TextOptionalChangelog"
+                                   Text="{loc:L Setup.Update.OtherOptions.Placeholder}"
+                                   Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" TextWrapping="Wrap" />
+                        <c:MyTextButton x:Name="BtnOptionalChangelogDetail" Text="{loc:L Setup.Update.Changelog.MoreInfo}" FontWeight="Thin"
+                                        Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Left"
+                                        VerticalAlignment="Center" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

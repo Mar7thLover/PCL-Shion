@@ -1,0 +1,95 @@
+<Grid xmlns="https://github.com/avaloniaui"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:c="using:PCL.Shion.Controls"
+      xmlns:loc="using:PCL.Shion.Localization"
+      x:Class="PCL.Shion.Controls.MyCompItem"
+      Height="64"
+      Background="{DynamicResource ColorBrushSemiTransparent}"
+      RenderTransformOrigin="0.5,0.5">
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="7" />
+        <ColumnDefinition Width="50" />
+        <ColumnDefinition Width="8" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="20" />
+        <RowDefinition Height="18" />
+        <RowDefinition Height="16" />
+        <RowDefinition Height="1.1*" />
+    </Grid.RowDefinitions>
+
+    <!-- Logo -->
+    <Border Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" IsHitTestVisible="False"
+            Width="50" Height="50" CornerRadius="6" ClipToBounds="True"
+            HorizontalAlignment="Right" VerticalAlignment="Center">
+        <c:MyImage x:Name="PathLogo" LoadingSource="avares://PCL.Shion/Assets/Images/Icons/NoIcon.png"
+                   Stretch="UniformToFill" />
+    </Border>
+
+    <!-- 标题 -->
+    <StackPanel Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Center"
+                Orientation="Horizontal" IsHitTestVisible="False">
+        <TextBlock x:Name="LabTitle" TextTrimming="CharacterEllipsis" FontSize="14"
+                   Foreground="{DynamicResource ColorBrush1}" />
+        <TextBlock x:Name="LabTitleRaw" TextTrimming="CharacterEllipsis" FontSize="12"
+                   Foreground="{DynamicResource ColorBrushGray1}" Opacity="0.4" VerticalAlignment="Center"
+                   IsVisible="False" Margin="6,0,0,0" />
+    </StackPanel>
+
+    <!-- Tag 与 详情 -->
+    <StackPanel x:Name="PanTags" Grid.Row="2" Grid.Column="3" Orientation="Horizontal"
+                VerticalAlignment="Center" Margin="-1,0,1,0" IsVisible="False" IsHitTestVisible="False" />
+    <TextBlock x:Name="LabInfo" Grid.Row="2" Grid.Column="4" VerticalAlignment="Center" Margin="0,0,3,0.5"
+               TextTrimming="CharacterEllipsis" FontSize="12" Foreground="{DynamicResource ColorBrushGray3}"
+               IsHitTestVisible="True" />
+
+    <!-- 下边栏 -->
+    <Grid Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" IsHitTestVisible="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="0.25*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="0.25*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="0.25*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="0.25*" />
+        </Grid.ColumnDefinitions>
+        <c:SvgIcon x:Name="SvgIconVersion" Grid.Column="0" IconBrush="{DynamicResource ColorBrushGray3}"
+                   Height="12" Icon="lucide/layout-list" />
+        <TextBlock x:Name="LabVersion" Grid.Column="1" Margin="4,0,2,0" VerticalAlignment="Center"
+                   Foreground="{DynamicResource ColorBrushGray3}" FontSize="12" TextTrimming="CharacterEllipsis" />
+        <c:SvgIcon x:Name="SvgIconDownload" Grid.Column="3" IconBrush="{DynamicResource ColorBrushGray4}"
+                   Height="12" Icon="lucide/download" />
+        <TextBlock x:Name="LabDownload" Grid.Column="4" Margin="5,0,2,0" VerticalAlignment="Center"
+                   Foreground="{DynamicResource ColorBrushGray4}" FontSize="12" />
+        <c:SvgIcon x:Name="SvgIconTime" Grid.Column="6" IconBrush="{DynamicResource ColorBrushGray4}"
+                   Height="12" Margin="0,0,1,0" Icon="lucide/arrow-up-from-line" />
+        <TextBlock x:Name="LabTime" Grid.Column="7" Margin="5,0,2,0" VerticalAlignment="Center"
+                   Foreground="{DynamicResource ColorBrushGray4}" FontSize="12" />
+        <c:SvgIcon x:Name="SvgIconSource" Grid.Column="9" IconBrush="{DynamicResource ColorBrushGray4}"
+                   Height="12" Icon="lucide/globe" />
+        <TextBlock x:Name="LabSource" Grid.Column="10" Margin="5,0,2,0" VerticalAlignment="Center"
+                   Foreground="{DynamicResource ColorBrushGray4}" FontSize="12" />
+    </Grid>
+
+    <!-- 右侧按钮组 -->
+    <StackPanel x:Name="PanButtons" Grid.Column="5" Grid.Row="0" Grid.RowSpan="5"
+                Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
+                Margin="0,0,5,0" Opacity="0">
+        <!-- 快速下载按钮 -->
+        <c:MyIconButton x:Name="BtnDownload" Height="25" Width="25" SvgIcon="lucide/download"
+                        Margin="0,0,4,0" IsVisible="False"
+                        ToolTip.Tip="{loc:L Download.Comp.QuickDownload.Btn.ToolTip}" />
+        <!-- 收藏按钮 -->
+        <c:MyIconButton x:Name="BtnDelete" Height="25" Width="25" SvgIcon="lucide/heart" />
+    </StackPanel>
+</Grid>

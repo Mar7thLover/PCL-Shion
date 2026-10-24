@@ -1,0 +1,314 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:PCL.Shion.Controls"
+                    xmlns:loc="using:PCL.Shion.Localization"
+                    xmlns:pages="using:PCL.Shion.Pages"
+                    x:Class="PCL.Shion.Pages.Setup.PageSetupLaunch"
+                    PanScroll="{Binding #PanBack, Mode=OneWay}">
+    <c:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="25,25,25,10">
+            <c:MyCard x:Name="CardArgument" Margin="0,0,0,15" Title="{loc:L Setup.Launch.Options.Title}">
+                <StackPanel Margin="25,40,25,15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="60" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="9" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="9" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="9" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="9" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="9" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="9" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="9" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Setup.Launch.Options.InstanceIsolation.Label}" Margin="0,0,25,0" />
+                        <c:MyComboBox x:Name="ComboArgumentIndieV2" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1"
+                                      SelectionChanged="ComboArgumentIndie_OnSelectionChanged"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Options.InstanceIsolation.ToolTip}">
+                            <c:MyComboBoxItem Content="{loc:L Common.Action.Close}"
+                                              ToolTip.Tip="{loc:L Setup.Launch.Options.InstanceIsolation.None.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.InstanceIsolation.ModdedOnly}"
+                                              IsSelected="True"
+                                              ToolTip.Tip="{loc:L Setup.Launch.Options.InstanceIsolation.ModdedOnly.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.InstanceIsolation.NonRelease}"
+                                              ToolTip.Tip="{loc:L Setup.Launch.Options.InstanceIsolation.NonRelease.ToolTip}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.InstanceIsolation.ModdedAndNonRelease}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.InstanceIsolation.All}"
+                                              ToolTip.Tip="{loc:L Setup.Launch.Options.InstanceIsolation.All.ToolTip}" />
+                        </c:MyComboBox>
+                        <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Setup.Launch.Options.WindowTitle.Label}" Margin="0,0,25,0" />
+                        <c:MyComboBox x:Name="TextArgumentTitle" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1"
+                                      IsEditable="True" IsTextSearchEnabled="False"
+                                      TextChanged="TextArgumentTitle_OnTextChanged"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Options.WindowTitle.ToolTip}"
+                                      HintText="{loc:L Common.Option.Default}">
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.WindowTitle.SampleFormat}" />
+                        </c:MyComboBox>
+                        <TextBlock Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Setup.Launch.Options.CustomInfo.Label}" Margin="0,0,25,0" />
+                        <c:MyTextBox x:Name="TextArgumentInfo" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="1"
+                                     Text="PCL" ValidatedTextChanged="TextBoxChange"
+                                     ToolTip.Tip="{loc:L Setup.Launch.Options.CustomInfo.ToolTip}" />
+                        <TextBlock Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Setup.Launch.Options.Visibility.Label}" Margin="0,0,25,0" />
+                        <c:MyComboBox x:Name="ComboArgumentVisibie" Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="1"
+                                      SelectionChanged="ComboArgumentVisibie_SelectionChanged">
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Visibility.CloseImmediately}" />
+                            <c:MyComboBoxItem Content="" IsEnabled="False" IsVisible="False" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Visibility.HideAndCloseOnExit}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Visibility.HideAndReopenOnExit}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Visibility.Minimize}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Visibility.KeepUnchanged}"
+                                              IsSelected="True" />
+                        </c:MyComboBox>
+                        <TextBlock Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Setup.Launch.Options.Priority.Label}" Margin="0,0,25,0" />
+                        <c:MyComboBox x:Name="ComboArgumentPriority" Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="1"
+                                      SelectionChanged="ComboArgumentPriority_SelectionChanged"
+                                      >
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Priority.RealTime}" Tag="4" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Priority.High}" Tag="3" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Priority.AboveNormal}" Tag="0" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Priority.Normal}" IsSelected="True"
+                                              Tag="1" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.Priority.BelowNormal}" Tag="2" />
+                        </c:MyComboBox>
+                        <TextBlock Grid.Row="10" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Setup.Launch.Options.WindowSize.Label}" Margin="0,0,25,0" />
+                        <Grid x:Name="PanArgumentWindow" Grid.Row="10" Grid.ColumnSpan="2" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <c:MyComboBox x:Name="ComboArgumentWindowType"
+                                          SelectionChanged="ComboArgumentWindowType_SelectionChanged"
+                                          ToolTip.Tip="{loc:L Setup.Launch.Options.WindowSize.ModernUiWarning}">
+                                <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.WindowSize.Fullscreen}" />
+                                <c:MyComboBoxItem Content="{loc:L Common.Option.Default}" IsSelected="True" />
+                                <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.WindowSize.SameAsLauncher}" />
+                                <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.WindowSize.Custom}"
+                                                  ToolTip.Tip="{loc:L Setup.Launch.Options.WindowSize.CustomHeightBug.ToolTip}" />
+                                <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.WindowSize.Maximized}" />
+                            </c:MyComboBox>
+                            <c:MyTextBox x:Name="TextArgumentWindowWidth" Padding="0,0,5,0" IsVisible="False"
+                                         Grid.Column="1" Margin="50,0,0,0" Width="60"
+                                         HorizontalContentAlignment="Center" Text="854"
+                                         ValidatedTextChanged="TextBoxChange" />
+                            <TextBlock x:Name="LabArgumentWindowMiddle" IsVisible="False" Grid.Column="2"
+                                       Text=" × " VerticalAlignment="Center" FontSize="18" />
+                            <c:MyTextBox x:Name="TextArgumentWindowHeight" Padding="0,0,5,0" IsVisible="False"
+                                         Grid.Column="3" Width="60" HorizontalContentAlignment="Center" Text="480"
+                                         ValidatedTextChanged="TextBoxChange"
+                                         ToolTip.Tip="{loc:L Setup.Launch.Options.WindowSize.CustomHeightBug.ToolTip}"
+                                         ToolTip.Placement="Right" ToolTip.HorizontalOffset="5" />
+                        </Grid>
+                        <TextBlock Grid.Row="12" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Setup.Launch.Options.MsAuth.Label}" Margin="0,0,25,0"
+                                   ToolTip.Tip="{loc:L Setup.Launch.Options.MsAuth.ToolTip}" />
+                        <c:MyComboBox x:Name="ComboMsAuthType" Grid.Row="12" Grid.ColumnSpan="2" Grid.Column="1"
+                                      SelectionChanged="ComboMsAuthType_SelectionChanged"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Options.MsAuth.ToolTip}"
+                                      IsEnabled="False">
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.MsAuth.WebManager}" IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.MsAuth.DeviceCode}" />
+                        </c:MyComboBox>
+                        <TextBlock Grid.Row="14" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Setup.Launch.Options.IpStack.Label}" Margin="0,0,25,0" />
+                        <c:MyComboBox x:Name="ComboPreferredIpStack" Grid.Row="14" Grid.ColumnSpan="2" Grid.Column="1"
+                                      SelectionChanged="ComboPreferredIpStack_SelectionChanged"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Options.IpStack.ToolTip}">
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.IpStack.Ipv4}" IsSelected="True" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.IpStack.JavaDefault}" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.IpStack.Ipv6}" />
+                        </c:MyComboBox>
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard Margin="0,0,0,15" Title="{loc:L Setup.Launch.Memory.Title}">
+                <StackPanel Margin="25,40,25,15">
+                    <c:MyHint x:Name="LabRamWarn" Theme="Yellow"
+                              Text="{loc:L Setup.Launch.Memory.Warning.Java32Bit}" Margin="0,0,0,12" />
+                    <c:MyHint x:Name="HintRamTooHigh" IsVisible="False" Height="30" Theme="Yellow"
+                              Text="{loc:L Setup.Launch.Memory.Warning.TooMuch}" Margin="0,0,0,12"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                    <Grid Margin="0,0,0,3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <c:MyRadioBox Text="{loc:L Setup.Launch.Memory.Auto}" Width="110" Checked="True"
+                                      x:Name="RadioRamType0" Margin="0,0,20,9" Check="RadioBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Memory.Auto.ToolTip}"
+                                      ToolTip.Placement="Left"
+                                      ToolTip.HorizontalOffset="-10" ToolTip.VerticalOffset="-10" />
+                        <c:MyRadioBox Grid.Row="1" Text="{loc:L Common.Option.Customize}" x:Name="RadioRamType1"
+                                      Margin="0,0,20,9" Check="RadioBoxChange" />
+                        <TextBlock Grid.Row="2" Text="{loc:L Setup.Launch.Memory.Max}" VerticalAlignment="Center"
+                                   Margin="0,0,20,9"
+                                   ToolTip.Tip="{loc:L Setup.Launch.Memory.Max.ToolTip}" />
+                        <c:MySlider Grid.Row="2" Grid.Column="1" IsEnabled="False" x:Name="SliderRamCustom"
+                                    MaxValue="49" Value="13" Change="SliderChange" Margin="0,0,12,9" />
+                        <TextBlock Grid.Row="3" Text="{loc:L Setup.Launch.Memory.Initial}" VerticalAlignment="Center"
+                                   Margin="0,0,20,0"
+                                   ToolTip.Tip="{loc:L Setup.Launch.Memory.Initial.ToolTip}" />
+                        <c:MySlider Grid.Row="3" Grid.Column="1" IsEnabled="False" x:Name="SliderRamInitialCustom"
+                                    MaxValue="49" Value="0" Change="SliderChange"
+                                    ToolTip.Tip="{loc:L Setup.Launch.Memory.Initial.ToolTip}" />
+                    </Grid>
+                    <Grid x:Name="PanRamDisplay" Margin="0,11,2,0" UseLayoutRounding="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4.7*" />
+                            <ColumnDefinition Width="2.5*" />
+                            <ColumnDefinition Width="0.7*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="4" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Rectangle x:Name="RectRamUsed" Grid.Row="1" StrokeThickness="0">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                                    <GradientStop Color="{DynamicResource ColorObject3}" Offset="0" />
+                                    <GradientStop Color="{DynamicResource ColorObject2}" Offset="0.5" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Rectangle Grid.Row="1" StrokeThickness="0" Grid.Column="1"
+                                   Fill="{DynamicResource ColorBrush3}" Opacity="0.5" x:Name="RectRamGame" />
+                        <Rectangle x:Name="RectRamEmpty" Grid.Row="1" StrokeThickness="0" Grid.Column="2"
+                                   Fill="{DynamicResource ColorBrush6}" Opacity="0.7" />
+                        <TextBlock x:Name="LabRamUsedTitle" Text="{loc:L Setup.Launch.Memory.UsedTotal}"
+                                   Grid.ColumnSpan="3" Opacity="0.7" TextTrimming="None" Margin="2,0,0,5"
+                                   FontSize="11" HorizontalAlignment="Left" />
+                        <TextBlock x:Name="LabRamGameTitle" Text="{loc:L Setup.Launch.Memory.GameAllocation}"
+                                   Opacity="0.7" Grid.ColumnSpan="3" TextTrimming="None" Margin="2,0,0,5"
+                                   FontSize="11" HorizontalAlignment="Left" />
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="3" Margin="2,3,0,0"
+                                    HorizontalAlignment="Left">
+                            <TextBlock x:Name="LabRamUsed" Text="4.7 GiB" FontSize="16"
+                                       Foreground="{DynamicResource ColorBrushMemory}" TextTrimming="None" />
+                            <TextBlock x:Name="LabRamTotal" Text=" / 7.9 GiB" FontSize="16"
+                                       Foreground="{DynamicResource ColorBrushMemory}" TextTrimming="None" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="2" x:Name="LabRamGame" Text="2.5 GiB" Grid.ColumnSpan="3"
+                                   TextTrimming="None" Margin="2,3,0,0" FontSize="16"
+                                   Foreground="{DynamicResource ColorBrushMemory}" HorizontalAlignment="Left" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard Margin="0,0,0,15" Title="{loc:L Setup.Launch.Advanced.Title}" IsSwapped="True" CanSwap="True">
+                <Grid Margin="25,40,25,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="9" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="9" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="9" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Text="{loc:L Setup.Launch.Advanced.Renderer.Label}" Margin="0,0,25,0" />
+                    <c:MyComboBox x:Name="ComboAdvanceRenderer" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                                  SelectionChanged="ComboAdvanceRenderer_OnSelectionChanged">
+                        <c:MyComboBoxItem Content="{loc:L Setup.Launch.Advanced.Renderer.GameDefault}" IsSelected="True" />
+                        <c:MyComboBoxItem Content="{loc:L Setup.Launch.Advanced.Renderer.Software}" />
+                        <c:MyComboBoxItem Content="{loc:L Setup.Launch.Advanced.Renderer.DirectX12}" />
+                        <c:MyComboBoxItem Content="{loc:L Setup.Launch.Advanced.Renderer.Vulkan}" />
+                    </c:MyComboBox>
+                    <StackPanel Grid.Row="2" VerticalAlignment="Center" Orientation="Horizontal"
+                                HorizontalAlignment="Left" Margin="0,0,25,0">
+                        <TextBlock Text="{loc:L Setup.Launch.Advanced.JvmHead}" VerticalAlignment="Center" />
+                        <c:MyIconButton Height="23" Margin="0,1,0,0" x:Name="BtnAdvanceJvmReset"
+                                        VerticalAlignment="Center" Click="BtnAdvanceJvmReset_Click"
+                                        ToolTip.Tip="{loc:L Setup.Launch.Advanced.JvmHead.Restore}"
+                                        ToolTip.Placement="Left"
+                                        ToolTip.ShowDelay="200" ToolTip.VerticalOffset="-1"
+                                        SvgIcon="lucide/rotate-ccw"
+                                        LogoScale="0.9" />
+                    </StackPanel>
+                    <c:MyTextBox x:Name="TextAdvanceJvm" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="1"
+                                 TextChanged="TextAdvanceJvm_TextChanged" ValidatedTextChanged="TextBoxChange"
+                                 ToolTip.Tip="{loc:L Setup.Launch.Advanced.JvmHead.ToolTip}"
+                                 MaxLength="4000" Height="100" AcceptsReturn="True" TextWrapping="Wrap"
+                                 VerticalContentAlignment="Top" Padding="0,5"
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                    <TextBlock Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Text="{loc:L Setup.Launch.Advanced.GameTail}" Margin="0,0,25,0" />
+                    <c:MyTextBox x:Name="TextAdvanceGame" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="1"
+                                 ValidatedTextChanged="TextBoxChange"
+                                 ToolTip.Tip="{loc:L Setup.Launch.Advanced.GameTail.ToolTip}" />
+                    <TextBlock Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Text="{loc:L Setup.Launch.Advanced.PreLaunchCommand}" Margin="0,0,25,0" />
+                    <c:MyTextBox x:Name="TextAdvanceRun" Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="1"
+                                 HintText="" ValidatedTextChanged="TextBoxChange"
+                                 TextChanged="TextAdvanceRun_TextChanged"
+                                 ToolTip.Tip="{loc:L Setup.Launch.Advanced.PreLaunchCommand.ToolTip}" />
+                    <c:MyCheckBox Grid.Row="7" Grid.Column="1" x:Name="CheckAdvanceRunWait" IsVisible="False"
+                                  Change="CheckBoxChange"
+                                  Text="{loc:L Setup.Launch.Advanced.PreLaunchCommand.Wait}" Margin="0,8,0,7" />
+                    <StackPanel Margin="0,12,0,4" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Left">
+                        <c:MyCheckBox Height="28" Text="{loc:L Setup.Launch.Advanced.DisableJlw}"
+                                      x:Name="CheckAdvanceDisableJLW" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Advanced.DisableJlw.ToolTip}" />
+                        <c:MyCheckBox Height="28" Text="{loc:L Setup.Launch.Advanced.DisableLF}"
+                                      x:Name="CheckAdvanceDisableLF" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Advanced.DisableLF.ToolTip}" />
+                        <c:MyCheckBox Height="28" Text="{loc:L Setup.Launch.Advanced.GpuPreference}"
+                                      x:Name="CheckAdvanceGraphicCard" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Advanced.GpuPreference.ToolTip}" />
+                        <c:MyCheckBox Height="28" Text="{loc:L Setup.Launch.Advanced.UseJavaExe}"
+                                      x:Name="CheckAdvanceNoJavaw" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Advanced.UseJavaExe.ToolTip}" />
+                        <c:MyCheckBox Height="28" Text="{loc:L Setup.Launch.Advanced.DisableLwjglUnsafeAgent}"
+                                      x:Name="CheckAdvanceDisableLwjglUnsafeAgent" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Advanced.DisableLwjglUnsafeAgent.ToolTip}" />
+                        <c:MyCheckBox Height="28" Text="{loc:L Setup.Launch.Advanced.DisableCrashAnalysis}"
+                                      x:Name="CheckAdvanceDisableCrashAnalysis" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Advanced.DisableCrashAnalysis.ToolTip}" />
+                        <c:MyCheckBox Height="28" Text="{loc:L Setup.Launch.Advanced.LockMemory}"
+                                      x:Name="CheckAdvanceLockMemory" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Advanced.LockMemory.ToolTip}" />
+                    </StackPanel>
+                    <c:MyHint Text="{loc:L Setup.Launch.Advanced.MoreInInstanceSetup}" Margin="0,5,0,10" Theme="Blue"
+                              Grid.Row="9" Grid.ColumnSpan="2" CanClose="True" RelativeSetup="HintMoreAdvancedSetup" />
+                </Grid>
+            </c:MyCard>
+            <c:MyExtraTextButton HorizontalAlignment="Center" Margin="0,-5,0,15"
+                                 x:Name="BtnSwitch" Text="{loc:L Setup.Launch.SwitchToInstanceSetup}"
+                                 Click="BtnSwitch_Click"
+                                 LogoScale="0.9"
+                                 SvgIcon="lucide/arrow-right" />
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

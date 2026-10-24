@@ -1,0 +1,269 @@
+<pages:MyPageLeft xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:PCL.Shion.Controls"
+                    xmlns:loc="using:PCL.Shion.Localization"
+                    xmlns:pages="using:PCL.Shion.Pages"
+                    x:Class="PCL.Shion.Pages.Launch.PageLaunchLeft"
+                    x:Name="PanBack"
+                    Width="300">
+    <Grid x:Name="PanInput" RenderTransformOrigin="0.5,0.5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RenderTransform>
+            <ScaleTransform />
+        </Grid.RenderTransform>
+        <c:MyButton x:Name="BtnInstance"
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Height="35"
+                    Margin="0,10,10,0"
+                    IsEnabled="False"
+                    Text="{loc:L Launch.Home.SelectInstance}"
+                    Click="BtnInstance_Click" />
+        <c:MyButton x:Name="BtnMore"
+                    Grid.Row="3"
+                    Grid.Column="3"
+                    Height="35"
+                    Margin="0,10,10,0"
+                    IsVisible="False"
+                    TextPadding="36"
+                    Text="{loc:L Launch.Home.InstanceSettings}"
+                    Click="BtnMore_Click" />
+        <Grid x:Name="PanLogin"
+              Grid.ColumnSpan="5"
+              Grid.Row="1"
+              Margin="20,0"
+              VerticalAlignment="Center" />
+        <Grid x:Name="PanApril" Grid.ColumnSpan="5" Grid.Row="2" RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <c:MyButton x:Name="BtnLaunch"
+                        Height="54"
+                        Margin="20,0"
+                        ColorType="Highlight"
+                        IsEnabled="False"
+                        Padding="30,0,30,15"
+                        Text="{loc:L Launch.Home.Button.Loading}"
+                        Click="BtnLaunch_Click" />
+            <TextBlock x:Name="LabVersion"
+                       Margin="35,0,35,10"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Bottom"
+                       FontSize="11"
+                       Foreground="{DynamicResource ColorBrushGray3}"
+                       IsHitTestVisible="False"
+                       RenderTransformOrigin="0.5,-0.2"
+                       TextTrimming="CharacterEllipsis"
+                       Text="{loc:L Launch.Home.VersionList.Loading}" />
+        </Grid>
+    </Grid>
+    <Grid x:Name="PanLaunching"
+          Opacity="0"
+          IsVisible="False"
+          RenderTransformOrigin="0.5,0.5">
+        <Grid.RenderTransform>
+            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+        </Grid.RenderTransform>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" Margin="0,-7,0,0" RenderTransformOrigin="0.5,0.5">
+            <StackPanel.Effect>
+                <DropShadowEffect BlurRadius="4.5"
+                                  Color="{DynamicResource ColorObjectGray2}"
+                                  Opacity="0.15"
+                                  OffsetX="0"
+                                  OffsetY="1.5" />
+            </StackPanel.Effect>
+            <c:MyLoading x:Name="LoadLaunching"
+                         Height="50"
+                         Margin="0,10,0,5"
+                         AutoRun="False" />
+            <TextBlock x:Name="LabLaunchingTitle"
+                       Margin="15,10,15,0"
+                       HorizontalAlignment="Center"
+                       FontSize="20"
+                       Foreground="{DynamicResource ColorBrush3}"
+                       Text="{loc:L Launch.Status.Title.Launching}">
+                <TextBlock.RenderTransform>
+                    <SkewTransform AngleX="-3" />
+                </TextBlock.RenderTransform>
+            </TextBlock>
+            <TextBlock x:Name="LabLaunchingName"
+                       Margin="40,5,40,0"
+                       HorizontalAlignment="Center"
+                       FontSize="13.5"
+                       Foreground="{DynamicResource ColorBrush3}"
+                       RenderTransformOrigin="0.5,0.5"
+                       Text="Forge 1.12.2-15.8.0.1560">
+                <TextBlock.RenderTransform>
+                    <SkewTransform AngleX="-3" />
+                </TextBlock.RenderTransform>
+            </TextBlock>
+            <Grid x:Name="PanLaunchingProgress" Height="4"
+                  Margin="30,12,30,27"
+                  UseLayoutRounding="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="69.28*" />
+                    <ColumnDefinition Width="30.72*" />
+                </Grid.ColumnDefinitions>
+                <Rectangle Grid.Column="0">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Offset="0" Color="{DynamicResource ColorObject4}" />
+                            <GradientStop Offset="0.6" Color="{DynamicResource ColorObject3}" />
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Rectangle Grid.Column="1"
+                           Opacity="0.6"
+                           Fill="{DynamicResource ColorBrush6}" />
+            </Grid>
+            <Grid x:Name="PanLaunchingInfo"
+                  HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           Grid.Column="1"
+                           Margin="0,0,0,5"
+                           HorizontalAlignment="Right"
+                           FontSize="12.5"
+                           Opacity="0.5"
+                           Text="{loc:L Launch.Status.CurrentStep}" />
+                <TextBlock x:Name="LabLaunchingStage"
+                           Grid.Row="0"
+                           Grid.Column="3"
+                           Margin="0,0,0,5"
+                           HorizontalAlignment="Left"
+                           FontSize="12.5"
+                           Text="{loc:L Launch.Status.DownloadLibs}" />
+                <TextBlock Grid.Row="1"
+                           Grid.Column="1"
+                           Margin="0,0,0,5"
+                           HorizontalAlignment="Right"
+                           FontSize="12.5"
+                           Opacity="0.5"
+                           Text="{loc:L Launch.Status.LoginMethod}" />
+                <TextBlock x:Name="LabLaunchingMethod"
+                           Grid.Row="1"
+                           Grid.Column="3"
+                           Margin="0,0,0,5"
+                           HorizontalAlignment="Left"
+                           MaxWidth="160"
+                           FontSize="12.5"
+                           TextWrapping="Wrap"
+                           Text="{loc:L Launch.Status.MicrosoftLogin}" />
+                <TextBlock x:Name="LabLaunchingProgressLeft"
+                           Grid.Row="2"
+                           Grid.Column="1"
+                           Margin="0,0,0,5"
+                           HorizontalAlignment="Right"
+                           FontSize="12.5"
+                           Opacity="0.5"
+                           Text="{loc:L Launch.Status.LaunchProgress}" />
+                <TextBlock x:Name="LabLaunchingProgress"
+                           Grid.Row="2"
+                           Grid.Column="3"
+                           Margin="0,0,0,5"
+                           HorizontalAlignment="Left"
+                           FontSize="12.5"
+                           Text="69.28 %" />
+                <TextBlock x:Name="LabLaunchingDownloadLeft"
+                           Grid.Row="3"
+                           Grid.Column="1"
+                           Margin="0,0,0,5"
+                           HorizontalAlignment="Right"
+                           FontSize="12.5"
+                           IsVisible="False"
+                           Opacity="0"
+                           Text="{loc:L Launch.Status.DownloadSpeed}" />
+                <TextBlock x:Name="LabLaunchingDownload"
+                           Grid.Row="3"
+                           Grid.Column="3"
+                           Margin="0,0,0,5"
+                           HorizontalAlignment="Left"
+                           FontSize="12.5"
+                           IsVisible="False"
+                           Opacity="0"
+                           Text="5.2 M/s" />
+                <Grid x:Name="PanLaunchingHint"
+                      Grid.Row="2"
+                      Grid.RowSpan="2"
+                      Grid.ColumnSpan="5"
+                      Width="260"
+                      Margin="0,16,0,2"
+                      HorizontalAlignment="Center"
+                      IsVisible="False"
+                      Opacity="0">
+                    <Border Margin="0,8,0,0"
+                            BorderBrush="{DynamicResource ColorBrushGray1}"
+                            BorderThickness="1"
+                            CornerRadius="3"
+                            Opacity="0.5">
+                        <Border.Clip>
+                            <CombinedGeometry GeometryCombineMode="Exclude">
+                                <CombinedGeometry.Geometry1>
+                                    <RectangleGeometry Rect="0,0,1000,1000" />
+                                </CombinedGeometry.Geometry1>
+                                <CombinedGeometry.Geometry2>
+                                    <RectangleGeometry Rect="94,0,72,10" />
+                                </CombinedGeometry.Geometry2>
+                            </CombinedGeometry>
+                        </Border.Clip>
+                    </Border>
+                    <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Top"
+                               FontSize="12.5"
+                               Opacity="0.5"
+                               Text="{loc:L Launch.Status.Trivia}" />
+                    <TextBlock x:Name="LabLaunchingHint"
+                               Margin="11,21,11,10"
+                               MaxHeight="54"
+                               HorizontalAlignment="Center"
+                               FontSize="12.5"
+                               TextTrimming="CharacterEllipsis"
+                               TextWrapping="Wrap"
+                               Text="{loc:L Launch.Status.Trivia.Placeholder}" />
+                </Grid>
+            </Grid>
+        </StackPanel>
+        <c:MyButton x:Name="BtnCancel"
+                    Grid.Row="4"
+                    Height="35"
+                    Margin="20,0,20,20"
+                    VerticalAlignment="Bottom"
+                    Text="{loc:L Common.Action.Cancel}"
+                    Click="BtnCancel_Click" />
+    </Grid>
+</pages:MyPageLeft>

@@ -1,0 +1,423 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:PCL.Shion.Controls"
+                    xmlns:loc="using:PCL.Shion.Localization"
+                    xmlns:pages="using:PCL.Shion.Pages"
+                    xmlns:local="using:PCL.Shion.Pages.Instance"
+                    xmlns:sys="using:System"
+                    x:Class="PCL.Shion.Pages.Instance.PageInstanceSetup">
+    <c:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="25,25,25,25">
+            <c:MyHint Text="{loc:L Instance.Setup.Hint}" Theme="Blue" Margin="0,0,0,15"
+                      CanClose="True" RelativeSetup="HintIndieSetup" />
+            <c:MyCard x:Name="CardArgument" Margin="0,0,0,15"
+                      Title="{loc:L Setup.Launch.Options.Title}">
+                <StackPanel Margin="25,40,25,21">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="60" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="9" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="9" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="9" />
+                            <RowDefinition Height="28" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Instance.Setup.Options.InstanceIsolation}"
+                                   Margin="0,0,25,0" />
+                        <c:MyComboBox x:Name="ComboArgumentIndieV2" Grid.Row="0" Grid.ColumnSpan="2"
+                                      Tag="VersionArgumentIndieV2" Grid.Column="1">
+                            <c:MyComboBoxItem Content="{loc:L Instance.Setup.Options.InstanceIsolation.Enabled}"
+                                              ToolTip.ShowDelay="0"
+                                              ToolTip.Tip="{loc:L Instance.Setup.Options.InstanceIsolation.Enabled.ToolTip}"
+                                              ToolTip.HorizontalOffset="100" />
+                            <c:MyComboBoxItem Content="{loc:L Common.Action.Close}"
+                                              ToolTip.ShowDelay="0"
+                                              ToolTip.Tip="{loc:L Instance.Setup.Options.InstanceIsolation.Disabled.ToolTip}"
+                                              ToolTip.HorizontalOffset="100" />
+                        </c:MyComboBox>
+                        <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Setup.Launch.Options.WindowTitle.Label}"
+                                   Margin="0,0,25,0" />
+                        <c:MyComboBox x:Name="TextArgumentTitle" Grid.Row="2" Grid.ColumnSpan="2"
+                                      Tag="VersionArgumentTitle" Grid.Column="1" IsEditable="True"
+                                      IsTextSearchEnabled="False"
+                                      ToolTip.Tip="{loc:L Instance.Setup.Options.WindowTitle.ToolTip}">
+                            <c:MyComboBoxItem Content="{loc:L Setup.Launch.Options.WindowTitle.SampleFormat}" />
+                        </c:MyComboBox>
+                        <c:MyCheckBox x:Name="CheckArgumentTitleEmpty" Margin="0,0,0,9" Grid.Row="4"
+                                      Grid.ColumnSpan="3"
+                                      Text="{loc:L Instance.Setup.Options.WindowTitle.Default}"
+                                      Tag="VersionArgumentTitleEmpty"
+                                      Grid.Column="0"
+                                      ToolTip.Tip="{loc:L Instance.Setup.Options.WindowTitle.Default.ToolTip}" />
+                        <TextBlock Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Setup.Launch.Options.CustomInfo.Label}"
+                                   Margin="0,0,25,0" />
+                        <c:MyTextBox x:Name="TextArgumentInfo" Grid.Row="6" Grid.ColumnSpan="2"
+                                     Tag="VersionArgumentInfo" Grid.Column="1"
+                                     HintText="{loc:L Instance.Setup.FollowGlobal}"
+                                     ToolTip.Tip="{loc:L Instance.Setup.Options.CustomInfo.ToolTip}">
+                            <c:MyTextBox.ValidateRules>
+                                <local:BlacklistValidator>
+                                    <local:BlacklistValidator.Blacklist>
+                                        <sys:String>"</sys:String>
+                                        <sys:String>“</sys:String>
+                                        <sys:String>”</sys:String>
+                                    </local:BlacklistValidator.Blacklist>
+                                </local:BlacklistValidator>
+                            </c:MyTextBox.ValidateRules>
+                        </c:MyTextBox>
+                        <TextBlock VerticalAlignment="Center" Grid.Row="8" HorizontalAlignment="Left"
+                                   Text="{loc:L Instance.Setup.Options.Java}"
+                                   Margin="0,0,25,0" />
+                        <c:MyComboBox x:Name="ComboArgumentJava" Grid.ColumnSpan="2" Grid.Row="8" Grid.Column="1"
+                                      MaxDropDownHeight="240"
+                                      ToolTip.Tip="{loc:L Instance.Setup.Options.Java.ToolTip}">
+                            <ComboBoxItem Content="{loc:L Instance.Setup.Options.Java.Loading}" IsSelected="True" />
+                        </c:MyComboBox>
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard Margin="0,0,0,15" Title="{loc:L Setup.Launch.Memory.Title}">
+                <StackPanel Margin="25,40,25,15">
+                    <c:MyHint x:Name="LabRamWarn" Text="{loc:L Setup.Launch.Memory.Warning.Java32Bit}"
+                              Theme="Yellow" Margin="0,0,0,12" />
+                    <c:MyHint x:Name="HintRamTooHigh" IsVisible="False" Height="30" Theme="Yellow"
+                              Text="{loc:L Setup.Launch.Memory.Warning.TooMuch}" Margin="0,0,0,12"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                    <Grid Margin="0,0,0,3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <c:MyRadioBox
+                            Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                            Text="{loc:L Instance.Setup.FollowGlobal}"
+                            Checked="True"
+                            x:Name="RadioRamType2"
+                            Tag="VersionRamType/2"
+                            Margin="0,0,20,9" />
+
+                        <c:MyRadioBox
+                            Grid.Row="1" Grid.Column="0"
+                            Text="{loc:L Setup.Launch.Memory.Auto}"
+                            Width="110"
+                            x:Name="RadioRamType0"
+                            Tag="VersionRamType/0"
+                            Margin="0,0,20,9"
+                            ToolTip.Tip="{loc:L Setup.Launch.Memory.Auto.ToolTip}"
+                            ToolTip.Placement="Left"
+                            ToolTip.HorizontalOffset="-10"
+                            ToolTip.VerticalOffset="-10" />
+
+                        <c:MyRadioBox
+                            Grid.Row="2" Grid.Column="0"
+                            Text="{loc:L Common.Option.Customize}"
+                            Width="110"
+                            x:Name="RadioRamType1"
+                            Tag="VersionRamType/1"
+                            Margin="0,0,20,9" />
+
+                        <TextBlock
+                            Grid.Row="3" Grid.Column="0"
+                            Text="{loc:L Setup.Launch.Memory.Max}"
+                            VerticalAlignment="Center"
+                            Margin="0,0,20,9"
+                            ToolTip.Tip="{loc:L Setup.Launch.Memory.Max.ToolTip}" />
+
+                        <c:MySlider
+                            Grid.Row="3" Grid.Column="1"
+                            IsEnabled="False"
+                            x:Name="SliderRamCustom"
+                            Tag="VersionRamCustom"
+                            MaxValue="49"
+                            Value="13"
+                            Margin="0,0,12,9" />
+
+                        <TextBlock
+                            Grid.Row="4" Grid.Column="0"
+                            Text="{loc:L Setup.Launch.Memory.Initial}"
+                            VerticalAlignment="Center"
+                            Margin="0,0,20,0"
+                            ToolTip.Tip="{loc:L Setup.Launch.Memory.Initial.ToolTip}" />
+
+                        <c:MySlider
+                            Grid.Row="4" Grid.Column="1"
+                            IsEnabled="False"
+                            x:Name="SliderRamInitialCustom"
+                            Tag="VersionRamCustomInitial"
+                            MaxValue="49"
+                            Value="0"
+                            Margin="0,0,12,0"
+                            ToolTip.Tip="{loc:L Setup.Launch.Memory.Initial.ToolTip}" />
+                    </Grid>
+                    <Grid x:Name="PanRamDisplay" Margin="0,11,2,0" UseLayoutRounding="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4.7*" />
+                            <ColumnDefinition Width="2.5*" />
+                            <ColumnDefinition Width="0.7*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="4" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Rectangle x:Name="RectRamUsed" Grid.Row="1" StrokeThickness="0">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                                    <GradientStop Color="{DynamicResource ColorObject3}" Offset="0" />
+                                    <GradientStop Color="{DynamicResource ColorObject2}" Offset="0.5" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Rectangle Grid.Row="1" StrokeThickness="0" Grid.Column="1"
+                                   Fill="{DynamicResource ColorBrush3}" Opacity="0.5" x:Name="RectRamGame" />
+                        <Rectangle x:Name="RectRamEmpty" Grid.Row="1" StrokeThickness="0" Grid.Column="2"
+                                   Fill="{DynamicResource ColorBrush6}" Opacity="0.7" />
+                        <TextBlock x:Name="LabRamUsedTitle" Text="{loc:L Instance.Setup.Memory.Used}"
+                                   Grid.ColumnSpan="3" Opacity="0.7"
+                                   TextTrimming="None" Margin="2,0,0,5" FontSize="11" HorizontalAlignment="Left" />
+                        <TextBlock x:Name="LabRamGameTitle" Text="{loc:L Setup.Launch.Memory.GameAllocation}"
+                                   Opacity="0.7" Grid.ColumnSpan="3"
+                                   TextTrimming="None" Margin="2,0,0,5" FontSize="11" HorizontalAlignment="Left" />
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="3" Margin="2,3,0,0"
+                                    HorizontalAlignment="Left">
+                            <TextBlock x:Name="LabRamUsed" Text="4.7 GiB" FontSize="16"
+                                       Foreground="{DynamicResource ColorBrushMemory}" TextTrimming="None" />
+                            <TextBlock x:Name="LabRamTotal" Text=" / 7.9 GiB" FontSize="16"
+                                       Foreground="{DynamicResource ColorBrushMemory}" TextTrimming="None" />
+                        </StackPanel>
+                        <TextBlock Grid.Row="2" x:Name="LabRamGame" Text="2.5 GiB" Grid.ColumnSpan="3"
+                                   TextTrimming="None" Margin="2,3,0,0" FontSize="16"
+                                   Foreground="{DynamicResource ColorBrushMemory}" HorizontalAlignment="Left" />
+                    </Grid>
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard x:Name="CardServer" Margin="0,0,0,15" Title="{loc:L Instance.Setup.Server.Title}">
+                <StackPanel Margin="25,42,25,18">
+                    <c:MyHint x:Name="HintServerLoginLock"
+                              Text="{loc:L Instance.Setup.Server.LoginLockHint}" Theme="Red"
+                              Margin="0,0,0,13" IsVisible="False" />
+                    <c:MyHint x:Name="LabServerAuthServerSecurityVerify"
+                              Text="{loc:L Instance.Setup.Server.SslWarning}" Theme="Blue"
+                              Margin="0,0,0,13" IsVisible="False" />
+                    <c:MyHint x:Name="LabServerAuthServerSecurity"
+                              Text="{loc:L Instance.Setup.Server.HttpWarning}"
+                              Margin="0,0,0,13" IsVisible="False" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="9" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="3" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                   Text="{loc:L Instance.Setup.Server.RestrictLogin}"
+                                   Margin="0,0,25,0" />
+                        <c:MyComboBox x:Name="ComboServerLoginRequire" Grid.Row="0" Grid.ColumnSpan="2"
+                                      Tag="VersionServerLoginRequire" Grid.Column="1">
+                            <c:MyComboBoxItem
+                                Content="{loc:L Instance.Setup.Server.LoginMethod.Unlimited}"
+                                IsSelected="True" />
+                            <c:MyComboBoxItem
+                                Content="{loc:L Instance.Setup.Server.LoginMethod.MicrosoftOnly}" />
+                            <c:MyComboBoxItem
+                                Content="{loc:L Instance.Setup.Server.LoginMethod.AuthOnly}" />
+                            <c:MyComboBoxItem
+                                Content="{loc:L Instance.Setup.Server.LoginMethod.MicrosoftOrAuth}" />
+                        </c:MyComboBox>
+                        <TextBlock Name="LabServerAuthServer" Grid.Row="1" VerticalAlignment="Center"
+                                   HorizontalAlignment="Left" Text="{loc:L Instance.Setup.Server.AuthServer}"
+                                   Margin="0,8,25,0" IsVisible="False" />
+                        <c:MyTextBox x:Name="TextServerAuthServer" Grid.Row="1" Grid.ColumnSpan="2"
+                                     ShowValidateResult="False" Tag="VersionServerAuthServer" Grid.Column="1"
+                                     Margin="0,8,0,0" IsVisible="False"
+                                     HintText="{loc:L Instance.Setup.Server.AuthServer.Hint}">
+                            <c:MyTextBox.ValidateRules>
+                                <local:HttpValidator />
+                            </c:MyTextBox.ValidateRules>
+                        </c:MyTextBox>
+                        <TextBlock Name="LabServerAuthRegister" Grid.Row="2" VerticalAlignment="Center"
+                                   HorizontalAlignment="Left" Text="{loc:L Instance.Setup.Server.Register}"
+                                   Margin="0,8,25,0" IsVisible="False" />
+                        <c:MyTextBox x:Name="TextServerAuthRegister" Grid.Row="2" Grid.ColumnSpan="2"
+                                     ShowValidateResult="False" Tag="VersionServerAuthRegister" Grid.Column="1"
+                                     Margin="0,8,0,0" IsVisible="False"
+                                     HintText="{loc:L Instance.Setup.Server.Register.Hint}">
+                            <c:MyTextBox.ValidateRules>
+                                <local:HttpValidator AllowsNullOrEmpty="True" />
+                            </c:MyTextBox.ValidateRules>
+                        </c:MyTextBox>
+                        <TextBlock Name="LabServerAuthName" Grid.Row="3" VerticalAlignment="Center"
+                                   HorizontalAlignment="Left" Text="{loc:L Instance.Setup.Server.Name}"
+                                   Margin="0,8,25,0" IsVisible="False" />
+                        <c:MyTextBox x:Name="TextServerAuthName" Grid.Row="3" Grid.ColumnSpan="2"
+                                     ShowValidateResult="False" Tag="VersionServerAuthName" Grid.Column="1"
+                                     Margin="0,8,0,0" IsVisible="False"
+                                     HintText="{loc:L Instance.Setup.Server.Name.Hint}" />
+                        <TextBlock VerticalAlignment="Center" Grid.Row="5" HorizontalAlignment="Left"
+                                   Text="{loc:L Instance.Setup.Server.AutoJoin}"
+                                   Margin="0,0,25,0" />
+                        <c:MyTextBox x:Name="TextServerEnter" Grid.ColumnSpan="2" Grid.Row="5"
+                                     Tag="VersionServerEnter" Grid.Column="1"
+                                     ToolTip.Tip="{loc:L Instance.Setup.Server.AutoJoin.ToolTip}">
+                            <c:MyTextBox.ValidateRules>
+                                <local:BlacklistValidator>
+                                    <local:BlacklistValidator.Blacklist>
+                                        <sys:String>"</sys:String>
+                                        <sys:String>“</sys:String>
+                                        <sys:String>”</sys:String>
+                                        <sys:String>http://</sys:String>
+                                        <sys:String>https://</sys:String>
+                                    </local:BlacklistValidator.Blacklist>
+                                </local:BlacklistValidator>
+                            </c:MyTextBox.ValidateRules>
+                        </c:MyTextBox>
+                    </Grid>
+                    <c:MyButton x:Name="BtnServerAuthLittle" Height="35" MinWidth="150" Margin="0,12,0,0"
+                                Text="{loc:L Instance.Setup.Server.SetLittleSkin}"
+                                HorizontalAlignment="Left" ColorType="Highlight" />
+                    <c:MyButton x:Name="BtnServerAuthLock" Height="35" MinWidth="150" Margin="180,-35,0,0"
+                                Text="{loc:L Instance.Setup.Server.LockLoginMethod}"
+                                HorizontalAlignment="Left" IsEnabled="False" />
+                    <c:MyButton x:Name="BtnServerNewProfile" Height="35" MinWidth="150" Margin="360,-35,0,0"
+                                Text="{loc:L Instance.Setup.Server.CreateProfile}"
+                                HorizontalAlignment="Left" />
+                </StackPanel>
+            </c:MyCard>
+            <c:MyCard x:Name="CardAdvance" Margin="0,0,0,15"
+                      Title="{loc:L Setup.Launch.Advanced.Title}" IsSwapped="True" CanSwap="True">
+                <Grid Margin="25,40,25,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="9" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="9" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="9" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="9" />
+                        <RowDefinition Height="31" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Text="{loc:L Setup.Launch.Advanced.Renderer.Label}"
+                               Margin="0,0,25,0" />
+                    <c:MyComboBox x:Name="ComboAdvanceRenderer" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                                  Tag="VersionAdvanceRenderer">
+                        <c:MyComboBoxItem Content="{loc:L Instance.Setup.FollowGlobal}"
+                                          IsSelected="True" />
+                        <c:MyComboBoxItem Content="{loc:L Setup.Launch.Advanced.Renderer.GameDefault}" />
+                        <c:MyComboBoxItem Content="{loc:L Setup.Launch.Advanced.Renderer.Software}" />
+                        <c:MyComboBoxItem Content="{loc:L Setup.Launch.Advanced.Renderer.DirectX12}" />
+                        <c:MyComboBoxItem Content="{loc:L Setup.Launch.Advanced.Renderer.Vulkan}" />
+                    </c:MyComboBox>
+
+                    <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Text="{loc:L Setup.Launch.Advanced.JvmHead}"
+                               Margin="0,0,25,0" />
+                    <c:MyTextBox x:Name="TextAdvanceJvm" Grid.Row="2" Grid.ColumnSpan="2" Tag="VersionAdvanceJvm"
+                                 Grid.Column="1" MaxLength="4000"
+                                 ToolTip.Tip="{loc:L Instance.Setup.Advanced.JvmArgs.ToolTip}"
+                                 HintText="{loc:L Instance.Setup.FollowGlobal}"
+                                 Height="100" AcceptsReturn="True" TextWrapping="Wrap"
+                                 VerticalContentAlignment="Top" Padding="0,5" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+
+                    <TextBlock Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Text="{loc:L Setup.Launch.Advanced.GameTail}"
+                               Margin="0,0,25,0" />
+                    <c:MyTextBox x:Name="TextAdvanceGame" Grid.Row="4" Grid.ColumnSpan="2" Tag="VersionAdvanceGame"
+                                 Grid.Column="1"
+                                 ToolTip.Tip="{loc:L Instance.Setup.Advanced.GameArgs.ToolTip}"
+                                 HintText="{loc:L Instance.Setup.FollowGlobal}" />
+
+                    <TextBlock Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Text="{loc:L Instance.Setup.Advanced.Classpath}"
+                               Margin="0,0,25,0" />
+                    <c:MyTextBox x:Name="TextAdvanceClasspathHead" Grid.Row="6" Grid.ColumnSpan="2"
+                                 Tag="VersionAdvanceClasspathHead" Grid.Column="1"
+                                 ToolTip.Tip="{loc:L Instance.Setup.Advanced.Classpath.ToolTip}" />
+
+                    <TextBlock Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Text="{loc:L Setup.Launch.Advanced.PreLaunchCommand}"
+                               Margin="0,0,25,3" />
+                    <c:MyTextBox x:Name="TextAdvanceRun" Grid.Row="8" Grid.ColumnSpan="2" Tag="VersionAdvanceRun"
+                                 Grid.Column="1" HintText="" Margin="0,0,0,3"
+                                 ToolTip.Tip="{loc:L Instance.Setup.Advanced.PreLaunchCommand.ToolTip}" />
+
+                    <StackPanel Margin="0,8,0,4" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Left">
+                        <c:MyCheckBox Height="28" x:Name="CheckAdvanceRunWait" Tag="VersionAdvanceRunWait"
+                                      IsVisible="False"
+                                      Text="{loc:L Setup.Launch.Advanced.PreLaunchCommand.Wait}" />
+                        <c:MyCheckBox Height="28"
+                                      Text="{loc:L Instance.Setup.Advanced.IgnoreJavaCompatibility}"
+                                      x:Name="CheckAdvanceJava"
+                                      Tag="VersionAdvanceJava"
+                                      ToolTip.Tip="{loc:L Instance.Setup.Advanced.IgnoreJavaCompatibility.ToolTip}" />
+                        <c:MyCheckBox Height="28"
+                                      Text="{loc:L Instance.Setup.Advanced.DisableFileVerification}"
+                                      x:Name="CheckAdvanceAssetsV2"
+                                      Tag="VersionAdvanceAssetsV2" Margin="0,0,60,0"
+                                      ToolTip.Tip="{loc:L Instance.Setup.Advanced.DisableFileVerification.ToolTip}" />
+                        <c:MyCheckBox Height="28" Text="{loc:L Instance.Setup.Advanced.UseGlobalProxy}"
+                                      x:Name="CheckAdvanceUseProxyV2"
+                                      Tag="VersionAdvanceUseProxyV2"
+                                      ToolTip.Tip="{loc:L Instance.Setup.Advanced.UseGlobalProxy.ToolTip}" />
+                        <c:MyCheckBox Height="28"
+                                      Text="{loc:L Setup.Launch.Advanced.DisableJlw}"
+                                      x:Name="CheckAdvanceDisableJLW"
+                                      Tag="VersionAdvanceDisableJLW"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Advanced.DisableJlw.ToolTip}" />
+                        <c:MyCheckBox Height="28"
+                                      Text="{loc:L Setup.Launch.Advanced.DisableLF}"
+                                      x:Name="CheckAdvanceDisableLF"
+                                      Tag="VersionAdvanceDisableLF"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Advanced.DisableLF.ToolTip}" />
+                        <c:MyCheckBox Height="28" Text="{loc:L Instance.Setup.Advanced.UseDebugLog4j}"
+                                      x:Name="CheckUseDebugLog4j2Config"
+                                      Tag="VersionUseDebugLog4j2Config" />
+                        <c:MyCheckBox Height="28"
+                                      Text="{loc:L Setup.Launch.Advanced.DisableLwjglUnsafeAgent}"
+                                      x:Name="CheckAdvanceDisableLwjglUnsafeAgent"
+                                      Tag="VersionAdvanceDisableLwjglUnsafeAgent"
+                                      ToolTip.Tip="{loc:L Setup.Launch.Advanced.DisableLwjglUnsafeAgent.ToolTip}" />
+                    </StackPanel>
+                </Grid>
+            </c:MyCard>
+            <c:MyExtraTextButton HorizontalAlignment="Center" Margin="0,-5,0,0"
+                                 x:Name="BtnSwitch" Text="{loc:L Instance.Setup.OpenGlobalSettings}"
+                                 LogoScale="0.9"
+                                 SvgIcon="lucide/arrow-right" />
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

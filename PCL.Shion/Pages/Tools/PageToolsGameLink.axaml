@@ -1,0 +1,97 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:c="using:PCL.Shion.Controls"
+                       xmlns:pages="using:PCL.Shion.Pages"
+                       x:Class="PCL.Shion.Pages.Tools.PageToolsGameLink"
+                       PanScroll="{Binding #PanBack}">
+    <!-- TODO(shion): 联机功能依赖 PCL.Core.Link（EasyTier，仅 Windows/WPF），目前仅为占位页面，布局对应 WPF 的 PageToolsGameLink.xaml。 -->
+    <c:MyScrollViewer HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      x:Name="PanBack">
+        <StackPanel x:Name="PanMain" Margin="10">
+            <c:MyHint x:Name="HintUnavailable"
+                      Margin="10"
+                      MinHeight="36"
+                      HorizontalAlignment="Stretch"
+                      Theme="Yellow" />
+
+            <!-- 对应 WPF 中的 NAT 测试与玩家账号入口 -->
+            <StackPanel Margin="10,4" HorizontalAlignment="Right" Orientation="Horizontal">
+                <c:MyCard Margin="12,0">
+                    <c:MyButton x:Name="BtnNatTest"
+                                IsEnabled="False"
+                                MinWidth="120"
+                                Margin="8,4" />
+                </c:MyCard>
+                <c:MyCard>
+                    <c:MyButton x:Name="BtnNatayarkLogin"
+                                IsEnabled="False"
+                                MinWidth="120"
+                                Margin="8,4" />
+                </c:MyCard>
+            </StackPanel>
+
+            <!-- 加入大厅 -->
+            <c:MyCard x:Name="CardJoin" Margin="10">
+                <StackPanel Margin="10,30,10,10">
+                    <TextBlock x:Name="TextJoinDescription"
+                               LineHeight="23"
+                               FontSize="14"
+                               TextWrapping="Wrap"
+                               Margin="10,10,10,-2" />
+                    <DockPanel Margin="10" Height="28">
+                        <c:MyButton x:Name="BtnJoin"
+                                    DockPanel.Dock="Right"
+                                    Width="50"
+                                    Margin="10,0,0,0"
+                                    ColorType="Highlight"
+                                    IsEnabled="False" />
+                        <c:MyButton x:Name="BtnPaste"
+                                    DockPanel.Dock="Right"
+                                    Width="50"
+                                    Margin="10,0,0,0"
+                                    IsEnabled="False" />
+                        <c:MyButton x:Name="BtnClearLobbyId"
+                                    DockPanel.Dock="Right"
+                                    Width="50"
+                                    Margin="10,0,0,0"
+                                    IsEnabled="False" />
+                        <c:MyTextBox x:Name="TextJoinLobbyId"
+                                     MaxLines="1"
+                                     AcceptsReturn="False"
+                                     IsEnabled="False" />
+                    </DockPanel>
+                </StackPanel>
+            </c:MyCard>
+
+            <!-- 创建大厅 -->
+            <c:MyCard x:Name="CardCreate" Margin="10">
+                <StackPanel Margin="10,30,10,10">
+                    <TextBlock x:Name="TextCreateDescription"
+                               LineHeight="23"
+                               FontSize="14"
+                               TextWrapping="Wrap"
+                               Margin="10,10,10,0" />
+                    <DockPanel Margin="10" Height="28">
+                        <c:MyButton x:Name="BtnCreate"
+                                    DockPanel.Dock="Right"
+                                    Width="50"
+                                    Margin="10,0,0,0"
+                                    ColorType="Highlight"
+                                    IsEnabled="False" />
+                        <c:MyButton x:Name="BtnRefresh"
+                                    DockPanel.Dock="Right"
+                                    Width="50"
+                                    Margin="10,0,0,0"
+                                    IsEnabled="False" />
+                        <c:MyButton x:Name="BtnInputPort"
+                                    DockPanel.Dock="Right"
+                                    Width="80"
+                                    Margin="10,0,0,0"
+                                    IsEnabled="False" />
+                    </DockPanel>
+                </StackPanel>
+            </c:MyCard>
+        </StackPanel>
+    </c:MyScrollViewer>
+</pages:MyPageRight>

@@ -1,0 +1,91 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:c="using:PCL.Shion.Controls"
+                   xmlns:loc="using:PCL.Shion.Localization"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   x:Class="PCL.Shion.Pages.Instance.PageInstanceSaves">
+    <c:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <Grid>
+            <c:MyCard x:Name="PanNoWorld" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40">
+                <Grid Margin="20,17">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="4" Margin="0,0,0,9" HorizontalAlignment="Center"
+                               Text="{loc:L Instance.Saves.Empty.Title}" FontSize="19"
+                               UseLayoutRounding="True"
+                               Foreground="{DynamicResource ColorBrush3}" />
+                    <Rectangle Grid.Row="1" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" Height="2"
+                               Fill="{DynamicResource ColorBrush3}" />
+                    <TextBlock Grid.Row="2" Grid.ColumnSpan="4" Margin="10,15,10,5"
+                               Text="{loc:L Instance.Saves.Empty.Message}"
+                               TextWrapping="Wrap" HorizontalAlignment="Center" />
+                    <c:MyButton Grid.Row="3" Grid.Column="1" Height="35" HorizontalAlignment="Center"
+                                Click="BtnOpenFolder_Click"
+                                MinWidth="140" Text="{loc:L Instance.Saves.OpenFolder}"
+                                Margin="10,10,10,0"
+                                Padding="13,0" ColorType="Highlight" />
+                    <c:MyButton Grid.Row="3" Grid.Column="2" Height="35" HorizontalAlignment="Center"
+                                Click="BtnDownloadNew_Click"
+                                MinWidth="140" Text="{loc:L Instance.Resource.DownloadNew}"
+                                Margin="10,10,10,0"
+                                Padding="13,0" />
+                    <c:MyButton Grid.Row="3" Grid.Column="3" Height="35" HorizontalAlignment="Center"
+                                Click="BtnPaste_Click"
+                                MinWidth="140" Text="{loc:L Instance.Saves.PasteFile}"
+                                Margin="10,10,10,0"
+                                Padding="13,0" />
+                </Grid>
+            </c:MyCard>
+            <StackPanel x:Name="PanContent" Orientation="Vertical" Margin="25,10,25,10">
+
+                <c:MySearchBox x:Name="SearchBox" Margin="0,15" HintText="{loc:L Instance.Saves.SearchHint}" />
+
+                <c:MyCard x:Name="PanQuickActions" Margin="0,0,0,15" Title="{loc:L Instance.Saves.QuickActions}">
+                    <Grid Height="35" Margin="25,40,15,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <c:MyButton x:Name="BtnQuickOpenFolder" Grid.Column="0" MinWidth="140"
+                                    Text="{loc:L Instance.Saves.OpenFolder}" Padding="13,0"
+                                    Margin="0,0,20,0" Click="BtnOpenFolder_Click"
+                                    HorizontalAlignment="Left" ColorType="Highlight" />
+                        <c:MyButton x:Name="BtnQuickDownloadNew" Grid.Column="1" MinWidth="140"
+                                    Text="{loc:L Instance.Resource.DownloadNew}" Padding="13,0"
+                                    Margin="0,0,20,0" Click="BtnDownloadNew_Click"
+                                    HorizontalAlignment="Left" />
+                        <c:MyButton x:Name="BtnQuickPaste" Grid.Column="2" MinWidth="140"
+                                    Text="{loc:L Instance.Saves.PasteFile}" Padding="13,0"
+                                    Margin="0,0,20,0" Click="BtnPaste_Click"
+                                    HorizontalAlignment="Left" />
+                    </Grid>
+                </c:MyCard>
+
+                <c:MyCard x:Name="PanListBack" Margin="0,0,0,15" VerticalAlignment="Top"
+                          Title="{loc:L Instance.Saves.ListTitle}"
+                          MinHeight="55">
+                    <Grid>
+                        <StackPanel Margin="0,13,15,0" Orientation="Horizontal" VerticalAlignment="Top"
+                                    HorizontalAlignment="Right" Height="28">
+                            <c:MyIconTextButton x:Name="BtnSort" Text="{loc:L Instance.Saves.SortBy}"
+                                                SvgIcon="lucide/arrow-up-down" />
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel x:Name="PanList" Margin="20,48,18,22" VerticalAlignment="Top" />
+                </c:MyCard>
+            </StackPanel>
+        </Grid>
+    </c:MyScrollViewer>
+</pages:MyPageRight>
