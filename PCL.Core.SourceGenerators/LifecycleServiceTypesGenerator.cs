@@ -193,6 +193,10 @@ public class LifecycleServiceTypesGenerator : IIncrementalGenerator
 
     private static void _Execute(SourceProductionContext context, List<string> validStates, ImmutableArray<LifecycleServiceInfo> services)
     {
+        // 没有 LifecycleState 也没有生命周期服务的程序集（如 PCL.Shion.Core 只为了写入密钥而引用本生成器）不生成代码
+        if (validStates.Count == 0 && services.IsEmpty)
+            return;
+
         // 过滤服务，只保留有效状态的服务
         var filteredServices = services.Where(s => validStates.Count == 0 || validStates.Contains(s.State)).ToList();
             

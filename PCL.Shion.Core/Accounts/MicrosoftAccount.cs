@@ -9,7 +9,7 @@ namespace PCL.Shion.Core.Accounts;
 /// </summary>
 public static class MicrosoftAccount
 {
-    /// <summary>保存 Microsoft Entra 应用客户端 ID 的环境变量。客户端 ID 不写入源码。</summary>
+    /// <summary>保存 Microsoft Entra 应用客户端 ID 的环境变量。客户端 ID 不写入源码，发布构建时由 <see cref="BuildSecrets"/> 写入。</summary>
     public const string ClientIdEnvironmentVariable = "PCL_MS_CLIENT_ID";
 
     private const string DeviceCodeEndpoint = "https://login.microsoftonline.com/consumers/oauth2/v2.0/devicecode";
@@ -22,10 +22,10 @@ public static class MicrosoftAccount
     private const string ProfileEndpoint = "https://api.minecraftservices.com/minecraft/profile";
 
     /// <summary>读取微软登录使用的客户端 ID。</summary>
-    /// <exception cref="AccountException">环境变量未设置。</exception>
+    /// <exception cref="AccountException">构建时未写入，且环境变量未设置。</exception>
     public static string GetClientId()
     {
-        var clientId = Environment.GetEnvironmentVariable(ClientIdEnvironmentVariable)?.Trim();
+        var clientId = BuildSecrets.MicrosoftClientId;
         if (string.IsNullOrEmpty(clientId))
             throw new AccountException("client_id_missing",
                 $"未配置微软登录的客户端 ID，请设置环境变量 {ClientIdEnvironmentVariable}。");

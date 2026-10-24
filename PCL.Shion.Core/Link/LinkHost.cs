@@ -54,7 +54,7 @@ public static class LinkHost
     public static Func<string> LauncherIdProvider { get; set; } = static () => Identify.Fallback();
 
     /// <summary>读取密钥，失败返回 null。</summary>
-    public static Func<string, string?> SecretProvider { get; set; } = static key => Environment.GetEnvironmentVariable("PCL_" + key);
+    public static Func<string, string?> SecretProvider { get; set; } = BuildSecrets.Get;
 }
 
 public enum LinkLogLevel

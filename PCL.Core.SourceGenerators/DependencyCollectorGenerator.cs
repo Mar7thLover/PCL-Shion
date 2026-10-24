@@ -158,6 +158,10 @@ public sealed class DependencyCollectorGenerator : IIncrementalGenerator
 
     private static void _GenerateDependencyGroup(SourceProductionContext spc, ImmutableArray<DependencyMatchResult> matches)
     {
+        // 没有依赖收集的程序集（如 PCL.Shion.Core 只为了写入密钥而引用本生成器）不生成代码
+        if (matches.IsEmpty)
+            return;
+
         var dependencyMap = new Dictionary<CollectorInfo, Dictionary<AttributeTargets, List<DependencyMatchResult>>>();
         foreach (var dep in matches)
         {

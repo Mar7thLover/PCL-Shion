@@ -35,12 +35,12 @@ public sealed class CompApi
     /// </summary>
     /// <param name="http">HTTP 客户端，应带有应用的 User-Agent。</param>
     /// <param name="strategy">镜像源策略。</param>
-    /// <param name="curseForgeApiKey">CurseForge API Key，为 null 时读取环境变量 PCL_CURSEFORGE_API_KEY。</param>
+    /// <param name="curseForgeApiKey">CurseForge API Key，为 null 时使用构建时写入的密钥（未写入时读取环境变量 PCL_CURSEFORGE_API_KEY）。</param>
     public CompApi(HttpClient http, CompSourceStrategy strategy = CompSourceStrategy.Balanced, string? curseForgeApiKey = null)
     {
         _http = http;
         Strategy = strategy;
-        CurseForgeApiKey = curseForgeApiKey ?? Environment.GetEnvironmentVariable("PCL_CURSEFORGE_API_KEY");
+        CurseForgeApiKey = curseForgeApiKey ?? BuildSecrets.CurseForgeApiKey;
     }
 
     /// <summary>镜像源策略。</summary>

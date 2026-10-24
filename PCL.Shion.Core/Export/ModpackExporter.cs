@@ -170,7 +170,7 @@ public static class ModpackExporter
 
     /// <summary>
     /// 通过 Modrinth 与 CurseForge 查询文件的下载地址。两个平台并行查询，单个平台失败不影响另一个，失败原因放在结果的 <see cref="ExportLookupResult.Failures"/> 中。
-    /// CurseForge 需要通过环境变量 <c>PCL_CURSEFORGE_API_KEY</c> 提供 API Key，未提供时跳过 CurseForge。
+    /// CurseForge 需要 API Key（构建时写入，或通过环境变量 <c>PCL_CURSEFORGE_API_KEY</c> 提供），未提供时跳过 CurseForge。
     /// </summary>
     public static async Task<ExportLookupResult> LookupDownloadUrlsAsync(HttpClient http, IReadOnlyList<ExportFile> files,
         bool modrinthUploadMode, CancellationToken cancellationToken)
@@ -190,7 +190,7 @@ public static class ModpackExporter
         }
 
         var modrinthTask = LookupModrinthAsync(http, files, Add, cancellationToken);
-        var curseForgeKey = Environment.GetEnvironmentVariable("PCL_CURSEFORGE_API_KEY");
+        var curseForgeKey = BuildSecrets.CurseForgeApiKey;
         var curseForgeTask = modrinthUploadMode || string.IsNullOrWhiteSpace(curseForgeKey)
             ? Task.CompletedTask
             : LookupCurseForgeAsync(http, files, curseForgeKey, Add, cancellationToken);
