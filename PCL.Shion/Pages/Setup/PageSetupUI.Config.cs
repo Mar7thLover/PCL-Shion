@@ -57,6 +57,7 @@ internal static class SetupConfig
             if (!SetupExtraSettings.Contains(tag))
                 return false;
             SetupExtraSettings.Current.SetValue(tag, value);
+            ModSetup.TryApply(tag, value);
             return true;
         }
 
@@ -66,6 +67,7 @@ internal static class SetupConfig
             : Convert.ChangeType(value, Nullable.GetUnderlyingType(type) ?? type, CultureInfo.InvariantCulture);
         property.SetValue(Settings, converted);
         Settings.Save();
+        ModSetup.TryApply(tag, converted);
         return true;
     }
 
@@ -135,7 +137,7 @@ internal sealed class SetupExtraSettings
         ["UiLauncherLogo"] = true,
         ["UiLauncherTransparent"] = 600,
         ["UiLockWindowSize"] = false,
-        ["UiLogoType"] = 0,
+        ["UiLogoType"] = 1,
         ["UiLogoText"] = "",
         ["UiLogoLeft"] = false,
         ["UiFont"] = "",

@@ -31,6 +31,11 @@ namespace PCL.Shion.Pages.Launch;
 
 public partial class PageLaunchLeft : MyPageLeft
 {
+    /// <summary>
+    ///     启动页的右侧固定为主页，对应 WPF 中 FormMain 把 frmLaunchRight 放入 PanMainRight。
+    /// </summary>
+    public override void OnNavigated(PageSubType sub) => Navigator.ShowRight(PageLaunchRight.Instance);
+
     private double actualUsedHeight;
     private double actualUsedWidth;
     private int btnLaunchState;

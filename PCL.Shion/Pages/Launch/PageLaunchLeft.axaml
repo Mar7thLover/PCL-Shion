@@ -38,7 +38,7 @@
                     Height="35"
                     Margin="0,10,10,0"
                     IsVisible="False"
-                    TextPadding="36"
+                    TextPadding="36,0"
                     Text="{loc:L Launch.Home.InstanceSettings}"
                     Click="BtnMore_Click" />
         <Grid x:Name="PanLogin"

@@ -882,6 +882,15 @@ public static class ModLoader
     private static readonly Dictionary<LoaderBase, LoaderFolderEntry> loaderFolderDictionary = new();
 
     /// <summary>
+    ///     任务列表中是否有正在进行的任务。对应 WPF 的 ModNet.HasDownloadingTask。
+    /// </summary>
+    public static bool HasDownloadingTask()
+    {
+        lock (taskbarLock)
+            return loaderTaskbar.Any(l => l.State == LoadState.Loading);
+    }
+
+    /// <summary>
     ///     将加载器加入任务列表。
     /// </summary>
     public static void LoaderTaskbarAdd<T>(LoaderCombo<T> loader)

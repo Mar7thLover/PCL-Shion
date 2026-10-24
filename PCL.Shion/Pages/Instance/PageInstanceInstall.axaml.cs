@@ -76,14 +76,7 @@ public partial class PageInstanceInstall : MyPageRight
         BtnLiteLoaderClear.PointerReleased += LiteLoader_Clear;
     }
 
-    // 页面尚未挂到界面树上时 FindResource 取不到应用级资源，此时直接从 Application 查找
-    private IBrush Brush(string key) =>
-        this.TryFindResource(key, ActualThemeVariant, out var resource) && resource is IBrush brush
-            ? brush
-            : Application.Current!.TryFindResource(key, Application.Current.ActualThemeVariant, out resource) &&
-              resource is IBrush appBrush
-                ? appBrush
-                : Brushes.Transparent;
+    private IBrush Brush(string key) => this.FindBrushOrTransparent(key);
 
     private void LoaderInit()
     {
@@ -1329,12 +1322,12 @@ public partial class PageInstanceInstall : MyPageRight
                 var cardInfo = new MyCard { Title = Lang.Text("Download.Version.Latest.Title"), Margin = new Thickness(0d, 15d, 0d, 15d) };
                 var topestVersions = new List<JsonObject>();
                 var release = (JsonObject)dict["正式版"][0].DeepClone();
-                release["lore"] = Lang.Text("Download.Version.Latest.Release", Lang.Date(release["releaseTime"]!.GetValue<DateTime>(), "g"));
+                release["lore"] = Lang.Text("Download.Version.Latest.Release", Lang.Date(McVersionClassifier.GetReleaseTime(release), "g"));
                 topestVersions.Add(release);
-                if (dict["正式版"][0]["releaseTime"]!.GetValue<DateTime>() < dict["预览版"][0]["releaseTime"]!.GetValue<DateTime>())
+                if (McVersionClassifier.GetReleaseTime(dict["正式版"][0]) < McVersionClassifier.GetReleaseTime(dict["预览版"][0]))
                 {
                     var snapshot = (JsonObject)dict["预览版"][0].DeepClone();
-                    snapshot["lore"] = Lang.Text("Download.Version.Latest.Development", Lang.Date(snapshot["releaseTime"]!.GetValue<DateTime>(), "g"));
+                    snapshot["lore"] = Lang.Text("Download.Version.Latest.Development", Lang.Date(McVersionClassifier.GetReleaseTime(snapshot), "g"));
                     topestVersions.Add(snapshot);
                 }
 

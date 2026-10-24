@@ -329,7 +329,7 @@ public partial class PageDownloadCompDetail : MyPageRight
         var instances = results.SelectMany(v => v.GameVersions)
             .Select(v => GroupedVersionName(v, _groupedDrop, _groupedOld))
             .Distinct()
-            .OrderByDescending(s => s, new CardSorter(""))
+            .OrderBy(s => s, new CardSorter("")) // CardSorter 本身就是新版本在前
             .ToList();
         var loaders = results.SelectMany(v => v.ModLoaders)
             .Select(l => l.ToString())

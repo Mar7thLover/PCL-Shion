@@ -531,8 +531,10 @@ public static class Navigator
             }
             case PageType.InstanceSetup:
             {
+                // 与 WPF 相同，标题中显示当前实例的名称
                 return left?.Title ??
-                       Lang.Text("Main.Title.InstanceSetup", Lang.Text("Common.State.Unknown"));
+                       Lang.Text("Main.Title.InstanceSetup",
+                           PageInstanceLeft.McInstance?.Name ?? Lang.Text("Common.State.Unknown"));
             }
             case PageType.CompDetail:
             {

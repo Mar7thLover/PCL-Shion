@@ -27,14 +27,16 @@ internal static class McVersionClassifier
     /// </summary>
     public static DateTime GetReleaseTime(JsonObject version)
     {
-        try
-        {
-            return version["releaseTime"]?.GetValue<DateTime>() ?? DateTime.MinValue;
-        }
-        catch (Exception ex) when (ex is FormatException or InvalidOperationException)
-        {
+        // 版本列表里的时间以字符串保存，GetValue<DateTime> 只能读取来自 JSON 文本的节点，因此两种情况都要处理
+        if (version["releaseTime"] is not JsonValue value)
             return DateTime.MinValue;
-        }
+        if (value.TryGetValue<DateTime>(out var time))
+            return time;
+        return value.TryGetValue<string>(out var text) &&
+               DateTime.TryParse(text, System.Globalization.CultureInfo.InvariantCulture,
+                   System.Globalization.DateTimeStyles.RoundtripKind, out time)
+            ? time
+            : DateTime.MinValue;
     }
 
     /// <summary>

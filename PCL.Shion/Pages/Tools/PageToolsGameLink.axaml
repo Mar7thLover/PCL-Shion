@@ -2,6 +2,7 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:c="using:PCL.Shion.Controls"
                        xmlns:pages="using:PCL.Shion.Pages"
+                       xmlns:loc="using:PCL.Shion.Localization"
                        x:Class="PCL.Shion.Pages.Tools.PageToolsGameLink"
                        PanScroll="{Binding #PanBack}">
     <!-- TODO(shion): 联机功能依赖 PCL.Core.Link（EasyTier，仅 Windows/WPF），目前仅为占位页面，布局对应 WPF 的 PageToolsGameLink.xaml。 -->
@@ -15,24 +16,30 @@
                       HorizontalAlignment="Stretch"
                       Theme="Yellow" />
 
-            <!-- 对应 WPF 中的 NAT 测试与玩家账号入口 -->
-            <StackPanel Margin="10,4" HorizontalAlignment="Right" Orientation="Horizontal">
+            <!-- 对应 WPF 中的 NAT 测试与玩家账号入口，联机不可用时仅作展示 -->
+            <StackPanel Margin="10,4" HorizontalAlignment="Right" Orientation="Horizontal" Opacity="0.6">
                 <c:MyCard Margin="12,0">
-                    <c:MyButton x:Name="BtnNatTest"
-                                IsEnabled="False"
-                                MinWidth="120"
-                                Margin="8,4" />
+                    <StackPanel Orientation="Horizontal" Height="32"
+                                ToolTip.Tip="{loc:L Tools.GameLink.Nat.Title}">
+                        <c:SvgIcon Width="14" Stretch="Uniform" Margin="12,0,7,0"
+                                   IconBrush="{DynamicResource ColorBrushGray1}" Icon="lucide/ethernet-port" />
+                        <TextBlock Text="{loc:L Tools.GameLink.Nat.Test}" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource ColorBrushGray1}" Margin="0,0,12,0" />
+                    </StackPanel>
                 </c:MyCard>
                 <c:MyCard>
-                    <c:MyButton x:Name="BtnNatayarkLogin"
-                                IsEnabled="False"
-                                MinWidth="120"
-                                Margin="8,4" />
+                    <StackPanel Orientation="Horizontal" Height="32"
+                                ToolTip.Tip="{loc:L Tools.GameLink.Natayark.Account}">
+                        <c:SvgIcon Width="14" Stretch="Uniform" Margin="12,0,7,0"
+                                   IconBrush="{DynamicResource ColorBrushGray1}" Icon="lucide/user" />
+                        <TextBlock Text="{loc:L Tools.GameLink.Natayark.Login}" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource ColorBrushGray1}" Margin="0,0,12,0" />
+                    </StackPanel>
                 </c:MyCard>
             </StackPanel>
 
             <!-- 加入大厅 -->
-            <c:MyCard x:Name="CardJoin" Margin="10">
+            <c:MyCard x:Name="CardJoin" Margin="10" Title="{loc:L Tools.GameLink.Join.Title}">
                 <StackPanel Margin="10,30,10,10">
                     <TextBlock x:Name="TextJoinDescription"
                                LineHeight="23"
@@ -65,7 +72,7 @@
             </c:MyCard>
 
             <!-- 创建大厅 -->
-            <c:MyCard x:Name="CardCreate" Margin="10">
+            <c:MyCard x:Name="CardCreate" Margin="10" Title="{loc:L Tools.GameLink.Create.Title}">
                 <StackPanel Margin="10,30,10,10">
                     <TextBlock x:Name="TextCreateDescription"
                                LineHeight="23"

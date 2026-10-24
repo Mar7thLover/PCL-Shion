@@ -493,14 +493,16 @@ public partial class MyListItem : Grid, IMyRadio
         InitializeComponent();
 
         SizeChanged += (_, _) => OnSizeChanged();
-        AddHandler(InputElement.PointerReleasedEvent, Button_MouseUp, RoutingStrategies.Tunnel);
-        AddHandler(InputElement.PointerPressedEvent, Button_MouseDown, RoutingStrategies.Tunnel);
-        PointerExited += Button_MouseLeave;
+        // 松开时先判定点击、再复位按下状态。两者分别注册为隧道处理器时执行顺序没有保证，
+        // 复位先执行会清掉 isMouseDown，导致点击列表项不生效
         AddHandler(InputElement.PointerReleasedEvent, (sender, e) =>
         {
+            Button_MouseUp(sender, e);
             if (e.InitialPressMouseButton == MouseButton.Left)
                 Button_MouseLeave(sender, e);
         }, RoutingStrategies.Tunnel);
+        AddHandler(InputElement.PointerPressedEvent, Button_MouseDown, RoutingStrategies.Tunnel);
+        PointerExited += Button_MouseLeave;
         PointerEntered += RefreshColor;
         PointerExited += RefreshColor;
         PointerPressed += (sender, e) =>
@@ -1155,12 +1157,8 @@ public partial class MyListItem : Grid, IMyRadio
         return Interlocked.Increment(ref _uuidSeed);
     }
 
-    private IBrush FindBrush(string resourceKey)
-    {
-        if (!this.TryFindResource(resourceKey, ActualThemeVariant, out var resource) || resource is not IBrush brush)
-            throw new KeyNotFoundException("找不到资源 " + resourceKey);
-        return brush;
-    }
+    // 悬停刷新颜色可能发生在列表项被移出界面树时（例如切换页面中），此时不能因找不到资源而抛出异常
+    private IBrush FindBrush(string resourceKey) => this.FindBrushOrTransparent(resourceKey);
 
     private void Log(string message, params object?[] args)
     {

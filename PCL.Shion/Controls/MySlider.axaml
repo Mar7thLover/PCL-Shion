@@ -9,10 +9,10 @@
         BorderBrush="{DynamicResource ColorBrushBg0}" x:Name="PanBack"
         Background="{StaticResource ColorBrushSemiTransparent}" Focusable="True">
     <Grid x:Name="PanMain" MinHeight="16" MaxHeight="16" IsHitTestVisible="False">
-        <Line Height="4" x:Name="LineBack" Stroke="{DynamicResource ColorBrushBg0}" Opacity="0.3" StrokeThickness="1"
+        <Line Height="4" x:Name="LineBack" ClipToBounds="True" Stroke="{DynamicResource ColorBrushBg0}" Opacity="0.3" StrokeThickness="1"
               StartPoint="0,2" EndPoint="10000,2" HorizontalAlignment="Right" Width="0"
               Margin="0,0,1,0" />
-        <Line Height="4" x:Name="LineFore" Stroke="{Binding BorderBrush, ElementName=PanBack}" StrokeThickness="2"
+        <Line Height="4" x:Name="LineFore" ClipToBounds="True" Stroke="{Binding BorderBrush, ElementName=PanBack}" StrokeThickness="2"
               StartPoint="0,2" EndPoint="10000,2" Width="0" HorizontalAlignment="Left" Margin="1,0,0,0" />
         <Ellipse HorizontalAlignment="Left" Width="10" Height="10"
                  Stroke="{Binding BorderBrush, ElementName=PanBack}" StrokeThickness="1.2"

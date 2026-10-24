@@ -54,7 +54,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20" />
                         </Grid.RowDefinitions>
-                        <c:MyCheckBox Grid.Row="0" Grid.Column="0" Text="{loc:L Setup.Misc.System.DisableHardwareAcceleration}" x:Name="CheckSystemDisableHardwareAcceleration" Tag="SystemDisableHardwareAcceleration" Change="CheckSystemDisableHardwareAcceleration_OnChange" />
+                        <c:MyCheckBox Grid.Row="0" Grid.Column="0" Text="{loc:L Setup.Misc.System.DisableHardwareAcceleration}" Margin="0,0,25,0" x:Name="CheckSystemDisableHardwareAcceleration" Tag="SystemDisableHardwareAcceleration" Change="CheckSystemDisableHardwareAcceleration_OnChange" />
                         <c:MyCheckBox Grid.Row="0" Grid.Column="1" Text="{loc:L Setup.Misc.System.Telemetry}" x:Name="CheckSystemTelemetry" Tag="SystemTelemetry" Change="CheckBoxChange"
                                       ToolTip.Tip="{loc:L Setup.Misc.System.Telemetry.ToolTip}" />
                     </Grid>

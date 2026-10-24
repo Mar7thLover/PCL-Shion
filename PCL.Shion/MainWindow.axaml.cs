@@ -106,6 +106,7 @@ public partial class MainWindow : Window, IPageHost
             AddResizer();
 
         SizeChanged += (_, _) => FormMainSizeChanged();
+        PanBack.SizeChanged += (_, e) => PanBackSizeChanged(e.NewSize);
         extraRefreshTimer.Tick += (_, _) => RefreshExtraButtonsTick();
     }
 
@@ -133,6 +134,11 @@ public partial class MainWindow : Window, IPageHost
 
         Navigator.Go(PageType.Launch);
 
+        // 对应 WPF 的 ThemeManager.ThemeRefresh 与 ModSetup.ApplyAll：把设置应用到界面上（背景、标题栏、透明度等）
+        ModSetup.ApplyAll();
+        // ApplyAll 已按设置写入不透明度，开场动画是从 0 开始的增量动画，这里先归零
+        Opacity = 0d;
+
         Topmost = false;
         isSizeSaveable = true;
         ShowWindowToTop();
@@ -149,7 +155,8 @@ public partial class MainWindow : Window, IPageHost
         ModAnimation.AniStart(new[]
         {
             ModAnimation.AaCode(() => ModAnimation.AniControlEnabled -= 1, 50),
-            ModAnimation.AaOpacity(this, 1d, 250, 100),
+            // 与 WPF 相同，淡入到设置中的启动器不透明度
+            ModAnimation.AaOpacity(this, SetupExtraSettings.Current.UiLauncherTransparent / 1000d + 0.4d, 250, 100),
             ModAnimation.AaDouble(i => TransformPos.Y += (double)i, -TransformPos.Y, 600,
                 100, new ModAnimation.AniEaseOutBack(ModAnimation.AniEasePower.Weak)),
             ModAnimation.AaDouble(i => TransformRotate.Angle += (double)i,
@@ -343,6 +350,15 @@ public partial class MainWindow : Window, IPageHost
         var settings = App.Services.Settings;
         settings.WindowWidth = Width;
         settings.WindowHeight = Height;
+    }
+
+    /// <summary>
+    ///     对应 WPF FormMain_SizeChanged 中设置 PanMain 尺寸的部分。PanMain 左对齐，不显式设置宽度时右侧页面只会按内容收缩。
+    /// </summary>
+    private void PanBackSizeChanged(Size size)
+    {
+        PanMain.Width = size.Width;
+        PanMain.Height = Math.Max(0d, size.Height - PanTitle.Height);
     }
 
     // 窗口边缘的热区：与 WPF 版相同，距边缘 6 像素起、宽 5 像素。
@@ -591,8 +607,9 @@ public partial class MainWindow : Window, IPageHost
     /// </summary>
     private void PanTitle_SizeChanged(object? sender, SizeChangedEventArgs e)
     {
-        var autoWidth = PanTitleSelect.Bounds.Width + PanTitleSelect.Margin.Left + PanTitleSelect.Margin.Right;
-        var columnWidth = (PanTitleMain.Bounds.Width - autoWidth) / 2d;
+        // 与 WPF 相同，取标题栏左侧一列的实际宽度。不能用 PanTitleMain.Bounds 推算：首次布局时它还是 0，
+        // 会把这一列的最大宽度设为 0，之后 PanTitleLeft 尺寸不再变化，本事件也不会再触发，标题徽标就一直不显示
+        var columnWidth = PanTitleMain.ColumnDefinitions[0].ActualWidth;
         if (columnWidth - 30 <= 0)
             PanTitleLeft.ColumnDefinitions[0].MaxWidth = 0;
         else
@@ -658,7 +675,7 @@ public partial class MainWindow : Window, IPageHost
 
     private bool BtnExtraDownload_ShowCheck()
     {
-        return Navigator.Current != PageType.TaskManager;
+        return ModLoader.HasDownloadingTask() && Navigator.Current != PageType.TaskManager;
     }
 
     private void BtnExtraDownload_Click(object? sender, PointerReleasedEventArgs e)

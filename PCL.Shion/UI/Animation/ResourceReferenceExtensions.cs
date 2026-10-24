@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Media;
+using Avalonia.Styling;
 
 namespace PCL.Shion.UI.Animation;
 
@@ -21,6 +23,20 @@ public static class ResourceReferenceExtensions
     /// <summary>
     /// 与 WPF 的 FrameworkElement.SetResourceReference 相同：属性引用该资源并随资源变化，替换属性上原有的本地值与本地绑定。
     /// </summary>
+    /// <summary>
+    /// 查找画刷资源。控件尚未挂到界面树上（或正在切换页面而被移出）时只能从 Application 查找；仍找不到时返回透明画刷，而不是抛出异常。
+    /// </summary>
+    public static IBrush FindBrushOrTransparent(this StyledElement element, string key)
+    {
+        var theme = (element as IThemeVariantHost)?.ActualThemeVariant;
+        if (element.TryFindResource(key, theme, out var resource) && resource is IBrush brush)
+            return brush;
+        if (Application.Current is { } app &&
+            app.TryFindResource(key, app.ActualThemeVariant, out resource) && resource is IBrush appBrush)
+            return appBrush;
+        return Brushes.Transparent;
+    }
+
     public static void SetResourceReference(this StyledElement element, AvaloniaProperty property, object key)
     {
         element.Bind(property, element.GetResourceObservable(key));

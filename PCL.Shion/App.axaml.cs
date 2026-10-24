@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
+using PCL.Shion.Localization;
 using PCL.Shion.Services;
 
 namespace PCL.Shion;
@@ -18,7 +20,22 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            // 对应 WPF 的 Application_DispatcherUnhandledException：UI 线程上的异常只记录并提示，不让启动器直接退出
+            Dispatcher.UIThread.UnhandledException += (_, e) =>
+            {
+                e.Handled = true;
+                try
+                {
+                    ModBase.Log(e.Exception, Lang.Text("SystemDialog.Error.Unexpected.Message"), ModBase.LogLevel.Hint);
+                }
+                catch
+                {
+                    // 全局处理中不能再抛出异常
+                }
+            };
             Services = new GameServices(AppSettings.Load());
+            // 主题服务与设置页共用同一份设置，否则设置页的修改不会反映到主题上
+            Themes.ThemeService.Settings = Services.Settings;
             desktop.MainWindow = new MainWindow();
             desktop.Exit += (_, _) => Services.Dispose();
         }

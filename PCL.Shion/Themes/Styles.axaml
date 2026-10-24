@@ -42,6 +42,12 @@
         <Setter Property="FontFamily" Value="{DynamicResource LaunchFontFamily}" />
     </Style>
 
+    <!-- Fluent 的工具提示有最大宽度，配合上面的省略号设置会把长提示截成一行；改为自动换行，完整显示 -->
+    <Style Selector="ToolTip TextBlock">
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="TextTrimming" Value="None" />
+    </Style>
+
     <!-- ScrollViewer -->
     <Style Selector="local|MyScrollBar">
         <Setter Property="MinWidth" Value="8" />
@@ -72,9 +78,7 @@
                 <Grid>
                     <ScrollContentPresenter Name="PART_ContentPresenter"
                                             Margin="{TemplateBinding Padding}"
-                                            Content="{TemplateBinding Content}"
-                                            CanHorizontallyScroll="False"
-                                            CanVerticallyScroll="False" />
+                                            Content="{TemplateBinding Content}" />
                     <local:MyScrollBar Name="PART_VerticalScrollBar"
                                        HorizontalAlignment="Right"
                                        Foreground="{TemplateBinding Foreground}"
@@ -86,6 +90,8 @@
 
     <!-- TextBox -->
     <Style Selector="local|MyTextBox">
+        <!-- 本样式叠加在 Fluent 的 TextBox 主题之上，需覆盖其默认内边距；WPF 版没有内边距 -->
+        <Setter Property="Padding" Value="0" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="{DynamicResource ColorBrushHalfWhite}" />
         <Setter Property="FontSize" Value="13" />
@@ -98,7 +104,12 @@
         <Setter Property="behaviors:ClipboardInterceptor.EnableSafeClipboard" Value="True" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Grid RowDefinitions="Auto,Auto">
+                <!-- 与 WPF 相同，第一行可伸展（最小 28），输入框比 28 高时内容才能垂直居中 -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition MinHeight="28" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
                     <Border Name="border"
                             MinHeight="28"
                             BorderThickness="{TemplateBinding BorderThickness}"
@@ -111,19 +122,24 @@
                                       Margin="5,0,0,0"
                                       Cursor="IBeam">
                             <TextPresenter Name="PART_TextPresenter"
+                                           Margin="{TemplateBinding Padding}"
                                            Text="{TemplateBinding Text, Mode=TwoWay}"
                                            CaretBrush="{TemplateBinding CaretBrush}"
                                            SelectionBrush="{TemplateBinding SelectionBrush}"
                                            SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}" />
                         </ScrollViewer>
                     </Border>
-                    <TextBlock Name="labHint"
-                               Margin="7,0,0,0"
-                               Foreground="{DynamicResource ColorBrushGray4}"
-                               FontSize="{TemplateBinding FontSize}"
-                               FontFamily="{DynamicResource LaunchFontFamily}"
-                               IsHitTestVisible="False"
-                               VerticalAlignment="Center" />
+                    <!-- 与 WPF 相同，提示文字按 Padding 偏移，避免被输入框内的图标遮住 -->
+                    <Border Margin="{TemplateBinding Padding}"
+                            IsHitTestVisible="False"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <TextBlock Name="labHint"
+                                   Margin="7,0,0,0"
+                                   Foreground="{DynamicResource ColorBrushGray4}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   FontFamily="{DynamicResource LaunchFontFamily}" />
+                    </Border>
                     <TextBlock Name="labWrong"
                                Grid.Row="1"
                                Height="0"
@@ -236,6 +252,9 @@
 
     <!-- ToggleButton -->
     <Style Selector="ToggleButton">
+        <!-- Fluent 主题把按钮设为左对齐，下拉框中的切换按钮需要铺满整个下拉框，箭头才会显示在右侧 -->
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Background="{DynamicResource ColorBrushSemiTransparent}">

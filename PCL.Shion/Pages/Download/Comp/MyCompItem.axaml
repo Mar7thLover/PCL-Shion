@@ -48,7 +48,7 @@
                IsHitTestVisible="True" />
 
     <!-- 下边栏 -->
-    <Grid Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" IsHitTestVisible="False">
+    <Grid Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" IsHitTestVisible="False" ClipToBounds="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />

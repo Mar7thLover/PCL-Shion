@@ -2,7 +2,7 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
-using Avalonia.VisualTree;
+using Avalonia.Threading;
 
 namespace PCL.Shion.Controls;
 
@@ -33,46 +33,30 @@ public class LazyLoadBehavior : AvaloniaObject
     {
         Detach();
         _associatedObject = element;
-        element.LayoutUpdated += OnLayoutUpdated;
+        // Avalonia 中判断控件是否进入滚动区域的标准方式是 EffectiveViewportChanged，
+        // 按 WPF 的做法在 LayoutUpdated 中手动计算交集时，占位元素始终不会被实例化
+        element.EffectiveViewportChanged += OnEffectiveViewportChanged;
     }
 
     internal void Detach()
     {
         if (_associatedObject is not null)
-            _associatedObject.LayoutUpdated -= OnLayoutUpdated;
+            _associatedObject.EffectiveViewportChanged -= OnEffectiveViewportChanged;
         _associatedObject = null;
     }
 
-    private void OnLayoutUpdated(object? sender, EventArgs e)
+    private void OnEffectiveViewportChanged(object? sender, EffectiveViewportChangedEventArgs e)
     {
         var element = _associatedObject;
         if (element is null || element.Bounds.Width < double.Epsilon || !element.IsVisible)
             return;
 
-        var scrollViewer = FindParentScrollViewer(element);
-        if (scrollViewer is null)
+        // EffectiveViewport 以元素自身为坐标系，与元素区域相交即表示已进入可视区域
+        if (!e.EffectiveViewport.Intersects(new Rect(element.Bounds.Size)))
             return;
 
-        var position = element.TranslatePoint(new Point(0d, 0d), scrollViewer);
-        if (position is null)
-            return;
-        var elementBounds = new Rect(position.Value, element.Bounds.Size);
-        var viewport = new Rect(0d, 0d, scrollViewer.Viewport.Width, scrollViewer.Viewport.Height);
-
-        if (!viewport.Intersects(elementBounds))
-            return;
-
-        Action?.Invoke();
-        // 仅执行一次
-        element.LayoutUpdated -= OnLayoutUpdated;
-    }
-
-    private static ScrollViewer? FindParentScrollViewer(Visual element)
-    {
-        for (var current = element; current is not null; current = current.GetVisualParent())
-            if (current is ScrollViewer scrollViewer)
-                return scrollViewer;
-
-        return null;
+        // 仅执行一次；实例化会把本元素从父级中移除，因此先解除订阅
+        Detach();
+        Dispatcher.UIThread.Post(() => Action?.Invoke());
     }
 }

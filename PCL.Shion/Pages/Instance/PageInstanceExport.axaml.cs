@@ -592,14 +592,7 @@ public partial class PageInstanceExport : MyPageRight
         }
     }
 
-    // 页面尚未挂到界面树上时 FindResource 取不到应用级资源，此时直接从 Application 查找
-    private IBrush Brush(string key) =>
-        this.TryFindResource(key, ActualThemeVariant, out var resource) && resource is IBrush brush
-            ? brush
-            : Application.Current!.TryFindResource(key, Application.Current.ActualThemeVariant, out resource) &&
-              resource is IBrush appBrush
-                ? appBrush
-                : Brushes.Transparent;
+    private IBrush Brush(string key) => this.FindBrushOrTransparent(key);
 
     /// <summary>
     ///     获取所有可作为选项的 CheckBox。

@@ -20,9 +20,6 @@ public partial class PageToolsGameLink : MyPageRight
         HintUnavailable.Text = LocalizedOrFallback("Tools.GameLink.Unavailable", UnavailableText);
         TextJoinDescription.Text = LocalizedOrFallback("Tools.GameLink.Join.Description", UnavailableText);
         TextCreateDescription.Text = LocalizedOrFallback("Tools.GameLink.Create.Description", UnavailableText);
-
-        BtnNatTest.Text = LocalizedOrFallback("Tools.GameLink.Nat.Test", "NAT 测试");
-        BtnNatayarkLogin.Text = LocalizedOrFallback("Tools.GameLink.Natayark.Login", "登录");
         BtnJoin.Text = LocalizedOrFallback("Tools.GameLink.Join.Action", "加入");
         BtnPaste.Text = LocalizedOrFallback("Tools.GameLink.Join.Paste", "粘贴");
         BtnClearLobbyId.Text = LocalizedOrFallback("Tools.GameLink.Join.Clear", "清空");

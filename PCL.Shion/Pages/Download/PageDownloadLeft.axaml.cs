@@ -1,4 +1,7 @@
 using System;
+using Avalonia.LogicalTree;
+using System.Linq;
+using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Input;
 using PCL.Shion.Controls;
@@ -268,6 +271,20 @@ public partial class PageDownloadLeft : MyPageLeft, IRefreshable
     {
         if (sender is MyListItem { Tag: { } tag })
             PageChange((PageSubType)Convert.ToInt32(tag));
+    }
+
+    /// <summary>
+    ///     进入本页面时显示对应的右侧页面，并勾选对应的边栏项。对应 WPF 中左侧页面在 Loaded 时调用的 PageChange。
+    /// </summary>
+    public override void OnNavigated(PageSubType sub)
+    {
+        var target = sub == PageSubType.Default ? pageID : sub;
+        pageID = target;
+        Navigator.ShowRight(PageGet(target));
+        var tag = ((int)target).ToString(CultureInfo.InvariantCulture);
+        this.GetLogicalDescendants().OfType<MyListItem>()
+            .FirstOrDefault(item => item.Tag?.ToString() == tag)
+            ?.SetChecked(true, false, false);
     }
 
     public MyPageRight PageGet(PageSubType id)

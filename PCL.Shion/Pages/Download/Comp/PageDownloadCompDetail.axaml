@@ -31,7 +31,8 @@
             </c:MyCard>
             <StackPanel Grid.Row="1" x:Name="PanMain">
                 <c:MyCard Margin="0,0,0,15" x:Name="CardFilter">
-                    <StackPanel>
+                    <!-- 与 WPF 相同，版本过多时超出部分被裁掉，而不是画到卡片外 -->
+                    <StackPanel ClipToBounds="True">
                         <StackPanel x:Name="PanInstanceFilter" Margin="10,10,0,5" Orientation="Horizontal"
                                     VerticalAlignment="Top" HorizontalAlignment="Left" />
                         <StackPanel x:Name="PanModLoaderFilter" Margin="10,5,0,10" Orientation="Horizontal"

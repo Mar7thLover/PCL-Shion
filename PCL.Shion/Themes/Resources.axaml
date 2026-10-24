@@ -43,9 +43,7 @@
                     </Grid.ColumnDefinitions>
                     <ScrollContentPresenter Name="PART_ContentPresenter"
                                             Grid.Column="0"
-                                            Content="{TemplateBinding Content}"
-                                            CanHorizontallyScroll="False"
-                                            CanVerticallyScroll="False" />
+                                            Content="{TemplateBinding Content}" />
                     <local:MyScrollBar Name="PART_VerticalScrollBar"
                                        Grid.Column="1"
                                        Margin="2,1,1,1"
@@ -67,9 +65,7 @@
                     <ScrollContentPresenter Name="PART_ContentPresenter"
                                             Grid.Column="0"
                                             Content="{TemplateBinding Content}"
-                                            Cursor="{TemplateBinding Cursor}"
-                                            CanHorizontallyScroll="False"
-                                            CanVerticallyScroll="False" />
+                                            Cursor="{TemplateBinding Cursor}" />
                     <local:MyScrollBar Name="PART_VerticalScrollBar"
                                        Grid.Column="1"
                                        Foreground="{TemplateBinding Foreground}"
