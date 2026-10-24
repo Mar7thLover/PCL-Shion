@@ -23,11 +23,11 @@ public static class Trash
                 WindowsRecycleBin.Move(fullPath);
                 break;
             case OsKind.MacOs:
-                UnixTrash.MoveToMacTrash(fullPath, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Trash"));
+                UnixTrash.MoveToMacTrash(fullPath, Path.Combine(SpecialFolders.Get(Environment.SpecialFolder.UserProfile), ".Trash"));
                 break;
             default:
                 // 在 Linux 上 LocalApplicationData 即 $XDG_DATA_HOME，未设置时为 ~/.local/share
-                UnixTrash.MoveToFreedesktopTrash(fullPath, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Trash"), DateTime.Now);
+                UnixTrash.MoveToFreedesktopTrash(fullPath, Path.Combine(SpecialFolders.Get(Environment.SpecialFolder.LocalApplicationData), "Trash"), DateTime.Now);
                 break;
         }
     }

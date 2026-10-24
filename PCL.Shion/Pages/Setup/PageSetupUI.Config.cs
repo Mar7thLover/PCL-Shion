@@ -12,6 +12,7 @@ using Avalonia.Logging;
 using Avalonia.Platform.Storage;
 using FluentValidation;
 using PCL.Shion.Controls;
+using PCL.Shion.Core.Platform;
 using PCL.Shion.Services;
 using PCL.Shion.UI;
 
@@ -23,7 +24,7 @@ namespace PCL.Shion.Pages.Setup;
 internal static class SetupPaths
 {
     public static string DataRoot { get; } = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PCL Shion");
+        SpecialFolders.Get(Environment.SpecialFolder.ApplicationData), "PCL Shion");
 
     public static string Pictures => Path.Combine(DataRoot, "Pictures");
 

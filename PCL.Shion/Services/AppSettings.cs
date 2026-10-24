@@ -6,6 +6,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using PCL.Shion.Core.Minecraft;
+using PCL.Shion.Core.Platform;
 using PCL.Shion.Core.Sources;
 using PCL.Shion.Themes;
 
@@ -1145,7 +1146,7 @@ public sealed class AppSettings
     #endregion
 
     private static string FilePath { get; } = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PCL Shion", "settings.json");
+        SpecialFolders.Get(Environment.SpecialFolder.ApplicationData), "PCL Shion", "settings.json");
 
     /// <summary>
     /// 恢复启动设置（对应 WPF 的 Config.Launch.Reset），包括默认 Java 的选择。

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using PCL.Shion.Core.Online;
+using PCL.Shion.Core.Platform;
 using PCL.Shion.Localization;
 
 namespace PCL.Shion.Pages.Download.Comp;
@@ -14,7 +15,7 @@ public static class CompFavoriteStore
     private static List<CompFavoriteFolder>? _folders;
 
     private static string FilePath => Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PCL Shion", "comp-favorites.json");
+        SpecialFolders.Get(Environment.SpecialFolder.ApplicationData), "PCL Shion", "comp-favorites.json");
 
     /// <summary>
     /// 全部收藏夹，首次访问时从磁盘读取；至少包含一个收藏夹。

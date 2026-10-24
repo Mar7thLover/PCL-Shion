@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using PCL.Shion.Core.Platform;
 
 namespace PCL.Shion.Core.Accounts;
 
@@ -24,7 +25,7 @@ public static class ProfileService
 
     /// <summary>启动器数据目录，与设置文件位于同一目录。</summary>
     public static string DataDirectory { get; } = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PCL Shion");
+        SpecialFolders.Get(Environment.SpecialFolder.ApplicationData), "PCL Shion");
 
     private static string FilePath => Path.Combine(DataDirectory, "profiles.json");
 

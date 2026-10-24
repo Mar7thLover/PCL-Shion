@@ -12,6 +12,7 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Threading;
+using PCL.Shion.Core.Platform;
 
 namespace PCL.Shion.Controls;
 
@@ -23,7 +24,7 @@ public class MyImage : Image
     private const string AssetImagePrefix = "avares://PCL.Shion/Assets/Images/";
 
     private static readonly string CacheFolder = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PCL Shion", "Cache", "Images");
+        SpecialFolders.Get(Environment.SpecialFolder.ApplicationData), "PCL Shion", "Cache", "Images");
 
     private static readonly HttpClient _httpClient = new();
 
