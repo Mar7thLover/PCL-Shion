@@ -304,6 +304,33 @@ public sealed class AppSettings
     /// <summary>在日志中输出联机组件的命令行信息，用于调试。</summary>
     public bool LinkEnableCliOutput { get; set; }
 
+    /// <summary>中继行为（默认 / 强制中继）。对应 WPF 的 Config.Link.RelayType。</summary>
+    public PCL.Shion.Core.Link.LinkRelayBehavior LinkRelayType { get; set; }
+
+    /// <summary>中继服务器类型（0 仅社区，1 官方与社区，2 仅自定义）。对应 WPF 的 Config.Link.ServerType。</summary>
+    public int LinkServerType { get; set; } = 1;
+
+    /// <summary>自定义中继服务器，多个以分号分隔。</summary>
+    public string LinkRelayServer { get; set; } = "";
+
+    /// <summary>是否已同意联机用户协议。对应 WPF 的 States.Link.LinkEula。</summary>
+    public bool LinkEula { get; set; }
+
+    /// <summary>联机公告缓存。</summary>
+    public string LinkAnnounceCache { get; set; } = "";
+
+    /// <summary>联机公告缓存的版本号。</summary>
+    public int LinkAnnounceCacheVer { get; set; }
+
+    /// <summary>Natayark ID 的刷新令牌。</summary>
+    public string LinkNaidRefreshToken { get; set; } = "";
+
+    /// <summary>Natayark ID 刷新令牌的过期时间。</summary>
+    public string LinkNaidRefreshExpiresAt { get; set; } = "";
+
+    /// <summary>是否还没有做过首次网络测试。</summary>
+    public bool LinkFirstTimeNetTest { get; set; } = true;
+
     /// <summary>主题模式（亮 / 暗 / 跟随系统）。对应 WPF 的 UiDarkMode。</summary>
     public ColorMode ColorMode { get; set; } = ColorMode.System;
 

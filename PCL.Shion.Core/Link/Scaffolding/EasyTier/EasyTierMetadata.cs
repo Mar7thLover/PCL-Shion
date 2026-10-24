@@ -1,0 +1,13 @@
+using System.IO;
+using System.Runtime.InteropServices;
+
+namespace PCL.Shion.Core.Link.Scaffolding.EasyTier;
+
+public static class EasyTierMetadata
+{
+    public const string CurrentEasyTierVer = "2.6.4";
+
+    public static string EasyTierFilePath => Path.Combine(Paths.SharedLocalData, "EasyTier",
+        CurrentEasyTierVer,
+        $"easytier-windows-{(RuntimeInformation.OSArchitecture == Architecture.Arm64 ? "arm64" : "x86_64")}");
+}

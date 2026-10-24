@@ -1,3 +1,4 @@
+using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -34,6 +35,8 @@ public partial class App : Application
                 }
             };
             Services = new GameServices(AppSettings.Load());
+            // 联机组件通过宿主接口读取设置、日志与语言
+            LinkEnvironment.Initialize(Services.Settings);
             // 主题服务与设置页共用同一份设置，否则设置页的修改不会反映到主题上
             Themes.ThemeService.Settings = Services.Settings;
             // 对应 WPF 中在窗口创建前启动的主题服务：按设置计算浅色 / 深色配色资源
@@ -43,7 +46,20 @@ public partial class App : Application
                 platformSettings.ColorValuesChanged += (_, _) =>
                     Dispatcher.UIThread.Post(Themes.ThemeService.RefreshColorMode);
             desktop.MainWindow = new MainWindow();
-            desktop.Exit += (_, _) => Services.Dispose();
+            desktop.Exit += (_, _) =>
+            {
+                // 退出前关闭联机，避免 EasyTier 进程残留
+                try
+                {
+                    Core.Link.Lobby.LobbyService.Stop();
+                }
+                catch (Exception ex)
+                {
+                    LogWrapper.Warn(ex, "[Link] 退出时关闭联机失败");
+                }
+
+                Services.Dispose();
+            };
         }
 
         base.OnFrameworkInitializationCompleted();
