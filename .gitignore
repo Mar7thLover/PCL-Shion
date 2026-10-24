@@ -28,6 +28,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+# 上面的规则本意是忽略构建日志目录，Shion 的日志页源码也叫 Log，需要排除
+!PCL.Shion/Pages/Log/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

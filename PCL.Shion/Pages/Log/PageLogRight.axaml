@@ -1,0 +1,87 @@
+<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:c="using:PCL.Shion.Controls"
+                   xmlns:loc="using:PCL.Shion.Localization"
+                   xmlns:pages="using:PCL.Shion.Pages"
+                   xmlns:log="using:PCL.Shion.Pages.Log"
+                   x:Class="PCL.Shion.Pages.Log.PageLogRight">
+    <Grid>
+        <Grid x:Name="PanAllBack">
+            <c:MyCard x:Name="PanLogCard" Margin="16,16,16,100">
+                <c:MyScrollViewer x:Name="PanBack"
+                                  Margin="12,40,12,20"
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
+                    <ItemsControl x:Name="PanLog" FontFamily="Consolas" FontSize="14">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="log:GameLogLine">
+                                <SelectableTextBlock Text="{Binding Text}"
+                                                     Foreground="{Binding Brush}"
+                                                     TextWrapping="Wrap" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </c:MyScrollViewer>
+            </c:MyCard>
+        </Grid>
+
+        <c:MyCard x:Name="CardOperation"
+                  Opacity="0"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Bottom"
+                  Margin="0,15,0,10"
+                  UseAnimation="False"
+                  HasMouseAnimation="True">
+            <StackPanel Margin="0,6,0,6">
+                <StackPanel x:Name="OperationsContainer"
+                            Orientation="Horizontal"
+                            Margin="10,8,10,8"
+                            HorizontalAlignment="Center">
+                    <c:MyCheckBox x:Name="CheckAutoScroll"
+                                  Margin="5,0,5,0"
+                                  Text="{loc:L LogPage.Action.Scroll}" />
+                    <c:MyIconTextButton x:Name="BtnOperationExport"
+                                        Margin="5,0,0,0"
+                                        Text="{loc:L LogPage.Action.Export}"
+                                        LogoScale="1"
+                                        SvgIcon="lucide/save" />
+                    <c:MyIconTextButton x:Name="BtnOperationClear"
+                                        Margin="5,0,0,0"
+                                        Text="{loc:L LogPage.Action.Clear}"
+                                        LogoScale="1.1"
+                                        SvgIcon="lucide/trash-2" />
+                    <c:MyIconTextButton x:Name="BtnOperationKill"
+                                        Margin="5,0,0,0"
+                                        Text="{loc:L LogPage.Action.KillProcess}"
+                                        LogoScale="0.85"
+                                        SvgIcon="lucide/x" />
+                    <c:MyIconTextButton x:Name="BtnOperationExportStackDump"
+                                        Margin="5,0,0,0"
+                                        Text="{loc:L LogPage.Action.ExportStack}"
+                                        LogoScale="0.85"
+                                        SvgIcon="lucide/package" />
+                </StackPanel>
+                <Grid VerticalAlignment="Center"
+                      Margin="12,0,12,4"
+                      ColumnDefinitions="Auto,*">
+                    <TextBlock Grid.Column="0"
+                               HorizontalAlignment="Left"
+                               Text="{loc:L LogPage.MaxLines.Title}"
+                               Margin="0,0,25,0" />
+                    <c:MySlider x:Name="SliderMaxLog"
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                Tag="SystemMaxLog"
+                                MaxValue="29"
+                                Value="13"
+                                ToolTip.Tip="{loc:L LogPage.MaxLines.ToolTip}" />
+                </Grid>
+            </StackPanel>
+        </c:MyCard>
+    </Grid>
+</pages:MyPageRight>
