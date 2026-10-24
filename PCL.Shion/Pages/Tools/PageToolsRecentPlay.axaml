@@ -8,7 +8,7 @@
     <c:MyScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       x:Name="PanBack">
-        <StackPanel x:Name="PanMain" Margin="25,10">
+        <StackPanel Grid.IsSharedSizeScope="True" x:Name="PanMain" Margin="25,10">
             <c:MyCard Margin="0,15" Title="{loc:L Widget.RecentPlay.Title}">
                 <StackPanel Margin="12,38,12,15">
                     <TextBlock x:Name="LabEmpty"

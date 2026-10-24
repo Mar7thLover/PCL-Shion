@@ -9,7 +9,7 @@
     <c:MyScrollViewer HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto"
                       x:Name="PanBack">
-        <StackPanel x:Name="PanMain" Margin="25,10">
+        <StackPanel Grid.IsSharedSizeScope="True" x:Name="PanMain" Margin="25,10">
             <c:MyCard Margin="0,15" Title="{loc:L Tools.Test.Title}">
                 <WrapPanel ItemHeight="50" Margin="25,40,21,5">
                     <c:MyButton x:Name="BtnClear"

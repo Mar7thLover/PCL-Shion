@@ -6,6 +6,6 @@
     <c:MyScrollViewer x:Name="PanBack"
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Disabled">
-        <StackPanel x:Name="PanMain" Margin="25,25,25,10" />
+        <StackPanel Grid.IsSharedSizeScope="True" x:Name="PanMain" Margin="25,25,25,10" />
     </c:MyScrollViewer>
 </pages:MyPageRight>

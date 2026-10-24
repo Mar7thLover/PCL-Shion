@@ -311,6 +311,8 @@ public partial class PageSetupLeft : MyPageLeft
     {
         var target = sub == PageSubType.Default ? pageID : sub;
         pageID = target;
+        // 与 PageChange 相同，标记已切换过子页面，避免首次 Loaded 时又切回第一个子页面
+        isPageSwitched = true;
         Navigator.ShowRight(PageGet(target));
         // 勾选对应的边栏项，其 Check 事件会调用 PageCheck，此时页面已一致，不会重复切换
         ItemOf(target)?.SetChecked(true, false, false);

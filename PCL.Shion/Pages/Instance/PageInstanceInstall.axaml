@@ -9,7 +9,7 @@
             <local:MyScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
                                   x:Name="PanBack">
                 <Grid Margin="25,10,25,75">
-                    <StackPanel Grid.Row="1" Name="PanMinecraft" Margin="0,0,0,-10"
+                    <StackPanel Grid.IsSharedSizeScope="True" Grid.Row="1" Name="PanMinecraft" Margin="0,0,0,-10"
                                 IsVisible="False">
                         <StackPanel.RenderTransform>
                             <TranslateTransform />

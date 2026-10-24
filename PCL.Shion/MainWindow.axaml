@@ -169,10 +169,10 @@
                 </Grid>
 
                 <Grid x:Name="PanMain" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" ColumnDefinitions="Auto,*">
-                    <Border Grid.Column="1" UseLayoutRounding="True">
+                    <Border Grid.Column="1" Grid.IsSharedSizeScope="True" UseLayoutRounding="True">
                         <Border x:Name="PanMainRight" UseLayoutRounding="False" />
                     </Border>
-                    <Border Grid.Column="0" UseLayoutRounding="True">
+                    <Border Grid.Column="0" Grid.IsSharedSizeScope="True" UseLayoutRounding="True">
                         <Border x:Name="PanMainLeft" SizeChanged="PanMainLeft_SizeChanged" UseLayoutRounding="False" />
                     </Border>
                 </Grid>

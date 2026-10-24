@@ -6,7 +6,7 @@
                    x:Class="PCL.Shion.Pages.Instance.PageInstanceCompResource">
     <Grid x:Name="PanAllBack">
         <c:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <StackPanel x:Name="PanMain" Margin="25,10,25,10">
+            <StackPanel Grid.IsSharedSizeScope="True" x:Name="PanMain" Margin="25,10,25,10">
                 <c:MySearchBox x:Name="SearchBox" Margin="0,15" HintText="{loc:L Instance.Resource.Search.Hint}" />
 
                 <c:MyCard x:Name="PanManage" Margin="0,0,0,15">

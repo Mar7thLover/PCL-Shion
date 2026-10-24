@@ -1,4 +1,4 @@
-<pages:MyPageRight xmlns="https://github.com/avaloniaui"
+<pages:MyPageRight Grid.IsSharedSizeScope="True" xmlns="https://github.com/avaloniaui"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                    xmlns:c="using:PCL.Shion.Controls"
                    xmlns:loc="using:PCL.Shion.Localization"

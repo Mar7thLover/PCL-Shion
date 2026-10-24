@@ -15,6 +15,7 @@ using PCL.Shion.Pages.Download;
 using PCL.Shion.Pages.Instance;
 using PCL.Shion.Pages.Launch;
 using PCL.Shion.Pages.Setup;
+using PCL.Shion.Themes;
 using PCL.Shion.UI;
 using PCL.Shion.UI.Animation;
 using PCL.Shion.ViewModels;
@@ -91,6 +92,9 @@ public partial class MainWindow : Window, IPageHost
     {
         Current = this;
         Navigator.Attach(this);
+        // 与 WPF FormMain 相同：配色模式或主题色变化时刷新主窗口
+        ThemeService.ColorModeChanged += (_, _) => ThemeManager.ThemeRefresh();
+        ThemeService.ColorThemeChanged += theme => ThemeManager.ThemeRefresh((int)theme);
         // 对应 WPF 中的 ModAnimation.AniControlEnabled 启动时的占用，由开场动画结束时释放
         ModAnimation.AniControlEnabled += 1;
         InitializeComponent();

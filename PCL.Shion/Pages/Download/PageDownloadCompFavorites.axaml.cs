@@ -82,5 +82,7 @@ public partial class PageDownloadCompFavorites : MyPageRight
                 card.IsSwapped = true;
             isFirst = false;
         }
+
+        CardNoContent.IsVisible = PanFolders.Children.Count == 0;
     }
 }

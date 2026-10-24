@@ -8,7 +8,7 @@
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto">
         <StackPanel Orientation="Vertical" Margin="5">
-            <c:MyCard x:Name="CardTip"
+            <c:MyCard Grid.IsSharedSizeScope="True" x:Name="CardTip"
                       Margin="20,20,20,0"
                       Title="{loc:L Download.Version.Cleanroom.Intro.Title}">
                 <StackPanel Margin="25,40,15,20">
@@ -27,7 +27,7 @@
                     </Grid>
                 </StackPanel>
             </c:MyCard>
-            <StackPanel x:Name="PanMain" Margin="20,15,20,5" />
+            <StackPanel Grid.IsSharedSizeScope="True" x:Name="PanMain" Margin="20,15,20,5" />
             <c:MyCard x:Name="PanLoad"
                       Margin="40,50"
                       HorizontalAlignment="Center"

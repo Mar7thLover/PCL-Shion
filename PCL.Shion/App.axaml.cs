@@ -36,6 +36,12 @@ public partial class App : Application
             Services = new GameServices(AppSettings.Load());
             // 主题服务与设置页共用同一份设置，否则设置页的修改不会反映到主题上
             Themes.ThemeService.Settings = Services.Settings;
+            // 对应 WPF 中在窗口创建前启动的主题服务：按设置计算浅色 / 深色配色资源
+            Themes.ThemeService.Initialize();
+            // 配色模式为“跟随系统”时，系统切换深浅色后同步刷新（对应 WPF FormMain 的 WndProc 处理）
+            if (PlatformSettings is { } platformSettings)
+                platformSettings.ColorValuesChanged += (_, _) =>
+                    Dispatcher.UIThread.Post(Themes.ThemeService.RefreshColorMode);
             desktop.MainWindow = new MainWindow();
             desktop.Exit += (_, _) => Services.Dispose();
         }

@@ -10,6 +10,19 @@
             <StackPanel x:Name="PanContent">
                 <StackPanel x:Name="PanFolders" />
             </StackPanel>
+            <!-- 与 WPF 相同，没有任何收藏时显示提示卡片 -->
+            <c:MyCard x:Name="CardNoContent" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40"
+                      IsVisible="False">
+                <Grid Margin="20,17" RowDefinitions="Auto,Auto,Auto">
+                    <TextBlock Grid.Row="0" Margin="0,0,0,9" HorizontalAlignment="Center" FontSize="19"
+                               Text="{loc:L Download.Comp.Favorites.Empty.Title}"
+                               Foreground="{DynamicResource ColorBrush3}" />
+                    <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" Height="2"
+                               Fill="{DynamicResource ColorBrush3}" />
+                    <TextBlock Grid.Row="2" Margin="10,15,10,5" TextWrapping="Wrap"
+                               Text="{loc:L Download.Comp.Favorites.Empty.Description}" />
+                </Grid>
+            </c:MyCard>
             <c:MyCard x:Name="PanLoad" HorizontalAlignment="Center" VerticalAlignment="Center"
                       UseAnimation="False" Margin="40,50">
                 <c:MyLoading x:Name="Load" Margin="20,20,20,17" HorizontalAlignment="Center"
