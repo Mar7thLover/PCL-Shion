@@ -35,6 +35,7 @@ jobs:
     with:
       configuration: ${{ matrix.configuration }}
       architecture: ${{ matrix.architecture }}
+      version: ${{ inputs.version }}
     secrets: inherit
 
   changelog:
@@ -145,9 +146,21 @@ jobs:
           dotnet-version: 10.0.x
 
       # 非 Windows 平台使用 Avalonia 界面，自包含发布，用户无需另装 .NET 运行时
+      # 设置 PCL_WRITE_SECRET 后，PCL_ 开头的环境变量会在构建时写入 PCL.Shion.Core 的 BuildSecrets
       - name: Publish
+        env:
+          PCL_WRITE_SECRET: '1'
+          PCL_MS_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          PCL_CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+          PCL_NAID_CLIENT_ID: ${{ secrets.NAID_CLIENT_ID }}
+          PCL_NAID_CLIENT_SECRET: ${{ secrets.NAID_CLIENT_SECRET }}
+          PCL_LINK_SERVER_ROOT: ${{ secrets.LINK_SERVER_ROOTS }}
+          PCL_LOBBY_DEFAULT_SECRET: ${{ secrets.LOBBY_DEFAULT_SECRET }}
+          PCL_GITHUB_SHA: ${{ github.sha }}
         run: |
-          dotnet publish PCL.Shion/PCL.Shion.csproj -c ${{ inputs.configuration }} -r ${{ matrix.rid }}           --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true           -p:DebugType=none -o ./publish
+          dotnet publish PCL.Shion/PCL.Shion.csproj -c ${{ inputs.configuration }} -r ${{ matrix.rid }} \
+          --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true \
+          -p:DebugType=none -p:Version=${{ inputs.version }} -p:UseSharedCompilation=false -o ./publish
 
       - name: Package (Linux)
         if: startsWith(matrix.rid, 'linux-')

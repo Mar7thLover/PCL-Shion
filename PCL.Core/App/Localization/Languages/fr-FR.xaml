@@ -291,7 +291,8 @@ Ce que vous pouvez essayer
     <sys:String x:Key="Setup.UI.Sidebar.CheckIn">Afficher le check-in quotidien</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.RecentPlay">Afficher les parties récentes</sys:String>
     <sys:String x:Key="Setup.UI.Sidebar.Title">Barre latérale de l'accueil</sys:String>
-    <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion does not provide in-app updates yet. Please download new versions manually from {0}.</sys:String>
+    <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion supports automatic updates: it checks GitHub Releases for new versions and asks you before updating, never installing anything on its own. You can also download new versions manually from {0}.</sys:String>
+    <sys:String x:Key="Setup.Update.Shion.NoticeManual">Installing updates from inside the launcher is not available on this platform yet. PCL Shion checks GitHub Releases for new versions and lets you know when one is out; download the package for your platform from {0}.</sys:String>
     <sys:String x:Key="Setup.Update.Shion.OpenReleases">Open download page</sys:String>
     <sys:String x:Key="Setup.Update.Shion.Status">In-app updates are not available</sys:String>
     <sys:String x:Key="Tools.Left.CheckIn">Check-in quotidien</sys:String>

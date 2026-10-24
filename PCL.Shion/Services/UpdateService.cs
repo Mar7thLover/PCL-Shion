@@ -26,6 +26,15 @@ public sealed class UpdateService(AppSettings settings, Func<HttpClient> http)
     /// <summary>状态变化时触发。</summary>
     public event Action? Changed;
 
+    /// <summary>是否把预发布版本计入：设置页的更新分支选择测试版（序号 1），或旧设置中勾选了包含预发布版。</summary>
+    private bool IncludePrerelease => settings.SystemUpdateChannel == 1 || settings.IncludePrereleaseUpdates;
+
+    /// <summary>
+    /// 启动时是否自动检查更新。启动器不会自行下载或安装更新：
+    /// “不自动检查更新”（序号 3）以外的选项一律只检查并弹窗提示。
+    /// </summary>
+    public bool CheckOnStartup => settings.SystemUpdateMode != 3;
+
     /// <summary>检查一次更新，结果通过状态给出，不会抛出网络错误。已有检查在进行时直接返回。</summary>
     public async Task CheckAsync()
     {
@@ -35,7 +44,7 @@ public sealed class UpdateService(AppSettings settings, Func<HttpClient> http)
         Update(UpdateState.Checking);
         try
         {
-            var latest = await UpdateChecker.GetLatestAsync(http(), settings.IncludePrereleaseUpdates, CancellationToken.None);
+            var latest = await UpdateChecker.GetLatestAsync(http(), IncludePrerelease, CancellationToken.None);
             if (latest is not null && UpdateChecker.IsNewer(latest, AppInfo.Version))
                 Update(UpdateState.Available, release: latest);
             else

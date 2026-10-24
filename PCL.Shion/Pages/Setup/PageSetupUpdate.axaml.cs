@@ -14,8 +14,8 @@ public partial class PageSetupUpdate : MyPageRight
 {
     private const string ShionReleasesUrl = "https://github.com/Mar7thLover/PCL-Shion/releases";
 
-    // PCL Shion 暂不提供应用内更新：展示前往 GitHub Releases 的提示，并隐藏更新源与更新渠道等设置
-    private const bool InAppUpdateEnabled = false;
+    /// <summary>“前往下载页面”按钮要打开的地址，检查到新版本时指向该版本的发布页。</summary>
+    private string _releaseUrl = ShionReleasesUrl;
 
     public PageSetupUpdate()
     {
@@ -28,31 +28,48 @@ public partial class PageSetupUpdate : MyPageRight
     {
         ModAnimation.AniControlEnabled += 1;
         var settings = SetupConfig.Settings;
-        TextMirrorCDK.Text = settings.MirrorChyanKey;
 
         ComboSystemUpdateChannel.SelectedIndex = settings.SystemUpdateChannel;
-        ComboSystemUpdateMode.SelectedIndex = settings.SystemUpdateMode;
+        // 不再提供后台下载或安装，旧设置中的前两项按“提示更新”显示
+        ComboSystemUpdateMode.SelectedIndex = settings.SystemUpdateMode == 3 ? 3 : 2;
 
         TextCurrentVersion.Text = "PCL Shion " + VersionNameFormat(AppInfo.VersionText);
-        CardShionNotice.IsVisible = !InAppUpdateEnabled;
-        CardUpdateSettings.IsVisible = InAppUpdateEnabled;
-        TextShionNotice.Text = Lang.Text("Setup.Update.Shion.Notice", ShionReleasesUrl);
+        // 这一版本的界面不能替换自身，只检查 GitHub Releases 上的新版本，并提供下载页面的入口
+        TextShionNotice.Text = Lang.Text("Setup.Update.Shion.NoticeManual", ShionReleasesUrl);
         ModAnimation.AniControlEnabled -= 1;
         CheckUpdate();
     }
 
-    public void CheckUpdate()
+    public async void CheckUpdate()
     {
-        // PCL Shion 不检查更新，也不访问上游更新源
+        var updates = App.Services.Updates;
         CardUpdate.IsVisible = false;
         CardCheck.IsVisible = true;
-        BtnCheckAgain.IsVisible = false;
-        TextCurrentDesc.Text = Lang.Text("Setup.Update.Shion.Status");
+        BtnCheckAgain.IsEnabled = false;
+        TextCurrentDesc.Text = Lang.Text("Setup.Update.Shion.Checking");
+        await updates.CheckAsync();
+        BtnCheckAgain.IsEnabled = true;
+        switch (updates.State)
+        {
+            case UpdateState.Available when updates.Release is { } release:
+                _releaseUrl = release.HtmlUrl.AbsoluteUri;
+                TextCurrentDesc.Text = Lang.Text("Setup.Update.Shion.NewVersion", release.Version.ToString());
+                BtnShionReleases.Text = Lang.Text("Setup.Update.Shion.Download");
+                break;
+            case UpdateState.UpToDate:
+                _releaseUrl = ShionReleasesUrl;
+                TextCurrentDesc.Text = Lang.Text("Setup.Update.Latest");
+                BtnShionReleases.Text = Lang.Text("Setup.Update.Shion.OpenReleases");
+                break;
+            case UpdateState.Failed:
+                TextCurrentDesc.Text = Lang.Text("Setup.Update.CheckFailed");
+                break;
+        }
     }
 
     private void BtnUpdate_Click(object? sender, PointerReleasedEventArgs e)
     {
-        SystemShell.OpenUrl(ShionReleasesUrl);
+        SystemShell.OpenUrl(_releaseUrl);
     }
 
     private async void BtnChangelogDetail_Click(object? sender, EventArgs? e)
@@ -131,24 +148,14 @@ public partial class PageSetupUpdate : MyPageRight
         }
     }
 
-    private void TextMirrorCDK_PasswordChanged(object? sender, TextChangedEventArgs e)
-    {
-        SetByTag(nameof(AppSettings.MirrorChyanKey), TextMirrorCDK.Text ?? "");
-    }
-
-    private void BtnGetMirrorCDK_Click(object? sender, PointerReleasedEventArgs e)
-    {
-        SystemShell.OpenUrl("https://mirrorchyan.com/");
-    }
-
     private void BtnChangelog_Click(object? sender, PointerReleasedEventArgs e)
     {
-        SystemShell.OpenUrl(ShionReleasesUrl);
+        SystemShell.OpenUrl($"{ShionReleasesUrl}/tag/v{AppInfo.VersionText}");
     }
 
     private void BtnShionReleases_Click(object? sender, PointerReleasedEventArgs e)
     {
-        SystemShell.OpenUrl(ShionReleasesUrl);
+        SystemShell.OpenUrl(_releaseUrl);
     }
 
     public string VersionNameFormat(string str)

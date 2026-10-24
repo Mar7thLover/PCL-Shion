@@ -12,7 +12,7 @@
                     <c:MyButton x:Name="BtnShionReleases" Text="{loc:L Setup.Update.Shion.OpenReleases}" ColorType="Highlight" Height="35" Padding="13,0" HorizontalAlignment="Left" Margin="0,15,0,0" Click="BtnShionReleases_Click" />
                 </StackPanel>
             </c:MyCard>
-            <c:MyCard x:Name="CardUpdateSettings" IsVisible="False">
+            <c:MyCard x:Name="CardUpdateSettings">
                 <StackPanel Margin="20,15,20,15">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -22,8 +22,6 @@
                             <ColumnDefinition Width="75" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="28" />
-                            <RowDefinition Height="7" />
                             <RowDefinition Height="28" />
                             <RowDefinition Height="7" />
                             <RowDefinition Height="28" />
@@ -46,20 +44,12 @@
                         <c:MyComboBox x:Name="ComboSystemUpdateMode" Tag="SystemUpdateMode" Grid.Column="1"
                                       Grid.ColumnSpan="3" Grid.Row="2"
                                       SelectionChanged="ComboSystemUpdateMode_SelectionChanged">
-                            <c:MyComboBoxItem Content="{loc:L Setup.Update.Auto.DownloadAndInstall}" ToolTip.Tip="{loc:L Setup.Update.Auto.DownloadAndInstall.ToolTip}" />
-                            <c:MyComboBoxItem Content="{loc:L Setup.Update.Auto.DownloadAndNotify}" ToolTip.Tip="{loc:L Setup.Update.Auto.DownloadAndNotify.ToolTip}" />
+                            <!-- 启动器不会自行下载或安装更新，这两项只保留占位，以便下标与 WPF 版的设置值对应 -->
+                            <c:MyComboBoxItem Content="{loc:L Setup.Update.Auto.DownloadAndInstall}" ToolTip.Tip="{loc:L Setup.Update.Auto.DownloadAndInstall.ToolTip}" IsVisible="False" />
+                            <c:MyComboBoxItem Content="{loc:L Setup.Update.Auto.DownloadAndNotify}" ToolTip.Tip="{loc:L Setup.Update.Auto.DownloadAndNotify.ToolTip}" IsVisible="False" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Update.Auto.NotifyOnly}" ToolTip.Tip="{loc:L Setup.Update.Auto.NotifyOnly.ToolTip}" />
                             <c:MyComboBoxItem Content="{loc:L Setup.Update.Auto.Disabled}" ToolTip.Tip="{loc:L Setup.Update.Auto.Disabled.ToolTip}" />
                         </c:MyComboBox>
-                        <TextBlock Text="{loc:L Setup.Update.MirrorChyanCdk.Label}" Grid.Row="4" VerticalAlignment="Center"
-                                   HorizontalAlignment="Left" Margin="0,0,25,0" />
-                        <TextBox x:Name="TextMirrorCDK"
-                                 PasswordChar="●"
-                                 ToolTip.Tip="{loc:L Setup.Update.MirrorChyanCdk.ToolTip}"
-                                 Grid.Row="4" Grid.Column="1"
-                                 TextChanged="TextMirrorCDK_PasswordChanged" />
-                        <c:MyButton x:Name="BtnGetMirrorCDK" Text="{loc:L Setup.Update.MirrorChyanCdk.Get}" Grid.Column="3" Grid.Row="4"
-                                    ColorType="Highlight" Click="BtnGetMirrorCDK_Click" />
                     </Grid>
                 </StackPanel>
             </c:MyCard>

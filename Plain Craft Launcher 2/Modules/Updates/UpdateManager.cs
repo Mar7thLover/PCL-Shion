@@ -13,17 +13,29 @@ public static class UpdateManager
     public static bool isUpdateWaitingRestart;
 
     /// <summary>
-    ///     PCL Shion 暂不提供应用内更新。
-    ///     为 false 时，启动器不会检查、下载上游 PCL CE 的更新或构建，也不会替换自身，更不会拉取上游公告；
-    ///     新版本请前往 <see cref="ModBase.shionReleasesUrl" /> 手动下载。
+    ///     更新源：PCL Shion 仓库的 GitHub Releases。
     /// </summary>
-    public static readonly bool InAppUpdateEnabled = false;
+    public static UpdatesWrapperModel remoteServer = new(new List<IUpdateSource> { new UpdatesGitHubModel() });
 
     /// <summary>
-    ///     更新源列表。上游 PCL CE 的更新源（MirrorChyan / Pysio / Naids / PCL2_CE_Server）已移除，
-    ///     PCL Shion 尚未提供自己的更新源，因此这里保持为空，即使有代码误调用也不会访问上游。
+    ///     下载的新版本存放的位置。与官方 PCL CE 使用不同的文件名，以免互相覆盖。
     /// </summary>
-    public static UpdatesWrapperModel remoteServer = new(new List<IUpdateSource>());
+    private static string UpdateFilePath => ModBase.exePath + @"PCL\PCL Shion Update.exe";
+
+    /// <summary>
+    ///     实际生效的自动更新行为。PCL Shion 不在后台静默下载或安装更新：
+    ///     旧配置中的“自动下载并安装”“自动下载并提示”一律按“提示更新”处理，发现新版本时弹窗由用户决定。
+    /// </summary>
+    public static LauncherAutoUpdateBehavior EffectiveUpdateMode =>
+        Config.Update.UpdateMode == LauncherAutoUpdateBehavior.Disable
+            ? LauncherAutoUpdateBehavior.Disable
+            : LauncherAutoUpdateBehavior.AnnounceOnly;
+
+    /// <summary>
+    ///     指定版本在 GitHub Releases 上的发布页。
+    /// </summary>
+    public static string GetReleaseUrl(string versionName) =>
+        $"{ModBase.shionReleasesUrl}/tag/v{versionName.TrimStart('v', 'V')}";
 
     public static bool IsCurrentVersionBeta
     {
@@ -37,9 +49,6 @@ public static class UpdateManager
     
     public static UpdateEnums.VersionStatus GetVersionStatus()
     {
-        // PCL Shion 不联网检查更新：无法判断时视为最新，以免阻止问题反馈、或在崩溃分析中误报“启动器已过时”
-        if (!InAppUpdateEnabled)
-            return UpdateEnums.VersionStatus.Latest;
         try
         {
             if (IsCurrentVersionBeta && (int)Config.Update.UpdateChannel != 1)
@@ -77,13 +86,7 @@ public static class UpdateManager
 
     public static void UpdateStart(UpdateEnums.UpdateType type, string receivedKey = null, bool forceValidated = false)
     {
-        if (!InAppUpdateEnabled)
-        {
-            ModBase.Log("[Update] PCL Shion 暂不提供应用内更新，已跳过更新流程。请前往 " + ModBase.shionReleasesUrl + " 下载新版本");
-            return;
-        }
-
-        var dlTargetPath = ModBase.exePath + @"PCL\Plain Craft Launcher Community Edition.exe";
+        var dlTargetPath = UpdateFilePath;
         ModBase.RunInNewThread(() =>
         {
             try
@@ -99,20 +102,28 @@ public static class UpdateManager
                     return;
                 if (type == UpdateEnums.UpdateType.PromptOnly)
                 {
+                    // 只弹窗询问，不会自动下载或安装：立即更新 / 前往 Releases 手动下载 / 取消
                     ModBase.RunInUi(() =>
                     {
-                        if (ModMain.MyMsgBox(
-                                Lang.Text("Update.Available", ModBase.versionBaseName, version.VersionName),
-                                Lang.Text("Update.Title"),
-                                Lang.Text("Update.Action"),
-                                Lang.Text("Common.Action.Cancel")
-                            ) == 1)
-                            ModMain.frmMain.PageChange(FormMain.PageType.Setup, FormMain.PageSubType.SetupUpdate);
+                        switch (ModMain.MyMsgBox(
+                                    Lang.Text("Update.Available", ModBase.versionBaseName, version.VersionName),
+                                    Lang.Text("Update.Title"),
+                                    Lang.Text("Update.Action"),
+                                    Lang.Text("Setup.Update.Shion.OpenReleases"),
+                                    Lang.Text("Common.Action.Cancel")))
+                        {
+                            case 1:
+                                UpdateStart(UpdateEnums.UpdateType.UpdateNow);
+                                break;
+                            case 2:
+                                ModBase.OpenWebsite(GetReleaseUrl(version.VersionName));
+                                break;
+                        }
                     });
                     return;
-                    // 构造步骤加载器
                 }
 
+                // 构造步骤加载器
                 var loaders = new List<ModLoader.LoaderBase>();
                 // 下载
                 loaders.AddRange(remoteServer.GetDownloadLoader(
@@ -178,7 +189,7 @@ public static class UpdateManager
     {
         try
         {
-            var fileName = ModBase.exePath + @"PCL\Plain Craft Launcher Community Edition.exe";
+            var fileName = UpdateFilePath;
             if (!File.Exists(fileName))
             {
                 ModBase.Log("[System] 更新失败：未找到更新文件");
@@ -217,17 +228,7 @@ public static class UpdateManager
     internal static void DownloadLatestPCL(ModLoader.LoaderBase loaderToSyncProgress = null)
     {
         // 注意：如果要自行实现这个功能，请换用另一个文件路径，以免与官方版本冲突
-        var latestPCLPath = Path.Combine(ModBase.pathTemp, "CE-Latest.exe");
-        if (!InAppUpdateEnabled)
-        {
-            // PCL Shion 不会从上游下载 PCL CE，整合包内附带的启动器直接使用当前正在运行的这一份
-            ModBase.Log("[Update] 未启用应用内更新，使用当前正在运行的 PCL Shion 作为整合包内附带的启动器");
-            if (File.Exists(latestPCLPath) &&
-                (ModBase.GetFileSHA256(latestPCLPath) ?? "") == (ModBase.GetFileSHA256(Basics.ExecutablePath) ?? ""))
-                return;
-            ModBase.CopyFile(Basics.ExecutablePath, latestPCLPath);
-            return;
-        }
+        var latestPCLPath = Path.Combine(ModBase.pathTemp, "Shion-Latest.exe");
 
         var target = remoteServer.GetLatestVersion(UpdateChannel.stable,
             SystemInfo.IsArm64System ? UpdateArch.arm64 : UpdateArch.x64);
@@ -259,30 +260,14 @@ public static class UpdateManager
 
     private static void LoadOnlineInfo()
     {
-        // PCL Shion 不检查更新，也不拉取上游的公告
-        if (!InAppUpdateEnabled)
-        {
-            ModBase.Log("[Update] PCL Shion 暂不提供应用内更新，已跳过更新检查与公告获取");
-            return;
-        }
-
         ScheduleBasedOnConfig();
         AnnouncementService.Load();
     }
 
     private static void ScheduleBasedOnConfig()
     {
-        switch (Config.Update.UpdateMode)
+        switch (EffectiveUpdateMode)
         {
-            case LauncherAutoUpdateBehavior.DownloadAndInstall:
-                ModBase.Log("[Update] 更新设置: 自动下载并安装更新");
-                if (GetVersionStatus() != UpdateEnums.VersionStatus.Latest)
-                    UpdateStart(UpdateEnums.UpdateType.Silent);
-                break;
-            case LauncherAutoUpdateBehavior.DownloadAndAnnounce:
-                ModBase.Log("[Update] 更新设置: 自动下载并提示更新");
-                UpdateStart(UpdateEnums.UpdateType.DownloadAndPrompt);
-                break;
             case LauncherAutoUpdateBehavior.AnnounceOnly:
                 ModBase.Log("[Update] 更新设置: 提示更新");
                 UpdateStart(UpdateEnums.UpdateType.PromptOnly);

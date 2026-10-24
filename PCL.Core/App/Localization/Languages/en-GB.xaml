@@ -2938,6 +2938,14 @@
     <sys:String x:Key="Setup.Misc.System.Announcement.Disabled.Warning.Message">If you choose this option, you will not receive relevant notifications even when serious issues occur in the future.&#xA;For example, if a critical bug is found in a certain game version, you may miss the notification and face unpredictable consequences.&#xA;&#xA;In general, choosing 'Show announcements only when important' should keep you mostly undisturbed.&#xA;Unless you are creating a server modpack or frequently update the launcher manually, this option is strongly discouraged!</sys:String>
     <sys:String x:Key="Setup.Misc.System.Announcement.ImportantOnly">Show announcements only when important</sys:String>
     <sys:String x:Key="Setup.Misc.System.DisableHardwareAcceleration">Disable hardware acceleration</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend">Rendering backend</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.ToolTip">The graphics interface used to draw the launcher window. Changes take effect after restarting PCL Shion. If the window renders incorrectly or flickers, try another backend.</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.Locked">The rendering backend can only be chosen on Windows. On other platforms it is selected automatically.</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.Auto">Automatic (recommended)</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.Angle">ANGLE (DirectX)</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.OpenGl">OpenGL</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.Vulkan">Vulkan</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.Software">Software rendering (no hardware acceleration)</sys:String>
     <sys:String x:Key="Setup.Misc.System.ExportSettings">Export settings</sys:String>
     <sys:String x:Key="Setup.Misc.System.ExportSettings.Filter">PCL Shion config file (*.json)|*.json</sys:String>
     <sys:String x:Key="Setup.Misc.System.ExportSettings.SaveTitle">Select save location</sys:String>
@@ -3647,7 +3655,8 @@
     <sys:String x:Key="Widget.Time.JustNow">just now</sys:String>
     <sys:String x:Key="Widget.Time.MinutesAgo">{0} min ago</sys:String>
 
-    <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion does not provide in-app updates yet. Please download new versions manually from {0}.</sys:String>
+    <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion supports automatic updates: it checks GitHub Releases for new versions and asks you before updating, never installing anything on its own. You can also download new versions manually from {0}.</sys:String>
+    <sys:String x:Key="Setup.Update.Shion.NoticeManual">Installing updates from inside the launcher is not available on this platform yet. PCL Shion checks GitHub Releases for new versions and lets you know when one is out; download the package for your platform from {0}.</sys:String>
     <sys:String x:Key="Setup.Update.Shion.OpenReleases">Open download page</sys:String>
 <sys:String x:Key="Setup.Update.Shion.Status">Updates are published on GitHub Releases</sys:String>
 <sys:String x:Key="Setup.Update.Shion.Checking">Checking the latest version on GitHub Releases…</sys:String>

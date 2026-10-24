@@ -2994,6 +2994,14 @@
     <sys:String x:Key="Setup.Misc.System.Announcement.Disabled.Warning.Message">若选择此项，即使在将来出现严重问题时，你也无法获取相关通知。&#xA;例如，如果发现某个版本游戏存在严重 Bug，你可能就会因为无法得到通知而导致无法预知的后果。&#xA;&#xA;一般选择 仅在有重要通知时显示公告 就可以让你尽量不受打扰了。&#xA;除非你在制作服务器整合包，或时常手动更新启动器，否则极度不推荐选择此项！</sys:String>
     <sys:String x:Key="Setup.Misc.System.Announcement.ImportantOnly">仅在有重要通知时显示公告</sys:String>
     <sys:String x:Key="Setup.Misc.System.DisableHardwareAcceleration">禁用硬件加速</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend">渲染后端</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.ToolTip">绘制启动器界面所用的图形接口，重启 PCL Shion 后生效。如果界面显示异常或闪烁，可以尝试换用其他后端。</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.Locked">只有 Windows 可以选择渲染后端，其他平台由启动器自动选择。</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.Auto">自动（推荐）</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.Angle">ANGLE（DirectX）</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.OpenGl">OpenGL</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.Vulkan">Vulkan</sys:String>
+    <sys:String x:Key="Setup.Misc.System.RenderBackend.Software">软件渲染（不使用硬件加速）</sys:String>
     <sys:String x:Key="Setup.Misc.System.ExportSettings">导出设置</sys:String>
     <sys:String x:Key="Setup.Misc.System.ExportSettings.Filter">PCL Shion 配置文件(*.json)|*.json</sys:String>
     <sys:String x:Key="Setup.Misc.System.ExportSettings.SaveTitle">选择保存位置</sys:String>
@@ -3703,7 +3711,8 @@
     <sys:String x:Key="Widget.Time.JustNow">刚刚</sys:String>
     <sys:String x:Key="Widget.Time.MinutesAgo">{0} 分钟前</sys:String>
 
-    <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion 暂不提供应用内更新，请前往 {0} 手动下载新版本。</sys:String>
+    <sys:String x:Key="Setup.Update.Shion.Notice">PCL Shion 已支持自动更新：启动器会从 GitHub Releases 检查新版本，发现新版本时弹窗询问你是否更新，不会强制安装。你也可以前往 {0} 手动下载。</sys:String>
+    <sys:String x:Key="Setup.Update.Shion.NoticeManual">当前平台暂不支持在启动器内安装更新。启动器会从 GitHub Releases 检查新版本，发现新版本时会提示你，请前往 {0} 下载对应平台的安装包。</sys:String>
     <sys:String x:Key="Setup.Update.Shion.OpenReleases">前往下载页面</sys:String>
 <sys:String x:Key="Setup.Update.Shion.Status">更新通过 GitHub Releases 发布</sys:String>
 <sys:String x:Key="Setup.Update.Shion.Checking">正在检查 GitHub Releases 上的最新版本…</sys:String>

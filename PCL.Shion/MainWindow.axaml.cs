@@ -149,6 +149,26 @@ public partial class MainWindow : Window, IPageHost
         PlayShowAnimation();
         extraRefreshTimer.Start();
         _ = CheckLauncherEulaAsync();
+        _ = CheckLauncherUpdateAsync();
+    }
+
+    /// <summary>
+    ///     启动时检查 GitHub Releases 上的新版本。发现新版本只弹窗询问，不会自动下载或安装。
+    /// </summary>
+    private static async Task CheckLauncherUpdateAsync()
+    {
+        var updates = App.Services.Updates;
+        if (!updates.CheckOnStartup)
+            return;
+        await updates.CheckAsync();
+        if (updates.State != Services.UpdateState.Available || updates.Release is not { } release)
+            return;
+        if (await MsgBox.ShowAsync(
+                Lang.Text("Setup.Update.Shion.NewVersion", release.Version.ToString()),
+                Lang.Text("Update.Title"),
+                Lang.Text("Setup.Update.Shion.OpenReleases"),
+                Lang.Text("Common.Action.Cancel")) == 1)
+            Core.Platform.SystemShell.OpenUrl(release.HtmlUrl.AbsoluteUri);
     }
 
     /// <summary>

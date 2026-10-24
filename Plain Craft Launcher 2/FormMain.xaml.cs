@@ -288,7 +288,7 @@ public partial class FormMain
                 {
                     ModDownload.dlClientListMojangLoader.Start(1); // PCL 会同时根据这里的加载结果决定是否使用官方源进行下载
                     RunCountSub();
-                    if (UpdateManager.InAppUpdateEnabled) UpdateManager.serverLoader.Start(1); // PCL Shion 不检查更新、不拉取上游公告
+                    UpdateManager.serverLoader.Start(1);
                     ModBase.RunInNewThread(ModMain.TryClearTaskTemp, "TryClearTaskTemp", ThreadPriority.BelowNormal);
                 }
                 catch (Exception ex)

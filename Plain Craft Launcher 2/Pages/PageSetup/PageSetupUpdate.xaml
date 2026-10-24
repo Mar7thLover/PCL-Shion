@@ -13,7 +13,7 @@
                     <local:MyButton x:Name="BtnShionReleases" Text="{DynamicResource Setup.Update.Shion.OpenReleases}" ColorType="Highlight" Height="35" Padding="13,0" HorizontalAlignment="Left" Margin="0,15,0,0" Click="BtnShionReleases_Click" />
                 </StackPanel>
             </local:MyCard>
-            <local:MyCard x:Name="CardUpdateSettings" Height="Auto" Visibility="Collapsed">
+            <local:MyCard x:Name="CardUpdateSettings" Height="Auto">
                 <StackPanel Margin="20,15,20,15">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -23,8 +23,6 @@
                             <ColumnDefinition Width="75" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="28" />
-                            <RowDefinition Height="7" />
                             <RowDefinition Height="28" />
                             <RowDefinition Height="7" />
                             <RowDefinition Height="28" />
@@ -47,19 +45,12 @@
                         <local:MyComboBox x:Name="ComboSystemUpdateMode" Tag="SystemUpdateMode" Grid.Column="1"
                                           Grid.ColumnSpan="3" Grid.Row="2"
                                           SelectionChanged="ComboSystemUpdateMode_SelectionChanged">
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Update.Auto.DownloadAndInstall}" ToolTip="{DynamicResource Setup.Update.Auto.DownloadAndInstall.ToolTip}" />
-                            <local:MyComboBoxItem Content="{DynamicResource Setup.Update.Auto.DownloadAndNotify}" ToolTip="{DynamicResource Setup.Update.Auto.DownloadAndNotify.ToolTip}" />
+                            <!-- PCL Shion 不在后台静默下载或安装更新，这两项只保留占位，以便下标与配置中的枚举值对应 -->
+                            <local:MyComboBoxItem Content="{DynamicResource Setup.Update.Auto.DownloadAndInstall}" ToolTip="{DynamicResource Setup.Update.Auto.DownloadAndInstall.ToolTip}" Visibility="Collapsed" />
+                            <local:MyComboBoxItem Content="{DynamicResource Setup.Update.Auto.DownloadAndNotify}" ToolTip="{DynamicResource Setup.Update.Auto.DownloadAndNotify.ToolTip}" Visibility="Collapsed" />
                             <local:MyComboBoxItem Content="{DynamicResource Setup.Update.Auto.NotifyOnly}" ToolTip="{DynamicResource Setup.Update.Auto.NotifyOnly.ToolTip}" />
                             <local:MyComboBoxItem Content="{DynamicResource Setup.Update.Auto.Disabled}" ToolTip="{DynamicResource Setup.Update.Auto.Disabled.ToolTip}" />
                         </local:MyComboBox>
-                        <TextBlock Text="{DynamicResource Setup.Update.MirrorChyanCdk.Label}" Grid.Row="4" VerticalAlignment="Center"
-                                   HorizontalAlignment="Left" Margin="0,0,25,0" />
-                        <PasswordBox x:Name="TextMirrorCDK"
-                                      ToolTip="{DynamicResource Setup.Update.MirrorChyanCdk.ToolTip}"
-                                     Grid.Row="4" Grid.Column="1"
-                                     PasswordChanged="TextMirrorCDK_PasswordChanged" />
-                        <local:MyButton x:Name="BtnGetMirrorCDK" Text="{DynamicResource Setup.Update.MirrorChyanCdk.Get}" Grid.Column="3" Grid.Row="4"
-                                        ColorType="Highlight" Click="BtnGetMirrorCDK_Click" />
                     </Grid>
                 </StackPanel>
             </local:MyCard>
@@ -124,7 +115,7 @@
                         <!-- <local:MyImage x:Name="ImgUpdateIcon" FallbackSource="pack://application:,,,/images/icon.ico" Source="https://www.pclc.cc/img/pcl-ce/icon.webp" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="50" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center"/> -->
                         <TextBlock x:Name="TextCurrentVersion" Text="PCL Shion" FontWeight="Bold" FontSize="20"
                                    Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-                        <TextBlock x:Name="TextCurrentDesc" Text="{DynamicResource Setup.Update.Shion.Status}" FontSize="14" Grid.Row="2" Grid.Column="2"
+                        <TextBlock x:Name="TextCurrentDesc" Text="{DynamicResource Setup.Update.Checking}" FontSize="14" Grid.Row="2" Grid.Column="2"
                                    HorizontalAlignment="Left" VerticalAlignment="Top" />
                         <local:MyButton x:Name="BtnCheckAgain" Text="{DynamicResource Setup.Update.CheckAgain}" ColorType="Highlight" Grid.Row="0"
                                         Grid.RowSpan="2" Grid.Column="3" HorizontalAlignment="Stretch"

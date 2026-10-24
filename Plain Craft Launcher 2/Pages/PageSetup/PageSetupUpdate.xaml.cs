@@ -27,20 +27,12 @@ public partial class PageSetupUpdate
     private void Init()
     {
         ModAnimation.AniControlEnabled += 1;
-        TextMirrorCDK.Password = Config.Update.MirrorChyanKey;
-
         ComboSystemUpdateChannel.SelectedIndex = (int)Config.Update.UpdateChannel;
-        ComboSystemUpdateMode.SelectedIndex = (int)Config.Update.UpdateMode;
+        ComboSystemUpdateMode.SelectedIndex = (int)UpdateManager.EffectiveUpdateMode;
 
         TextCurrentVersion.Text = "PCL Shion " + VersionNameFormat(ModBase.versionBaseName);
-        // PCL Shion 暂不提供应用内更新：展示前往 GitHub Releases 的提示，并隐藏更新源与更新渠道等设置
-        var inAppUpdate = UpdateManager.InAppUpdateEnabled;
-        CardShionNotice.Visibility = inAppUpdate ? Visibility.Collapsed : Visibility.Visible;
-        CardUpdateSettings.Visibility = inAppUpdate ? Visibility.Visible : Visibility.Collapsed;
-        if (inAppUpdate)
-            TextShionNotice.Text = Lang.Text("Setup.Update.Shion.Notice", ModBase.shionReleasesUrl);
-        else
-            _ = CheckShionReleaseAsync();
+        // 应用内更新从 GitHub Releases 获取新版本，同时保留前往 Releases 手动下载的入口
+        TextShionNotice.Text = Lang.Text("Setup.Update.Shion.Notice", ModBase.shionReleasesUrl);
         ModAnimation.AniControlEnabled -= 1;
         CheckUpdate();
     }
@@ -75,49 +67,8 @@ public partial class PageSetupUpdate
         }
     }
 
-    /// <summary>
-    /// 从 GitHub Releases 检查最新版本。只更新提示文字，不下载、不安装。
-    /// </summary>
-    private async Task CheckShionReleaseAsync()
-    {
-        TextShionNotice.Text = Lang.Text("Setup.Update.Shion.Checking");
-        try
-        {
-            var releases = await ShionUpdate.GetReleasesAsync();
-            var latest = ShionUpdate.FindLatest(releases);
-            if (latest is null || !ShionUpdate.IsNewer(latest.Version, ModBase.versionBaseName))
-            {
-                _shionReleaseUrl = latest?.Url ?? ModBase.shionReleasesUrl;
-                TextShionNotice.Text = Lang.Text("Setup.Update.Shion.Latest", ModBase.versionBaseName);
-                BtnShionReleases.Text = Lang.Text("Setup.Update.Shion.OpenReleases");
-            }
-            else
-            {
-                _shionReleaseUrl = latest.Url;
-                TextShionNotice.Text = Lang.Text("Setup.Update.Shion.NewVersion", latest.Version);
-                BtnShionReleases.Text = Lang.Text("Setup.Update.Shion.Download");
-            }
-        }
-        catch (Exception ex)
-        {
-            LogWrapper.Warn(ex, "从 GitHub Releases 检查最新版本失败");
-            TextShionNotice.Text = Lang.Text("Setup.Update.Shion.Failed");
-            BtnShionReleases.Text = Lang.Text("Setup.Update.Shion.OpenReleases");
-        }
-    }
-
     public async void CheckUpdate()
     {
-        if (!UpdateManager.InAppUpdateEnabled)
-        {
-            // PCL Shion 不检查更新，也不访问上游更新源
-            CardUpdate.Visibility = Visibility.Collapsed;
-            CardCheck.Visibility = Visibility.Visible;
-            BtnCheckAgain.Visibility = Visibility.Collapsed;
-            TextCurrentDesc.Text = Lang.Text("Setup.Update.Shion.Status");
-            return;
-        }
-
         ModBase.Log("[Update] 开始检查更新");
         CardUpdate.Visibility = Visibility.Collapsed;
         CardCheck.Visibility = Visibility.Visible;
@@ -135,8 +86,13 @@ public partial class PageSetupUpdate
                             ? UpdateChannel.beta
                             : UpdateChannel.stable, SystemInfo.IsArm64System ? UpdateArch.arm64 : UpdateArch.x64);
                     TextUpdateName.Text = "PCL Shion " + VersionNameFormat(updateInfo.VersionName);
-                    var summary = updateInfo.Changelog.Between("<summary>", "</summary>");
-                    if (!updateInfo.Changelog.Contains("<summary>") || string.IsNullOrWhiteSpace(summary.Trim()))
+                    _shionReleaseUrl = UpdateManager.GetReleaseUrl(updateInfo.VersionName);
+                    BtnShionReleases.Text = Lang.Text("Setup.Update.Shion.Download");
+                    // GitHub Releases 的发布说明没有 <summary> 标签时直接显示全文
+                    var summary = updateInfo.Changelog.Contains("<summary>")
+                        ? updateInfo.Changelog.Between("<summary>", "</summary>")
+                        : updateInfo.Changelog;
+                    if (string.IsNullOrWhiteSpace(summary.Trim()))
                         TextChangelog.Text = Lang.Text("Setup.Update.Changelog.Empty");
                     else
                         TextChangelog.Text = summary;
@@ -299,19 +255,9 @@ public partial class PageSetupUpdate
         }
     }
 
-    private void TextMirrorCDK_PasswordChanged(object sender, EventArgs e)
-    {
-        Config.Update.MirrorChyanKey = TextMirrorCDK.Password;
-    }
-
-    private void BtnGetMirrorCDK_Click(object sender, MouseButtonEventArgs e)
-    {
-        ModBase.OpenWebsite("https://mirrorchyan.com/");
-    }
-
     private void BtnChangelog_Click(object sender, MouseButtonEventArgs e)
     {
-        ModBase.OpenWebsite(ModBase.shionReleasesUrl);
+        ModBase.OpenWebsite(UpdateManager.GetReleaseUrl(ModBase.versionBaseName));
     }
 
     private void BtnShionReleases_Click(object sender, MouseButtonEventArgs e)
