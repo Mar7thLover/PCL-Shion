@@ -415,6 +415,7 @@ public partial class PageDownloadCompDetail : MyPageRight
                 Title = pair.Key,
                 Margin = new Thickness(0d, 0d, 0d, 15d)
             };
+            newCard.Children.Add(newStack); // 与 WPF 相同，折叠区需要先加入卡片
             newCard.SwapControl = newStack;
             newCard.InstallMethod = stack =>
             {

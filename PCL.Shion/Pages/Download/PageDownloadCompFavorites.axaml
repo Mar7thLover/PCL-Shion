@@ -4,30 +4,76 @@
                    xmlns:loc="using:PCL.Shion.Localization"
                    xmlns:pages="using:PCL.Shion.Pages"
                    x:Class="PCL.Shion.Pages.Download.PageDownloadCompFavorites">
-    <c:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto"
-                      HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Margin="25">
-            <StackPanel x:Name="PanContent">
-                <StackPanel x:Name="PanFolders" />
-            </StackPanel>
-            <!-- 与 WPF 相同，没有任何收藏时显示提示卡片 -->
-            <c:MyCard x:Name="CardNoContent" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40"
-                      IsVisible="False">
-                <Grid Margin="20,17" RowDefinitions="Auto,Auto,Auto">
-                    <TextBlock Grid.Row="0" Margin="0,0,0,9" HorizontalAlignment="Center" FontSize="19"
-                               Text="{loc:L Download.Comp.Favorites.Empty.Title}"
-                               Foreground="{DynamicResource ColorBrush3}" />
-                    <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" Height="2"
-                               Fill="{DynamicResource ColorBrush3}" />
-                    <TextBlock Grid.Row="2" Margin="10,15,10,5" TextWrapping="Wrap"
-                               Text="{loc:L Download.Comp.Favorites.Empty.Description}" />
-                </Grid>
-            </c:MyCard>
-            <c:MyCard x:Name="PanLoad" HorizontalAlignment="Center" VerticalAlignment="Center"
-                      UseAnimation="False" Margin="40,50">
-                <c:MyLoading x:Name="Load" Margin="20,20,20,17" HorizontalAlignment="Center"
-                             VerticalAlignment="Center" Text="{loc:L Download.Version.LoadingList}" />
-            </c:MyCard>
-        </StackPanel>
-    </c:MyScrollViewer>
+    <!-- 与 WPF 相同：根 Grid 叠放列表、底部操作栏与加载卡片。Avalonia 不会裁剪溢出内容，因此开启 ClipToBounds。 -->
+    <Grid ClipToBounds="True">
+        <c:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+            <Grid x:Name="PanContent">
+                <StackPanel Margin="25">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,15" ColumnDefinitions="*,Auto">
+                            <c:MySearchBox x:Name="PanSearchBox" Grid.Column="0"
+                                           HintText="{loc:L Download.Comp.Favorites.Search.Hint}" />
+                            <c:MyCard Grid.Column="1" Margin="15,0,0,0" Height="40" CanSwap="False">
+                                <StackPanel Orientation="Horizontal">
+                                    <c:MyComboBox x:Name="ComboTargetFav" Margin="8,0,-1,0"
+                                                  VerticalAlignment="Center" Height="27"
+                                                  MaxWidth="160" MinWidth="80" DropDownWidthSync="False" />
+                                    <c:MyIconButton x:Name="Btn_ManageTargetFav" LogoScale="1.1"
+                                                    Margin="4,8,5,8" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </c:MyCard>
+                        </Grid>
+                        <c:MyHint x:Name="HintGetFail" Theme="Yellow" Margin="0,0,0,15" IsVisible="False"
+                                  Text="{loc:L Download.Comp.Favorites.GetInfoFailed}" />
+                        <StackPanel x:Name="PanContentList" />
+                    </StackPanel>
+                </StackPanel>
+                <!-- 与 WPF 相同，没有任何收藏时显示提示卡片 -->
+                <c:MyCard x:Name="CardNoContent" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40"
+                          IsVisible="False">
+                    <Grid Margin="20,17" RowDefinitions="Auto,Auto,Auto">
+                        <TextBlock Grid.Row="0" Margin="0,0,0,9" HorizontalAlignment="Center" FontSize="19"
+                                   Text="{loc:L Download.Comp.Favorites.Empty.Title}"
+                                   Foreground="{DynamicResource ColorBrush3}" />
+                        <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" Height="2"
+                                   Fill="{DynamicResource ColorBrush3}" />
+                        <TextBlock Grid.Row="2" Margin="10,15,10,5" TextWrapping="Wrap"
+                                   Text="{loc:L Download.Comp.Favorites.Empty.Description}" />
+                    </Grid>
+                </c:MyCard>
+            </Grid>
+        </c:MyScrollViewer>
+
+        <!-- 底部多选操作栏，位置与显隐动画在代码中控制 -->
+        <c:MyCard x:Name="CardSelect" IsVisible="False" Opacity="0"
+                  HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="25,25,25,0"
+                  UseAnimation="False" HasMouseAnimation="False">
+            <Grid>
+                <TextBlock x:Name="LabSelect" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="9"
+                           Text="{loc:L Download.Comp.Favorites.Selection.Placeholder}"
+                           Foreground="{DynamicResource ColorBrush2}" />
+                <StackPanel Orientation="Horizontal" Margin="5,28,5,5">
+                    <c:MyIconTextButton x:Name="Btn_FavoritesCancel"
+                                        Text="{loc:L Download.Comp.Favorites.Cancel}"
+                                        LogoScale="1" SvgIcon="lucide/heart-filled" />
+                    <c:MyIconTextButton x:Name="Btn_FavoritesShare"
+                                        Text="{loc:L Download.Comp.Favorites.Share}"
+                                        LogoScale="1" SvgIcon="lucide/share-2" />
+                    <c:MyIconTextButton x:Name="Btn_FavoritesDownload"
+                                        Text="{loc:L Download.Comp.Favorites.Download}"
+                                        LogoScale="1" SvgIcon="lucide/download" />
+                    <c:MyIconTextButton x:Name="Btn_SelectCancel"
+                                        Text="{loc:L Download.Comp.Favorites.Deselect}"
+                                        LogoScale="0.8" SvgIcon="lucide/download" />
+                </StackPanel>
+            </Grid>
+        </c:MyCard>
+
+        <c:MyCard x:Name="PanLoad" HorizontalAlignment="Center" VerticalAlignment="Center"
+                  UseAnimation="False" Margin="40,50">
+            <c:MyLoading x:Name="Load" Margin="20,20,20,17" HorizontalAlignment="Center"
+                         VerticalAlignment="Center" Text="{loc:L Download.Comp.Favorites.Loading}" />
+        </c:MyCard>
+    </Grid>
 </pages:MyPageRight>

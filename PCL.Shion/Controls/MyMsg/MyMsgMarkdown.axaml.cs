@@ -277,15 +277,12 @@ public partial class MyMsgMarkdown : Grid
             var groups = match.Groups;
             if (groups["b"].Success)
             {
-                var bold = new Bold();
-                bold.Inlines.Add(new Run(groups["b"].Value));
-                inlines.Add(bold);
+                // 套在 Bold / Italic 里的 Run 不会显示为粗体、斜体，直接在 Run 上设置字重与字形
+                inlines.Add(new Run(groups["b"].Value) { FontWeight = FontWeight.Bold });
             }
             else if (groups["i"].Success)
             {
-                var italic = new Italic();
-                italic.Inlines.Add(new Run(groups["i"].Value));
-                inlines.Add(italic);
+                inlines.Add(new Run(groups["i"].Value) { FontStyle = FontStyle.Italic });
             }
             else if (groups["c"].Success)
             {
