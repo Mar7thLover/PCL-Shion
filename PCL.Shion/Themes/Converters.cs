@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using Avalonia;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 
@@ -45,13 +46,14 @@ public class MultiplicationConverter : IValueConverter
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is null)
-            return 0;
+            return targetType == typeof(CornerRadius) ? new CornerRadius(0) : 0;
         if (!double.TryParse(value.ToString(), out var before))
-            return 0;
+            return targetType == typeof(CornerRadius) ? new CornerRadius(0) : 0;
         var scale = 1d;
         if (parameter is not null)
             double.TryParse(parameter.ToString(), out scale);
-        return before * scale;
+        var result = before * scale;
+        return targetType == typeof(CornerRadius) ? new CornerRadius(result) : result;
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

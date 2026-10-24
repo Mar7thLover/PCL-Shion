@@ -39,7 +39,7 @@
                 </StackPanel>
 
                 <c:MyCard x:Name="PanListBack" Margin="0,0,0,15" VerticalAlignment="Top" MinHeight="55"
-                          Title="{loc:L Instance.Resource.ListTitle}">
+                          Title=" ">
                     <Grid>
                         <StackPanel Margin="0,13,15,0" Orientation="Horizontal" VerticalAlignment="Top"
                                     HorizontalAlignment="Right" Height="28">
@@ -77,16 +77,16 @@
                   IsVisible="False">
             <StackPanel Margin="20,17">
                 <TextBlock Margin="0,0,0,9" HorizontalAlignment="Center" FontSize="19"
-                           Text="{loc:L Instance.Resource.Schematic.Empty.Title}"
+                           Text="{loc:L Instance.Resource.Schematic.Unavailable.Title}"
                            Foreground="{DynamicResource ColorBrush3}" />
                 <Rectangle HorizontalAlignment="Stretch" Height="2" Fill="{DynamicResource ColorBrush3}" />
                 <TextBlock Margin="10,10,10,0" TextWrapping="Wrap" HorizontalAlignment="Center"
-                           Text="{loc:L Instance.Resource.Schematic.Empty.Message}" />
+                           Text="{loc:L Instance.Resource.Schematic.Unavailable.Message}" />
                 <WrapPanel HorizontalAlignment="Center" Margin="5,20,5,5">
                     <c:MyButton x:Name="BtnSchematicDownloadMod" Height="35" MinWidth="130" Margin="5,0,5,0" Padding="12,0"
-                                Text="{loc:L Instance.Resource.DownloadNew}" ColorType="Highlight" />
+                                Text="{loc:L Instance.Resource.Schematic.DownloadMod}" ColorType="Highlight" />
                     <c:MyButton x:Name="BtnSchematicVersionSelect" Height="35" MinWidth="130" Margin="5,0,5,0"
-                                Padding="12,0" Text="{loc:L Instance.Resource.Schematic.SelectInstance}" />
+                                Padding="12,0" Text="{loc:L Instance.Resource.Mod.Disabled.SelectInstance}" />
                 </WrapPanel>
             </StackPanel>
         </c:MyCard>
@@ -108,9 +108,9 @@
                 <c:MyButton x:Name="BtnSelectUpdate" MinWidth="90" Padding="10,6" Margin="0,0,8,0"
                             Text="{loc:L Instance.Resource.Update}" />
                 <c:MyButton x:Name="BtnSelectFavorites" MinWidth="90" Padding="10,6" Margin="0,0,8,0"
-                            Text="{loc:L Instance.Resource.Favorites}" />
+                            Text="{loc:L Instance.Resource.Favorite}" />
                 <c:MyButton x:Name="BtnSelectShare" MinWidth="90" Padding="10,6" Margin="0,0,8,0"
-                            Text="{loc:L Instance.Resource.Share}" />
+                            Text="{loc:L Instance.Resource.ShareSelected}" />
                 <c:MyButton x:Name="BtnSelectDelete" MinWidth="90" Padding="10,6" Margin="0,0,8,0"
                             Text="{loc:L Common.Action.Delete}" ColorType="Highlight" />
                 <c:MyButton x:Name="BtnSelectCancel" MinWidth="90" Padding="10,6"

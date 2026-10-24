@@ -51,11 +51,7 @@
                         Grid.Row="2"
                         Margin="3"
                         PointerPressed="ImgPCLLogo_Click"
-                        Source="avares://PCL.Shion/Assets/Images/Heads/Logo-CE.png">
-                        <Image.Clip>
-                            <EllipseGeometry Rect="0,0,34,34" />
-                        </Image.Clip>
-                    </Image>
+                        Source="avares://PCL.Shion/Assets/Images/icon.png" />
                     <Image
                         Grid.Row="0"
                         Margin="3"

@@ -338,10 +338,10 @@ public sealed class AppSettings
     public bool UiShowLaunchingHint { get; set; } = true;
 
     /// <summary>首页侧栏显示日期打卡。</summary>
-    public bool UiSidebarCheckIn { get; set; } = true;
+    public bool UiSidebarCheckIn { get; set; }
 
     /// <summary>首页侧栏显示最近游玩。</summary>
-    public bool UiSidebarRecentPlay { get; set; } = true;
+    public bool UiSidebarRecentPlay { get; set; }
 
     /// <summary>首页侧栏显示 Minecraft 新闻。</summary>
     public bool UiSidebarNews { get; set; }
