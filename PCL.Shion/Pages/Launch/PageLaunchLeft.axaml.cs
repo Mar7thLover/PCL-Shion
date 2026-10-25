@@ -66,6 +66,11 @@ public partial class PageLaunchLeft : MyPageLeft
     /// <summary>当前选中的实例，对应 WPF 的 ModInstanceList.McMcInstanceSelected。</summary>
     public static GameInstance? McInstanceSelected { get; private set; }
 
+    /// <summary>
+    ///     下一次启动要直接进入的存档或服务器，只生效一次，例如存档页的「直接进入」。
+    /// </summary>
+    public static QuickPlayTarget? PendingQuickPlay { get; set; }
+
     /// <summary>实例列表是否正在读取，对应 WPF 的 mcInstanceListLoader 加载状态。</summary>
     private static bool instanceListLoading;
 
@@ -217,13 +222,7 @@ public partial class PageLaunchLeft : MyPageLeft
         {
             case LaunchButtonAction.Launch:
             {
-                if (File.Exists(Path.Combine(McInstanceSelected!.Directory, ".pclignore")))
-                {
-                    HintService.Hint(Lang.Text("Launch.Home.Instance.InstallingCannotLaunch"), HintType.Error);
-                    return;
-                }
-
-                McLaunchStart();
+                LaunchSelected();
                 break;
             }
             case LaunchButtonAction.Download:
@@ -232,6 +231,22 @@ public partial class PageLaunchLeft : MyPageLeft
                 break;
             }
         }
+    }
+
+    /// <summary>
+    ///     启动当前选中的实例，不检查页面切换状态。供存档页的「直接进入」等从其他页面发起的启动使用。
+    /// </summary>
+    public void LaunchSelected()
+    {
+        if (McInstanceSelected is null)
+            return;
+        if (File.Exists(Path.Combine(McInstanceSelected.Directory, ".pclignore")))
+        {
+            HintService.Hint(Lang.Text("Launch.Home.Instance.InstallingCannotLaunch"), HintType.Error);
+            return;
+        }
+
+        McLaunchStart();
     }
 
     public void RefreshButtonsUI()
@@ -491,13 +506,17 @@ public partial class PageLaunchLeft : MyPageLeft
     {
         if (isLaunchRunning)
         {
+            PendingQuickPlay = null;
             HintService.Hint(Lang.Text("Minecraft.Launch.Error.AlreadyLaunching"), HintType.Error);
             return;
         }
 
         var instance = McInstanceSelected;
         if (instance is null)
+        {
+            PendingQuickPlay = null;
             return;
+        }
 
         isLaunchRunning = true;
         isLaunchStarted = false;
@@ -526,6 +545,9 @@ public partial class PageLaunchLeft : MyPageLeft
 
             var profile = ProfileService.Current ?? throw new OperationCanceledException();
             var instanceSettings = await Task.Run(() => InstanceStore.Load(root, instance.Name), cancel.Token);
+            var quickPlay = PendingQuickPlay;
+            PendingQuickPlay = null;
+            LaunchSettingsResolver.Apply(instanceSettings, instance, settings, quickPlay);
             var java = await ResolveJavaAsync(root, instance, instanceSettings, settings);
             if (java is null)
                 throw new InvalidOperationException(Lang.Text("Minecraft.Launch.Error.NoJava"));

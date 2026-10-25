@@ -5,6 +5,7 @@ using System.Text;
 using Avalonia.Logging;
 using PCL.Shion.Core.Instances;
 using PCL.Shion.Navigation;
+using PCL.Shion.Pages.Launch;
 using PCL.Shion.UI;
 
 namespace PCL.Shion.Pages.Instance.Saves;
@@ -43,7 +44,7 @@ internal static class SavesSupport
         Convert.ToHexString(MD5.HashData(Encoding.UTF8.GetBytes(text))).ToLowerInvariant();
 
     /// <summary>
-    ///     以指定存档启动游戏：把快捷启动目标写入实例设置，并跳转到启动页。
+    ///     以指定存档启动游戏：选中实例并跳转到启动页后直接启动，进入存档只对这一次启动生效。与 WPF 相同。
     /// </summary>
     public static void QuickPlay(string worldName)
     {
@@ -52,13 +53,12 @@ internal static class SavesSupport
             return;
 
         var services = App.Services;
-        var root = services.Settings.MinecraftRoot;
-        var settings = InstanceStore.Load(root, instance.Name);
-        settings.QuickPlay = new QuickPlayTarget(QuickPlayKind.Singleplayer, worldName);
-        InstanceStore.Save(root, instance.Name, settings);
-
         services.Settings.SelectedInstance = instance.Name;
         services.Settings.Save();
+        PageLaunchLeft.SelectInstance(instance);
+        PageLaunchLeft.PendingQuickPlay = new QuickPlayTarget(QuickPlayKind.Singleplayer, worldName);
         Navigator.Go(PageType.Launch);
+        if (Navigator.PageLeft is PageLaunchLeft launch)
+            launch.LaunchSelected();
     }
 }
