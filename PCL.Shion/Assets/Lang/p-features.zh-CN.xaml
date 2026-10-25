@@ -16,4 +16,17 @@
     <sys:String x:Key="Instance.Setup.Advanced.EnvironmentVariables">环境变量</sys:String>
     <sys:String x:Key="Instance.Setup.Advanced.EnvironmentVariables.ToolTip">为游戏进程额外设置的环境变量，每行一个，格式为 名称=值，以 # 开头的行会被忽略</sys:String>
     <sys:String x:Key="Instance.Setup.Advanced.EnvironmentVariables.Hint">每行一个，例如 __GL_THREADED_OPTIMIZATIONS=1</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.Title">已有同一个 Mod</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.Identical.Message">保存位置里已有内容完全相同的文件：{0}
+
+仍要下载吗？</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.Identical.Download">仍然下载</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.Message">文件夹里还有 {0} 的其他文件：
+{1}
+
+同一个 Mod 同时存在多个版本可能导致游戏无法启动。要把旧文件移到回收站吗？</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.Remove">移到回收站</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.Keep">保留</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.Removed">已将 {0} 个旧文件移到回收站</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.RemoveFailed">以下文件未能移到回收站：{0}</sys:String>
 </ResourceDictionary>

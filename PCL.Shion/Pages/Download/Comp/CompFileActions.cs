@@ -43,13 +43,22 @@ internal static class CompFileActions
         if (picked?.Path.LocalPath is not { Length: > 0 } path)
             return;
 
-        await DownloadAsync(file.ToDownloadItem(path), project, file);
+        // Mod 文件：检查保存位置里是否已有同一个 Mod
+        var isMod = path.EndsWith(".jar", StringComparison.OrdinalIgnoreCase);
+        var existing = isMod && System.IO.Path.GetDirectoryName(path) is { } folder
+            ? await ModDuplicateCheck.ScanAsync(folder, path)
+            : [];
+        if (!await ModDuplicateCheck.ConfirmIdenticalAsync(existing, file.Hash))
+            return;
+
+        if (await DownloadAsync(file.ToDownloadItem(path), project, file) && existing.Count > 0)
+            await ModDuplicateCheck.CheckOtherVersionsAsync(existing, path);
     }
 
     /// <summary>
-    /// 下载一个文件，结果以提示的形式显示。
+    /// 下载一个文件，结果以提示的形式显示。返回是否下载成功。
     /// </summary>
-    public static async Task DownloadAsync(PCL.Shion.Core.Download.DownloadItem item, CompProject project, CompFile file)
+    public static async Task<bool> DownloadAsync(PCL.Shion.Core.Download.DownloadItem item, CompProject project, CompFile file)
     {
         try
         {
@@ -59,15 +68,17 @@ internal static class CompFileActions
             {
                 Hint.Show(Lang.Text("Download.Comp.Detail.Task.Failed", file.FileName,
                     string.Join("\n", result.Errors.Values.SelectMany(e => e).Select(e => e.ToString()))), HintType.Error);
-                return;
+                return false;
             }
 
             Hint.Show(Lang.Text("Download.Comp.QuickDownload.Hint.DownloadStarted", project.RawName), HintType.Success);
             App.Services.Notify(project.RawName, file.FileName);
+            return true;
         }
         catch (Exception ex)
         {
             Hint.Show(Lang.Text("Download.Comp.Error.OperationFailed") + ": " + ex.Message, HintType.Error);
+            return false;
         }
     }
 }

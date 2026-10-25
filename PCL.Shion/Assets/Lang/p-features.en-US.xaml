@@ -16,4 +16,17 @@
     <sys:String x:Key="Instance.Setup.Advanced.EnvironmentVariables">Environment variables</sys:String>
     <sys:String x:Key="Instance.Setup.Advanced.EnvironmentVariables.ToolTip">Extra environment variables for the game process, one NAME=value per line; lines starting with # are ignored</sys:String>
     <sys:String x:Key="Instance.Setup.Advanced.EnvironmentVariables.Hint">One per line, e.g. __GL_THREADED_OPTIMIZATIONS=1</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.Title">Mod already present</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.Identical.Message">An identical file already exists in this folder: {0}
+
+Download anyway?</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.Identical.Download">Download anyway</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.Message">The folder also contains other files of {0}:
+{1}
+
+Having several versions of the same mod may stop the game from starting. Move the old files to the recycle bin?</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.Remove">Move to recycle bin</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.Keep">Keep</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.Removed">Moved {0} old file(s) to the recycle bin</sys:String>
+    <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.RemoveFailed">Could not move these files to the recycle bin: {0}</sys:String>
 </ResourceDictionary>

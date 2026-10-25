@@ -610,6 +610,22 @@ public partial class PageInstanceCompResource : MyPageRight, IRefreshable
     /// <summary>
     ///     刷新整个 UI。
     /// </summary>
+    /// <summary>
+    ///     找出重复的资源：同一 Mod ID（或同一工程）有两个及以上未禁用的文件。
+    /// </summary>
+    private static List<LocalFile> DuplicateEntries(IEnumerable<LocalFile> entries) => entries
+        .Where(m => !m.IsFolder && m.State != LocalFileStatus.Disabled)
+        .Select(m => (Entry: m, Key: DuplicateKey(m)))
+        .Where(item => item.Key is not null)
+        .GroupBy(item => item.Key!, StringComparer.OrdinalIgnoreCase)
+        .Where(g => g.Count() > 1)
+        .SelectMany(g => g.Select(item => item.Entry))
+        .ToList();
+
+    private static string? DuplicateKey(LocalFile entry) =>
+        !string.IsNullOrEmpty(entry.ModId) ? "mod:" + entry.ModId :
+        entry.Comp is not null ? "comp:" + entry.Comp.Id : null;
+
     public void RefreshUI()
     {
         if (PanList is null)
@@ -679,12 +695,8 @@ public partial class PageInstanceCompResource : MyPageRight, IRefreshable
         BtnFilterError.Text = Lang.Text("Instance.Resource.Filter.ErrorWithCount", unavailableCount);
         BtnFilterError.IsVisible = Filter == FilterType.Unavailable || unavailableCount > 0;
 
-        // 查找重复项目
-        var duplicateItems = itemSource
-            .GroupBy(m => m.Comp is null ? ":Nothing:" : m.Comp.Id)
-            .Where(g => g.Count() > 1 && g.First().Comp is not null)
-            .SelectMany(g => g)
-            .ToList();
+        // 查找重复项目：优先按文件里读到的 Mod ID 判断，读不到时按联网获取的工程判断，已禁用的不算重复
+        var duplicateItems = DuplicateEntries(itemSource);
         BtnFilterDuplicate.Text = Lang.Text("Instance.Resource.Filter.DuplicateWithCount", duplicateItems.Count);
         BtnFilterDuplicate.IsVisible = Filter == FilterType.Duplicate || duplicateItems.Count > 0;
 
@@ -1333,8 +1345,7 @@ public partial class PageInstanceCompResource : MyPageRight, IRefreshable
                 var itemSource = IsSearching
                     ? searchResult ?? new List<LocalFile>()
                     : AllEntries().ToList();
-                return checkingMod.Comp is not null &&
-                       itemSource.Count(m => m.Comp is not null && (checkingMod.Comp.Id ?? "") == (m.Comp.Id ?? "")) > 1;
+                return DuplicateEntries(itemSource).Contains(checkingMod);
             }
             default:
                 return false;
