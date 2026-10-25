@@ -62,6 +62,9 @@ public partial class PageInstanceSetup : MyPageRight
         TextAdvanceJvm.TextChanged += TextBoxChange;
         TextAdvanceGame.TextChanged += TextBoxChange;
         TextAdvanceClasspathHead.TextChanged += TextBoxChange;
+        TextAdvancePostExit.TextChanged += TextBoxChange;
+        TextAdvanceWrapper.TextChanged += TextBoxChange;
+        TextAdvanceEnv.TextChanged += TextBoxChange;
         TextAdvanceRun.TextChanged += TextAdvanceRun_TextChanged;
         CheckAdvanceRunWait.Change += CheckBoxChange;
         CheckAdvanceJava.Change += CheckBoxChange;
@@ -157,6 +160,9 @@ public partial class PageInstanceSetup : MyPageRight
             TextAdvanceJvm.Text = config.JvmArgs[path];
             TextAdvanceGame.Text = config.GameArgs[path];
             TextAdvanceRun.Text = config.PreLaunchCommand[path];
+            TextAdvancePostExit.Text = config.PostExitCommand[path];
+            TextAdvanceWrapper.Text = config.WrapperCommand[path];
+            TextAdvanceEnv.Text = config.EnvironmentVariables[path];
             CheckAdvanceRunWait.Checked = config.PreLaunchCommandWait[path];
             CheckAdvanceDisableLwjglUnsafeAgent.Checked = config.DisableLwjglUnsafeAgent[path];
             if (config.AssetVerifySolutionV1[path] == 2)

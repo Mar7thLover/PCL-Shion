@@ -9,4 +9,11 @@
     <sys:String x:Key="Setup.Misc.System.Notifications.ToolTip">Send a system notification when a game starts or exits and when a download finishes</sys:String>
     <sys:String x:Key="Setup.Misc.System.CompletionSound">Completion sound</sys:String>
     <sys:String x:Key="Setup.Misc.System.CompletionSound.ToolTip">Play a sound together with the notifications above</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.PostExitCommand">Post-exit command</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.PostExitCommand.ToolTip">Command run after the game exits. The INST_NAME, INST_DIR, INST_MC_DIR and INST_JAVA environment variables are available</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.WrapperCommand">Wrapper command</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.WrapperCommand.ToolTip">Command placed before Java when starting the game, such as prime-run, gamemoderun or mangohud</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.EnvironmentVariables">Environment variables</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.EnvironmentVariables.ToolTip">Extra environment variables for the game process, one NAME=value per line; lines starting with # are ignored</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.EnvironmentVariables.Hint">One per line, e.g. __GL_THREADED_OPTIMIZATIONS=1</sys:String>
 </ResourceDictionary>

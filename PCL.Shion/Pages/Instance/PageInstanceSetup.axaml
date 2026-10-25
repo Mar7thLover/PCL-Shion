@@ -326,9 +326,32 @@
                         <RowDefinition Height="28" />
                         <RowDefinition Height="9" />
                         <RowDefinition Height="31" />
+                        <RowDefinition Height="9" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="9" />
+                        <RowDefinition Height="28" />
+                        <RowDefinition Height="9" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="10" VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Text="{loc:L Instance.Setup.Advanced.PostExitCommand}" Margin="0,0,25,0" />
+                    <c:MyTextBox x:Name="TextAdvancePostExit" Grid.Row="10" Grid.Column="1" Tag="VersionAdvancePostExit"
+                                 ToolTip.Tip="{loc:L Instance.Setup.Advanced.PostExitCommand.ToolTip}" />
+
+                    <TextBlock Grid.Row="12" VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Text="{loc:L Instance.Setup.Advanced.WrapperCommand}" Margin="0,0,25,0" />
+                    <c:MyTextBox x:Name="TextAdvanceWrapper" Grid.Row="12" Grid.Column="1" Tag="VersionAdvanceWrapper"
+                                 ToolTip.Tip="{loc:L Instance.Setup.Advanced.WrapperCommand.ToolTip}" />
+
+                    <TextBlock Grid.Row="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,6,25,0"
+                               Text="{loc:L Instance.Setup.Advanced.EnvironmentVariables}" />
+                    <c:MyTextBox x:Name="TextAdvanceEnv" Grid.Row="14" Grid.Column="1" Tag="VersionAdvanceEnv"
+                                 ToolTip.Tip="{loc:L Instance.Setup.Advanced.EnvironmentVariables.ToolTip}"
+                                 HintText="{loc:L Instance.Setup.Advanced.EnvironmentVariables.Hint}"
+                                 Height="70" AcceptsReturn="True" TextWrapping="Wrap"
+                                 VerticalContentAlignment="Top" Padding="0,5" ScrollViewer.VerticalScrollBarVisibility="Auto" />
 
                     <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left"
                                Text="{loc:L Setup.Launch.Advanced.Renderer.Label}"
@@ -375,7 +398,7 @@
                                  Grid.Column="1" HintText="" Margin="0,0,0,3"
                                  ToolTip.Tip="{loc:L Instance.Setup.Advanced.PreLaunchCommand.ToolTip}" />
 
-                    <StackPanel Margin="0,8,0,4" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Left">
+                    <StackPanel Margin="0,8,0,4" Grid.Row="15" Grid.ColumnSpan="2" HorizontalAlignment="Left">
                         <c:MyCheckBox Height="28" x:Name="CheckAdvanceRunWait" Tag="VersionAdvanceRunWait"
                                       IsVisible="False"
                                       Text="{loc:L Setup.Launch.Advanced.PreLaunchCommand.Wait}" />

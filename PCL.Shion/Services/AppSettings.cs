@@ -619,6 +619,9 @@ public sealed class AppSettings
             IndieV2 = Add("VersionArgumentIndieV2", false);
             SelectedJava = Add("VersionArgumentJavaSelect", "使用全局设置");
             ServerToEnter = Add("VersionServerEnter", "");
+            PostExitCommand = Add("VersionAdvancePostExit", "");
+            WrapperCommand = Add("VersionAdvanceWrapper", "");
+            EnvironmentVariables = Add("VersionAdvanceEnv", "");
         }
 
         public InstanceArg<string> JvmArgs { get; }
@@ -652,6 +655,15 @@ public sealed class AppSettings
         public InstanceArg<bool> IndieV2 { get; }
         public InstanceArg<string> SelectedJava { get; }
         public InstanceArg<string> ServerToEnter { get; }
+
+        /// <summary>游戏退出后执行的命令。Shion 新增，WPF 中没有对应项。</summary>
+        public InstanceArg<string> PostExitCommand { get; }
+
+        /// <summary>包装命令，放在 Java 之前启动，例如 prime-run。Shion 新增。</summary>
+        public InstanceArg<string> WrapperCommand { get; }
+
+        /// <summary>额外的环境变量，每行一个 名称=值。Shion 新增。</summary>
+        public InstanceArg<string> EnvironmentVariables { get; }
     }
 
     /// <summary>对应 WPF 的 <c>Config.InstanceAuth</c>。</summary>

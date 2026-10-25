@@ -9,4 +9,11 @@
     <sys:String x:Key="Setup.Misc.System.Notifications.ToolTip">游戏启动、退出和资源下载完成时发送系统通知</sys:String>
     <sys:String x:Key="Setup.Misc.System.CompletionSound">完成提示音</sys:String>
     <sys:String x:Key="Setup.Misc.System.CompletionSound.ToolTip">发送上述通知时同时播放提示音</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.PostExitCommand">退出后执行命令</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.PostExitCommand.ToolTip">游戏退出后执行的命令，可使用 INST_NAME、INST_DIR、INST_MC_DIR、INST_JAVA 环境变量</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.WrapperCommand">包装命令</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.WrapperCommand.ToolTip">放在 Java 之前启动游戏的命令，例如 prime-run、gamemoderun、mangohud</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.EnvironmentVariables">环境变量</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.EnvironmentVariables.ToolTip">为游戏进程额外设置的环境变量，每行一个，格式为 名称=值，以 # 开头的行会被忽略</sys:String>
+    <sys:String x:Key="Instance.Setup.Advanced.EnvironmentVariables.Hint">每行一个，例如 __GL_THREADED_OPTIMIZATIONS=1</sys:String>
 </ResourceDictionary>
