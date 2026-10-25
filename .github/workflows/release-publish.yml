@@ -19,6 +19,11 @@ on:
         description: 'Version to release (e.g., 2.14.2)'
         required: true
         type: string
+      replace_existing:
+        description: 'Delete the existing release and tag of this version before publishing (re-release the same version)'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   build:
@@ -45,6 +50,15 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+
+      # 重新发布同一版本时，先删掉旧的发布与标签，新的标签会指向本次构建的提交
+      - name: Remove existing release and tag
+        if: ${{ inputs.replace_existing }}
+        run: |
+          gh release delete "v${{ inputs.version }}" --cleanup-tag --yes || echo "没有找到 v${{ inputs.version }} 的发布"
+          gh api -X DELETE "repos/${{ github.repository }}/git/refs/tags/v${{ inputs.version }}" || echo "没有找到 v${{ inputs.version }} 标签"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install git-cliff
         uses: taiki-e/install-action@e407f7bafb71fd004bc5c2da3032e5470cbb6ef0 # v2.87.24
