@@ -24,7 +24,17 @@ body = """
 
 ---
 
-在下方的 Assets 中下载即可。
+### 📦 下载哪个文件
+
+| 系统 | 推荐下载 | 说明 |
+|---|---|---|
+| Windows x64 | `PCL_Shion_Release_x64.exe` | WPF 界面，功能最完整，需要 [.NET 10 Desktop Runtime](https://get.dot.net/10) |
+| Windows ARM64 | `PCL_Shion_Release_ARM64.exe` | 同上 |
+| Windows（尝鲜） | `PCL_Shion_Release_win-x64.exe` / `win-arm64.exe` | Avalonia 新界面，自带运行时；主题配色、渲染后端等新功能只在这一版中提供 |
+| macOS | `PCL_Shion_Release_osx-arm64.tar.gz`（Apple 芯片）/ `osx-x64.tar.gz`（Intel） | Avalonia 界面；首次打开需在 Finder 中右键选择“打开” |
+| Linux | `PCL_Shion_Release_linux-x64.tar.gz` / `linux-arm64.tar.gz` | Avalonia 界面 |
+
+`.sigstore.json` 是对应文件的签名，普通用户不需要下载。
 
 """
 # Remove leading and trailing whitespaces from the changelog's body.
