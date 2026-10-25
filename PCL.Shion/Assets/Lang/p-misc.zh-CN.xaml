@@ -1,0 +1,10 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <sys:String x:Key="Instance.Resource.Disabled">已禁用</sys:String>
+    <sys:String x:Key="Instance.Resource.Error.Unavailable">文件不可用</sys:String>
+    <sys:String x:Key="Setup.About.GitHubHome">PCL CE 社区主页</sys:String>
+    <sys:String x:Key="Setup.Language.Banner.TranslateWebsite">前往翻译网站</sys:String>
+    <sys:String x:Key="Setup.UI.Sidebar.News">显示 Minecraft 新闻</sys:String>
+    <sys:String x:Key="Setup.UI.Sidebar.Hint">勾选的项目会以小组件的形式显示在启动页右侧。</sys:String>
+</ResourceDictionary>

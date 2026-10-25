@@ -93,12 +93,12 @@ jobs:
 
       - name: Rename binaries
         run: |
-          mv "./artifact/Plain Craft Launcher 2.exe" "PCL_Shion_${{ matrix.configuration }}_${{ matrix.architecture }}.exe"
+          mv "./artifact/Plain Craft Launcher 2.exe" "PCL_Shion_${{ matrix.configuration }}_WPF_${{ matrix.architecture }}.exe"
 
       - name: Sign the binary
         uses: sigstore/gh-action-sigstore-python@790bc6befb9d733738f18d8f895854b453640ec9 # v3.5.0
         with:
-          inputs: PCL_Shion_${{ matrix.configuration }}_${{ matrix.architecture }}.exe
+          inputs: PCL_Shion_${{ matrix.configuration }}_WPF_${{ matrix.architecture }}.exe
           verify: true
           verify-cert-identity: https://github.com/Mar7thLover/PCL-Shion/.github/workflows/release-publish.yml@refs/heads/dev
           verify-oidc-issuer: https://token.actions.githubusercontent.com
@@ -109,8 +109,8 @@ jobs:
           draft: true
           tag_name: v${{ inputs.version }}
           files: |
-            PCL_Shion_${{ matrix.configuration }}_${{ matrix.architecture }}.exe
-            PCL_Shion_${{ matrix.configuration }}_${{ matrix.architecture }}.exe.sigstore.json
+            PCL_Shion_${{ matrix.configuration }}_WPF_${{ matrix.architecture }}.exe
+            PCL_Shion_${{ matrix.configuration }}_WPF_${{ matrix.architecture }}.exe.sigstore.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -127,21 +127,28 @@ jobs:
           # Windows 版与 WPF 版一同发布；在 Windows 上构建，才能把图标写入可执行文件
           - rid: win-x64
             os: windows-latest
+            label: Windows-x64
           - rid: win-arm64
             os: windows-latest
+            label: Windows-ARM64
           - rid: linux-x64
             os: ubuntu-latest
+            label: Linux-x64
           - rid: linux-arm64
             os: ubuntu-latest
+            label: Linux-ARM64
           - rid: osx-x64
             os: macos-latest
+            label: macOS-Intel
           - rid: osx-arm64
             os: macos-latest
+            label: macOS-AppleSilicon
       fail-fast: false
     env:
       # Windows 版是单个可执行文件，其他平台打包为 tar.gz 以保留可执行权限。
-      # 文件名中平台与架构用连字符连接（如 win-x64），不会被 WPF 版的应用内更新误当作 _x64.exe 选中
-      PACKAGE: PCL_Shion_${{ inputs.configuration }}_${{ matrix.rid }}${{ startsWith(matrix.rid, 'win-') && '.exe' || '.tar.gz' }}
+      # 文件名标明 Avalonia 与系统，如 PCL_Shion_Release_Avalonia_Windows-x64.exe；
+      # 系统与架构用连字符连接，不会被 WPF 版的应用内更新（匹配 _x64.exe / _ARM64.exe）误选中
+      PACKAGE: PCL_Shion_${{ inputs.configuration }}_Avalonia_${{ matrix.label }}${{ startsWith(matrix.rid, 'win-') && '.exe' || '.tar.gz' }}
 
     steps:
       - name: Checkout

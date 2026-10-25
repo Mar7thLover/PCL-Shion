@@ -1,0 +1,10 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <sys:String x:Key="Instance.Resource.Disabled">Disabled</sys:String>
+    <sys:String x:Key="Instance.Resource.Error.Unavailable">Unavailable</sys:String>
+    <sys:String x:Key="Setup.About.GitHubHome">PCL CE community</sys:String>
+    <sys:String x:Key="Setup.Language.Banner.TranslateWebsite">Translation website</sys:String>
+    <sys:String x:Key="Setup.UI.Sidebar.News">Show Minecraft news</sys:String>
+    <sys:String x:Key="Setup.UI.Sidebar.Hint">Checked items are shown as widgets on the right side of the launch page.</sys:String>
+</ResourceDictionary>

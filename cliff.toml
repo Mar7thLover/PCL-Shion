@@ -24,7 +24,16 @@ body = """
 
 ---
 
-在下方的 Assets 中下载即可。
+### 📦 下载哪个文件
+
+| 系统 | 文件名 | 说明 |
+|---|---|---|
+| Windows | `PCL_Shion_Release_WPF_x64.exe` / `WPF_ARM64.exe` | WPF 界面，约 23 MB，需要另装 [.NET 10 Desktop Runtime](https://get.dot.net/10) |
+| Windows | `PCL_Shion_Release_Avalonia_Windows-x64.exe` / `Windows-ARM64.exe` | Avalonia 新界面，约 100 MB，自带运行时；主题配色、渲染后端等新功能只在这一版中提供 |
+| macOS | `PCL_Shion_Release_Avalonia_macOS-AppleSilicon.tar.gz` / `macOS-Intel.tar.gz` | Avalonia 界面；首次打开需在 Finder 中右键选择“打开” |
+| Linux | `PCL_Shion_Release_Avalonia_Linux-x64.tar.gz` / `Linux-ARM64.tar.gz` | Avalonia 界面 |
+
+两个 Windows 版本互不冲突，可以同时保留；设置与账号分开保存。
 
 """
 # Remove leading and trailing whitespaces from the changelog's body.
