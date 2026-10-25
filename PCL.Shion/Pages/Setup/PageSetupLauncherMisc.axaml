@@ -70,6 +70,12 @@
                         </Grid.RowDefinitions>
                         <c:MyCheckBox Grid.Row="0" Grid.Column="0" Text="{loc:L Setup.Misc.System.Telemetry}" x:Name="CheckSystemTelemetry" Tag="SystemTelemetry" Change="CheckBoxChange"
                                       ToolTip.Tip="{loc:L Setup.Misc.System.Telemetry.ToolTip}" />
+                        <c:MyCheckBox Grid.Row="0" Grid.Column="1" Margin="25,0,0,0" Text="{loc:L Setup.Misc.System.Notifications}"
+                                      x:Name="CheckNotifications" Tag="NotificationsEnabled" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.Misc.System.Notifications.ToolTip}" />
+                        <c:MyCheckBox Grid.Row="0" Grid.Column="2" Margin="25,0,0,0" Text="{loc:L Setup.Misc.System.CompletionSound}"
+                                      x:Name="CheckCompletionSound" Tag="CompletionSound" Change="CheckBoxChange"
+                                      ToolTip.Tip="{loc:L Setup.Misc.System.CompletionSound.ToolTip}" />
                     </Grid>
                     <Grid Grid.Row="10" Grid.ColumnSpan="5">
                         <Grid.ColumnDefinitions>

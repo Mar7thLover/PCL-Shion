@@ -68,6 +68,8 @@ public partial class PageSetupLauncherMisc : MyPageRight
         SliderAniFPS.Value = settings.UiAniFPS;
         SliderMaxLog.Value = settings.SystemMaxLog;
         CheckSystemTelemetry.Checked = extra.SystemTelemetry;
+        CheckNotifications.Checked = settings.NotificationsEnabled;
+        CheckCompletionSound.Checked = settings.CompletionSound;
 
         // 网络
         TextSystemHttpProxy.Text = settings.SystemHttpProxy;

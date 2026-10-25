@@ -5,4 +5,8 @@
     <sys:String x:Key="Select.Instance.Sort.Name">By name</sys:String>
     <sys:String x:Key="Select.Instance.Sort.Version">By game version</sys:String>
     <sys:String x:Key="Select.Instance.Sort.LastPlayed">By last played</sys:String>
+    <sys:String x:Key="Setup.Misc.System.Notifications">System notifications</sys:String>
+    <sys:String x:Key="Setup.Misc.System.Notifications.ToolTip">Send a system notification when a game starts or exits and when a download finishes</sys:String>
+    <sys:String x:Key="Setup.Misc.System.CompletionSound">Completion sound</sys:String>
+    <sys:String x:Key="Setup.Misc.System.CompletionSound.ToolTip">Play a sound together with the notifications above</sys:String>
 </ResourceDictionary>

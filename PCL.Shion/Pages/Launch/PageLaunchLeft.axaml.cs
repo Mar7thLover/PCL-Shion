@@ -26,6 +26,7 @@ using PCL.Shion.Pages.Setup;
 using PCL.Shion.Services;
 using PCL.Shion.UI;
 using PCL.Shion.UI.Animation;
+using PCL.Shion.ViewModels;
 
 namespace PCL.Shion.Pages.Launch;
 
@@ -572,10 +573,11 @@ public partial class PageLaunchLeft : MyPageLeft
             launchProgress = 0.95d;
             var game = await Task.Run(() => App.Services.Runner.Start(
                 root, instance.Name, plan, instanceSettings, null,
-                code => Dispatcher.UIThread.Post(() => OnGameExited(code))), cancel.Token);
+                code => Dispatcher.UIThread.Post(() => OnGameExited(instance.Name, code))), cancel.Token);
 
             launchGame = game;
             isLaunchStarted = true;
+            App.Services.Notify(instance.Name, LaunchStrings.NotifyStarted);
             launchProgress = 1d;
             settings.SelectedInstance = instance.Name;
             settings.Save();
@@ -727,8 +729,9 @@ public partial class PageLaunchLeft : MyPageLeft
     }
 
     /// <summary>游戏退出：恢复页面，对应 WPF 的 McLaunchState 进入登录页面。</summary>
-    private void OnGameExited(int exitCode)
+    private void OnGameExited(string instanceName, int exitCode)
     {
+        App.Services.Notify(instanceName, LaunchStrings.NotifyExited(exitCode));
         launchGame = null;
         FinishLaunch();
         _ = LoadInstancesAsync();

@@ -5,4 +5,8 @@
     <sys:String x:Key="Select.Instance.Sort.Name">依名稱</sys:String>
     <sys:String x:Key="Select.Instance.Sort.Version">依遊戲版本</sys:String>
     <sys:String x:Key="Select.Instance.Sort.LastPlayed">依最近遊玩</sys:String>
+    <sys:String x:Key="Setup.Misc.System.Notifications">系統通知</sys:String>
+    <sys:String x:Key="Setup.Misc.System.Notifications.ToolTip">遊戲啟動、結束和資源下載完成時傳送系統通知</sys:String>
+    <sys:String x:Key="Setup.Misc.System.CompletionSound">完成提示音</sys:String>
+    <sys:String x:Key="Setup.Misc.System.CompletionSound.ToolTip">傳送上述通知時同時播放提示音</sys:String>
 </ResourceDictionary>
