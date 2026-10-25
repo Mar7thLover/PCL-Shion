@@ -6,8 +6,18 @@
                    x:Class="PCL.Shion.Pages.Select.PageSelectRight">
     <Grid>
         <Grid x:Name="PanAllBack" RowDefinitions="Auto,*">
-            <c:MySearchBox x:Name="PanVerSearchBox" Margin="25,15,25,12" VerticalAlignment="Top"
-                           Grid.Row="0" ToolTip.Tip="{loc:L Select.Instance.Search.ToolTip}" />
+            <Grid Grid.Row="0" Margin="25,15,25,12" ColumnDefinitions="*,Auto">
+                <c:MySearchBox x:Name="PanVerSearchBox" VerticalAlignment="Top"
+                               ToolTip.Tip="{loc:L Select.Instance.Search.ToolTip}" />
+                <!-- 选项序号与 InstanceSortMode 枚举值一致 -->
+                <c:MyComboBox x:Name="ComboSort" Grid.Column="1" Width="130" Margin="10,0,0,0"
+                              VerticalAlignment="Stretch" ToolTip.Tip="{loc:L Select.Instance.Sort.ToolTip}"
+                              SelectionChanged="ComboSort_SelectionChanged">
+                    <c:MyComboBoxItem Content="{loc:L Select.Instance.Sort.Name}" />
+                    <c:MyComboBoxItem Content="{loc:L Select.Instance.Sort.Version}" />
+                    <c:MyComboBoxItem Content="{loc:L Select.Instance.Sort.LastPlayed}" />
+                </c:MyComboBox>
+            </Grid>
             <c:MyScrollViewer x:Name="PanBack" Grid.Row="1"
                               VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled">

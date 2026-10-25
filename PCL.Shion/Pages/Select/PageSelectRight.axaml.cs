@@ -16,6 +16,7 @@ using PCL.Shion.Core.Platform;
 using PCL.Shion.Localization;
 using PCL.Shion.Navigation;
 using PCL.Shion.Pages;
+using PCL.Shion.Services;
 using PCL.Shion.UI;
 
 namespace PCL.Shion.Pages.Select;
@@ -41,6 +42,7 @@ public partial class PageSelectRight : MyPageRight
         PanScroll = PanBack;
         PanVerSearchBox.HintText = Lang.Text("Select.Instance.Search.Hint");
         PanVerSearchBox.TextChanged += PanVerSearchBox_TextChanged;
+        ComboSort.SelectedIndex = (int)App.Services.Settings.InstanceSort;
         Loaded += PageSelectRight_Loaded;
         Unloaded += PageSelectRight_Unloaded;
         LoaderInit();
@@ -58,6 +60,16 @@ public partial class PageSelectRight : MyPageRight
     private void OnInstancesChanged()
     {
         Dispatcher.UIThread.Post(() => SelectInstances.Reload(true));
+    }
+
+    private void ComboSort_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        var settings = App.Services.Settings;
+        if (ComboSort.SelectedIndex < 0 || (int)settings.InstanceSort == ComboSort.SelectedIndex)
+            return;
+        settings.InstanceSort = (InstanceSortMode)ComboSort.SelectedIndex;
+        settings.Save();
+        SelectInstances.Reload(true);
     }
 
     private void PanVerSearchBox_TextChanged(object? sender, EventArgs e)

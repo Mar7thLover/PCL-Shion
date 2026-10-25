@@ -1,0 +1,8 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <sys:String x:Key="Select.Instance.Sort.ToolTip">实例列表的排序方式</sys:String>
+    <sys:String x:Key="Select.Instance.Sort.Name">按名称</sys:String>
+    <sys:String x:Key="Select.Instance.Sort.Version">按游戏版本</sys:String>
+    <sys:String x:Key="Select.Instance.Sort.LastPlayed">按最近游玩</sys:String>
+</ResourceDictionary>
