@@ -1,0 +1,21 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <sys:String x:Key="Setup.Ui.Theme.Color.SakuraPink">Sakura Pink</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.LavenderPurple">Lavender</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.MintGreen">Mint</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.ForestGreen">Forest</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.AmberOrange">Amber</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.CrimsonRed">Crimson</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.Custom">Custom</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.CustomHue">Hue</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.CustomHue.ToolTip">Drag to pick the base hue of the custom theme; the strip below is a reference</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.CustomSaturation">Saturation</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.CustomSaturation.ToolTip">How vivid the custom theme is; 50% matches the preset themes</sys:String>
+    <sys:String x:Key="Setup.Ui.Slider.Degree">{0}°</sys:String>
+    <sys:String x:Key="Setup.Ui.Background.GradientStyle">Gradient style</sys:String>
+    <sys:String x:Key="Setup.Ui.Background.Gradient.Classic">Classic</sys:String>
+    <sys:String x:Key="Setup.Ui.Background.Gradient.Aurora">Aurora</sys:String>
+    <sys:String x:Key="Setup.Ui.Background.Gradient.Sunset">Sunset</sys:String>
+    <sys:String x:Key="Setup.Ui.Background.Gradient.Halo">Halo</sys:String>
+</ResourceDictionary>

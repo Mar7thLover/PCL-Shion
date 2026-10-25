@@ -1,0 +1,21 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <sys:String x:Key="Setup.Ui.Theme.Color.SakuraPink">櫻花粉</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.LavenderPurple">薰衣草紫</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.MintGreen">薄荷綠</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.ForestGreen">森林綠</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.AmberOrange">琥珀橙</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.CrimsonRed">緋紅</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.Custom">自訂</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.CustomHue">色相</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.CustomHue.ToolTip">拖曳以選擇自訂配色的主色調，下方色條可作參考</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.CustomSaturation">飽和度</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.CustomSaturation.ToolTip">調整自訂配色的鮮豔程度，50% 與預設配色相同</sys:String>
+    <sys:String x:Key="Setup.Ui.Slider.Degree">{0}°</sys:String>
+    <sys:String x:Key="Setup.Ui.Background.GradientStyle">漸層樣式</sys:String>
+    <sys:String x:Key="Setup.Ui.Background.Gradient.Classic">經典</sys:String>
+    <sys:String x:Key="Setup.Ui.Background.Gradient.Aurora">極光</sys:String>
+    <sys:String x:Key="Setup.Ui.Background.Gradient.Sunset">晚霞</sys:String>
+    <sys:String x:Key="Setup.Ui.Background.Gradient.Halo">光暈</sys:String>
+</ResourceDictionary>

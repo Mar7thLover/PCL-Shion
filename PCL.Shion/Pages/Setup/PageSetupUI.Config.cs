@@ -94,7 +94,8 @@ internal static class SetupConfig
     /// </summary>
     public static bool IsUiKey(string name) =>
         (name.StartsWith("Ui", StringComparison.Ordinal) && name is not ("UiLanguage" or "UiFormatCulture")) ||
-        name is "ColorMode" or "DarkColor" or "LightColor" or "BackgroundColorful";
+        name is "ColorMode" or "DarkColor" or "LightColor" or "BackgroundColorful" or "BackgroundGradientStyle"
+            or "ThemeCustomHue" or "ThemeCustomSaturation";
 
     /// <summary>
     ///     记录一般日志。与 WPF 的 ModBase.Log(string) 对应。
