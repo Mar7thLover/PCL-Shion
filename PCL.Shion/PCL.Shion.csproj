@@ -7,7 +7,7 @@
         <AssemblyName>PCL.Shion</AssemblyName>
         <RootNamespace>PCL.Shion</RootNamespace>
         <Product>PCL Shion</Product>
-        <Version>1.1.0</Version>
+        <Version>1.2.0</Version>
         <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <Configurations>Debug;CI;Release;Beta</Configurations>
