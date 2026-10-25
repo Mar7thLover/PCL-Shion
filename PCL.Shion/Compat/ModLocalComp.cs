@@ -332,6 +332,9 @@ public static class ModLocalComp
         /// <summary>Mod ID，读取不到时为 null。</summary>
         public string? ModId => _mod?.Id;
 
+        /// <summary>读取到的 Mod 元数据；不是 Mod 文件或读取失败时为 null。</summary>
+        public LocalMod? Mod => _mod;
+
         /// <summary>显示名称，读取不到时为 null。</summary>
         public string? Name => _mod?.Name;
 

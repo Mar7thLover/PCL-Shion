@@ -29,4 +29,10 @@ Having several versions of the same mod may stop the game from starting. Move th
     <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.Keep">Keep</sys:String>
     <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.Removed">Moved {0} old file(s) to the recycle bin</sys:String>
     <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.RemoveFailed">Could not move these files to the recycle bin: {0}</sys:String>
+    <sys:String x:Key="Instance.Resource.MissingDependency.Title">Missing required mods</sys:String>
+    <sys:String x:Key="Instance.Resource.MissingDependency.Item">{0}: required by {1}</sys:String>
+    <sys:String x:Key="Instance.Resource.MissingDependency.Separator">, </sys:String>
+    <sys:String x:Key="Instance.Resource.MissingDependency.Download">Download</sys:String>
+    <sys:String x:Key="Instance.Resource.MissingDependency.Searching">Looking up {0}…</sys:String>
+    <sys:String x:Key="Instance.Resource.MissingDependency.NotFound">{0} was not found on Modrinth; please search for it on the download page</sys:String>
 </ResourceDictionary>

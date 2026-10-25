@@ -29,4 +29,10 @@
     <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.Keep">保留</sys:String>
     <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.Removed">已将 {0} 个旧文件移到回收站</sys:String>
     <sys:String x:Key="Download.Comp.Duplicate.OtherVersion.RemoveFailed">以下文件未能移到回收站：{0}</sys:String>
+    <sys:String x:Key="Instance.Resource.MissingDependency.Title">缺少前置 Mod</sys:String>
+    <sys:String x:Key="Instance.Resource.MissingDependency.Item">{0}：{1} 需要它</sys:String>
+    <sys:String x:Key="Instance.Resource.MissingDependency.Separator">、</sys:String>
+    <sys:String x:Key="Instance.Resource.MissingDependency.Download">下载前置</sys:String>
+    <sys:String x:Key="Instance.Resource.MissingDependency.Searching">正在查找 {0}……</sys:String>
+    <sys:String x:Key="Instance.Resource.MissingDependency.NotFound">在 Modrinth 上没有找到 {0}，请在下载页手动搜索</sys:String>
 </ResourceDictionary>

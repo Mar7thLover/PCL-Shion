@@ -38,6 +38,11 @@
                     <c:MyRadioButton x:Name="BtnFilterDuplicate" Tag="5" Margin="0,0,8,0" IsVisible="False" />
                 </StackPanel>
 
+                <c:MyCard x:Name="PanMissingDeps" Margin="0,0,0,15" IsVisible="False"
+                          Title="{loc:L Instance.Resource.MissingDependency.Title}">
+                    <StackPanel x:Name="PanMissingDepsList" Margin="25,40,25,12" />
+                </c:MyCard>
+
                 <c:MyCard x:Name="PanListBack" Margin="0,0,0,15" VerticalAlignment="Top" MinHeight="55"
                           Title=" ">
                     <Grid>

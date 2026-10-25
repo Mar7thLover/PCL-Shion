@@ -20,6 +20,7 @@ using PCL.Shion.Controls;
 using PCL.Shion.Core.Download;
 using PCL.Shion.Core.Instances;
 using PCL.Shion.Core.Minecraft;
+using PCL.Shion.Core.Mods;
 using PCL.Shion.Core.Online;
 using PCL.Shion.Core.Platform;
 using PCL.Shion.Localization;
@@ -622,6 +623,87 @@ public partial class PageInstanceCompResource : MyPageRight, IRefreshable
         .SelectMany(g => g.Select(item => item.Entry))
         .ToList();
 
+    /// <summary>
+    ///     检查已启用的 Mod 缺少哪些必需的前置，在列表上方逐项列出，并提供下载入口。
+    /// </summary>
+    private void RefreshMissingDependencies()
+    {
+        PanMissingDepsList.Children.Clear();
+        var missing = currentCompType != CompType.Mod
+            ? []
+            : ModAnalyzer.Analyze(AllEntries().Select(entry => entry.Mod).OfType<LocalMod>().ToList())
+                .Where(issue => issue.Kind == ModIssueKind.MissingDependency && issue.MissingDependencyId is not null)
+                .GroupBy(issue => issue.MissingDependencyId!, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        PanMissingDeps.IsVisible = missing.Count > 0;
+        foreach (var group in missing)
+        {
+            var dependencyId = group.Key;
+            var requiredBy = group
+                .SelectMany(issue => issue.Mods)
+                .Select(mod => mod.Name ?? mod.Id ?? mod.FileName)
+                .Distinct()
+                .ToList();
+            var row = new Grid { ColumnDefinitions = new ColumnDefinitions("*,Auto"), Margin = new Thickness(0, 0, 0, 8) };
+            row.Children.Add(new TextBlock
+            {
+                Text = Lang.Text("Instance.Resource.MissingDependency.Item", dependencyId, string.Join(Lang.Text("Instance.Resource.MissingDependency.Separator"), requiredBy)),
+                TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(0, 0, 15, 0)
+            });
+            var button = new MyButton
+            {
+                Text = Lang.Text("Instance.Resource.MissingDependency.Download"),
+                MinWidth = 110,
+                Height = 30,
+                Padding = new Thickness(12, 0),
+                ColorType = MyButton.ColorState.Highlight
+            };
+            button.Click += (_, _) => _ = OpenDependencyAsync(dependencyId);
+            Grid.SetColumn(button, 1);
+            row.Children.Add(button);
+            PanMissingDepsList.Children.Add(row);
+        }
+    }
+
+    /// <summary>
+    ///     在 Modrinth 上按 Mod ID 查找前置并打开它的下载页面，版本与加载器按当前实例筛选。
+    ///     Mod ID 与 Modrinth 的项目标识通常相同，下划线写法也会尝试换成连字符。
+    /// </summary>
+    private async Task OpenDependencyAsync(string dependencyId)
+    {
+        var instance = PageInstanceLeft.McInstance;
+        if (instance is null)
+            return;
+        Hint.Show(Lang.Text("Instance.Resource.MissingDependency.Searching", dependencyId), HintType.Info);
+        try
+        {
+            var candidates = new List<string> { dependencyId.ToLowerInvariant() };
+            if (dependencyId.Contains('_'))
+                candidates.Add(dependencyId.Replace('_', '-').ToLowerInvariant());
+            var projects = await CompServices.CreateApi().GetProjectsByIdsAsync(candidates);
+            var project = projects.FirstOrDefault(p => p.Type == CompType.Mod) ?? projects.FirstOrDefault();
+            if (project is null)
+            {
+                Hint.Show(Lang.Text("Instance.Resource.MissingDependency.NotFound", dependencyId), HintType.Error);
+                return;
+            }
+
+            var moddedLabyMod = instance.Info.HasLabyMod && instance.Modable;
+            var loader = instance.Info.HasForge ? CompLoaderType.Forge :
+                instance.Info.HasNeoForge ? CompLoaderType.NeoForge :
+                instance.Info.HasFabric || moddedLabyMod ? CompLoaderType.Fabric :
+                CompLoaderType.Any;
+            await Dispatcher.UIThread.InvokeAsync(() => PageDownloadCompDetail.Open(
+                new CompDetailArgs(project, new List<string>(), instance.Info.VanillaName, loader, CompType.Mod)));
+        }
+        catch (Exception ex)
+        {
+            Hint.Show(Lang.Text("Instance.Resource.MissingDependency.NotFound", dependencyId) + ": " + ex.Message, HintType.Error);
+        }
+    }
+
     private static string? DuplicateKey(LocalFile entry) =>
         !string.IsNullOrEmpty(entry.ModId) ? "mod:" + entry.ModId :
         entry.Comp is not null ? "comp:" + entry.Comp.Id : null;
@@ -697,6 +779,7 @@ public partial class PageInstanceCompResource : MyPageRight, IRefreshable
 
         // 查找重复项目：优先按文件里读到的 Mod ID 判断，读不到时按联网获取的工程判断，已禁用的不算重复
         var duplicateItems = DuplicateEntries(itemSource);
+        RefreshMissingDependencies();
         BtnFilterDuplicate.Text = Lang.Text("Instance.Resource.Filter.DuplicateWithCount", duplicateItems.Count);
         BtnFilterDuplicate.IsVisible = Filter == FilterType.Duplicate || duplicateItems.Count > 0;
 
