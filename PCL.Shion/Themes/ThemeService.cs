@@ -1,5 +1,6 @@
 using System;
 using Avalonia;
+using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Styling;
 using Avalonia.Threading;
@@ -142,17 +143,52 @@ public static class ThemeService
     }
 
     /// <summary>
+    /// 设置页中可供选择的配色主题，按显示顺序排列。HMCL 配色只在愚人节出现。
+    /// </summary>
+    public static ColorTheme[] GetSelectableThemes(bool includeAprilFool) =>
+    [
+        ColorTheme.SkyBlue,
+        ColorTheme.CatBlue,
+        ColorTheme.DeathBlue,
+        .. includeAprilFool ? [ColorTheme.HmclBlue] : (ColorTheme[])[],
+        ColorTheme.SakuraPink,
+        ColorTheme.LavenderPurple,
+        ColorTheme.MintGreen,
+        ColorTheme.ForestGreen,
+        ColorTheme.AmberOrange,
+        ColorTheme.CrimsonRed,
+        ColorTheme.Custom
+    ];
+
+    /// <summary>
+    /// 自定义配色的饱和度设置值（0 到 100）对应的彩度调整量，50 为不调整。
+    /// </summary>
+    public static double CustomChromaAdjust(int saturation) => Math.Clamp(saturation, 0, 100) / 100d - 0.5;
+
+    /// <summary>
     /// 获取当前色彩主题对应的各种参数。
     /// </summary>
-    public static (int Hue, double LightAdjust, double ChromaAdjust) GetCurrentThemeArgs()
+    public static (int Hue, double LightAdjust, double ChromaAdjust) GetCurrentThemeArgs() => GetThemeArgs(CurrentTheme);
+
+    /// <summary>
+    /// 获取指定色彩主题对应的各种参数。色相为 OKLCH 色相角，调整量的含义见 <see cref="_AdjustLinear"/>。
+    /// </summary>
+    public static (int Hue, double LightAdjust, double ChromaAdjust) GetThemeArgs(ColorTheme theme)
     {
-        var theme = CurrentTheme;
         return theme switch
         {
             ColorTheme.SkyBlue => (235, 0.36, 0.2),
             ColorTheme.CatBlue => (255, 0, -0.2),
             ColorTheme.DeathBlue => (268, -0.05, -0.1),
             ColorTheme.HmclBlue => (275, -0.03, -0.35),
+            ColorTheme.SakuraPink => (355, 0.12, -0.15),
+            ColorTheme.LavenderPurple => (300, 0.05, -0.2),
+            ColorTheme.MintGreen => (170, 0.2, -0.15),
+            ColorTheme.ForestGreen => (150, -0.08, -0.25),
+            ColorTheme.AmberOrange => (62, 0.22, -0.05),
+            ColorTheme.CrimsonRed => (22, -0.04, -0.1),
+            ColorTheme.Custom => (((Settings.ThemeCustomHue % 360) + 360) % 360, 0,
+                CustomChromaAdjust(Settings.ThemeCustomSaturation)),
 #if DEBUG
             _ => ((int)theme, 0, 0)
 #else
@@ -231,6 +267,18 @@ public static class ThemeService
     {
         var cache = IsDarkMode ? DarkGrayCache : LightGrayCache;
         foreach (var c in cache) c.Apply();
+    }
+
+    /// <summary>
+    /// 获取配色在指定模式下的预览色，分别与该配色的 Color2 与 Color4 相同，用于设置页的色块预览。
+    /// </summary>
+    public static (Color Deep, Color Light) GetThemePreviewColors(ColorTheme theme, bool isDarkMode)
+    {
+        var tone = isDarkMode ? ToneProfiles.Dark : ToneProfiles.Light;
+        var (hue, lightAdj, chromaAdj) = GetThemeArgs(theme);
+        return (
+            LabColor.FromLch(_AdjustLinear(tone.L2, lightAdj), _AdjustLinear(tone.C2, chromaAdj), hue).ToAvaloniaColor(),
+            LabColor.FromLch(_AdjustLinear(tone.L4, lightAdj), _AdjustLinear(tone.C4, chromaAdj), hue).ToAvaloniaColor());
     }
 
     /// <summary>

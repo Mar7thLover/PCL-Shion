@@ -349,6 +349,15 @@ public sealed class AppSettings
     /// <summary>彩色底部填充。</summary>
     public bool BackgroundColorful { get; set; } = true;
 
+    /// <summary>彩色背景的渐变样式。</summary>
+    public BackgroundGradientStyle BackgroundGradientStyle { get; set; } = BackgroundGradientStyle.Classic;
+
+    /// <summary>自定义配色的色相，取值 0 到 359（OKLCH 色相角）。</summary>
+    public int ThemeCustomHue { get; set; } = 200;
+
+    /// <summary>自定义配色的饱和度，取值 0 到 100，50 与预设配色的彩度相同。</summary>
+    public int ThemeCustomSaturation { get; set; } = 50;
+
     /// <summary>窗口透明度，取值为千分比。</summary>
     public int WindowOpacity { get; set; } = 600;
 

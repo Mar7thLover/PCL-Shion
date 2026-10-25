@@ -40,8 +40,11 @@ public partial class PageSetupUI : MyPageRight
         InitializeComponent();
         instance ??= this;
         PanScroll = PanBack; // 不知道为啥不能在 XAML 设置
-        ComboLightColor.ItemsSource = ThemeColors;
-        ComboDarkColor.ItemsSource = ThemeColors;
+        lightThemeOptions = CreateThemeOptions(false);
+        darkThemeOptions = CreateThemeOptions(true);
+        ComboLightColor.ItemsSource = lightThemeOptions;
+        ComboDarkColor.ItemsSource = darkThemeOptions;
+        BorderThemeHueStrip.Background = CreateHueStripBrush();
         TextCustomNet.ValidateRules.Add(new HttpUrlValidator());
         HintCustom.Click += (_, _) =>
         {
@@ -57,9 +60,65 @@ public partial class PageSetupUI : MyPageRight
     /// </summary>
     public static PageSetupUI? Instance => instance;
 
-    public string[] ThemeColors => MainWindow.IsAprilEnabled
-        ? [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), Lang.Text("Setup.Ui.Theme.Color.Hmcl")]
-        : [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue")];
+    /// <summary>
+    ///     配色下拉框中依次列出的主题，下拉框的序号与此数组的下标一一对应。
+    /// </summary>
+    private readonly ColorTheme[] selectableThemes = ThemeService.GetSelectableThemes(MainWindow.IsAprilEnabled);
+
+    private readonly ThemeColorOption[] lightThemeOptions;
+
+    private readonly ThemeColorOption[] darkThemeOptions;
+
+    private ThemeColorOption[] CreateThemeOptions(bool isDarkMode) => selectableThemes
+        .Select(theme => new ThemeColorOption(theme, Lang.Text(theme switch
+        {
+            ColorTheme.SkyBlue => "Setup.Ui.Theme.Color.SkyBlue",
+            ColorTheme.CatBlue => "Setup.Ui.Theme.Color.CatBlue",
+            ColorTheme.DeathBlue => "Setup.Ui.Theme.Color.CrashBlue",
+            ColorTheme.HmclBlue => "Setup.Ui.Theme.Color.Hmcl",
+            _ => "Setup.Ui.Theme.Color." + theme
+        }), isDarkMode))
+        .ToArray();
+
+    /// <summary>
+    ///     自定义配色的色相或饱和度改变后，刷新下拉框中自定义配色的色块。
+    /// </summary>
+    public void ThemeSwatchRefresh()
+    {
+        foreach (var option in lightThemeOptions.Concat(darkThemeOptions))
+        {
+            if (option.Theme == ColorTheme.Custom)
+                option.RefreshSwatch();
+        }
+    }
+
+    private int ThemeIndex(ColorTheme theme)
+    {
+        var index = Array.IndexOf(selectableThemes, theme);
+        return index >= 0 ? index : Array.IndexOf(selectableThemes, ColorTheme.CatBlue);
+    }
+
+    /// <summary>
+    ///     浅色或深色配色选择了自定义时，显示自定义配色的色相与饱和度。
+    /// </summary>
+    public void ThemeCustomRefresh()
+    {
+        var settings = SetupConfig.Settings;
+        PanThemeCustom.IsVisible = settings.LightColor == ColorTheme.Custom || settings.DarkColor == ColorTheme.Custom;
+    }
+
+    // 色相滑动条下方的色环预览，亮度与彩度固定，只体现色相
+    private static LinearGradientBrush CreateHueStripBrush()
+    {
+        var brush = new LinearGradientBrush
+        {
+            StartPoint = new RelativePoint(0, 0.5, RelativeUnit.Relative),
+            EndPoint = new RelativePoint(1, 0.5, RelativeUnit.Relative)
+        };
+        for (var hue = 0; hue <= 360; hue += 30)
+            brush.GradientStops.Add(new GradientStop(LabColor.FromLch(0.7, 0.14, hue).ToAvaloniaColor(), hue / 360d));
+        return brush;
+    }
 
     private void PageSetupUI_Loaded(object? sender, RoutedEventArgs e)
     {
@@ -76,8 +135,6 @@ public partial class PageSetupUI : MyPageRight
         isLoaded = true;
 
         SliderLoad();
-
-        PanLauncherHide.IsVisible = true;
     }
 
     public void Reload()
@@ -91,8 +148,11 @@ public partial class PageSetupUI : MyPageRight
             SliderLauncherOpacity.Value = extra.UiLauncherTransparent;
             CheckLauncherLogo.Checked = extra.UiLauncherLogo;
             ComboDarkMode.SelectedIndex = (int)settings.ColorMode;
-            ComboDarkColor.SelectedIndex = (int)settings.DarkColor;
-            ComboLightColor.SelectedIndex = (int)settings.LightColor;
+            ComboDarkColor.SelectedIndex = ThemeIndex(settings.DarkColor);
+            ComboLightColor.SelectedIndex = ThemeIndex(settings.LightColor);
+            SliderThemeCustomHue.Value = settings.ThemeCustomHue;
+            SliderThemeCustomSaturation.Value = settings.ThemeCustomSaturation;
+            ThemeCustomRefresh();
             CheckShowLaunchingHint.Checked = settings.UiShowLaunchingHint;
 
             // 字体设置
@@ -111,6 +171,8 @@ public partial class PageSetupUI : MyPageRight
             SliderBackgroundBlur.Value = extra.UiBackgroundBlur;
             ComboBackgroundSuit.SelectedIndex = settings.UiBackgroundSuit;
             CheckBackgroundColorful.Checked = settings.BackgroundColorful;
+            ComboBackgroundGradient.SelectedIndex = (int)settings.BackgroundGradientStyle;
+            PanBackgroundGradient.IsVisible = settings.BackgroundColorful;
             var autoPauseVideo = extra.UiAutoPauseVideo;
             CheckAutoPauseVideo.Checked = autoPauseVideo;
 
@@ -736,14 +798,11 @@ public partial class PageSetupUI : MyPageRight
     private void ThemeColor_Change(object? senderRaw, SelectionChangedEventArgs e)
     {
         var sender = (MyComboBox)senderRaw!;
-        SetByTag(sender.Tag?.ToString(), sender.SelectedIndex);
+        if (sender.SelectedIndex < 0 || sender.SelectedIndex >= selectableThemes.Length)
+            return;
+        SetByTag(sender.Tag?.ToString(), (int)selectableThemes[sender.SelectedIndex]);
+        ThemeCustomRefresh();
         ThemeManager.ThemeRefresh();
-    }
-
-    // 赞助
-    private void BtnLauncherDonate_Click(object? sender, PointerReleasedEventArgs e)
-    {
-        SystemShell.OpenUrl("https://afdian.com/a/LTCat");
     }
 
     // 滑动条
@@ -758,6 +817,8 @@ public partial class PageSetupUI : MyPageRight
         SliderBackgroundBlur.getHintText = new Func<object, object>(v => Lang.Text("Setup.Ui.Slider.Pixel", Lang.Number(Convert.ToDouble(v), "N0")));
         SliderBlurValue.getHintText = new Func<object, object>(v => Lang.Text("Setup.Ui.Slider.Pixel", Lang.Number(Convert.ToDouble(v), "N0")));
         SliderBlurSamplingRate.getHintText = new Func<object, object>(v => Lang.Number(Convert.ToDouble(v) / 100d, "P0"));
+        SliderThemeCustomHue.getHintText = new Func<object, object>(v => Lang.Text("Setup.Ui.Slider.Degree", Lang.Number(Convert.ToDouble(v), "N0")));
+        SliderThemeCustomSaturation.getHintText = new Func<object, object>(v => Lang.Number(Convert.ToDouble(v) / 100d, "P0"));
     }
 
     private void CheckMusicStart_OnChange(object? sender, bool user)

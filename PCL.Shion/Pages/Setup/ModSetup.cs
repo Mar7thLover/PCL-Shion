@@ -150,8 +150,15 @@ public static class ModSetup
     public static void UiBackgroundColorful(bool value)
     {
         SyncThemeSettings();
+        if (PageSetupUI.Instance is { } page)
+            page.PanBackgroundGradient.IsVisible = value;
         ThemeManager.ThemeRefresh();
     }
+
+    /// <summary>
+    ///     彩色背景开关，设置页复选框的配置键名。
+    /// </summary>
+    public static void BackgroundColorful(bool value) => UiBackgroundColorful(value);
 
     public static void UiLockWindowSize(bool value)
     {
@@ -181,6 +188,33 @@ public static class ModSetup
     ///     暗色模式下的配色主题。
     /// </summary>
     public static void DarkColor(int value) => RefreshThemeColors();
+
+    /// <summary>
+    ///     自定义配色的色相。
+    /// </summary>
+    public static void ThemeCustomHue(int value)
+    {
+        RefreshThemeColors();
+        PageSetupUI.Instance?.ThemeSwatchRefresh();
+    }
+
+    /// <summary>
+    ///     自定义配色的饱和度。
+    /// </summary>
+    public static void ThemeCustomSaturation(int value)
+    {
+        RefreshThemeColors();
+        PageSetupUI.Instance?.ThemeSwatchRefresh();
+    }
+
+    /// <summary>
+    ///     彩色背景的渐变样式。
+    /// </summary>
+    public static void BackgroundGradientStyle(int value)
+    {
+        SyncThemeSettings();
+        ThemeManager.ThemeRefresh();
+    }
 
     private static void RefreshThemeColors()
     {
