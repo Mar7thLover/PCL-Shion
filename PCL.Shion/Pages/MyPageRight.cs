@@ -111,9 +111,18 @@ public class MyPageRight : ContentControl
         if (finishedInvoke is not null)
             realLoader.PreviewFinish += _ =>
             {
+                var task = realLoader as ModLoader.LoaderTask;
+                var runningTask = task?.lastRunningTask;
+                bool MayFinish() => task is null || (runningTask is not null && !task.IsAbortedWithThread(runningTask.Id));
                 while (PageState == PageStates.PageExit || PageState == PageStates.ContentExit)
+                {
+                    if (!MayFinish()) return;
                     Thread.Sleep(10); // 不在退出动画时执行 UI 线程操作，避免退出动画被重置
-                RunInUiWait(() => finishedInvoke(realLoader));
+                }
+                RunInUiWait(() =>
+                {
+                    if (MayFinish()) finishedInvoke(realLoader);
+                });
                 Thread.Sleep(20); // 由于大量初始化控件会导致掉帧，延迟触发 State 改变事件
             };
         realLoader.OnStateChangedUi += (loader, newState, oldState) =>

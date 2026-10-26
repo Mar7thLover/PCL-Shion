@@ -11,6 +11,8 @@ internal sealed class TomlReader
 {
     private readonly string _text;
     private int _position;
+    private int _valueDepth;
+    private const int MaxValueDepth = 64;
 
     private TomlReader(string text)
     {
@@ -138,17 +140,27 @@ internal sealed class TomlReader
 
     private object ReadValue()
     {
-        switch (Peek)
+        if (_valueDepth >= MaxValueDepth)
+            throw Error("Nested TOML value exceeded the maximum depth");
+        _valueDepth++;
+        try
         {
-            case '"':
-            case '\'':
-                return ReadString();
-            case '[':
-                return ReadArray();
-            case '{':
-                return ReadInlineTable();
-            default:
-                return ReadScalar();
+            switch (Peek)
+            {
+                case '"':
+                case '\'':
+                    return ReadString();
+                case '[':
+                    return ReadArray();
+                case '{':
+                    return ReadInlineTable();
+                default:
+                    return ReadScalar();
+            }
+        }
+        finally
+        {
+            _valueDepth--;
         }
     }
 

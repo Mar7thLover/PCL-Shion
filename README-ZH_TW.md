@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="Plain Craft Launcher 2/Images/icon.ico" alt="Logo" width="80" height="80">
+<img src="PCL.Shion/Assets/Images/icon.png" alt="Logo" width="80" height="80">
 
 # PCL 詩音（Shion）
 
@@ -38,7 +38,7 @@ PCL 詩音已完整移除這套限制，所有地區的使用者都可以正常�
 
 ## 🗺️ 開發計畫
 
-- **跨平台 UI 框架**：基於 Avalonia 的新介面已作為 macOS 與 Linux 平台的正式介面提供，Windows 平台暫時繼續使用 WPF 介面。之後會繼續補齊 Avalonia 介面的功能，成熟後再逐步取代 WPF。
+- **統一跨平台介面**：Windows、macOS、Linux 均以 Avalonia 為正式入口；WPF 僅保留歷史原始碼供移植參考，不再參與預設建置與發布。持續補齊功能並改善穩定性。
 - **主題與個人化**：引入更豐富的主題與個人化選項。
 - **有趣的小工具**：加入更多實用又好玩的小工具。
 - **新的連線方案**：考慮引入不依賴 Natayark OpenID 的連線方案，作為現有方案的替代選擇。
@@ -46,24 +46,58 @@ PCL 詩音已完整移除這套限制，所有地區的使用者都可以正常�
 
 ## 💻 支援平台
 
-| 作業系統 | 支援情況 | 環境需求 |
+從本次移植後的建置開始，三個平台統一使用 **Avalonia + .NET 10**。所有發布包均採 **framework-dependent**，不再內含 .NET 執行環境。
+
+| 作業系統 | 介面與支援範圍 | 環境需求 |
 |---|---|---|
-| Windows 10 1809 (17763) 或更高 | ✅ 完整支援 | [.NET 10 Desktop Runtime](https://get.dot.net/10) |
-| Windows 8 - Windows 10 1809 (17763) | ⚠️ 理論可用，不保證可用 | [.NET 10 Desktop Runtime](https://get.dot.net/10) |
-| Windows 7 或更舊版本 | ❌ 不支援 | / |
-| macOS 12 或更高（Intel / Apple 晶片） | 🧪 Avalonia 介面，持續完善中 | 無（發布包已內含 .NET 執行環境） |
-| Linux（x64 / ARM64） | 🧪 Avalonia 介面，持續完善中 | 無（發布包已內含 .NET 執行環境） |
-| 其他作業系統 | ❌ 不支援 | / |
+| Windows 11（x64 / ARM64） | 正式 Avalonia 介面 | 對應架構的 [.NET 10 Runtime](https://dotnet.microsoft.com/download/dotnet/10.0) |
+| Windows 10 22H2（x64） | 盡力相容，受系統與框架支援週期限制 | 同上 |
+| macOS 15 或更新版本（Intel / Apple 晶片） | 正式 Avalonia 介面 | 對應架構的 .NET 10 Runtime |
+| Linux（x64 / ARM64，glibc） | 正式 Avalonia 介面，使用 X11 / XWayland 桌面 | .NET 10 Runtime 與系統圖形相依套件 |
+| 更早或其他作業系統 | 不在目前驗證範圍內 | 參考下方框架支援說明 |
 
-**✅ 完整支援**：盡可能提供一切相關支援，但必須確保啟動器為最新版本。
+安裝一般 **.NET Runtime** 即可；不需要 Windows Desktop Runtime。已有相同架構的 .NET 10 SDK 也可執行。可用 `dotnet --list-runtimes` 確認已安裝 `Microsoft.NETCore.App 10.x`。執行環境架構必須與下載包一致，例如 Apple 晶片選擇 ARM64 Runtime 與 AppleSilicon 包。
 
-**⚠️ 理論可用，不保證可用**：PCL 詩音應該可以在這些平台上執行，但不保證功能完全可用。
+詳細系統版本與 Linux 相依套件請參閱 [.NET 10 支援清單](https://github.com/dotnet/core/blob/main/release-notes/10.0/supported-os.md)、[Avalonia 支援平台](https://docs.avaloniaui.net/docs/supported-platforms)及 [Linux 部署說明](https://docs.avaloniaui.net/docs/platform-specific-guides/linux)。專案仍處密集開發階段，CI 建置與自動化測試不取代各平台的實際遊戲啟動驗收。
 
-**❌ 不支援**：PCL 詩音在這些平台的可用性較低，甚至根本無法開啟。請升級作業系統後使用。
+## 📦 下載哪個檔案
 
-**🧪 Avalonia 介面，持續完善中**：macOS 與 Linux 使用基於 Avalonia 的跨平台介面，可以在 [Releases](https://github.com/Mar7thLover/PCL-Shion/releases) 下載對應平台的 `PCL_Shion_*_osx-*.tar.gz` 或 `PCL_Shion_*_linux-*.tar.gz`。這套介面由 WPF 版移植而來，部分功能可能尚未完全對齊 Windows 版，遇到問題歡迎回報。Windows 使用者也可以下載 `PCL_Shion_*_win-*.exe` 體驗 Avalonia 介面，它與 WPF 版的 `PCL_Shion_*_x64.exe` / `PCL_Shion_*_ARM64.exe` 互不衝突。macOS 版沒有經過 Apple 公證，首次開啟時需要在 Finder 中按右鍵選擇「打開」。
+在 [Releases](https://github.com/Mar7thLover/PCL-Shion/releases/latest) 頁面的 Assets 中依下表選擇；Beta 使用相同命名，將 `Release` 換成 `Beta`。所有包均需預先安裝 .NET 10 Runtime。
 
-**註**：僅對最新版本的啟動器提供支援。
+| 系統 | 檔案名稱 |
+|---|---|
+| Windows x64 | `PCL_Shion_Release_Avalonia_Windows-x64.exe` |
+| Windows ARM64 | `PCL_Shion_Release_Avalonia_Windows-ARM64.exe` |
+| macOS Apple 晶片 | `PCL_Shion_Release_Avalonia_macOS-AppleSilicon.tar.gz` |
+| macOS Intel | `PCL_Shion_Release_Avalonia_macOS-Intel.tar.gz` |
+| Linux x64 | `PCL_Shion_Release_Avalonia_Linux-x64.tar.gz` |
+| Linux ARM64 | `PCL_Shion_Release_Avalonia_Linux-ARM64.tar.gz` |
+
+Windows 為單一執行檔；Linux 解壓縮後執行 `PCL.Shion`；macOS 解壓縮後開啟 `PCL Shion.app`。macOS 套件未經 Apple 公證；首次開啟若被系統阻擋，確認下載來源後，依 [Apple 官方說明](https://support.apple.com/en-us/102445)前往「系統設定 → 隱私權與安全性 → 強制打開」。發布同時提供 `SHA256SUMS` 與 Sigstore 簽章，套件大小以實際檔案為準。
+
+### 從舊版升級
+
+1. 安裝與下載包相同架構的 .NET 10 Runtime，再執行新版本。
+2. 從舊 Avalonia 版本升級可沿用現有 Avalonia 資料。WPF 的設定與帳號先前獨立儲存，不能直接覆蓋至 Avalonia；請保留舊目錄，在新介面重新加入原有遊戲目錄並登入帳號，原有存檔與模組無需刪除。
+3. 歷史 WPF 與舊版內含執行環境的檔案仍依當時說明使用；後續建置僅提供 Avalonia，不再產生 WPF 發布包。
+
+### 已知功能差異
+
+Avalonia 已成為預設入口，但尚未完整對齊歷史 WPF 版。**啟動指令碼匯出、測試模式啟動尚未實作**，介面保留停用按鈕與說明；一般遊戲啟動請使用啟動頁。其他驗收範圍與測試結果請參閱[驗證記錄](docs/validation.md)。
+
+## 🛠️ 建置
+
+安裝 .NET 10 SDK 後執行：
+
+```bash
+dotnet build PCL.Shion.slnx -c Release
+dotnet test PCL.Shion.Core.Test/PCL.Shion.Core.Test.csproj -c Release
+dotnet test PCL.Shion.Test/PCL.Shion.Test.csproj -c Release
+```
+
+發布建置與套件檢查請參閱[貢獻指南](CONTRIBUTING.md)。歷史 WPF 工程位於 [legacy/PCL.Wpf.slnx](legacy/PCL.Wpf.slnx)。
+
+[上游整合表](docs/upstream-integration.md) · [驗證記錄](docs/validation.md)
 
 ## 🔒 授權條款
 

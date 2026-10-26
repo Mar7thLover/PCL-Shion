@@ -61,21 +61,31 @@ public sealed class GameRunner
 
         var postExitCommand = settings.PostExitCommand;
         var startTimestamp = 0L;
+        var startNotified = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         RunningGame? game = null;
 
         void OnExited(int exitCode)
         {
+            // 先报告启动再报告退出；不在 _gate 中调用订阅者，界面可同步读取 Running。
+            startNotified.Task.GetAwaiter().GetResult();
             // Start 持有 _gate 直到 game 加入列表，所以即使进程立即退出，这里取得锁时 game 也已赋值
             lock (_gate)
                 _running.Remove(game!);
             game!.MarkExited();
 
-            RecordPlayTime(minecraftRoot, instanceName, Stopwatch.GetElapsedTime(startTimestamp));
-            RunningChanged?.Invoke();
-            onExited?.Invoke(exitCode);
-            if (!string.IsNullOrWhiteSpace(postExitCommand))
-                Process.Start(ShellCommand.CreateStartInfo(postExitCommand, plan.WorkingDirectory, commandEnvironment))?.Dispose();
-            game.Session.Dispose();
+            try
+            {
+                RecordPlayTime(minecraftRoot, instanceName, Stopwatch.GetElapsedTime(startTimestamp));
+                NotifyRunningChanged();
+                if (onExited is not null)
+                    InvokeSafely(() => onExited(exitCode));
+                if (!string.IsNullOrWhiteSpace(postExitCommand))
+                    InvokeSafely(() => Process.Start(ShellCommand.CreateStartInfo(postExitCommand, plan.WorkingDirectory, commandEnvironment))?.Dispose());
+            }
+            finally
+            {
+                game.Session.Dispose();
+            }
         }
 
         lock (_gate)
@@ -86,8 +96,34 @@ public sealed class GameRunner
             game = new RunningGame(minecraftRoot, instanceName, session, startedAt);
             _running.Add(game);
         }
-        RunningChanged?.Invoke();
+        try
+        {
+            NotifyRunningChanged();
+        }
+        finally
+        {
+            startNotified.TrySetResult();
+        }
         return game;
+    }
+
+    private void NotifyRunningChanged()
+    {
+        if (RunningChanged is not { } handlers) return;
+        foreach (Action handler in handlers.GetInvocationList())
+            InvokeSafely(handler);
+    }
+
+    private static void InvokeSafely(Action callback)
+    {
+        try
+        {
+            callback();
+        }
+        catch (Exception exception)
+        {
+            Trace.TraceError("Game lifecycle callback failed: {0}", exception);
+        }
     }
 
     private static void RunPreLaunchCommand(string command, string workingDirectory, IReadOnlyDictionary<string, string> environment)

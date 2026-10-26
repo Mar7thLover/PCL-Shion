@@ -46,10 +46,8 @@ public partial class PageInstanceOverall : MyPageRight
         BtnFolderVersion.Click += BtnFolderVersion_Click;
         BtnFolderSaves.Click += BtnFolderSaves_Click;
         BtnFolderMods.Click += BtnFolderMods_Click;
-        BtnManageScript.Click += BtnManageScript_Click;
         BtnManageCheck.Click += BtnManageCheck_Click;
         BtnManageRestore.Click += BtnManageRestore_Click;
-        BtnManageTest.Click += BtnManageTest_Click;
         BtnManageDelete.Click += BtnManageDelete_Click;
         BtnManagePatch.Click += BtnManagePatch_Click;
     }
@@ -312,6 +310,8 @@ public partial class PageInstanceOverall : MyPageRight
         catch (Exception)
         {
             HintService.Hint(Lang.Text("Instance.Overall.Error.OperationFailed"), HintType.Error);
+            Reload();
+            return;
         }
 
         // 进行更改
@@ -391,24 +391,6 @@ public partial class PageInstanceOverall : MyPageRight
 
     #region 卡片：管理
 
-    // 导出启动脚本
-    private async void BtnManageScript_Click(object? sender, PointerReleasedEventArgs e)
-    {
-        try
-        {
-            // 弹窗要求指定脚本的保存位置
-            var savePath = await SystemDialogs.SelectSaveFileAsync(Lang.Text("Instance.Overall.Script.SelectSaveTitle"), "启动 " + PageInstanceLeft.McInstance!.Name + ".bat",
-                Lang.Text("Instance.Overall.Script.FileFilter"));
-            if (string.IsNullOrEmpty(savePath))
-                return;
-            HintService.Hint(Lang.Text("Instance.Overall.Script.Exporting"));
-        }
-        catch (Exception)
-        {
-            HintService.Hint(Lang.Text("Instance.Overall.Error.OperationFailed"), HintType.Error);
-        }
-    }
-
     // 补全文件
     private void BtnManageCheck_Click(object? sender, PointerReleasedEventArgs e)
     {
@@ -451,20 +433,6 @@ public partial class PageInstanceOverall : MyPageRight
 
             // 提交安装申请
             App.Services.RequestReinstall(instance);
-            Navigator.Go(PageType.Launch);
-        }
-        catch (Exception)
-        {
-            HintService.Hint(Lang.Text("Instance.Overall.Error.OperationFailed"), HintType.Error);
-        }
-    }
-
-    // 测试游戏
-    private void BtnManageTest_Click(object? sender, PointerReleasedEventArgs e)
-    {
-        try
-        {
-            App.Services.StartTestGame(PageInstanceLeft.McInstance!);
             Navigator.Go(PageType.Launch);
         }
         catch (Exception)
@@ -545,18 +513,38 @@ public partial class PageInstanceOverall : MyPageRight
     // 修补核心
     private async void BtnManagePatch_Click(object? sender, PointerReleasedEventArgs e)
     {
-        var instance = PageInstanceLeft.McInstance!;
-        if (await MsgBox.ShowAsync(
-                Lang.Text("Instance.Overall.Patch.ConfirmMessage", instance.Name),
-                Lang.Text("Instance.Overall.Patch.ConfirmTitle"), button2: Lang.Text("Common.Action.Cancel")) != 1)
+        if (!BtnManagePatch.IsEnabled)
             return;
-        var userInput = await SystemDialogs.SelectFileAsync(Lang.Text("Instance.Overall.Patch.SelectFile.Filter"), Lang.Text("Instance.Overall.Patch.SelectFile.Title"));
-        if (string.IsNullOrWhiteSpace(userInput))
-            return;
-        HintService.Hint(Lang.Text("Instance.Overall.Patch.Patching"));
-        App.Services.PatchCore(instance, userInput);
-        Settings.Config.Instance.DisableAssetVerifyV2[instance.PathInstance] = true;
-        Settings.Save();
+        BtnManagePatch.IsEnabled = false;
+        try
+        {
+            var instance = PageInstanceLeft.McInstance!;
+            if (await MsgBox.ShowAsync(
+                    Lang.Text("Instance.Overall.Patch.ConfirmMessage", instance.Name),
+                    Lang.Text("Instance.Overall.Patch.ConfirmTitle"), button2: Lang.Text("Common.Action.Cancel")) != 1)
+                return;
+            var userInput = await SystemDialogs.SelectFileAsync(Lang.Text("Instance.Overall.Patch.SelectFile.Filter"),
+                Lang.Text("Instance.Overall.Patch.SelectFile.Title"));
+            if (string.IsNullOrWhiteSpace(userInput))
+                return;
+            HintService.Hint(Lang.Text("Instance.Overall.Patch.Patching"));
+            if (await App.Services.PatchCore(instance, userInput))
+            {
+                Settings.Config.Instance.DisableAssetVerifyV2[instance.PathInstance] = true;
+                Settings.Save();
+            }
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (Exception)
+        {
+            HintService.Hint(Lang.Text("Instance.Overall.Error.OperationFailed"), HintType.Error);
+        }
+        finally
+        {
+            BtnManagePatch.IsEnabled = true;
+        }
     }
 
     #endregion

@@ -20,6 +20,24 @@ public static class FileVerifier
         return HashEquals(SHA1.HashData(stream), sha1);
     }
 
+    internal static async Task<bool> MatchesAsync(string path, long? size, string? sha1, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        var file = new FileInfo(path);
+        if (!file.Exists || (size is { } expected && file.Length != expected)) return false;
+        if (sha1 is null) return true;
+
+        await using var stream = new FileStream(path, new FileStreamOptions
+        {
+            Mode = FileMode.Open,
+            Access = FileAccess.Read,
+            Share = FileShare.Read,
+            Options = FileOptions.Asynchronous | FileOptions.SequentialScan
+        });
+        var hash = await SHA1.HashDataAsync(stream, cancellationToken).ConfigureAwait(false);
+        return HashEquals(hash, sha1);
+    }
+
     internal static bool HashEquals(byte[] hash, string sha1) =>
         string.Equals(Convert.ToHexString(hash), sha1, StringComparison.OrdinalIgnoreCase);
 }

@@ -66,6 +66,9 @@ public partial class PageInstanceCompResource : MyPageRight, IRefreshable
     private void Page_Unloaded(object? sender, RoutedEventArgs e)
     {
         modFileInfoCache.Clear();
+        // 共享加载器可能已经属于另一个资源页，不能取消新页面的工作。
+        if (ReferenceEquals(ModLocalComp.compResourceListLoader.input?.frm, this))
+            ModLocalComp.compResourceListLoader.Abort();
     }
 
     #endregion
@@ -106,9 +109,18 @@ public partial class PageInstanceCompResource : MyPageRight, IRefreshable
         }
 
         if (currentCompType == CompType.Mod)
+        {
             BtnManageJarInJar.Click += (_, _) => Navigator.Go(PageType.InstanceSetup, PageSubType.VersionModJarInJar);
+            CheckParseModMetadata.Checked = App.Services.Settings.EnableModMetadataParsing;
+            CheckParseModMetadata.Change += (_, _) => SetModMetadataParsing(CheckParseModMetadata.Checked == true);
+            BtnSkipModParsing.Click += (_, _) => SetModMetadataParsing(false);
+        }
         else
+        {
             BtnManageJarInJar.IsVisible = false;
+            CheckParseModMetadata.IsVisible = false;
+            BtnSkipModParsing.IsVisible = false;
+        }
 
         Unloaded += Page_Unloaded;
         Loaded += (_, _) => PageOther_Loaded();
@@ -160,8 +172,9 @@ public partial class PageInstanceCompResource : MyPageRight, IRefreshable
         {
             gameVersion = PageInstanceLeft.McInstance,
             frm = this,
-            compPath = GetCompRootPath(currentCompType),
-            compType = currentCompType
+            compPath = string.IsNullOrEmpty(CurrentFolderPath) ? GetCompRootPath(currentCompType) : CurrentFolderPath,
+            compType = currentCompType,
+            parseModMetadata = App.Services.Settings.EnableModMetadataParsing
         };
 
         List<CompLoaderType> requireLoaders;
@@ -201,6 +214,8 @@ public partial class PageInstanceCompResource : MyPageRight, IRefreshable
     private void PageOther_Loaded()
     {
         CurrentFolderPath = string.Empty;
+        CheckParseModMetadata.Checked = App.Services.Settings.EnableModMetadataParsing;
+        BtnSkipModParsing.IsVisible = currentCompType == CompType.Mod && App.Services.Settings.EnableModMetadataParsing;
 
         PanBack.ScrollToHome();
         ModAnimation.AniControlEnabled += 1;
@@ -228,6 +243,10 @@ public partial class PageInstanceCompResource : MyPageRight, IRefreshable
     /// </summary>
     public void ReloadCompFileList(bool forceReload = false)
     {
+        var loader = ModLocalComp.compResourceListLoader;
+        forceReload |= loader.State is LoadState.Aborted or LoadState.Failed
+                       || !ReferenceEquals(loader.input?.frm, this)
+                       || loader.input?.parseModMetadata != App.Services.Settings.EnableModMetadataParsing;
         if (LoaderRun(forceReload
                 ? ModLoader.LoaderFolderRunType.ForceRun
                 : ModLoader.LoaderFolderRunType.RunOnUpdated))
@@ -242,6 +261,18 @@ public partial class PageInstanceCompResource : MyPageRight, IRefreshable
                 SearchBox.Text = "";
             });
         }
+    }
+
+    private void SetModMetadataParsing(bool enabled)
+    {
+        if (App.Services.Settings.EnableModMetadataParsing == enabled)
+            return;
+        App.Services.Settings.EnableModMetadataParsing = enabled;
+        App.Services.Settings.Save();
+        CheckParseModMetadata.Checked = enabled;
+        BtnSkipModParsing.IsVisible = enabled;
+        // ForceRun 取消旧扫描；新扫描关闭解析后不再读取整个 Jar 或计算 SHA-1。
+        ReloadCompFileList(true);
     }
 
     // 强制刷新
@@ -410,6 +441,8 @@ public partial class PageInstanceCompResource : MyPageRight, IRefreshable
     /// </summary>
     private void LoadUIFromLoaderOutput()
     {
+        if (!ReferenceEquals(ModLocalComp.compResourceListLoader.input?.frm, this))
+            return;
         try
         {
             var output = ModLocalComp.compResourceListLoader.output ?? new List<LocalFile>();
@@ -604,6 +637,8 @@ public partial class PageInstanceCompResource : MyPageRight, IRefreshable
             parts.Add(Lang.Text("Instance.Resource.Disabled"));
         else if (entry.State == LocalFileStatus.Unavailable)
             parts.Add(Lang.Text("Instance.Resource.Error.Unavailable"));
+        if (entry.MetadataWarning is not null)
+            parts.Add(Lang.Text("Instance.Resource.Mod.PartialMetadata"));
         return string.Join("  |  ", parts);
     }
 

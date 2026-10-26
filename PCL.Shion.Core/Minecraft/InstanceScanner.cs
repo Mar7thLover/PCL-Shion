@@ -1,4 +1,5 @@
 using System.Text.Json;
+using PCL.Shion.Core.Install;
 using PCL.Shion.Core.Instances;
 
 namespace PCL.Shion.Core.Minecraft;
@@ -19,6 +20,7 @@ public static class InstanceScanner
             return [];
 
         return versionsDirectory.EnumerateDirectories()
+            .Where(directory => !InstallationSession.IsActive(directory.FullName))
             .Where(directory => File.Exists(Path.Combine(directory.FullName, $"{directory.Name}.json")))
             .OrderBy(directory => directory.Name, StringComparer.OrdinalIgnoreCase)
             .Select(directory => Describe(minecraftRoot, directory))
@@ -27,10 +29,11 @@ public static class InstanceScanner
 
     private static GameInstance Describe(string minecraftRoot, DirectoryInfo directory)
     {
-        var isolated = InstanceSettings.IsIsolated(directory.FullName);
+        var isolated = false;
         var (lastPlayed, totalPlaySeconds) = ReadPlayRecord(minecraftRoot, directory.Name);
         try
         {
+            isolated = InstanceSettings.IsIsolated(directory.FullName);
             var version = VersionResolver.Resolve(minecraftRoot, directory.Name);
             return new GameInstance(
                 directory.Name, directory.FullName, version.MinecraftVersion, version.Loader, isolated, null, lastPlayed, totalPlaySeconds);

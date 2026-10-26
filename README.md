@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="Plain Craft Launcher 2/Images/icon.ico" alt="Logo" width="80" height="80">
+<img src="PCL.Shion/Assets/Images/icon.png" alt="Logo" width="80" height="80">
 
 # PCL 詩音（Shion）
 
@@ -38,7 +38,7 @@ PCL 詩音已完整移除这套限制，所有地区的用户都可以正常使�
 
 ## 🗺️ 开发计划
 
-- **跨平台 UI 框架**：基于 Avalonia 的新界面已作为 macOS 与 Linux 平台的正式界面提供，Windows 平台暂时继续使用 WPF 界面。之后会继续补齐 Avalonia 界面的功能，成熟后再逐步取代 WPF。
+- **统一跨平台界面**：Windows、macOS、Linux 均以 Avalonia 为正式入口；WPF 仅保留历史源码供迁移参考，不再参与默认构建和发布。持续补齐功能、改善稳定性。
 - **主题与个性化**：引入更丰富的主题与个性化选项。
 - **有趣的小工具**：加入更多实用又好玩的小工具。
 - **新的联机方案**：考虑引入不依赖 Natayark OpenID 的联机方案，作为现有方案的替代选择。
@@ -46,37 +46,58 @@ PCL 詩音已完整移除这套限制，所有地区的用户都可以正常使�
 
 ## 💻 支持平台
 
-| 操作系统 | 支持情况 | 环境要求 |
+从本次迁移后的构建开始，三个平台统一使用 **Avalonia + .NET 10**。所有发布包均为 **framework-dependent**，不再自包含 .NET 运行时。
+
+| 操作系统 | 界面与支持范围 | 环境要求 |
 |---|---|---|
-| Windows 10 1809 (17763) 或更高 | ✅ 完整支持 | [.NET 10 Desktop Runtime](https://get.dot.net/10) |
-| Windows 8 - Windows 10 1809 (17763) | ⚠️ 理论能跑，不保证可用 | [.NET 10 Desktop Runtime](https://get.dot.net/10) |
-| Windows 7 或更低版本 | ❌ 不支持 | / |
-| macOS 12 或更高（Intel / Apple 芯片） | 🧪 Avalonia 界面，持续完善中 | 无（发布包已自带 .NET 运行时） |
-| Linux（x64 / ARM64） | 🧪 Avalonia 界面，持续完善中 | 无（发布包已自带 .NET 运行时） |
-| 其他操作系统 | ❌ 不支持 | / |
+| Windows 11（x64 / ARM64） | 正式 Avalonia 界面 | 对应架构的 [.NET 10 Runtime](https://dotnet.microsoft.com/download/dotnet/10.0) |
+| Windows 10 22H2（x64） | 尽力兼容，受系统与框架支持周期限制 | 同上 |
+| macOS 15 或更高（Intel / Apple 芯片） | 正式 Avalonia 界面 | 对应架构的 .NET 10 Runtime |
+| Linux（x64 / ARM64，glibc） | 正式 Avalonia 界面，使用 X11 / XWayland 桌面 | .NET 10 Runtime 和系统图形依赖 |
+| 更早或其他操作系统 | 不在当前验证范围内 | 参考下方框架支持说明 |
 
-**✅ 完整支持**：尽可能提供一切相关支持，但必须确保启动器为最新版本。
+安装普通 **.NET Runtime** 即可；不需要 Windows Desktop Runtime。已有同架构的 .NET 10 SDK 也可运行。可用 `dotnet --list-runtimes` 确认安装了 `Microsoft.NETCore.App 10.x`。运行时架构必须与下载包一致，例如 Apple 芯片选择 ARM64 Runtime 和 AppleSilicon 包。
 
-**⚠️ 理论能跑，不保证可用**：PCL 詩音应该可以在这些平台上运行，但不保证功能完全可用。
-
-**❌ 不支持**：PCL 詩音在这些平台的可用性较低，甚至压根打不开。请升级操作系统后使用。
-
-**🧪 Avalonia 界面，持续完善中**：macOS 与 Linux 使用基于 Avalonia 的跨平台界面，可以在 [Releases](https://github.com/Mar7thLover/PCL-Shion/releases) 下载对应平台的 `PCL_Shion_*_Avalonia_macOS-*.tar.gz` 或 `PCL_Shion_*_Avalonia_Linux-*.tar.gz`。这套界面由 WPF 版移植而来，部分功能可能尚未完全对齐 Windows 版，遇到问题欢迎反馈。Windows 用户也可以下载 `PCL_Shion_*_Avalonia_Windows-*.exe` 体验 Avalonia 界面，它与 WPF 版的 `PCL_Shion_*_WPF_x64.exe` / `PCL_Shion_*_WPF_ARM64.exe` 互不冲突。1.2.0 及更早版本的文件名不带 WPF / Avalonia 字样：`_x64.exe` / `_ARM64.exe` 是 WPF 版，`_win-x64.exe` / `_win-arm64.exe` 是 Avalonia 版。macOS 版没有经过 Apple 公证，首次打开时需要在 Finder 中右键选择“打开”。
-
-**注**：仅对最新版本的启动器提供支持。
+具体系统版本与 Linux 依赖以 [.NET 10 支持列表](https://github.com/dotnet/core/blob/main/release-notes/10.0/supported-os.md)、[Avalonia 支持平台](https://docs.avaloniaui.net/docs/supported-platforms)及 [Linux 部署说明](https://docs.avaloniaui.net/docs/platform-specific-guides/linux)为准。项目仍处于密集开发阶段，CI 构建与自动化测试不代替每个平台的真实游戏启动验收。
 
 ## 📦 下载哪个文件
 
-在 [Releases](https://github.com/Mar7thLover/PCL-Shion/releases/latest) 页面的 Assets 中按下表选择：
+在 [Releases](https://github.com/Mar7thLover/PCL-Shion/releases/latest) 页面的 Assets 中按下表选择；Beta 使用相同命名，把 `Release` 换成 `Beta`。所有包均需预先安装 .NET 10 Runtime。
 
-| 系统 | 文件名 | 说明 |
-|---|---|---|
-| Windows | `PCL_Shion_Release_WPF_x64.exe` / `WPF_ARM64.exe` | WPF 界面，约 23 MB，需要另装 [.NET 10 Desktop Runtime](https://get.dot.net/10) |
-| Windows | `PCL_Shion_Release_Avalonia_Windows-x64.exe` / `Windows-ARM64.exe` | Avalonia 新界面，约 100 MB，自带运行时；主题配色、渲染后端等新功能只在这一版中提供 |
-| macOS | `PCL_Shion_Release_Avalonia_macOS-AppleSilicon.tar.gz` / `macOS-Intel.tar.gz` | Avalonia 界面；首次打开需在 Finder 中右键选择“打开” |
-| Linux | `PCL_Shion_Release_Avalonia_Linux-x64.tar.gz` / `Linux-ARM64.tar.gz` | Avalonia 界面 |
+| 系统 | 文件名 |
+|---|---|
+| Windows x64 | `PCL_Shion_Release_Avalonia_Windows-x64.exe` |
+| Windows ARM64 | `PCL_Shion_Release_Avalonia_Windows-ARM64.exe` |
+| macOS Apple 芯片 | `PCL_Shion_Release_Avalonia_macOS-AppleSilicon.tar.gz` |
+| macOS Intel | `PCL_Shion_Release_Avalonia_macOS-Intel.tar.gz` |
+| Linux x64 | `PCL_Shion_Release_Avalonia_Linux-x64.tar.gz` |
+| Linux ARM64 | `PCL_Shion_Release_Avalonia_Linux-ARM64.tar.gz` |
 
-两个 Windows 版本互不冲突，可以同时保留；设置与账号分开保存。
+Windows 为单个可执行文件；Linux 解压后运行 `PCL.Shion`；macOS 解压后打开 `PCL Shion.app`。macOS 包未经过 Apple 公证；首次打开如被系统拦截，在确认下载来源后，按 [Apple 官方说明](https://support.apple.com/en-us/102445)进入“系统设置 → 隐私与安全性 → 仍要打开”。发布同时提供 `SHA256SUMS` 与 Sigstore 签名，包大小以实际资产为准。
+
+### 从旧版升级
+
+1. 安装与下载包同架构的 .NET 10 Runtime，再运行新版本。
+2. 从旧 Avalonia 版本升级可沿用现有 Avalonia 数据。WPF 的设置与账号此前独立保存，不能直接覆盖到 Avalonia；请保留旧目录，在新界面重新添加原有游戏目录并登录账号，原有存档和模组无需删除。
+3. 历史 WPF 和旧版自包含资产仍按当时的说明使用；后续构建只提供 Avalonia，不再生成 WPF 发行包。
+
+### 已知功能差异
+
+Avalonia 已成为默认入口，但与历史 WPF 版尚未完全对齐。**启动脚本导出、测试模式启动暂未实现**，界面保留禁用按钮和说明；正常游戏启动请使用启动页。其余验收边界及测试结果见[验证记录](docs/validation.md)。
+
+## 🛠️ 构建
+
+安装 .NET 10 SDK 后执行：
+
+```bash
+dotnet build PCL.Shion.slnx -c Release
+dotnet test PCL.Shion.Core.Test/PCL.Shion.Core.Test.csproj -c Release
+dotnet test PCL.Shion.Test/PCL.Shion.Test.csproj -c Release
+```
+
+发行构建、包检查与上游整合规范见 [贡献指南](CONTRIBUTING.md)。历史 WPF 工程位于 [legacy/PCL.Wpf.slnx](legacy/PCL.Wpf.slnx)。
+
+[上游整合表](docs/upstream-integration.md) · [验证记录](docs/validation.md)
 
 ## 🔒 许可证
 

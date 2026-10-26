@@ -20,19 +20,19 @@ public sealed class GameSessionTest
         var exitCode = int.MinValue;
         var linesBeforeExit = -1;
 
-        using var session = GameSession.Start(plan);
-        session.OutputReceived += line =>
-        {
-            lock (lines)
-                lines.Add(line.Trim());
-        };
-        session.Exited += code =>
-        {
-            lock (lines)
-                linesBeforeExit = lines.Count;
-            exitCode = code;
-            exited.Set();
-        };
+        using var session = GameSession.Start(plan,
+            line =>
+            {
+                lock (lines)
+                    lines.Add(line.Trim());
+            },
+            code =>
+            {
+                lock (lines)
+                    linesBeforeExit = lines.Count;
+                exitCode = code;
+                exited.Set();
+            });
 
         Assert.IsTrue(exited.Wait(Timeout), "the process did not exit in time");
         Assert.IsGreaterThan(0, session.ProcessId);
@@ -129,6 +129,54 @@ public sealed class GameSessionTest
         };
 
         Assert.Throws<Win32Exception>(() => GameSession.Start(plan));
+    }
+
+    [TestMethod]
+    public void ThrowingOutputAndExitSubscribersDoNotPreventOtherSubscribers()
+    {
+        var lines = new List<string>();
+        using var exited = new ManualResetEventSlim();
+        var exitCode = -1;
+        Action<string> onOutput = _ => throw new InvalidOperationException("broken log subscriber");
+        onOutput += line =>
+        {
+            lock (lines) lines.Add(line.Trim());
+        };
+        Action<int> onExited = _ => throw new InvalidOperationException("broken exit subscriber");
+        onExited += code =>
+        {
+            exitCode = code;
+            exited.Set();
+        };
+
+        using var session = GameSession.Start(ShellPlan.Create("echo observed& exit /b 7", "echo observed; exit 7"), onOutput, onExited);
+
+        Assert.IsTrue(exited.Wait(Timeout), "a throwing subscriber must not swallow the exit notification");
+        Assert.AreEqual(7, exitCode);
+        lock (lines) CollectionAssert.AreEqual(new[] { "observed" }, lines);
+    }
+
+    [TestMethod]
+    public void ShortLivedProcessesAlwaysDrainBothPipesBeforeExit()
+    {
+        for (var iteration = 0; iteration < 10; iteration++)
+        {
+            var (lines, exitCode) = Run(ShellPlan.Create("echo first& echo last 1>&2& exit /b 0", "echo first; echo last >&2; exit 0"));
+            Assert.AreEqual(0, exitCode);
+            CollectionAssert.AreEquivalent(new[] { "first", "last" }, lines);
+        }
+    }
+
+    [TestMethod]
+    public void KillAfterDisposalDoesNothing()
+    {
+        using var exited = new ManualResetEventSlim();
+        var session = GameSession.Start(ShellPlan.Create("exit /b 0", "exit 0"), onExited: _ => exited.Set());
+        Assert.IsTrue(exited.Wait(Timeout));
+
+        session.Dispose();
+        session.Dispose();
+        session.Kill();
     }
 
     /// <summary>

@@ -96,6 +96,9 @@
         <!-- 工具栏：搜索、刷新、打开 Mod 文件夹 -->
         <DockPanel Grid.Row="0">
             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
+                <CheckBox Content="{x:Static vm:ModsStrings.ParseMetadata}"
+                          ToolTip.Tip="{x:Static vm:ModsStrings.ParseMetadataHint}"
+                          IsChecked="{Binding ParseMetadata, Mode=TwoWay}" VerticalAlignment="Center" />
                 <Button Classes="toolbar" Content="{x:Static vm:ModsStrings.Refresh}"
                         Command="{Binding RefreshCommand}" />
                 <Button Classes="toolbar" Content="{x:Static vm:ModsStrings.OpenFolder}"

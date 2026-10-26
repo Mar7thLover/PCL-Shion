@@ -13,6 +13,7 @@ using PCL.Shion.Controls;
 using PCL.Shion.Core.Platform;
 using PCL.Shion.Localization;
 using PCL.Shion.UI;
+using PCL.Shion.Services;
 
 namespace PCL.Shion.Pages.Setup;
 
@@ -37,7 +38,7 @@ public partial class PageSetupLog : MyPageRight
     /// <summary>
     ///     本次运行正在写入的日志文件。
     /// </summary>
-    private static List<string> CurrentLogs => [];
+    private static List<string> CurrentLogs => DiagnosticLog.CurrentPath is { } path && File.Exists(path) ? [path] : [];
 
     private void PageOtherLog_Loaded(object? sender, RoutedEventArgs e)
     {
@@ -55,7 +56,7 @@ public partial class PageSetupLog : MyPageRight
         {
             var fullPath = Path.GetFullPath(item);
             var title = Path.GetFileName(item);
-            if (title.StartsWith("Launch"))
+            if (title.StartsWith("Launch-") && title.EndsWith(".log") && title.Length > 11)
             {
                 title = title.Substring(7, title.Length - 11);
                 var r = DateTime.TryParseExact(title, "yyyy-M-d-HHmmssfff", CultureInfo.InvariantCulture,
@@ -65,7 +66,7 @@ public partial class PageSetupLog : MyPageRight
                 if (current.Any(log => log.Equals(fullPath)))
                     title = Lang.Text("Setup.Log.CurrentSuffix", title);
             }
-            else if (title.StartsWith("LastPending"))
+            else if (title.StartsWith("LastPending") && title.Length >= 15)
             {
                 title = title.Substring(11, title.Length - 15);
                 if (title.Length > 1)

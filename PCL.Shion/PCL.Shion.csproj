@@ -12,6 +12,12 @@
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <Configurations>Debug;CI;Release;Beta</Configurations>
         <Platforms>AnyCPU;x64;ARM64</Platforms>
+        <!-- 正式发行依赖系统安装的普通 .NET Runtime，不捆绑运行时。 -->
+        <SelfContained>false</SelfContained>
+        <PublishSelfContained>false</PublishSelfContained>
+        <!-- JSON、AXAML 和兼容层使用反射；保留完整应用程序集以保证行为稳定。 -->
+        <PublishTrimmed>false</PublishTrimmed>
+        <PublishReadyToRun>false</PublishReadyToRun>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="12.1.4" />
@@ -32,4 +38,17 @@
         <EmbeddedResource Include="..\PCL.Core\App\Localization\Languages\*.xaml" Link="Assets\Lang\Core\%(Filename)%(Extension)" LogicalName="PCL.Shion.Lang.Core.%(Filename).xaml" WithCulture="false" />
         <EmbeddedResource Include="Assets\Lang\*.xaml" LogicalName="PCL.Shion.Lang.%(Filename).xaml" WithCulture="false" />
     </ItemGroup>
+    <Target Name="ValidateFrameworkDependentPublish" BeforeTargets="PrepareForPublish">
+        <Error Condition="'$(SelfContained)' == 'true' Or '$(PublishSelfContained)' == 'true'"
+               Text="PCL Shion must be published framework-dependent. Use --self-contained false." />
+        <Error Condition="'$(PublishTrimmed)' == 'true'"
+               Text="Trimming is not supported by Shion's reflection-based resources and serializers." />
+    </Target>
+    <!-- NuGet 的 Windows 原生包把 PDB 当作 runtime assets，DebugSymbols=false 不会自动排除它们。 -->
+    <Target Name="ExcludeNativePublishSymbols" AfterTargets="ComputeResolvedFilesToPublishList"
+            Condition="'$(DebugType)' == 'none'">
+        <ItemGroup>
+            <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition="'%(ResolvedFileToPublish.Extension)' == '.pdb'" />
+        </ItemGroup>
+    </Target>
 </Project>

@@ -159,4 +159,14 @@ public sealed class InstanceStoreTest
 
         Assert.Throws<JsonException>(() => InstanceStore.Load(_root.RootPath, Instance));
     }
+
+    [TestMethod]
+    [DataRow("../outside")]
+    [DataRow("..\\outside")]
+    [DataRow("/absolute")]
+    [DataRow("C:drive")]
+    public void InstanceNameCannotEscapeTheVersionsDirectory(string name)
+    {
+        Assert.Throws<InvalidDataException>(() => InstanceStore.Save(_root.RootPath, name, new InstanceSettings()));
+    }
 }

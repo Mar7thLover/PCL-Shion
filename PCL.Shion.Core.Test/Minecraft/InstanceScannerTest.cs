@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PCL.Shion.Core.Install;
 using PCL.Shion.Core.Instances;
 using PCL.Shion.Core.Minecraft;
 using InstanceSettings = PCL.Shion.Core.Instances.InstanceSettings;
@@ -189,5 +190,35 @@ public sealed class InstanceScannerTest
 
         Assert.IsNotNull(instance.Error);
         Assert.AreEqual(90L, instance.TotalPlaySeconds);
+    }
+
+    [TestMethod]
+    public void ActiveInstallationIsExcludedButUnrelatedBrokenInstancesRemainVisible()
+    {
+        _root.WriteVersion("installing", "{ not finished");
+        _root.WriteVersion("broken", "{ not json");
+        using (InstallationSession.Begin(_root.RootPath, "installing"))
+        {
+            var visible = InstanceScanner.Scan(_root.RootPath);
+            Assert.AreEqual("broken", visible.Single().Name);
+            Assert.IsNotNull(visible[0].Error);
+        }
+
+        Assert.HasCount(2, InstanceScanner.Scan(_root.RootPath));
+    }
+
+    [TestMethod]
+    public void AnUnreadableIsolationFileDoesNotHideOtherInstances()
+    {
+        _root.WriteVersion("locked", """{ "mainClass": "Main" }""");
+        _root.WriteVersion("good", """{ "mainClass": "Main" }""");
+        var path = _root.WriteFile("versions/locked/PCL/config.v1.yml", "VersionArgumentIndieV2: true\n");
+        using var locked = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None);
+
+        var instances = InstanceScanner.Scan(_root.RootPath).ToDictionary(instance => instance.Name);
+
+        Assert.HasCount(2, instances);
+        Assert.IsNull(instances["good"].Error);
+        Assert.IsNotNull(instances["locked"].Error);
     }
 }

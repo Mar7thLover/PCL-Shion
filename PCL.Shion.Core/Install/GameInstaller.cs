@@ -2,6 +2,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using PCL.Shion.Core.Download;
+using PCL.Shion.Core.IO;
 using PCL.Shion.Core.Minecraft;
 using PCL.Shion.Core.Sources;
 using PCL.Shion.Core.Versions;
@@ -37,6 +38,8 @@ public sealed class GameInstaller(DownloadEngine engine, DownloadSource source)
         IProgress<InstallProgress>? progress,
         CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        using var installation = InstallationSession.Begin(minecraftRoot, instanceName);
         var jsonPath = Path.Combine(minecraftRoot, "versions", instanceName, $"{instanceName}.json");
         var versionJson = new DownloadItem(MirrorUrls.Resolve(version.JsonUrl.AbsoluteUri, source), jsonPath, Sha1: version.Sha1);
         ThrowIfFailed(await engine.DownloadAsync([versionJson], BeginStage(progress, VersionStage), cancellationToken).ConfigureAwait(false));
@@ -84,7 +87,7 @@ public sealed class GameInstaller(DownloadEngine engine, DownloadSource source)
     {
         var root = JsonNode.Parse(File.ReadAllText(jsonPath))!.AsObject();
         root["id"] = instanceName;
-        File.WriteAllText(jsonPath, root.ToJsonString(JsonWriteOptions));
+        AtomicFile.WriteAllText(jsonPath, root.ToJsonString(JsonWriteOptions));
     }
 
     private static void ThrowIfFailed(DownloadResult result)

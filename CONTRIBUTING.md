@@ -1,5 +1,44 @@
 # 如何为项目做贡献
 
+## 当前构建入口
+
+Windows、macOS、Linux 统一开发和发布 `PCL.Shion`（Avalonia）。安装 .NET 10 SDK，仓库的 `global.json` 允许使用同一主版本内较新的稳定 SDK：
+
+```bash
+dotnet build PCL.Shion.slnx -c Release
+dotnet test PCL.Shion.Core.Test/PCL.Shion.Core.Test.csproj -c Release --no-build
+dotnet test PCL.Shion.Test/PCL.Shion.Test.csproj -c Release --no-build
+```
+
+`legacy/PCL.Wpf.slnx` 保留旧版 WPF 的开发参考，不参与默认 CI 和正式发布。修改 `PCL.Core.SourceGenerators` 或共享语言文件也会触发 Avalonia 的验证流程。
+
+## 发布与瘦身
+
+所有平台使用 **framework-dependent** 发布，依赖普通 .NET 10 Runtime。禁止重新启用 `SelfContained` / `PublishSelfContained`，也不要用未经验证的程序集裁剪换取包体积。单文件中仍需包含应用及 Avalonia/Skia 所需的本机库。
+
+以下以 Linux x64 为例；其他 RID 为 `win-x64`、`win-arm64`、`linux-arm64`、`osx-x64`、`osx-arm64`：
+
+```bash
+dotnet publish PCL.Shion/PCL.Shion.csproj -c Release -r linux-x64 \
+  --self-contained false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true \
+  -p:DebugType=none -p:DebugSymbols=false -o ./publish
+python scripts/verify-publish.py --publish-dir ./publish --rid linux-x64 \
+  --runtime-config PCL.Shion/bin/Release/net10.0/linux-x64/PCL.Shion.runtimeconfig.json
+```
+
+检查脚本验证单文件打包前的 runtimeconfig 只依赖 `Microsoft.NETCore.App`，且发布目录没有被遗漏的依赖文件。每次发布应使用干净的输出目录；包体积由实际产物记录，不使用历史估算值。
+
+`Shion Build (CI)` 在 Windows、Linux、macOS 上构建、测试并检查发布包。`Release publish` 先通过这些检查，再生成六个 RID 的正式产物和 SHA-256 校验文件，最后发布带签名的版本；不会生成 WPF 资产。实际窗口渲染、账号登录、安装与游戏启动仍需在对应平台做验收，headless 测试不等同于显卡、窗口系统和 Java 环境验证。
+
+MirrorChyan 工作流只有在仓库变量 `MIRRORCHYAN_RID` 配置为本项目独立资源时才启用，并使用本仓库的 Avalonia 资产。不要填写上游 `PCL2-CE` 的资源标识。
+
+## 上游整合与验收
+
+- [上游功能请求与修复整合表](docs/upstream-integration.md)：来源、取舍与实现状态。
+- [验证记录](docs/validation.md)：实际测试结果、包体积与未完成的跨平台验收项。
+
+## 上游参考
+
 Wiki 页面（沿用上游 PCL CE）:
 [开发指南](https://github.com/PCL-Community/PCL2-CE/wiki/开发指南)
 [技术规范](https://github.com/PCL-Community/PCL2-CE/wiki/技术规范)

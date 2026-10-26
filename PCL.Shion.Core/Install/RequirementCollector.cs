@@ -39,14 +39,14 @@ public static class RequirementCollector
             if (GetLibraryUrl(library) is not { } url)
                 continue;
 
-            var path = Path.Combine(librariesDirectory, library.RelativePath.Replace('/', Path.DirectorySeparatorChar));
+            var path = ManifestPath.Resolve(librariesDirectory, library.RelativePath);
             items.Add(new DownloadItem(MirrorUrls.Resolve(url, source), path, library.Download?.Size, library.Download?.Sha1));
         }
 
         if (version.AssetIndexDownload is { } assetIndex)
             items.Add(CreateItem(assetIndex, GetAssetIndexPath(minecraftRoot, version.AssetIndexId), source));
         if (version is { LoggingFileId: { } loggingFileId, LoggingFileDownload: { } loggingFile })
-            items.Add(CreateItem(loggingFile, Path.Combine(minecraftRoot, "assets", "log_configs", loggingFileId), source));
+            items.Add(CreateItem(loggingFile, ManifestPath.ResolveName(Path.Combine(minecraftRoot, "assets", "log_configs"), loggingFileId), source));
         return items;
     }
 
@@ -66,7 +66,10 @@ public static class RequirementCollector
         var hashes = new HashSet<string>();
         foreach (var asset in document.RootElement.GetProperty("objects").EnumerateObject())
         {
-            var hash = asset.Value.GetProperty("hash").GetString()!;
+            var hash = ManifestPath.AssetHash(asset.Value.GetProperty("hash").GetString());
+            var size = asset.Value.GetProperty("size").GetInt64();
+            if (size < 0)
+                throw new InvalidDataException($"Asset '{asset.Name}' has a negative size.");
             if (!hashes.Add(hash))
                 continue;
 
@@ -74,7 +77,7 @@ public static class RequirementCollector
             items.Add(new DownloadItem(
                 MirrorUrls.Resolve($"{ResourcesUrl}{prefix}/{hash}", source),
                 Path.Combine(objectsDirectory, prefix, hash),
-                asset.Value.GetProperty("size").GetInt64(),
+                size,
                 hash));
         }
         return items;
@@ -82,7 +85,7 @@ public static class RequirementCollector
 
     internal static string GetAssetIndexPath(string minecraftRoot, string assetIndexId)
     {
-        return Path.Combine(minecraftRoot, "assets", "indexes", $"{assetIndexId}.json");
+        return ManifestPath.ResolveName(Path.Combine(minecraftRoot, "assets", "indexes"), assetIndexId, ".json");
     }
 
     private static DownloadItem CreateItem(FileDownload download, string targetPath, DownloadSource source)

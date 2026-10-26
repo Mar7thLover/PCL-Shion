@@ -35,15 +35,22 @@ public sealed class GameServices : IDisposable
     private readonly HashSet<string> _runningTasks = [];
     private DownloadEngine _engine;
     private int _engineConcurrency;
+    private readonly CancellationTokenSource _shutdown = new();
+    private readonly CancellationToken _shutdownToken;
+    private int _disposed;
 
     public GameServices(AppSettings settings)
     {
         Settings = settings;
+        _shutdownToken = _shutdown.Token;
         _engine = CreateEngine();
-        Updates = new UpdateService(settings, () => Engine.Http);
+        Updates = new UpdateService(settings, () => Engine.Http, _shutdownToken);
     }
 
     public AppSettings Settings { get; }
+
+    /// <summary>启动器退出时取消仍在准备、联网或安装的任务，不终止已启动的游戏。</summary>
+    public CancellationToken ShutdownToken => _shutdownToken;
 
     /// <summary>
     /// 下载引擎。并发数在设置里改动后，下一次取用时换成新的引擎；正在使用旧引擎的下载照常完成。
@@ -54,6 +61,7 @@ public sealed class GameServices : IDisposable
         {
             lock (_engineLock)
             {
+                ObjectDisposedException.ThrowIf(_disposed != 0, this);
                 if (_engineConcurrency != Settings.MaxDownloadConcurrency)
                 {
                     _retiredEngines.Add(_engine);
@@ -81,7 +89,15 @@ public sealed class GameServices : IDisposable
     /// <summary>按当前下载源创建安装器；下载源在设置里改动后，需要重新创建。</summary>
     public GameInstaller CreateInstaller() => new(Engine, Source);
 
-    public void NotifyInstancesChanged() => InstancesChanged?.Invoke();
+    public void NotifyInstancesChanged()
+    {
+        if (InstancesChanged is not { } handlers) return;
+        foreach (Action handler in handlers.GetInvocationList())
+        {
+            try { handler(); }
+            catch (Exception ex) { LogError(ex, "[Instance] 实例列表订阅者失败"); }
+        }
+    }
 
     public void RequestOpenInstance(string name) => OpenInstanceRequested?.Invoke(name);
 
@@ -90,8 +106,13 @@ public sealed class GameServices : IDisposable
     /// </summary>
     public void Notify(string title, string message)
     {
+        if (_shutdownToken.IsCancellationRequested) return;
         if (Settings.NotificationsEnabled)
-            _ = Task.Run(() => Notifier.Notify(title, message));
+            _ = Task.Run(() =>
+            {
+                try { Notifier.Notify(title, message); }
+                catch (Exception ex) { LogError(ex, "[Notify] 发送通知失败"); }
+            });
 
         if (Settings.CompletionSound)
             SystemBeep.Play();
@@ -120,9 +141,11 @@ public sealed class GameServices : IDisposable
         {
             try
             {
-                await CreateInstaller().CompleteAsync(root, instance.Name, null, CancellationToken.None);
+                var result = await CreateInstaller().CompleteAsync(root, instance.Name, null, _shutdownToken);
+                if (!result.Succeeded) throw new InstallException(result);
                 PostHint("实例文件补全完成", HintType.Success);
             }
+            catch (OperationCanceledException) when (_shutdownToken.IsCancellationRequested) { }
             catch (Exception ex)
             {
                 LogError(ex, "[Instance] 补全实例文件失败");
@@ -153,24 +176,29 @@ public sealed class GameServices : IDisposable
             return;
         }
 
+        var taskName = "Reinstall:" + instance.Directory;
+        if (!TryBeginTask(taskName)) return;
         var root = Settings.MinecraftRoot;
         _ = Task.Run(async () =>
         {
             try
             {
                 BackupInstanceFiles(instance);
-                var manifest = await VersionManifestClient.FetchAsync(Engine.Http, Source, CancellationToken.None);
+                _shutdownToken.ThrowIfCancellationRequested();
+                var manifest = await VersionManifestClient.FetchAsync(Engine.Http, Source, _shutdownToken);
                 var remote = manifest.Versions.FirstOrDefault(version => version.Id == vanillaVersion)
                              ?? throw new InvalidOperationException("版本清单中找不到 " + vanillaVersion);
-                await CreateInstaller().InstallVanillaAsync(root, remote, instance.Name, null, CancellationToken.None);
+                await CreateInstaller().InstallVanillaAsync(root, remote, instance.Name, null, _shutdownToken);
                 NotifyInstancesChanged();
                 PostHint("实例重装完成", HintType.Success);
             }
+            catch (OperationCanceledException) when (_shutdownToken.IsCancellationRequested) { }
             catch (Exception ex)
             {
                 LogError(ex, "[Instance] 重装实例失败");
                 PostHint(Lang.Text("Instance.Overall.Error.OperationFailed"), HintType.Error);
             }
+            finally { EndTask(taskName); }
         });
     }
 
@@ -186,21 +214,27 @@ public sealed class GameServices : IDisposable
     /// <summary>
     /// 把 <paramref name="filePath"/> 中的文件合并进实例的客户端 jar（对应 WPF 的 <c>GameCore.AddToCore</c>），在后台执行。
     /// </summary>
-    public void PatchCore(GameInstance instance, string filePath)
+    public Task<bool> PatchCore(GameInstance instance, string filePath)
     {
         var corePath = Path.Combine(instance.Directory, instance.Name + ".jar");
-        _ = Task.Run(() =>
+        var taskName = "Patch:" + corePath;
+        if (!TryBeginTask(taskName)) return Task.FromResult(false);
+        return Task.Run(() =>
         {
             try
             {
-                AddToCore(corePath, filePath);
+                AddToCore(corePath, filePath, _shutdownToken);
                 PostHint(Lang.Text("Instance.Overall.Patch.Success"), HintType.Success);
+                return true;
             }
+            catch (OperationCanceledException) when (_shutdownToken.IsCancellationRequested) { return false; }
             catch (Exception ex)
             {
                 LogError(ex, "[Instance] 修补核心失败");
                 PostHint(Lang.Text("Instance.Overall.Error.OperationFailed"), HintType.Error);
+                return false;
             }
+            finally { EndTask(taskName); }
         });
     }
 
@@ -217,12 +251,17 @@ public sealed class GameServices : IDisposable
 
     public void Dispose()
     {
+        if (Interlocked.Exchange(ref _disposed, 1) != 0) return;
+        try { _shutdown.Cancel(); }
+        catch (AggregateException ex) { LogError(ex, "[System] 任务取消回调失败"); }
         lock (_engineLock)
         {
             _engine.Dispose();
             foreach (var engine in _retiredEngines)
                 engine.Dispose();
+            _retiredEngines.Clear();
         }
+        _shutdown.Dispose();
     }
 
     private DownloadEngine CreateEngine()
@@ -234,7 +273,7 @@ public sealed class GameServices : IDisposable
     private bool TryBeginTask(string name)
     {
         lock (_taskLock)
-            return _runningTasks.Add(name);
+            return !_shutdownToken.IsCancellationRequested && _runningTasks.Add(name);
     }
 
     private void EndTask(string name)
@@ -259,33 +298,74 @@ public sealed class GameServices : IDisposable
     /// 与 PCL.Core 的 <c>GameCore.AddToCore</c> 相同：把 <paramref name="jarPath"/> 中的条目复制进核心 jar，并删除签名目录。
     /// 对于不以 .jar 结尾的文件（如 Better Than Wolves 的 .zip 模组），只复制名称包含 MINECRAFT-JAR 的条目。
     /// </summary>
-    private static void AddToCore(string corePath, string jarPath)
+    internal static void AddToCore(string corePath, string jarPath, CancellationToken cancellationToken = default)
     {
         if (!File.Exists(corePath))
             throw new FileNotFoundException($"未找到指定文件：{corePath}");
         if (!File.Exists(jarPath))
             throw new FileNotFoundException($"未找到指定文件：{jarPath}");
 
-        using var coreStream = new FileStream(corePath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read, 16384, true);
-        using var jarStream = new FileStream(jarPath, FileMode.Open, FileAccess.Read, FileShare.Read, 16384, true);
-        using var coreArchive = new ZipArchive(coreStream, ZipArchiveMode.Update);
-        using var jarArchive = new ZipArchive(jarStream);
-
-        var filter = jarPath.EndsWith(".jar", StringComparison.OrdinalIgnoreCase) ? "" : "MINECRAFT-JAR";
-        foreach (var entry in jarArchive.Entries)
+        var temporaryPath = corePath + "." + Guid.NewGuid().ToString("N") + ".tmp";
+        try
         {
-            if (!entry.FullName.Contains(filter, StringComparison.Ordinal))
-                continue;
-            // 核心 jar 中已有同名条目时先删除，避免写出重复条目
-            coreArchive.GetEntry(entry.FullName)?.Delete();
-            using var coreEntryStream = coreArchive.CreateEntry(entry.FullName).Open();
-            using var jarEntryStream = jarArchive.GetEntry(entry.FullName)?.Open();
-            jarEntryStream?.CopyTo(coreEntryStream);
-        }
+            cancellationToken.ThrowIfCancellationRequested();
+            File.Copy(corePath, temporaryPath);
+            using (var coreStream = new FileStream(temporaryPath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+            {
+                using (var coreArchive = new ZipArchive(coreStream, ZipArchiveMode.Update, leaveOpen: true))
+                using (var jarStream = File.OpenRead(jarPath))
+                using (var jarArchive = new ZipArchive(jarStream))
+                {
+                    var isJar = jarPath.EndsWith(".jar", StringComparison.OrdinalIgnoreCase);
+                    var buffer = new byte[81920];
+                    var patchedEntries = 0;
+                    foreach (var entry in jarArchive.Entries)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        if (entry.Name.Length == 0) continue;
+                        var entryName = entry.FullName;
+                        if (!isJar)
+                        {
+                            const string marker = "MINECRAFT-JAR/";
+                            var index = entryName.IndexOf(marker, StringComparison.Ordinal);
+                            if (index < 0) continue;
+                            entryName = entryName[(index + marker.Length)..];
+                        }
+                        if (IsJarSignature(entryName)) continue;
+                        coreArchive.GetEntry(entryName)?.Delete();
+                        using var target = coreArchive.CreateEntry(entryName).Open();
+                        using var source = entry.Open();
+                        int count;
+                        while ((count = source.Read(buffer)) != 0)
+                        {
+                            cancellationToken.ThrowIfCancellationRequested();
+                            target.Write(buffer, 0, count);
+                        }
+                        patchedEntries++;
+                    }
 
-        // 删除签名文件所在的目录，避免 Oracle JDK 加载时校验签名失败导致无法启动
-        coreArchive.GetEntry("META-INF")?.Delete();
+                    if (patchedEntries == 0)
+                        throw new InvalidDataException("补丁中没有可应用的游戏文件。");
+
+                    // 移除失效的签名，保留 META-INF/services 等真正需要的资源。
+                    foreach (var entry in coreArchive.Entries.Where(entry => IsJarSignature(entry.FullName)).ToArray())
+                        entry.Delete();
+                }
+                coreStream.Flush(flushToDisk: true);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            File.Move(temporaryPath, corePath, overwrite: true);
+        }
+        finally
+        {
+            try { File.Delete(temporaryPath); }
+            catch (IOException) { }
+            catch (UnauthorizedAccessException) { }
+        }
     }
+
+    private static bool IsJarSignature(string name) => name.StartsWith("META-INF/", StringComparison.OrdinalIgnoreCase)
+        && new[] { ".SF", ".RSA", ".DSA", ".EC" }.Contains(Path.GetExtension(name), StringComparer.OrdinalIgnoreCase);
 
     private static void PostHint(string text, HintType type) =>
         Dispatcher.UIThread.Post(() => HintService.Hint(text, type));

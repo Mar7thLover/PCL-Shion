@@ -89,7 +89,8 @@ public static class VersionResolver
             if (!visited.Add(name))
                 throw new InvalidDataException($"Circular inheritsFrom chain involving '{name}'.");
 
-            var file = VersionFile.Load(Path.Combine(versionsDirectory, name, $"{name}.json"));
+            var directory = ManifestPath.ResolveName(versionsDirectory, name);
+            var file = VersionFile.Load(ManifestPath.ResolveName(directory, name, ".json"));
             chain.Add((name, file));
             name = file.InheritsFrom;
         }
@@ -122,7 +123,7 @@ public static class VersionResolver
 
     private static string GetJarPath(string versionsDirectory, string name)
     {
-        return Path.Combine(versionsDirectory, name, $"{name}.jar");
+        return ManifestPath.ResolveName(ManifestPath.ResolveName(versionsDirectory, name), name, ".jar");
     }
 
     /// <summary>

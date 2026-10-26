@@ -1,0 +1,8 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <sys:String x:Key="Instance.Resource.Mod.ParseMetadata">Parse mod information</sys:String>
+    <sys:String x:Key="Instance.Resource.Mod.ParseMetadata.Hint">Turn off to list file names only. You can still enable, disable and delete mods. Turn on again to read names and dependencies.</sys:String>
+    <sys:String x:Key="Instance.Resource.Mod.SkipParsing">Stop parsing and list files</sys:String>
+    <sys:String x:Key="Instance.Resource.Mod.PartialMetadata">Some mod information could not be read</sys:String>
+</ResourceDictionary>

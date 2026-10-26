@@ -245,6 +245,9 @@ public partial class MainWindow : Window, IPageHost
 
     protected override void OnClosed(EventArgs e)
     {
+        extraRefreshTimer.Stop();
+        foreach (var login in PanMsg.Children.OfType<MyMsgLogin>().ToArray())
+            login.Cancel();
         base.OnClosed(e);
         if (ReferenceEquals(Current, this))
             Current = null;
@@ -552,8 +555,7 @@ public partial class MainWindow : Window, IPageHost
         MyMsgSelect select => () => select.Btn1_Click(null, null),
         MyMsgText text => () => text.Btn1_Click(null, null),
         MyMsgMarkdown markdown => () => markdown.Btn1_Click(null, null),
-        // TODO(shion): MyMsgLogin 尚未公开 Btn1_Click，回车暂不触发其主按钮（打开验证网址）
-        MyMsgLogin => null,
+        MyMsgLogin login => login.OpenVerificationWebsite,
         _ => null
     };
 
@@ -575,8 +577,7 @@ public partial class MainWindow : Window, IPageHost
             : markdown.Btn2.IsVisible
                 ? () => markdown.Btn2_Click(null, null)
                 : () => markdown.Btn1_Click(null, null),
-        // TODO(shion): MyMsgLogin 尚未公开 Btn3_Click，Esc 暂不能取消设备码登录，需要在 MyMsgLogin 中公开后接入
-        MyMsgLogin => null,
+        MyMsgLogin login => login.Cancel,
         _ => null
     };
 

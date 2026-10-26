@@ -11,6 +11,10 @@ public static class ModsStrings
     public static string SearchPlaceholder => Text(nameof(SearchPlaceholder));
     public static string Refresh => Text(nameof(Refresh));
     public static string OpenFolder => Text(nameof(OpenFolder));
+    public static string ParseMetadata => Text(nameof(ParseMetadata));
+    public static string ParseMetadataHint => Text(nameof(ParseMetadataHint));
+    public static string PartialMetadata => Text(nameof(PartialMetadata));
+    public static string ReadWarnings(int count) => Text(nameof(ReadWarnings), count);
     public static string Summary(int total, int enabled) => Text(nameof(Summary), total, enabled);
 
     public static string Loading => Text(nameof(Loading));

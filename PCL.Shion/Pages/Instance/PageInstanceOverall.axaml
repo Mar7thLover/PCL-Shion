@@ -105,10 +105,12 @@
                 <StackPanel Margin="25,40,25,15">
                     <WrapPanel Margin="0,-5,-20,7">
                         <c:MyButton x:Name="BtnManageScript" Text="{loc:L Instance.Overall.Manage.ExportLaunchScript}" MinWidth="140" Padding="13,0"
-                                    Margin="0,7,20,0" Height="35" />
+                                    Margin="0,7,20,0" Height="35" IsEnabled="False"
+                                    ToolTip.Tip="{loc:L Instance.Overall.Manage.ScriptUnavailable}" />
                         <c:MyButton x:Name="BtnManageTest" Text="{loc:L Instance.Overall.Manage.TestGame}" MinWidth="140" Padding="13,0"
                                     Margin="0,7,20,0"
-                                    Height="35" />
+                                    Height="35" IsEnabled="False"
+                                    ToolTip.Tip="{loc:L Instance.Overall.Manage.TestUnavailable}" />
                         <c:MyButton x:Name="BtnManageCheck" Text="{loc:L Instance.Overall.Manage.RepairFiles}" MinWidth="140" Padding="13,0"
                                     Margin="0,7,20,0"
                                     ToolTip.Tip="{loc:L Instance.Overall.Manage.RepairFiles.ToolTip}"
@@ -124,6 +126,8 @@
                                     Margin="0,7,20,0"
                                     Height="35" />
                     </WrapPanel>
+                    <TextBlock Text="{loc:L Instance.Overall.Manage.PendingFeatures}" TextWrapping="Wrap"
+                               FontSize="12" Opacity="0.7" Margin="0,5,0,0" />
                 </StackPanel>
             </c:MyCard>
         </StackPanel>

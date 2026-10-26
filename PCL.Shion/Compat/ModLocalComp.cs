@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json.Nodes;
+using System.Threading;
 using PCL.Shion.Core.Minecraft;
 using PCL.Shion.Core.Mods;
 using PCL.Shion.Core.Online;
@@ -37,6 +38,9 @@ public static class ModLocalComp
 
         /// <summary>该资源类型依赖的加载器。</summary>
         public List<CompLoaderType> loaders = [];
+
+        /// <summary>此次扫描是否解析元数据；快照避免设置变化影响正在运行的扫描。</summary>
+        public bool parseModMetadata = true;
     }
 
     /// <summary>
@@ -147,6 +151,9 @@ public static class ModLocalComp
 
     private static void LoadResourceList(ModLoader.LoaderTask<CompLocalLoaderData, List<LocalCompFile>> loader)
     {
+        if (loader.IsAborted)
+            return;
+        var cancellationToken = loader.AbortedToken;
         var result = new List<LocalCompFile>();
         var input = loader.input;
         if (input is null || string.IsNullOrEmpty(input.compPath) || !Directory.Exists(input.compPath))
@@ -157,6 +164,7 @@ public static class ModLocalComp
 
         foreach (var directory in Directory.EnumerateDirectories(input.compPath))
         {
+            cancellationToken.ThrowIfCancellationRequested();
             if (loader.IsAborted)
                 return;
             result.Add(new LocalCompFile(Path.Combine(directory, LocalCompFile.FolderMarker)));
@@ -164,25 +172,31 @@ public static class ModLocalComp
 
         foreach (var file in Directory.EnumerateFiles(input.compPath))
         {
+            cancellationToken.ThrowIfCancellationRequested();
             if (loader.IsAborted)
                 return;
             if (!LocalCompFile.IsCompFile(file, input.compType))
                 continue;
-            result.Add(new LocalCompFile(file));
+            result.Add(new LocalCompFile(file, input.parseModMetadata, cancellationToken));
         }
 
-        ResolveComps(result);
-        loader.output = result;
+        cancellationToken.ThrowIfCancellationRequested();
+        if (loader.IsAborted || !ReferenceEquals(loader.input, input))
+            return;
+        ResolveComps(result, cancellationToken);
+        if (!loader.IsAborted && ReferenceEquals(loader.input, input))
+            loader.output = result;
     }
 
     /// <summary>
     ///     通过本地已缓存的工程文件列表（<see cref="CompApi.FilesCache"/>）按 SHA-1 关联在线工程，不发起网络请求。
     /// </summary>
-    private static void ResolveComps(IEnumerable<LocalCompFile> items)
+    private static void ResolveComps(IEnumerable<LocalCompFile> items, CancellationToken cancellationToken)
     {
         var index = new Dictionary<string, (CompProject Project, CompFile File)>(StringComparer.OrdinalIgnoreCase);
         foreach (var (projectId, files) in CompApi.FilesCache)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             if (!CompProject.Cache.TryGetValue(projectId, out var project))
                 continue;
             foreach (var file in files.ToList())
@@ -194,6 +208,7 @@ public static class ModLocalComp
             return;
         foreach (var item in items)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             if (item.IsFolder || string.IsNullOrEmpty(item.ModrinthHash))
                 continue;
             if (!index.TryGetValue(item.ModrinthHash, out var hit))
@@ -261,8 +276,9 @@ public static class ModLocalComp
         /// <summary>
         ///     读取文件信息。文件夹与非 Mod 的资源只包含文件名信息，Mod 会通过 <see cref="ModScanner"/> 读取元数据。
         /// </summary>
-        public LocalCompFile(string path)
+        public LocalCompFile(string path, bool? parseMetadata = null, CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             this.path = path;
             if (IsFolder)
                 return;
@@ -271,9 +287,11 @@ public static class ModLocalComp
                 return;
             try
             {
-                _mod = ModScanner.Read(path);
+                _mod = ModScanner.Read(path,
+                    new ModScanOptions { ParseMetadata = parseMetadata ?? App.Services?.Settings.EnableModMetadataParsing ?? true },
+                    cancellationToken);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
                 _unavailable = true;
                 FileUnavailableReason = ex;
@@ -299,7 +317,7 @@ public static class ModLocalComp
         public string FileName => Path.GetFileName(ActualPath);
 
         /// <summary>去掉 .disabled 与 .old 后缀的文件名。</summary>
-        public string RawFileName => FileName.Replace(".disabled", "").Replace(".old", "");
+        public string RawFileName => ModScanner.GetEnabledFileName(FileName);
 
         /// <summary>去掉 .disabled 与 .old 后缀的完整路径，启用与禁用的同一个 Mod 具有相同的 RawPath。</summary>
         public string RawPath
@@ -337,6 +355,9 @@ public static class ModLocalComp
 
         /// <summary>版本号，读取不到时为 null。</summary>
         public string? Version => _mod?.Version;
+
+        /// <summary>元数据损坏或达到读取预算；文件仍可启用、禁用和删除。</summary>
+        public string? MetadataWarning => _mod?.ReadWarning;
 
         /// <summary>文件无法读取时的原因。</summary>
         public Exception? FileUnavailableReason { get; private set; }
@@ -525,13 +546,7 @@ public static class ModLocalComp
         /// </summary>
         public static bool IsModFileName(string nameOrPath)
         {
-            var lower = nameOrPath.ToLowerInvariant();
-            return lower.EndsWith(".jar", StringComparison.Ordinal) ||
-                   lower.EndsWith(".litemod", StringComparison.Ordinal) ||
-                   lower.EndsWith(".jar.disabled", StringComparison.Ordinal) ||
-                   lower.EndsWith(".jar.old", StringComparison.Ordinal) ||
-                   lower.EndsWith(".litemod.disabled", StringComparison.Ordinal) ||
-                   lower.EndsWith(".litemod.old", StringComparison.Ordinal);
+            return ModScanner.IsModFileName(nameOrPath);
         }
 
         /// <summary>

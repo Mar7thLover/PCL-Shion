@@ -172,6 +172,46 @@ public sealed class GameRunnerTest
         game.Kill();
     }
 
+    [TestMethod]
+    public void ThrowingLifecycleSubscribersDoNotPreventRecordingOrThePostExitCommand()
+    {
+        var settings = new InstanceSettings
+        {
+            PostExitCommand = ShellPlan.IsWindows
+                ? "echo completed>post.tmp& move /y post.tmp post.txt >nul"
+                : "echo completed > post.tmp && mv post.tmp post.txt"
+        };
+        var marker = Path.Combine(_gameDirectory, "post.txt");
+        var runner = new GameRunner();
+        var changes = 0;
+        runner.RunningChanged += () => throw new InvalidOperationException("broken running-game subscriber");
+        runner.RunningChanged += () => Interlocked.Increment(ref changes);
+
+        var game = runner.Start(_root.RootPath, Instance, GamePlan(), settings, null,
+            _ => throw new InvalidOperationException("broken exit subscriber"));
+
+        Assert.IsTrue(SpinWait.SpinUntil(() => File.Exists(marker), Timeout), "a broken subscriber must not stop cleanup and post-exit commands");
+        Assert.HasCount(0, runner.Running);
+        Assert.AreEqual(2, Volatile.Read(ref changes));
+        Assert.IsNotNull(InstanceStore.Load(_root.RootPath, Instance).LastPlayed);
+        game.Kill();
+    }
+
+    [TestMethod]
+    public void RunningChangedSubscribersCanReadTheRunningListOnAnotherThread()
+    {
+        var runner = new GameRunner();
+        var observations = new List<bool>();
+        using var exited = new ManualResetEventSlim();
+        runner.RunningChanged += () =>
+            observations.Add(Task.Run(() => runner.Running.Count).Wait(TimeSpan.FromSeconds(5)));
+
+        runner.Start(_root.RootPath, Instance, GamePlan(), new InstanceSettings(), null, _ => exited.Set());
+
+        Assert.IsTrue(exited.Wait(Timeout));
+        CollectionAssert.AreEqual(new[] { true, true }, observations);
+    }
+
     /// <summary>
     /// 在实例目录中运行的游戏：默认停顿约一秒后正常退出。
     /// </summary>

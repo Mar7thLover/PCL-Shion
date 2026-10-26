@@ -1,0 +1,8 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <sys:String x:Key="Instance.Resource.Mod.ParseMetadata">解析模組資訊</sys:String>
+    <sys:String x:Key="Instance.Resource.Mod.ParseMetadata.Hint">關閉後僅顯示檔案名稱，仍可啟用、停用及刪除模組；重新開啟後恢復名稱與相依性解析。</sys:String>
+    <sys:String x:Key="Instance.Resource.Mod.SkipParsing">停止解析，僅列出檔案</sys:String>
+    <sys:String x:Key="Instance.Resource.Mod.PartialMetadata">部分模組資訊無法解析</sys:String>
+</ResourceDictionary>

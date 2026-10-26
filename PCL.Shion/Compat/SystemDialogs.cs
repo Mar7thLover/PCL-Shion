@@ -2,14 +2,13 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using PCL.Shion.Pages.Setup;
-using PCL.Shion.UI;
 
 namespace PCL.Shion;
 
 /// <summary>
 ///     与 WPF 版 PCL.Core.UI.SystemDialogs 对应的文件对话框。
 ///     Avalonia 的文件选择器（<c>TopLevel.StorageProvider</c>）只有异步接口，因此实际的选择逻辑放在 <see cref="SelectFileAsync" />
-///     和 <see cref="SelectSaveFileAsync" />；同步签名只为保持与 WPF 调用处的形状一致，无法在 UI 线程上同步等待，目前只提示暂未提供。
+///     和 <see cref="SelectSaveFileAsync" />。调用方必须 await，避免在 UI 线程阻塞原生选择器。
 ///     文件过滤器沿用 WPF 的写法，例如 <c>常用图片文件|*.png;*.jpg</c>。取消时返回空字符串，与 WPF 相同。
 /// </summary>
 public static class SystemDialogs
@@ -39,27 +38,6 @@ public static class SystemDialogs
         var (filterName, patterns) = ParseFilter(fileFilter);
         return await SetupDialogs.SelectSaveFileAsync(anchor, title ?? DefaultSaveTitle, fileName, filterName,
             patterns) ?? "";
-    }
-
-    /// <summary>
-    ///     同步形状的选择文件。调用方应改用 <see cref="SelectFileAsync" />。
-    /// </summary>
-    public static string SelectFile(string? fileFilter = null, string? title = null, string? initialDirectory = null)
-    {
-        // TODO(shion): 调用方（实例概览页的图标、补丁文件选择）需要改成 await SelectFileAsync，这里无法同步等待 Avalonia 的文件选择器。
-        HintService.Hint("该功能暂未在 Shion 中提供", HintType.Error);
-        return "";
-    }
-
-    /// <summary>
-    ///     同步形状的选择保存位置。调用方应改用 <see cref="SelectSaveFileAsync" />。
-    /// </summary>
-    public static string SelectSaveFile(string? title, string fileName, string? fileFilter = null,
-        string? initialDirectory = null)
-    {
-        // TODO(shion): 调用方（导出启动脚本）需要改成 await SelectSaveFileAsync，这里无法同步等待 Avalonia 的文件选择器。
-        HintService.Hint("该功能暂未在 Shion 中提供", HintType.Error);
-        return "";
     }
 
     /// <summary>

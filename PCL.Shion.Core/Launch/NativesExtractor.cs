@@ -1,4 +1,5 @@
 using System.IO.Compression;
+using PCL.Shion.Core.Minecraft;
 
 namespace PCL.Shion.Core.Launch;
 
@@ -23,9 +24,7 @@ internal static class NativesExtractor
             if (entry.Name.Length == 0 || IsExcluded(entry.FullName, exclude))
                 continue;
 
-            var destination = Path.GetFullPath(Path.Combine(targetDirectory, entry.FullName));
-            if (!destination.StartsWith(targetDirectory + Path.DirectorySeparatorChar, StringComparison.Ordinal))
-                throw new InvalidDataException($"Unsafe path '{entry.FullName}' in {jarPath}");
+            var destination = ManifestPath.Resolve(targetDirectory, entry.FullName);
 
             if (File.Exists(destination) && new FileInfo(destination).Length == entry.Length)
                 continue;

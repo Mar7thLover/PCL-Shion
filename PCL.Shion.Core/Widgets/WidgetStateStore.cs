@@ -1,5 +1,6 @@
 using System.Text.Json;
 using PCL.Shion.Core.Platform;
+using PCL.Shion.Core.IO;
 
 namespace PCL.Shion.Core.Widgets;
 
@@ -53,7 +54,13 @@ internal static class WidgetStateStore
     {
         lock (SyncRoot)
         {
-            var state = Load();
+            var stored = JsonFileStore.Read<WidgetState>(FilePath, JsonOptions);
+            if (!stored.CanPersist)
+            {
+                changed = false;
+                return false;
+            }
+            var state = stored.Value ?? new WidgetState();
             changed = mutate(state);
             if (!changed) return true;
             return Save(state);
@@ -64,8 +71,7 @@ internal static class WidgetStateStore
     {
         try
         {
-            if (!File.Exists(FilePath)) return new WidgetState();
-            return JsonSerializer.Deserialize<WidgetState>(File.ReadAllText(FilePath), JsonOptions) ?? new WidgetState();
+            return JsonFileStore.Read<WidgetState>(FilePath, JsonOptions).Value ?? new WidgetState();
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or JsonException or NotSupportedException)
         {
@@ -77,8 +83,7 @@ internal static class WidgetStateStore
     {
         try
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(FilePath)!);
-            File.WriteAllText(FilePath, JsonSerializer.Serialize(state, JsonOptions));
+            JsonFileStore.Save(FilePath, state, JsonOptions);
             return true;
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or NotSupportedException)

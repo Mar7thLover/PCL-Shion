@@ -1,6 +1,7 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using PCL.Shion.Core.IO;
 
 namespace PCL.Shion.Core.Instances;
 
@@ -27,7 +28,11 @@ public static class InstanceStore
         if (!File.Exists(path))
             return new InstanceSettings();
 
-        return JsonSerializer.Deserialize<InstanceSettings>(File.ReadAllText(path), JsonOptions) ?? new InstanceSettings();
+        using var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete);
+        using var reader = new StreamReader(stream, detectEncodingFromByteOrderMarks: true);
+        var settings = JsonSerializer.Deserialize<InstanceSettings>(reader.ReadToEnd(), JsonOptions) ?? new InstanceSettings();
+        settings.EnvironmentVariables ??= new();
+        return settings;
     }
 
     /// <summary>
@@ -36,16 +41,12 @@ public static class InstanceStore
     public static void Save(string minecraftRoot, string instanceName, InstanceSettings settings)
     {
         var path = GetPath(minecraftRoot, instanceName);
-        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-
-        // 先写临时文件再替换，写入被打断时不会留下残缺的设置
-        var temporaryPath = path + ".tmp";
-        File.WriteAllText(temporaryPath, JsonSerializer.Serialize(settings, JsonOptions));
-        File.Move(temporaryPath, path, overwrite: true);
+        AtomicFile.WriteAllText(path, JsonSerializer.Serialize(settings, JsonOptions), ownerOnly: true);
     }
 
     internal static string GetPath(string minecraftRoot, string instanceName)
     {
-        return Path.Combine(minecraftRoot, "versions", instanceName, "PCL Shion", "instance.json");
+        var directory = Minecraft.ManifestPath.ResolveName(Path.Combine(minecraftRoot, "versions"), instanceName);
+        return Path.Combine(directory, "PCL Shion", "instance.json");
     }
 }

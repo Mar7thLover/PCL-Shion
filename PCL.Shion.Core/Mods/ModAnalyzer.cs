@@ -18,6 +18,9 @@ public static class ModAnalyzer
     public static IReadOnlyList<ModIssue> Analyze(IReadOnlyList<LocalMod> mods)
     {
         var enabled = mods.Where(mod => mod is { Enabled: true, Id: not null }).ToList();
+        // 未解析的文件可能提供缺失的 ID；不要把不完整的扫描结果误报成确定的缺少前置。
+        if (mods.Any(mod => mod.Enabled && !mod.MetadataComplete))
+            return [.. FindDuplicates(enabled)];
         return [.. FindDuplicates(enabled), .. FindMissingDependencies(enabled)];
     }
 

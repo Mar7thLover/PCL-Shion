@@ -14,8 +14,6 @@ namespace PCL.Shion.ViewModels;
 /// </summary>
 public sealed partial class ModItem(LocalMod mod, ModsViewModel owner) : ObservableObject
 {
-    private const string DisabledSuffix = ".disabled";
-
     private bool _enabled = mod.Enabled;
 
     public LocalMod Mod { get; private set; } = mod;
@@ -25,7 +23,8 @@ public sealed partial class ModItem(LocalMod mod, ModsViewModel owner) : Observa
 
     /// <summary>列表第二行：版本、加载器与文件名。</summary>
     public string Description => string.Join(" · ",
-        new[] { Mod.Version, LoadersText, Mod.FileName }.Where(part => !string.IsNullOrEmpty(part)));
+        new[] { Mod.Version, LoadersText, Mod.FileName, Mod.ReadWarning is null ? null : ModsStrings.PartialMetadata }
+            .Where(part => !string.IsNullOrEmpty(part)));
 
     /// <summary>启用开关的状态；由界面改动时会触发改名，改名失败后用 <see cref="RestoreEnabled"/> 还原。</summary>
     public bool Enabled
@@ -82,9 +81,7 @@ public sealed partial class ModItem(LocalMod mod, ModsViewModel owner) : Observa
 
     private static string FileStem(string fileName)
     {
-        var name = fileName.EndsWith(DisabledSuffix, StringComparison.OrdinalIgnoreCase)
-            ? fileName[..^DisabledSuffix.Length]
-            : fileName;
+        var name = ModScanner.GetEnabledFileName(fileName);
         return Path.GetFileNameWithoutExtension(name);
     }
 }
