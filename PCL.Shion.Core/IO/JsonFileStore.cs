@@ -16,12 +16,17 @@ public static class JsonFileStore
 {
     public static JsonFileResult<T> Read<T>(string path, JsonSerializerOptions? options = null) where T : class
     {
-        if (TryRead(path, options, out T? value, out var error))
-            return new(value, JsonFileStatus.Loaded, null);
-        if (TryRead(path + ".bak", options, out value, out var backupError))
-            return new(value, JsonFileStatus.Recovered, error);
-        var missing = IsMissing(error) && IsMissing(backupError);
-        return new(null, missing ? JsonFileStatus.Missing : JsonFileStatus.Unreadable, IsMissing(error) ? backupError : error);
+        // Windows 替换文件时，新打开的句柄可能短暂被拒绝。与本进程的写入者协调，
+        // 避免把正常保存误判为主文件损坏，或退回旧备份后永久关闭配置写入。
+        lock (AtomicFile.GateFor(path))
+        {
+            if (TryRead(path, options, out T? value, out var error))
+                return new(value, JsonFileStatus.Loaded, null);
+            if (TryRead(path + ".bak", options, out value, out var backupError))
+                return new(value, JsonFileStatus.Recovered, error);
+            var missing = IsMissing(error) && IsMissing(backupError);
+            return new(null, missing ? JsonFileStatus.Missing : JsonFileStatus.Unreadable, IsMissing(error) ? backupError : error);
+        }
     }
 
     public static void Save<T>(string path, T value, JsonSerializerOptions? options = null, bool ownerOnly = true) where T : class

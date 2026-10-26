@@ -8,11 +8,17 @@ public static class SpecialFolders
 {
     /// <summary>
     /// 取得特殊目录的绝对路径。目录可能尚未创建，写入前需由调用方创建。
-    /// 系统给不出绝对路径时（例如 HOME 为相对路径），退回到程序所在目录。
+    /// 系统给不出绝对路径时（例如 Linux 的 HOME 为相对路径），退回到程序所在目录。
     /// </summary>
-    public static string Get(Environment.SpecialFolder folder)
+    public static string Get(Environment.SpecialFolder folder) => Get(folder, Environment.GetFolderPath);
+
+    // 显式传入解析器以便独立验证缺失目录与无效路径，不修改进程级 HOME/XDG 环境。
+    // macOS 的应用数据目录由系统原生 API 决定，不能用 HOME 覆盖来模拟它。
+    internal static string Get(
+        Environment.SpecialFolder folder,
+        Func<Environment.SpecialFolder, Environment.SpecialFolderOption, string> resolveFolder)
     {
-        var path = Environment.GetFolderPath(folder, Environment.SpecialFolderOption.DoNotVerify);
+        var path = resolveFolder(folder, Environment.SpecialFolderOption.DoNotVerify);
         return Path.IsPathFullyQualified(path) ? path : AppContext.BaseDirectory;
     }
 }

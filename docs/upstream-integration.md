@@ -2,7 +2,7 @@
 
 调研日期：2026-10-25（America/Los_Angeles）。对照基线：`Mar7thLover/PCL-Shion` 的 `dev`，提交 `9fb1c0144a7595e7770a8119574784a373f503f1`。
 
-最终验证日期：2026-10-26（UTC）。本次交付通过 903 项 Core 测试和 31 项应用测试，共 934 项；六个 RID 的发布验证通过，发布产物不包含 .NET 运行时。验证环境、命令、产物检查和剩余限制见[验证记录](validation.md)。
+最终验证日期：2026-10-26（UTC）。本次交付通过 908 项 Core 测试和 31 项应用测试，共 939 项；六个 RID 的发布验证通过，发布产物不包含 .NET 运行时。验证环境、命令、产物检查和剩余限制见[验证记录](validation.md)。
 
 GitHub 仓库元数据的 `parent` 与 `source` 均为 [PCL-Community/PCL-CE](https://github.com/PCL-Community/PCL-CE)。本仓库 README 说明更早来源是 [Meloong-Git/PCL](https://github.com/Meloong-Git/PCL)。以下优先检查直接上游的实际 issue、PR 内容与状态，再与 Shion 的 Avalonia 实现比对；没有把 WPF 修复自动视作新前端的同一个缺陷，也没有机械合并上游分支。
 

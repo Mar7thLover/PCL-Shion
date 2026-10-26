@@ -123,7 +123,15 @@ public sealed class JsonFileStoreTest
         Directory.CreateDirectory(_directory);
         var destination = Path.Combine(_directory, "directory-not-file");
         Directory.CreateDirectory(destination);
-        Assert.Throws<IOException>(() => AtomicFile.WriteAllText(destination, "data"));
+        try
+        {
+            AtomicFile.WriteAllText(destination, "data");
+            Assert.Fail("Replacing a directory with a file must fail.");
+        }
+        catch (Exception error) when (error is IOException or UnauthorizedAccessException)
+        {
+            // Windows 对目录目标返回拒绝访问，Unix 返回 IO 错误；都必须保留目标。
+        }
         Assert.IsTrue(Directory.Exists(destination));
         Assert.IsEmpty(Directory.GetFiles(_directory, "*.tmp"));
     }
