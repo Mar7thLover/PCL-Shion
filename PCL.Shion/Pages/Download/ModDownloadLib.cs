@@ -727,13 +727,13 @@ public static class ModDownloadLib
             if (loader is null)
             {
                 await services.CreateInstaller()
-                    .InstallVanillaAsync(root, minecraft, instanceName, null, CancellationToken.None)
+                    .InstallVanillaAsync(root, minecraft, instanceName, null, services.ShutdownToken)
                     .ConfigureAwait(false);
             }
             else
             {
                 await new LoaderInstaller(services.Engine, services.Source)
-                    .InstallAsync(root, loader, instanceName, javaExecutable, null, CancellationToken.None)
+                    .InstallAsync(root, loader, instanceName, javaExecutable, null, services.ShutdownToken)
                     .ConfigureAwait(false);
             }
 
@@ -749,12 +749,16 @@ public static class ModDownloadLib
                     items.Add(mod.ToDownloadItem(Path.Combine(modsFolder, CompNaming.SanitizeFileName(mod.FileName))));
                 }
 
-                var result = await services.Engine.DownloadAsync(items, null, CancellationToken.None).ConfigureAwait(false);
+                var result = await services.Engine.DownloadAsync(items, null, services.ShutdownToken).ConfigureAwait(false);
                 if (!result.Succeeded)
                     throw new InvalidOperationException("模组文件下载失败：" + string.Join(", ", result.Failed.Select(item => item.TargetPath)));
             }
 
             services.NotifyInstancesChanged();
+        }
+        catch (OperationCanceledException) when (services.ShutdownToken.IsCancellationRequested)
+        {
+            CleanupFailedFolder(instanceFolder);
         }
         catch (Exception ex)
         {

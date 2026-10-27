@@ -63,7 +63,7 @@ public static class ModLoader
         ///     当前加载器是否由 IsForceRestart 强制调起。
         ///     这个属性自身不会干任何事，而是提供给加载器执行的函数，使得加载器调用另一个加载器时，可以继承强制重启属性。
         /// </summary>
-        public bool isForceRestarting;
+        public virtual bool isForceRestarting { get; set; }
 
         /// <summary>
         ///     加载器的名称。
@@ -121,23 +121,32 @@ public static class ModLoader
         }
 
         // 状态监控
-        private LoadState _state = LoadState.Waiting;
+        private volatile LoadState _state = LoadState.Waiting;
+        private long _stateVersion;
 
         /// <summary>
         ///     加载器的状态。
         /// </summary>
-        public LoadState State
+        public virtual LoadState State
         {
             get => _state;
             set
             {
-                if (_state == value)
-                    return;
-                var oldState = _state;
-                _state = value;
+                LoadState oldState;
+                long version;
+                lock (lockState)
+                {
+                    if (_state == value)
+                        return;
+                    oldState = _state;
+                    _state = value;
+                    version = Interlocked.Increment(ref _stateVersion);
+                }
                 // 实现 ILoadingTrigger 接口与 OnStateChanged 回调
                 RunInUi(() =>
                 {
+                    if (Volatile.Read(ref _stateVersion) != version)
+                        return;
                     switch (value)
                     {
                         case LoadState.Loading:
@@ -161,14 +170,18 @@ public static class ModLoader
                     OnStateChangedUi?.Invoke(this, value, oldState);
                 });
                 if (hasOnStateChangedThread)
-                    RunInThread(() => OnStateChangedThread?.Invoke(this, value, oldState));
+                    RunInThread(() =>
+                    {
+                        if (Volatile.Read(ref _stateVersion) == version)
+                            OnStateChangedThread?.Invoke(this, value, oldState);
+                    });
             }
         }
 
         /// <summary>
         ///     若加载器出错，可提供给外部参考的异常。
         /// </summary>
-        public Exception? Error { get; set; }
+        public virtual Exception? Error { get; set; }
 
         // 进度监控
         private double _progress = -1d;
@@ -370,7 +383,7 @@ public static class ModLoader
         /// <summary>
         ///     当前执行线程是否应当中断。需要手动提供加载器线程，用于需要跨线程检查的情况。
         /// </summary>
-        public bool IsAbortedWithThread(int compareTaskId)
+        public virtual bool IsAbortedWithThread(int compareTaskId)
         {
             return lastRunningTask is null || compareTaskId != lastRunningTask.Id ||
                    State == LoadState.Aborted;
@@ -388,17 +401,160 @@ public static class ModLoader
     /// </summary>
     public class LoaderTask<InputType, OutputType> : LoaderTask
     {
-        // 输入输出
-        public InputType? input;
+        // 每次运行保留独立输入、取消令牌与输出。AsyncLocal 也覆盖委托内部创建的异步回调。
+        private readonly AsyncLocal<RunContext?> _executingRun = new();
+        private RunContext? _currentRun;
+        private InputType? _input;
+        private OutputType? _output;
+
+        public InputType? input
+        {
+            get
+            {
+                lock (lockState)
+                    return _executingRun.Value is { } run ? run.Input : _input;
+            }
+            set
+            {
+                lock (lockState)
+                {
+                    if (_executingRun.Value is { } run)
+                    {
+                        if (IsActive(run)) run.Input = value;
+                    }
+                    else _input = value;
+                }
+            }
+        }
         protected internal Func<InputType?>? inputDelegate;
 
         // 执行事件
         protected internal Action<LoaderTask<InputType, OutputType>> loadDelegate;
-        public OutputType? output = default;
+        public OutputType? output
+        {
+            get
+            {
+                lock (lockState)
+                    return _executingRun.Value is { } run ? run.Output : _output;
+            }
+            set
+            {
+                lock (lockState)
+                {
+                    if (_executingRun.Value is { } run)
+                    {
+                        if (IsActive(run)) run.Output = value;
+                    }
+                    else _output = value;
+                }
+            }
+        }
 
-        private CancellationTokenSource? cancelToken;
+        public CancellationToken AbortedToken
+        {
+            get
+            {
+                lock (lockState)
+                    return (_executingRun.Value ?? _currentRun)?.Token ?? new CancellationToken(true);
+            }
+        }
 
-        public CancellationToken AbortedToken => cancelToken?.Token ?? new CancellationToken(true);
+        public override bool isForceRestarting
+        {
+            get => _executingRun.Value?.ForceRestart ?? base.isForceRestarting;
+            set
+            {
+                lock (lockState)
+                    if (_executingRun.Value is not { } run || IsActive(run))
+                        base.isForceRestarting = value;
+            }
+        }
+
+        public override LoadState State
+        {
+            get => base.State;
+            set
+            {
+                lock (lockState)
+                    if (_executingRun.Value is not { } run || IsActive(run))
+                        PublishState(value);
+            }
+        }
+
+        public override Exception? Error
+        {
+            get => base.Error;
+            set
+            {
+                lock (lockState)
+                    if (_executingRun.Value is not { } run || IsActive(run))
+                        base.Error = value;
+            }
+        }
+
+        public override double Progress
+        {
+            get => base.Progress;
+            set
+            {
+                lock (lockState)
+                    if (_executingRun.Value is not { } run || IsActive(run))
+                        base.Progress = value;
+            }
+        }
+
+        public override bool IsAbortedWithThread(int compareTaskId)
+        {
+            lock (lockState)
+            {
+                if (_executingRun.Value is { } run)
+                    return !IsActive(run);
+                return base.IsAbortedWithThread(compareTaskId);
+            }
+        }
+
+        private bool IsActive(RunContext run) =>
+            ReferenceEquals(_currentRun, run) && !run.Completed && !run.Token.IsCancellationRequested
+            && base.State == LoadState.Loading;
+
+        // 状态观察者应读取公开的最新结果，不能继承工作线程的运行上下文。
+        private void PublishState(LoadState value)
+        {
+            var previous = _executingRun.Value;
+            _executingRun.Value = null;
+            try { base.State = value; }
+            finally { _executingRun.Value = previous; }
+        }
+
+        private sealed class RunContext : IDisposable
+        {
+            private readonly CancellationTokenSource _cancellation = new();
+            public readonly CancellationToken Token;
+            public InputType? Input;
+            public OutputType? Output;
+            public readonly bool ForceRestart;
+            public bool Completed;
+
+            public RunContext(InputType? input, bool forceRestart)
+            {
+                Token = _cancellation.Token;
+                Input = input;
+                ForceRestart = forceRestart;
+            }
+
+            public void Cancel()
+            {
+                try { _cancellation.Cancel(); }
+                catch (ObjectDisposedException) { }
+                catch (AggregateException ex)
+                {
+                    // 取消回调的异常不能让 UI 的停止 / 刷新操作失败。
+                    System.Diagnostics.Trace.TraceWarning("Loader cancellation callback failed: {0}", ex.Message);
+                }
+            }
+
+            public void Dispose() => _cancellation.Dispose();
+        }
 
         // 线程设定
         protected internal ThreadPriority threadPriority;
@@ -444,12 +600,19 @@ public static class ModLoader
                 {
                     State = LoadState.Failed;
                 }
+                return false;
             }
 
+            lock (lockState)
+                return ShouldStartResolved(input, isForceRestart, ignoreReloadTimeout);
+        }
+
+        private bool ShouldStartResolved(object? input, bool isForceRestart, bool ignoreReloadTimeout = false)
+        {
             // 检验输入以确定情况
             if (isForceRestart)
                 return true; // 强制要求重启
-            if (input is null != this.input is null || (input is not null && !input.Equals(this.input)))
+            if (input is null != _input is null || (input is not null && !input.Equals(_input)))
                 return true; // 输入不同
             if ((State == LoadState.Loading || State == LoadState.Finished) &&
                 (ignoreReloadTimeout || reloadTimeout == -1 || lastFinishedTime == 0L ||
@@ -463,74 +626,97 @@ public static class ModLoader
 
         public override void Start(object? input = null, bool isForceRestart = false)
         {
-            // 确认是否开始加载
-            if (ShouldStart(ref input, isForceRestart))
+            // 输入委托可能需要 UI 线程，解析时不能持有 lockState。
+            if (!ShouldStart(ref input, isForceRestart))
+                return;
+
+            RunContext? previous;
+            RunContext run;
+            Task task;
+            lock (lockState)
             {
-                // 输入不同或失败，开始加载
-                if (State == LoadState.Loading)
-                    TriggerThreadAbort();
-                this.input = ToGenericParameter<InputType>(input);
+                // 两个调用可能同时解析完相同的输入，必须在发布新任务前再检查一次。
+                if (!ShouldStartResolved(input, isForceRestart))
+                    return;
+                previous = _currentRun;
+                run = new RunContext(ToGenericParameter<InputType>(input), isForceRestart);
+                task = new Task(() => Execute(run), CancellationToken.None, TaskCreationOptions.DenyChildAttach);
+                _currentRun = run;
+                _input = run.Input;
+                lastRunningTask = task;
+                base.isForceRestarting = isForceRestart;
+                base.Error = null;
+                base.Progress = -1;
+                PublishState(LoadState.Loading);
+            }
+
+            previous?.Cancel();
+            // Task 已经完整发布，短委托也不会在 lastRunningTask 赋值之前开始执行。
+            task.Start(TaskScheduler.Default);
+        }
+
+        private void Execute(RunContext run)
+        {
+            var previous = _executingRun.Value;
+            _executingRun.Value = run;
+            try
+            {
+                run.Token.ThrowIfCancellationRequested();
+                loadDelegate(this);
                 lock (lockState)
                 {
-                    State = LoadState.Loading;
-                    Progress = -1;
+                    if (!IsActive(run)) return;
+                    // PreviewFinish 会同步调度 UI 读取结果；不能依赖执行上下文一定跨 Dispatcher 传播。
+                    _input = run.Input;
+                    _output = run.Output;
                 }
-            }
-            else
-            {
-                return;
-            }
 
-            // 如果线程是因为判断到 IsAborted 而提前中止，则代表已有新线程被重启，此时不应当改为 Aborted
-            // 如果线程是在没有 IsAborted 时手动引发了 ThreadInterruptedException，则代表没有重启线程，这通常代表用户手动取消，应当改为 Aborted
-            lastRunningTask = Task.Run(() =>
-            {
-                try
+                RaisePreviewFinish();
+                lock (lockState)
                 {
-                    isForceRestarting = isForceRestart;
-                    loadDelegate(this);
-                    if (IsAborted)
-                        return;
-
-                    RaisePreviewFinish();
-                    State = LoadState.Finished;
+                    if (!IsActive(run)) return;
+                    _input = run.Input;
+                    _output = run.Output;
                     lastFinishedTime = Environment.TickCount64;
+                    PublishState(LoadState.Finished);
                 }
-                catch (CancelledException)
+            }
+            catch (Exception ex) when (ex is OperationCanceledException or CancelledException or ThreadInterruptedException)
+            {
+                lock (lockState)
+                    if (ReferenceEquals(_currentRun, run))
+                        PublishState(LoadState.Aborted);
+                run.Cancel();
+            }
+            catch (Exception ex)
+            {
+                lock (lockState)
                 {
-                    if (!IsAborted) State = LoadState.Aborted;
+                    if (!IsActive(run)) return;
+                    base.Error = ex;
+                    PublishState(LoadState.Failed);
                 }
-                catch (ThreadInterruptedException)
-                {
-                    if (!IsAborted) State = LoadState.Aborted;
-                }
-                catch (Exception ex)
-                {
-                    if (IsAborted) return;
-                    Error = ex;
-                    State = LoadState.Failed;
-                }
-            }, (cancelToken ??= new CancellationTokenSource()).Token); // 未中断，本次输出有效
+            }
+            finally
+            {
+                lock (lockState)
+                    run.Completed = true;
+                _executingRun.Value = previous;
+                run.Dispose();
+            }
         }
 
         public override void Abort()
         {
-            if (State != LoadState.Loading)
-                return;
+            RunContext? run;
             lock (lockState)
             {
-                State = LoadState.Aborted;
+                if (base.State != LoadState.Loading)
+                    return;
+                run = _currentRun;
+                PublishState(LoadState.Aborted);
             }
-
-            TriggerThreadAbort();
-        }
-
-        private void TriggerThreadAbort()
-        {
-            if (lastRunningTask is null) return;
-            if (!lastRunningTask.IsCompleted) cancelToken?.Cancel();
-            lastRunningTask = null;
-            cancelToken = null;
+            run?.Cancel();
         }
 
         private static T? ToGenericParameter<T>(object? value)
@@ -1063,7 +1249,8 @@ public static class ModLoader
 
     private static object? GetOutput(LoaderBase loader)
     {
-        return loader.GetType().GetField("output")?.GetValue(loader);
+        return loader.GetType().GetProperty("output")?.GetValue(loader)
+               ?? loader.GetType().GetField("output")?.GetValue(loader);
     }
 
     #endregion

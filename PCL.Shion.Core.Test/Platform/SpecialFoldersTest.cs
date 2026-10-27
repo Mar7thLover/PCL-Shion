@@ -16,55 +16,44 @@ public sealed class SpecialFoldersTest
     }
 
     [TestMethod]
-    public void MissingConfigDirectoryStillResolvesUnderHome()
+    [DataRow(Environment.SpecialFolder.ApplicationData)]
+    [DataRow(Environment.SpecialFolder.LocalApplicationData)]
+    [DataRow(Environment.SpecialFolder.UserProfile)]
+    public void MissingDirectoryStillResolvesWithoutCreatingIt(Environment.SpecialFolder folder)
     {
-        if (OperatingSystem.IsWindows()) Assert.Inconclusive("HOME 只在类 Unix 系统上决定数据目录。");
-
         var home = Path.Combine(Path.GetTempPath(), "PCL.Shion.Test." + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(home);
-        var originalHome = Environment.GetEnvironmentVariable("HOME");
-        var originalConfig = Environment.GetEnvironmentVariable("XDG_CONFIG_HOME");
-        var originalData = Environment.GetEnvironmentVariable("XDG_DATA_HOME");
         try
         {
-            Environment.SetEnvironmentVariable("HOME", home);
-            Environment.SetEnvironmentVariable("XDG_CONFIG_HOME", null);
-            Environment.SetEnvironmentVariable("XDG_DATA_HOME", null);
+            var expected = Path.Combine(home, "not-created", folder.ToString());
+            var actual = SpecialFolders.Get(folder, (requested, option) =>
+            {
+                Assert.AreEqual(folder, requested);
+                Assert.AreEqual(Environment.SpecialFolderOption.DoNotVerify, option,
+                    "Missing directories must be resolved without verifying or creating them.");
+                return expected;
+            });
 
-            var expectedAppData = OperatingSystem.IsMacOS()
-                ? Path.Combine(home, "Library", "Application Support")
-                : Path.Combine(home, ".config");
-            Assert.AreEqual(expectedAppData, SpecialFolders.Get(Environment.SpecialFolder.ApplicationData));
-            Assert.IsFalse(Directory.Exists(expectedAppData));
-            Assert.StartsWith(home, SpecialFolders.Get(Environment.SpecialFolder.LocalApplicationData));
+            Assert.AreEqual(expected, actual);
+            Assert.IsTrue(Path.IsPathFullyQualified(actual));
+            Assert.IsFalse(Directory.Exists(Path.Combine(home, "not-created")));
         }
         finally
         {
-            Environment.SetEnvironmentVariable("HOME", originalHome);
-            Environment.SetEnvironmentVariable("XDG_CONFIG_HOME", originalConfig);
-            Environment.SetEnvironmentVariable("XDG_DATA_HOME", originalData);
             Directory.Delete(home, true);
         }
     }
 
     [TestMethod]
-    public void RelativeHomeFallsBackToBaseDirectory()
+    [DataRow("relative-home")]
+    [DataRow("relative-home/Library/Application Support")]
+    [DataRow(".")]
+    [DataRow("")]
+    public void RelativeOrMissingSystemPathFallsBackToBaseDirectory(string path)
     {
-        if (OperatingSystem.IsWindows()) Assert.Inconclusive("HOME 只在类 Unix 系统上决定数据目录。");
+        var actual = SpecialFolders.Get(Environment.SpecialFolder.ApplicationData, (_, _) => path);
 
-        var originalHome = Environment.GetEnvironmentVariable("HOME");
-        var originalConfig = Environment.GetEnvironmentVariable("XDG_CONFIG_HOME");
-        try
-        {
-            Environment.SetEnvironmentVariable("HOME", "relative-home");
-            Environment.SetEnvironmentVariable("XDG_CONFIG_HOME", null);
-
-            Assert.AreEqual(AppContext.BaseDirectory, SpecialFolders.Get(Environment.SpecialFolder.ApplicationData));
-        }
-        finally
-        {
-            Environment.SetEnvironmentVariable("HOME", originalHome);
-            Environment.SetEnvironmentVariable("XDG_CONFIG_HOME", originalConfig);
-        }
+        Assert.AreEqual(AppContext.BaseDirectory, actual);
+        Assert.IsTrue(Path.IsPathFullyQualified(actual));
     }
 }

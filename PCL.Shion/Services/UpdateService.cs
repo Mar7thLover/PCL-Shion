@@ -13,8 +13,9 @@ namespace PCL.Shion.Services;
 /// </summary>
 /// <param name="settings">是否包含预发布版取自这里。</param>
 /// <param name="http">取得发起请求用的 HTTP 客户端。</param>
-public sealed class UpdateService(AppSettings settings, Func<HttpClient> http)
+public sealed class UpdateService(AppSettings settings, Func<HttpClient> http, CancellationToken shutdownToken = default)
 {
+    private int _checking;
     public UpdateState State { get; private set; }
 
     /// <summary>状态为 <see cref="UpdateState.Available"/> 时的新版本。</summary>
@@ -38,22 +39,31 @@ public sealed class UpdateService(AppSettings settings, Func<HttpClient> http)
     /// <summary>检查一次更新，结果通过状态给出，不会抛出网络错误。已有检查在进行时直接返回。</summary>
     public async Task CheckAsync()
     {
-        if (State == UpdateState.Checking)
+        if (shutdownToken.IsCancellationRequested || Interlocked.CompareExchange(ref _checking, 1, 0) != 0)
             return;
 
-        Update(UpdateState.Checking);
         try
         {
-            var latest = await UpdateChecker.GetLatestAsync(http(), IncludePrerelease, CancellationToken.None);
+            Update(UpdateState.Checking);
+            var latest = await UpdateChecker.GetLatestAsync(http(), IncludePrerelease, shutdownToken);
             if (latest is not null && UpdateChecker.IsNewer(latest, AppInfo.Version))
                 Update(UpdateState.Available, release: latest);
             else
                 Update(UpdateState.UpToDate);
         }
+        catch (OperationCanceledException) when (shutdownToken.IsCancellationRequested)
+        {
+            Update(UpdateState.Idle);
+        }
+        catch (ObjectDisposedException) when (shutdownToken.IsCancellationRequested)
+        {
+            Update(UpdateState.Idle);
+        }
         catch (Exception e) when (e is HttpRequestException or JsonException or OperationCanceledException)
         {
             Update(UpdateState.Failed, error: e.Message);
         }
+        finally { Interlocked.Exchange(ref _checking, 0); }
     }
 
     private void Update(UpdateState state, ReleaseInfo? release = null, string? error = null)
@@ -61,6 +71,11 @@ public sealed class UpdateService(AppSettings settings, Func<HttpClient> http)
         State = state;
         Release = release;
         Error = error;
-        Changed?.Invoke();
+        if (Changed is { } handlers)
+            foreach (Action handler in handlers.GetInvocationList())
+            {
+                try { handler(); }
+                catch (Exception ex) { LogWrapper.Warn(ex, "[Update] 更新状态订阅者失败"); }
+            }
     }
 }

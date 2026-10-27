@@ -31,9 +31,12 @@ public sealed class LoaderInstaller(DownloadEngine engine, DownloadSource source
         IProgress<InstallProgress>? progress,
         CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        InstallationSession.ValidateInstanceName(loader.MinecraftVersion);
         if (string.Equals(instanceName, loader.MinecraftVersion, StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException("The instance name must differ from the Minecraft version it inherits from.", nameof(instanceName));
 
+        using var installation = InstallationSession.Begin(minecraftRoot, instanceName);
         await EnsureVanillaAsync(minecraftRoot, loader, progress, cancellationToken).ConfigureAwait(false);
 
         var install = loader.Kind switch
@@ -57,6 +60,8 @@ public sealed class LoaderInstaller(DownloadEngine engine, DownloadSource source
         CancellationToken cancellationToken)
     {
         var minecraftVersion = loader.MinecraftVersion;
+        if (InstallationSession.IsActive(Path.Combine(minecraftRoot, "versions", minecraftVersion)))
+            throw new IOException($"Minecraft version '{minecraftVersion}' is still being installed.");
         if (File.Exists(Path.Combine(minecraftRoot, "versions", minecraftVersion, $"{minecraftVersion}.json")))
             return;
 

@@ -70,13 +70,23 @@ public partial class MyMsgLogin : Grid
 
         LabTitle.Text = Lang.Text("Launch.Account.LoginDialog.MinecraftLogin");
         Loaded += Load;
-        Btn1.Click += (_, _) => ProfileUi.OpenWebsite(_website);
+        Btn1.Click += (_, _) => OpenVerificationWebsite();
         Btn2.Click += (_, _) => ProfileUi.CopyText(_userCode);
-        Btn3.Click += (_, _) => Finished(new OperationCanceledException());
+        Btn3.Click += (_, _) => Cancel();
         LabTitle.PointerPressed += Drag;
         PanBorder.PointerPressed += Drag;
         _ = WorkThreadAsync();
     }
+
+    /// <summary>主按钮和 Enter 共用的验证网页操作。</summary>
+    public void OpenVerificationWebsite()
+    {
+        if (!_converter.IsExited)
+            ProfileUi.OpenWebsite(_website);
+    }
+
+    /// <summary>取消按钮、Esc 和窗口关闭共用的结束操作；重复调用不会重复通知。</summary>
+    public void Cancel() => Finished(new OperationCanceledException());
 
     /// <summary>结束登录：通知完成回调并关闭弹窗。</summary>
     private void Finished(object result)

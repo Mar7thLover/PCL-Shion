@@ -3,6 +3,7 @@ using PCL.Shion.Core.Download;
 using PCL.Shion.Core.Install;
 using PCL.Shion.Core.Minecraft;
 using PCL.Shion.Core.Sources;
+using System.Text.Json;
 
 namespace PCL.Shion.Core.Test;
 
@@ -377,6 +378,54 @@ public sealed class RequirementCollectorTest
                 "https://resources.download.minecraft.net/80/8030dd9dc315c0381d52c4782ea36c6baf6e8135"
             },
             items[0].Urls.Select(url => url.AbsoluteUri).ToArray());
+    }
+
+    [TestMethod]
+    [DataRow("../outside.jar")]
+    [DataRow("..\\outside.jar")]
+    [DataRow("C:\\outside.jar")]
+    [DataRow("file.jar:payload")]
+    public void LibraryDownloadPathsMustStayInsideLibraries(string path)
+    {
+        _root.WriteVersion("unsafe", $$"""
+            { "mainClass": "Main", "libraries": [
+              { "name": "example:library:1", "downloads": { "artifact": {
+                "path": {{JsonSerializer.Serialize(path)}}, "url": "https://example.invalid/library.jar"
+              } } }
+            ] }
+            """);
+
+        Assert.ThrowsExactly<InvalidDataException>(() => Collect("unsafe", Windows));
+    }
+
+    [TestMethod]
+    public void IndexAndLogConfigurationNamesCannotEscapeTheirDirectories()
+    {
+        _root.WriteVersion("index", """
+            { "mainClass": "Main", "assetIndex": { "id": "../outside", "url": "https://example.invalid/index.json" } }
+            """);
+        _root.WriteVersion("logging", """
+            { "mainClass": "Main", "logging": { "client": {
+                "argument": "-Dlog4j.configurationFile=${path}",
+                "file": { "id": "../outside.xml", "url": "https://example.invalid/logging.xml" }
+            } } }
+            """);
+
+        Assert.ThrowsExactly<InvalidDataException>(() => Collect("index", Windows));
+        Assert.ThrowsExactly<InvalidDataException>(() => Collect("logging", Windows));
+    }
+
+    [TestMethod]
+    [DataRow("a", 1L)]
+    [DataRow("../../outside", 1L)]
+    [DataRow("5ff04807c356f1beed0b86ccf659b44b9983e3fa", -1L)]
+    public void InvalidAssetHashesAndSizesAreRejected(string hash, long size)
+    {
+        _root.WriteFile("assets/indexes/bad.json", $$"""
+            { "objects": { "file": { "hash": {{JsonSerializer.Serialize(hash)}}, "size": {{size}} } } }
+            """);
+
+        Assert.ThrowsExactly<InvalidDataException>(() => RequirementCollector.CollectAssetObjects(_root.RootPath, "bad", DownloadSource.Official));
     }
 
     [TestMethod]

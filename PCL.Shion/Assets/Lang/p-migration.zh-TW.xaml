@@ -1,0 +1,7 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+    <sys:String x:Key="Instance.Overall.Manage.ScriptUnavailable">Avalonia 尚未支援匯出啟動指令碼，請透過啟動器啟動遊戲。</sys:String>
+    <sys:String x:Key="Instance.Overall.Manage.TestUnavailable">Avalonia 尚未支援測試啟動；可在啟動頁正常啟動遊戲。</sys:String>
+    <sys:String x:Key="Instance.Overall.Manage.PendingFeatures">啟動指令碼匯出與測試啟動暫不可用，請在啟動頁正常啟動遊戲。</sys:String>
+</ResourceDictionary>

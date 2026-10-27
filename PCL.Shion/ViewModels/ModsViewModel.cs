@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -21,13 +22,29 @@ public sealed partial class ModsViewModel : ObservableObject
     private string? _gameDirectory;
     private string? _loadError;
     private bool _loading;
+    private readonly AppSettings _settings;
+    private CancellationTokenSource? _scanCancellation;
 
     /// <summary>每次扫描加一，用来丢弃已被新一轮扫描取代的结果。</summary>
     private int _generation;
 
-    /// <summary>构造方式与其他页面的视图模型一致，由调用方传入共享服务；Mod 管理目前只操作本地文件，用不到它。</summary>
+    /// <summary>通过共享服务读取并保存模组解析偏好。</summary>
     public ModsViewModel(GameServices services)
     {
+        _settings = services.Settings;
+        ParseMetadata = _settings.EnableModMetadataParsing;
+    }
+
+    [ObservableProperty]
+    public partial bool ParseMetadata { get; set; } = true;
+
+    partial void OnParseMetadataChanged(bool value)
+    {
+        if (_settings.EnableModMetadataParsing == value)
+            return;
+        _settings.EnableModMetadataParsing = value;
+        _settings.Save();
+        _ = RefreshAsync();
     }
 
     [ObservableProperty]
@@ -67,6 +84,7 @@ public sealed partial class ModsViewModel : ObservableObject
     public void Load(string gameDirectory)
     {
         _gameDirectory = gameDirectory;
+        ParseMetadata = _settings.EnableModMetadataParsing;
         _ = RefreshAsync();
     }
 
@@ -79,6 +97,9 @@ public sealed partial class ModsViewModel : ObservableObject
             return;
 
         var generation = ++_generation;
+        _scanCancellation?.Cancel();
+        var cancellation = _scanCancellation = new CancellationTokenSource();
+        var options = new ModScanOptions { ParseMetadata = ParseMetadata };
         _loading = true;
         _loadError = null;
         ErrorText = null;
@@ -88,11 +109,26 @@ public sealed partial class ModsViewModel : ObservableObject
         string? failure = null;
         try
         {
-            scanned = await Task.Run(() => ModScanner.Scan(directory));
+            scanned = await Task.Run(() => ModScanner.Scan(directory, options, cancellation.Token), cancellation.Token);
+        }
+        catch (OperationCanceledException) when (cancellation.IsCancellationRequested)
+        {
+            if (generation == _generation)
+            {
+                _loading = false;
+                ApplyFilter();
+            }
+            return;
         }
         catch (Exception e)
         {
             failure = e.Message;
+        }
+        finally
+        {
+            if (ReferenceEquals(_scanCancellation, cancellation))
+                _scanCancellation = null;
+            cancellation.Dispose();
         }
 
         if (generation != _generation)
@@ -102,8 +138,19 @@ public sealed partial class ModsViewModel : ObservableObject
         _pendingDelete = null;
         _loading = false;
         _loadError = failure;
+        var warningCount = scanned.Count(mod => mod.ReadWarning is not null);
+        if (warningCount > 0)
+            ErrorText = ModsStrings.ReadWarnings(warningCount);
         ApplyFilter();
         UpdateOverview();
+    }
+
+    /// <summary>离开页面时停止哈希和嵌套解析，并丢弃迟到的结果。</summary>
+    public void CancelScan()
+    {
+        ++_generation;
+        _scanCancellation?.Cancel();
+        _loading = false;
     }
 
     [RelayCommand]

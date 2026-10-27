@@ -319,6 +319,167 @@ public sealed class DownloadEngineTest
         Assert.IsEmpty(handler.Requests);
     }
 
+    [TestMethod]
+    public async Task AForbiddenFileDoesNotStopOtherDownloads()
+    {
+        var handler = new FakeHttpHandler((url, _) => url.AbsoluteUri == PrimaryUrl
+            ? Status(HttpStatusCode.Forbidden) : Ok(Content));
+        using var engine = CreateEngine(handler);
+        var denied = CreateItem(_root.GetPath("denied.bin"), PrimaryUrl);
+        var allowed = CreateItem(_root.GetPath("allowed.bin"), MirrorUrl);
+
+        var result = await engine.DownloadAsync([denied, allowed], null, CancellationToken.None);
+
+        CollectionAssert.AreEqual(new[] { denied }, result.Failed.ToArray());
+        Assert.Contains("403", result.Errors[denied.TargetPath].Single().ToString());
+        CollectionAssert.AreEqual(Content, File.ReadAllBytes(allowed.TargetPath));
+        Assert.AreEqual(1, handler.CountRequests(PrimaryUrl));
+    }
+
+    [TestMethod]
+    public async Task ConcurrentBatchesShareATargetWithoutRedownloadingIt()
+    {
+        var requested = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var duplicateRequest = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var handler = new FakeHttpHandler(async (_, attempt, token) =>
+        {
+            if (attempt > 1) duplicateRequest.TrySetResult();
+            requested.TrySetResult();
+            await release.Task.WaitAsync(token);
+            return Ok(Content);
+        });
+        using var engine = CreateEngine(handler);
+        var item = CreateItem(_root.GetPath("shared.bin"), PrimaryUrl);
+        var first = engine.DownloadAsync([item], null, CancellationToken.None);
+        await requested.Task.WaitAsync(WaitLimit);
+        var second = engine.DownloadAsync([item], null, CancellationToken.None);
+        try
+        {
+            await Task.WhenAny(duplicateRequest.Task, Task.Delay(200));
+        }
+        finally
+        {
+            release.TrySetResult();
+        }
+
+        var results = await Task.WhenAll(first, second).WaitAsync(WaitLimit);
+
+        Assert.IsTrue(results.All(result => result.Succeeded));
+        Assert.IsFalse(duplicateRequest.Task.IsCompleted, "the second batch must wait and recheck the completed file");
+        Assert.AreEqual(1, handler.CountRequests(PrimaryUrl));
+        CollectionAssert.AreEqual(Content, File.ReadAllBytes(item.TargetPath));
+    }
+
+    [TestMethod]
+    public async Task CancellingATargetWaiterDoesNotCancelTheDownloadThatOwnsIt()
+    {
+        var requested = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var handler = new FakeHttpHandler(async (_, _, token) =>
+        {
+            requested.TrySetResult();
+            await release.Task.WaitAsync(token);
+            return Ok(Content);
+        });
+        using var engine = CreateEngine(handler);
+        using var cancellation = new CancellationTokenSource();
+        var item = CreateItem(_root.GetPath("shared.bin"), PrimaryUrl);
+        var first = engine.DownloadAsync([item], null, CancellationToken.None);
+        await requested.Task.WaitAsync(WaitLimit);
+        var waiting = engine.DownloadAsync([item], null, cancellation.Token);
+        await cancellation.CancelAsync();
+        try
+        {
+            await Assert.ThrowsAsync<OperationCanceledException>(() => waiting.WaitAsync(WaitLimit));
+        }
+        finally
+        {
+            release.TrySetResult();
+        }
+
+        Assert.IsTrue((await first.WaitAsync(WaitLimit)).Succeeded);
+        Assert.AreEqual(1, handler.CountRequests(PrimaryUrl));
+        Assert.IsTrue((await engine.DownloadAsync([item], null, CancellationToken.None)).Succeeded);
+    }
+
+    [TestMethod]
+    public async Task RejectsOversizedContentBeforeReadingToTheEndAndKeepsTheOldFile()
+    {
+        var stream = new StallingStream(Content);
+        var handler = new FakeHttpHandler((_, _) => new HttpResponseMessage(HttpStatusCode.OK) { Content = new StreamContent(stream) });
+        using var engine = CreateEngine(handler);
+        var target = _root.WriteFile("data.bin", "previous file");
+        var item = new DownloadItem([new Uri(PrimaryUrl)], target, Content.Length - 1);
+
+        var result = await engine.DownloadAsync([item], null, CancellationToken.None).WaitAsync(WaitLimit);
+
+        Assert.AreEqual(DownloadErrorKind.SizeMismatch, result.Errors[target].Single().Kind);
+        Assert.IsFalse(stream.Stalled.IsCompleted, "an oversized response should stop before the next read");
+        Assert.AreEqual("previous file", File.ReadAllText(target));
+        CollectionAssert.AreEqual(new[] { target }, Directory.GetFiles(_root.RootPath));
+    }
+
+    [TestMethod]
+    public async Task CancellationAtEndOfResponseDoesNotReplaceTheOldFile()
+    {
+        using var cancellation = new CancellationTokenSource();
+        var handler = new FakeHttpHandler((_, _) => new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StreamContent(new CancelAtEndStream(Content, cancellation))
+        });
+        using var engine = CreateEngine(handler);
+        var target = _root.WriteFile("data.bin", "previous file");
+
+        await Assert.ThrowsAsync<OperationCanceledException>(() =>
+            engine.DownloadAsync([CreateItem(target, PrimaryUrl)], null, cancellation.Token));
+
+        Assert.AreEqual("previous file", File.ReadAllText(target));
+        CollectionAssert.AreEqual(new[] { target }, Directory.GetFiles(_root.RootPath));
+    }
+
+    [TestMethod]
+    public async Task DisposingTheEngineCancelsActiveAndQueuedWorkWithoutLeakingTemporaryFiles()
+    {
+        var stream = new StallingStream(Content[..4]);
+        var handler = new FakeHttpHandler((_, _) => new HttpResponseMessage(HttpStatusCode.OK) { Content = new StreamContent(stream) });
+        using var engine = CreateEngine(handler, maxConcurrency: 1);
+        var first = engine.DownloadAsync([CreateItem(_root.GetPath("first.bin"), PrimaryUrl)], null, CancellationToken.None);
+        await stream.Stalled.WaitAsync(WaitLimit);
+        var queued = engine.DownloadAsync([CreateItem(_root.GetPath("second.bin"), PrimaryUrl)], null, CancellationToken.None);
+
+        engine.Dispose();
+
+        await Assert.ThrowsAsync<OperationCanceledException>(() => first.WaitAsync(WaitLimit));
+        await Assert.ThrowsAsync<OperationCanceledException>(() => queued.WaitAsync(WaitLimit));
+        Assert.IsEmpty(Directory.GetFiles(_root.RootPath));
+        await Assert.ThrowsAsync<ObjectDisposedException>(() => engine.DownloadAsync([], null, CancellationToken.None));
+    }
+
+    [TestMethod]
+    public async Task AnAlreadyCancelledEmptyBatchStillReportsCancellation()
+    {
+        using var engine = CreateEngine(new FakeHttpHandler((_, _) => Ok(Content)));
+
+        await Assert.ThrowsAsync<OperationCanceledException>(() => engine.DownloadAsync([], null, new CancellationToken(true)));
+    }
+
+    [TestMethod]
+    [DataRow(0)]
+    [DataRow(-1)]
+    public void RejectsNonPositiveConcurrencyInsteadOfWaitingForever(int concurrency)
+    {
+        Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new DownloadEngine(new DownloadOptions { MaxConcurrency = concurrency }));
+    }
+
+    [TestMethod]
+    public void RejectsInvalidRetryAndTimeoutOptions()
+    {
+        Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new DownloadEngine(new DownloadOptions { MaxRetries = -1 }));
+        Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new DownloadEngine(new DownloadOptions { Timeout = TimeSpan.Zero }));
+        Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => new DownloadEngine(new DownloadOptions { Timeout = Timeout.InfiniteTimeSpan }));
+    }
+
     private static DownloadEngine CreateEngine(FakeHttpHandler handler, int maxConcurrency = 4, int maxRetries = 3, TimeSpan? timeout = null) =>
         new(new DownloadOptions
         {
@@ -334,6 +495,16 @@ public sealed class DownloadEngineTest
     private static HttpResponseMessage Ok(byte[] content) => new(HttpStatusCode.OK) { Content = new ByteArrayContent(content) };
 
     private static HttpResponseMessage Status(HttpStatusCode status) => new(status);
+
+    private sealed class CancelAtEndStream(byte[] bytes, CancellationTokenSource cancellation) : MemoryStream(bytes)
+    {
+        public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
+        {
+            if (Position < Length) return base.ReadAsync(buffer, cancellationToken);
+            cancellation.Cancel();
+            return ValueTask.FromResult(0);
+        }
+    }
 
     /// <summary>
     /// 按回调生成响应并记录请求；回调的第二个参数是同一地址的第几次请求（从 1 开始）。

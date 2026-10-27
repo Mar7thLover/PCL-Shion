@@ -15,6 +15,8 @@ public partial class App : Application
     /// </summary>
     public static GameServices Services { get; private set; } = null!;
 
+    internal static Func<AppSettings> SettingsLoader { get; set; } = AppSettings.Load;
+
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
     public override void OnFrameworkInitializationCompleted()
@@ -34,7 +36,7 @@ public partial class App : Application
                     // 全局处理中不能再抛出异常
                 }
             };
-            Services = new GameServices(AppSettings.Load());
+            Services = new GameServices(SettingsLoader());
             // 联机组件通过宿主接口读取设置、日志与语言
             LinkEnvironment.Initialize(Services.Settings);
             // 主题服务与设置页共用同一份设置，否则设置页的修改不会反映到主题上

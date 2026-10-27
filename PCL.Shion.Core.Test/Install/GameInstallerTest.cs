@@ -145,6 +145,87 @@ public sealed class GameInstallerTest
         Assert.IsFalse(Directory.Exists(_root.GetPath("libraries")));
     }
 
+    [TestMethod]
+    public async Task AnInstanceIsHiddenOnlyWhileItsInstallationIsActive()
+    {
+        using var engine = CreateEngine();
+        var inspected = false;
+        var progress = new CallbackProgress(value =>
+        {
+            if (value.Stage != "files") return;
+            inspected = true;
+            Assert.IsTrue(File.Exists(_root.GetPath($"versions/{VersionId}/{VersionId}.json")));
+            Assert.IsEmpty(InstanceScanner.Scan(_root.RootPath), "partially installed instances must not be listed as launchable or broken");
+        });
+
+        await new GameInstaller(engine, DownloadSource.Official)
+            .InstallVanillaAsync(_root.RootPath, Remote, VersionId, progress, CancellationToken.None);
+
+        Assert.IsTrue(inspected);
+        Assert.AreEqual(VersionId, InstanceScanner.Scan(_root.RootPath).Single().Name);
+    }
+
+    [TestMethod]
+    public async Task CancellationReleasesTheInstallationAndLeavesTheInstanceAvailableForRepair()
+    {
+        using var engine = CreateEngine();
+        using var cancellation = new CancellationTokenSource();
+        var progress = new CallbackProgress(value =>
+        {
+            if (value.Stage == "files") cancellation.Cancel();
+        });
+
+        await Assert.ThrowsAsync<OperationCanceledException>(() => new GameInstaller(engine, DownloadSource.Official)
+            .InstallVanillaAsync(_root.RootPath, Remote, VersionId, progress, cancellation.Token));
+
+        Assert.AreEqual(VersionId, InstanceScanner.Scan(_root.RootPath).Single().Name);
+        await new GameInstaller(engine, DownloadSource.Official)
+            .InstallVanillaAsync(_root.RootPath, Remote, VersionId, null, CancellationToken.None);
+        CollectionAssert.AreEqual(ClientJar, File.ReadAllBytes(_root.GetPath($"versions/{VersionId}/{VersionId}.jar")));
+    }
+
+    [TestMethod]
+    public async Task FailedInstallationDoesNotLeaveAnInstanceHidden()
+    {
+        _server.Remove(ClientUrl);
+        using var engine = CreateEngine();
+
+        await Assert.ThrowsExactlyAsync<InstallException>(() => new GameInstaller(engine, DownloadSource.Official)
+            .InstallVanillaAsync(_root.RootPath, Remote, VersionId, null, CancellationToken.None));
+
+        Assert.AreEqual(VersionId, InstanceScanner.Scan(_root.RootPath).Single().Name);
+        using var retry = InstallationSession.Begin(_root.RootPath, VersionId);
+    }
+
+    [TestMethod]
+    public async Task RejectsAnotherInstallationOfTheSameInstance()
+    {
+        using var engine = CreateEngine();
+        using var active = InstallationSession.Begin(_root.RootPath, VersionId);
+
+        await Assert.ThrowsExactlyAsync<IOException>(() => new GameInstaller(engine, DownloadSource.Official)
+            .InstallVanillaAsync(_root.RootPath, Remote, VersionId, null, CancellationToken.None));
+
+        Assert.IsFalse(Directory.Exists(_root.GetPath("versions")));
+    }
+
+    [TestMethod]
+    [DataRow("../outside")]
+    [DataRow("nested/name")]
+    [DataRow("nested\\name")]
+    [DataRow("C:\\outside")]
+    [DataRow("..")]
+    [DataRow("")]
+    public async Task RejectsInstanceNamesThatCanEscapeTheVersionDirectory(string name)
+    {
+        using var engine = CreateEngine();
+
+        await Assert.ThrowsExactlyAsync<ArgumentException>(() => new GameInstaller(engine, DownloadSource.Official)
+            .InstallVanillaAsync(_root.RootPath, Remote, name, null, CancellationToken.None));
+
+        Assert.IsEmpty(Directory.GetFileSystemEntries(_root.RootPath));
+    }
+
     private DownloadEngine CreateEngine()
     {
         return new DownloadEngine(handler: new StubHandler(_server));
@@ -181,6 +262,11 @@ public sealed class GameInstallerTest
     private static string Sha1(byte[] data)
     {
         return Convert.ToHexStringLower(SHA1.HashData(data));
+    }
+
+    private sealed class CallbackProgress(Action<InstallProgress> report) : IProgress<InstallProgress>
+    {
+        public void Report(InstallProgress value) => report(value);
     }
 
     /// <summary>

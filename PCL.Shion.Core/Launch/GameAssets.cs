@@ -1,4 +1,5 @@
 using System.Text.Json;
+using PCL.Shion.Core.Minecraft;
 
 namespace PCL.Shion.Core.Launch;
 
@@ -21,7 +22,7 @@ internal static class GameAssets
     /// </summary>
     public static IReadOnlyList<string> Prepare(string assetsDirectory, string indexId, bool isVirtual)
     {
-        var indexPath = Path.Combine(assetsDirectory, "indexes", $"{indexId}.json");
+        var indexPath = ManifestPath.ResolveName(Path.Combine(assetsDirectory, "indexes"), indexId, ".json");
         if (!File.Exists(indexPath))
             return [indexPath];
 
@@ -31,7 +32,7 @@ internal static class GameAssets
 
         foreach (var asset in document.RootElement.GetProperty("objects").EnumerateObject())
         {
-            var hash = asset.Value.GetProperty("hash").GetString()!;
+            var hash = ManifestPath.AssetHash(asset.Value.GetProperty("hash").GetString());
             var objectPath = Path.Combine(assetsDirectory, "objects", hash[..2], hash);
             if (!File.Exists(objectPath))
             {
@@ -42,7 +43,7 @@ internal static class GameAssets
             if (!isVirtual)
                 continue;
 
-            var virtualPath = Path.Combine(virtualDirectory, asset.Name.Replace('/', Path.DirectorySeparatorChar));
+            var virtualPath = ManifestPath.Resolve(virtualDirectory, asset.Name);
             if (!File.Exists(virtualPath))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(virtualPath)!);

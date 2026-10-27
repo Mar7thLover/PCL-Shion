@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using PCL.Shion.Core.Platform;
+using PCL.Shion.Core.IO;
 
 namespace PCL.Shion.Core.Accounts;
 
@@ -169,22 +170,13 @@ public static class ProfileService
         _selectedId = null;
         _loaded = true;
         _canPersist = true;
-        if (!File.Exists(FilePath))
-            return;
-
-        try
+        var result = JsonFileStore.Read<StoredProfiles>(FilePath, JsonOptions);
+        _canPersist = result.CanPersist;
+        if (result.Value is { } stored)
         {
-            var stored = JsonSerializer.Deserialize<StoredProfiles>(File.ReadAllText(FilePath), JsonOptions);
-            if (stored is null)
-                return;
             if (stored.Profiles is not null)
-                Items.AddRange(stored.Profiles);
+                Items.AddRange(stored.Profiles.Where(profile => profile is not null));
             _selectedId = stored.SelectedProfileId;
-        }
-        catch (Exception e) when (e is IOException or UnauthorizedAccessException or JsonException)
-        {
-            // 档案文件无法读取时保持空列表，并且不覆盖原文件，避免丢失原有的令牌
-            _canPersist = false;
         }
     }
 
@@ -195,8 +187,7 @@ public static class ProfileService
 
         try
         {
-            Directory.CreateDirectory(DataDirectory);
-            File.WriteAllText(FilePath, JsonSerializer.Serialize(new StoredProfiles(_selectedId, Items), JsonOptions));
+            JsonFileStore.Save(FilePath, new StoredProfiles(_selectedId, Items), JsonOptions);
         }
         catch (Exception e) when (e is IOException or UnauthorizedAccessException)
         {

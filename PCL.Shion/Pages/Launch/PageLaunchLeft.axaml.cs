@@ -506,7 +506,7 @@ public partial class PageLaunchLeft : MyPageLeft
         launchProgress = 0d;
         launchSpeed = 0;
         launchGame = null;
-        var cancel = new CancellationTokenSource();
+        var cancel = CancellationTokenSource.CreateLinkedTokenSource(App.Services.ShutdownToken);
         launchCancel = cancel;
 
         // 开始动画
@@ -1171,10 +1171,26 @@ public partial class PageLaunchLeft : MyPageLeft
     /// <summary>刷新显示；若皮肤控件已换成别的加载器，则放弃输入以便下次重新加载。</summary>
     private static void RefreshLoginSkin(ModLoader.LoaderTask<SkinInput, string> data)
     {
-        if (frmLoginProfileSkin?.Skin is { } skin && ReferenceEquals(skin.loader, data))
-            Dispatcher.UIThread.Post(skin.Load);
-        else if (!data.IsAborted)
+        if (data.IsAborted || data.lastRunningTask is not { } run)
+            return;
+        if (frmLoginProfileSkin?.Skin is not { } skin || !ReferenceEquals(skin.loader, data))
+        {
             data.input = null; // 清空输入，因为皮肤实际上没有被渲染，如果不清空切换到页面的 Start 会由于输入相同而不渲染
+            return;
+        }
+
+        // 等此次任务成功发布 output 后再读取；快速切换账号不能让上一轮皮肤覆盖当前账号。
+        _ = run.ContinueWith(_ =>
+        {
+            if (!ReferenceEquals(data.lastRunningTask, run) || data.State != LoadState.Finished)
+                return;
+            Dispatcher.UIThread.Post(() =>
+            {
+                if (ReferenceEquals(data.lastRunningTask, run) && data.State == LoadState.Finished
+                    && ReferenceEquals(frmLoginProfileSkin?.Skin, skin) && ReferenceEquals(skin.loader, data))
+                    skin.Load();
+            });
+        }, CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
     }
 
     /// <summary>默认皮肤图片的地址。</summary>

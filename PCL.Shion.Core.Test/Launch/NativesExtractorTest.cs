@@ -99,9 +99,12 @@ public sealed class NativesExtractorTest
     }
 
     [TestMethod]
-    public void RejectsEntriesThatEscapeTheTargetDirectory()
+    [DataRow("../evil.dll")]
+    [DataRow("..\\evil.dll")]
+    [DataRow("C:\\evil.dll")]
+    public void RejectsEntriesThatEscapeTheTargetDirectory(string name)
     {
-        var jar = CreateJar(("../evil.dll", "evil"));
+        var jar = CreateJar((name, "evil"));
         var target = _root.GetPath("natives");
         Directory.CreateDirectory(target);
 

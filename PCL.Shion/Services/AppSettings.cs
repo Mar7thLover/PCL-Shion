@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using PCL.Shion.Core.Minecraft;
+using PCL.Shion.Core.IO;
 using PCL.Shion.Core.Platform;
 using PCL.Shion.Core.Sources;
 using PCL.Shion.Themes;
@@ -185,6 +187,9 @@ public sealed class AppSettings
 
     /// <summary>已安装资源的本地名称显示方式，与设置界面下拉框的选项序号一致。</summary>
     public int ToolModLocalNameStyle { get; set; } = 0;
+
+    /// <summary>读取模组元数据与嵌套依赖。关闭后仅列出文件，损坏模组仍可禁用或删除。</summary>
+    public bool EnableModMetadataParsing { get; set; } = true;
 
     /// <summary>快速下载的行为，与设置界面下拉框的选项序号一致。</summary>
     public int ToolDownloadQuickBehavior { get; set; } = 0;
@@ -1157,6 +1162,13 @@ public sealed class AppSettings
     private static string FilePath { get; } = Path.Combine(
         SpecialFolders.Get(Environment.SpecialFolder.ApplicationData), "PCL Shion", "settings.json");
 
+    private string _storagePath = FilePath;
+    private bool _canPersist = true;
+    private readonly object _saveGate = new();
+
+    [JsonIgnore]
+    public JsonFileStatus LoadStatus { get; private set; } = JsonFileStatus.Missing;
+
     /// <summary>
     /// 恢复启动设置（对应 WPF 的 Config.Launch.Reset），包括默认 Java 的选择。
     /// </summary>
@@ -1222,25 +1234,66 @@ public sealed class AppSettings
         ToolUpdateSnapshot = false;
     }
 
-    public static AppSettings Load()
+    public static AppSettings Load() => Load(FilePath);
+
+    internal static AppSettings Load(string path)
     {
+        var result = JsonFileStore.Read<AppSettings>(path, JsonOptions);
+        var settings = result.Value ?? new AppSettings();
+        settings._storagePath = path;
+        settings._canPersist = result.CanPersist;
+        settings.LoadStatus = result.Status;
         try
         {
-            if (!File.Exists(FilePath))
-                return new AppSettings();
-
-            var json = File.ReadAllText(FilePath);
-            var settings = JsonSerializer.Deserialize<AppSettings>(json, JsonOptions) ?? new AppSettings();
-            if (ReadLegacyRoot(json) is { } legacyRoot)
-                settings.MinecraftFolders = [legacyRoot];
-            else if (settings.MinecraftFolders.Count == 0)
-                settings.MinecraftFolders.Add(MinecraftFolder.GetDefault());
-            return settings;
+            if (result.Value is not null)
+            {
+                var source = result.Status == JsonFileStatus.Recovered ? path + ".bak" : path;
+                if (ReadLegacyRoot(File.ReadAllText(source)) is { } legacyRoot)
+                    settings.MinecraftFolders = [legacyRoot];
+            }
         }
         catch (Exception e) when (e is IOException or UnauthorizedAccessException or JsonException)
         {
-            return new AppSettings();
+            LogWrapper.Warn(e, "[Settings] 读取旧版目录设置失败");
         }
+
+        settings.Normalize();
+        if (result.Status is JsonFileStatus.Recovered or JsonFileStatus.Unreadable)
+            LogWrapper.Warn(result.Error, result.Status == JsonFileStatus.Recovered
+                ? "[Settings] 主设置文件损坏，已恢复上次有效备份"
+                : "[Settings] 设置与备份无法读取，使用临时默认值并保留原文件");
+        return settings;
+    }
+
+    private void Normalize()
+    {
+        var comparer = OperatingSystem.IsWindows() ? StringComparer.OrdinalIgnoreCase : StringComparer.Ordinal;
+        MinecraftFolders = (MinecraftFolders ?? []).Where(path => !string.IsNullOrWhiteSpace(path))
+            .Select(NormalizeFolder).OfType<string>().Distinct(comparer).ToList();
+        if (MinecraftFolders.Count == 0) MinecraftFolders.Add(MinecraftFolder.GetDefault());
+        JavaManualPaths ??= [];
+        JavaDisabledPaths ??= [];
+        StarredInstances ??= [];
+        HiddenInstances ??= [];
+        MinecraftFolderNames ??= new();
+        InstanceConfigValues = CleanInstanceValues(InstanceConfigValues);
+        InstanceAuthConfigValues = CleanInstanceValues(InstanceAuthConfigValues);
+        InstanceStateValues = CleanInstanceValues(InstanceStateValues);
+        MaxDownloadConcurrency = Math.Clamp(MaxDownloadConcurrency, 1, 256);
+        MaxMemoryMb = Math.Clamp(MaxMemoryMb, 256, 1048576);
+        WindowWidth = double.IsFinite(WindowWidth) ? Math.Clamp(WindowWidth, 640, 7680) : 900;
+        WindowHeight = double.IsFinite(WindowHeight) ? Math.Clamp(WindowHeight, 400, 4320) : 550;
+        if (!Enum.IsDefined(SystemRenderBackend)) SystemRenderBackend = RenderBackend.Auto;
+        if (!Enum.IsDefined(DownloadSource)) DownloadSource = DownloadSource.Official;
+    }
+
+    private static InstanceValueStore CleanInstanceValues(InstanceValueStore? values) =>
+        values?.Where(pair => pair.Value is not null).ToDictionary(pair => pair.Key, pair => pair.Value) ?? new();
+
+    private static string? NormalizeFolder(string path)
+    {
+        try { return Path.GetFullPath(path); }
+        catch (Exception e) when (e is ArgumentException or NotSupportedException or PathTooLongException) { return null; }
     }
 
     /// <summary>旧版本只保存一个目录，键名为 <c>MinecraftRoot</c>。设置里还没有目录列表时返回它，作为迁移后唯一的目录。</summary>
@@ -1257,14 +1310,15 @@ public sealed class AppSettings
 
     public void Save()
     {
+        if (!_canPersist) return;
         try
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(FilePath)!);
-            File.WriteAllText(FilePath, JsonSerializer.Serialize(this, JsonOptions));
+            lock (_saveGate)
+                JsonFileStore.Save(_storagePath, this, JsonOptions);
         }
         catch (Exception e) when (e is IOException or UnauthorizedAccessException)
         {
-            // 设置只是便利功能，写入失败不应影响启动
+            LogWrapper.Warn(e, "[Settings] 保存失败，原设置文件保持完整");
         }
     }
 }

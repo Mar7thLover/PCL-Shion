@@ -17,7 +17,7 @@ public static class ModManager
             return mod;
 
         var path = enabled
-            ? mod.FilePath[..^ModScanner.DisabledSuffix.Length]
+            ? Path.Combine(Path.GetDirectoryName(mod.FilePath) ?? "", ModScanner.GetEnabledFileName(mod.FileName))
             : mod.FilePath + ModScanner.DisabledSuffix;
         File.Move(mod.FilePath, path);
         return mod with { FilePath = path, FileName = Path.GetFileName(path), Enabled = enabled };

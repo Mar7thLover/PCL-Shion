@@ -23,18 +23,20 @@ on:
 
 jobs:
   mirrorchyan_uploading:
+    # 只在维护者配置了本项目自己的 MirrorChyan 资源后启用，禁止写入上游资源。
+    if: ${{ vars.MIRRORCHYAN_RID != '' && vars.MIRRORCHYAN_RID != 'PCL2-CE' }}
     runs-on: macos-latest
 
     steps:
       - uses: MirrorChyan/uploading-action@ea9a0f6f516fafb6b0a3046a1fe4b0dccb29eca8 # v1
         with:
           filetype: latest-release
-          filename: "PCL2_CE_${{ inputs.channel == 'stable' && 'Release' || 'Beta' }}_${{ inputs.arch == 'x64' && 'x64' || 'ARM64' }}.exe"
-          mirrorchyan_rid: PCL2-CE
+          filename: "PCL_Shion_${{ inputs.channel == 'stable' && 'Release' || 'Beta' }}_Avalonia_Windows-${{ inputs.arch == 'x64' && 'x64' || 'ARM64' }}.exe"
+          mirrorchyan_rid: ${{ vars.MIRRORCHYAN_RID }}
 
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          owner: PCL-Community
-          repo: PCL2-CE
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
           upload_token: ${{ secrets.MirrorChyanUploadToken }}
           os: win
           arch: ${{ inputs.arch }}

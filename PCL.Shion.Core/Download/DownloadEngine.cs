@@ -22,12 +22,25 @@ public sealed class DownloadEngine : IDisposable
 
     private readonly DownloadOptions _options;
     private readonly SemaphoreSlim _concurrency;
+    private readonly CancellationTokenSource _shutdown = new();
+    private readonly Lock _lifetimeGate = new();
+    private readonly Lock _targetsGate = new();
+    private readonly Dictionary<string, TargetLock> _targets = new(PathComparer);
+    private int _activeBatches;
+    private bool _disposed;
+    private bool _disposing;
 
     /// <param name="options">下载选项，为 null 时使用默认值。</param>
     /// <param name="handler">HTTP 消息处理器，为 null 时使用默认的连接池；传入的处理器随引擎一起释放。</param>
     public DownloadEngine(DownloadOptions? options = null, HttpMessageHandler? handler = null)
     {
         _options = options ?? new DownloadOptions();
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(_options.MaxConcurrency);
+        ArgumentOutOfRangeException.ThrowIfNegative(_options.MaxRetries);
+        if (_options.Timeout <= TimeSpan.Zero || _options.Timeout.TotalMilliseconds > int.MaxValue)
+            throw new ArgumentOutOfRangeException(nameof(options), "The download timeout must be positive and finite.");
+        if (_options.RetryDelay < TimeSpan.Zero)
+            throw new ArgumentOutOfRangeException(nameof(options), "The retry delay must not be negative.");
         _concurrency = new SemaphoreSlim(_options.MaxConcurrency);
         Http = new HttpClient(handler ?? CreateDefaultHandler()) { Timeout = _options.Timeout };
         // 版本号取自应用程序集（PCL Shion 本体），没有入口程序集时退回本库
@@ -53,16 +66,49 @@ public sealed class DownloadEngine : IDisposable
         IProgress<DownloadProgress>? progress,
         CancellationToken cancellationToken)
     {
+        lock (_lifetimeGate)
+        {
+            ObjectDisposedException.ThrowIf(_disposed, this);
+            _activeBatches++;
+        }
+        try
+        {
+            using var linked = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _shutdown.Token);
+            return await DownloadBatchAsync(items, progress, linked.Token).ConfigureAwait(false);
+        }
+        finally
+        {
+            lock (_lifetimeGate)
+            {
+                _activeBatches--;
+                if (_disposed && !_disposing && _activeBatches == 0)
+                    DisposeSynchronization();
+            }
+        }
+    }
+
+    private async Task<DownloadResult> DownloadBatchAsync(
+        IReadOnlyList<DownloadItem> items,
+        IProgress<DownloadProgress>? progress,
+        CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
         var targets = items.DistinctBy(item => Path.GetFullPath(item.TargetPath), PathComparer).ToList();
         var tracker = new DownloadTracker(targets);
         var timer = new PeriodicTimer(ReportInterval);
         var reporting = progress is null ? Task.CompletedTask : ReportAsync(timer, tracker, progress);
-        IReadOnlyList<DownloadError>?[] errors;
+        var errors = new IReadOnlyList<DownloadError>?[targets.Count];
         try
         {
-            // 放到线程池上执行，避免在调用方（例如界面线程）上同步校验文件
-            errors = await Task.WhenAll(targets.Select(item =>
-                Task.Run(() => DownloadItemAsync(item, tracker, cancellationToken), cancellationToken))).ConfigureAwait(false);
+            // 资源索引可含数万个文件，只创建有限的工作任务；不同批次仍共同受 _concurrency 限制。
+            await Parallel.ForEachAsync(Enumerable.Range(0, targets.Count), new ParallelOptions
+            {
+                MaxDegreeOfParallelism = _options.MaxConcurrency,
+                CancellationToken = cancellationToken
+            }, async (index, token) =>
+            {
+                errors[index] = await DownloadItemAsync(targets[index], tracker, token).ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
         finally
         {
@@ -84,8 +130,33 @@ public sealed class DownloadEngine : IDisposable
 
     public void Dispose()
     {
-        Http.Dispose();
+        lock (_lifetimeGate)
+        {
+            if (_disposed) return;
+            _disposed = true;
+            _disposing = true;
+        }
+        try
+        {
+            // 先取消正在下载或等待的批次，等它们结束后再释放信号量，避免 finally.Release 抛出异常。
+            _shutdown.Cancel();
+            Http.Dispose();
+        }
+        finally
+        {
+            lock (_lifetimeGate)
+            {
+                _disposing = false;
+                if (_activeBatches == 0)
+                    DisposeSynchronization();
+            }
+        }
+    }
+
+    private void DisposeSynchronization()
+    {
         _concurrency.Dispose();
+        _shutdown.Dispose();
     }
 
     private static SocketsHttpHandler CreateDefaultHandler() => new()
@@ -103,7 +174,9 @@ public sealed class DownloadEngine : IDisposable
 
     private async Task<IReadOnlyList<DownloadError>?> DownloadItemAsync(DownloadItem item, DownloadTracker tracker, CancellationToken cancellationToken)
     {
-        await _concurrency.WaitAsync(cancellationToken);
+        // 相同路径可能来自同时安装的多个实例。先等目标锁再占下载名额，避免重复写入共享库。
+        using var target = await LockTargetAsync(item.TargetPath, cancellationToken).ConfigureAwait(false);
+        await _concurrency.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
             var error = await EnsureFileAsync(item, tracker, cancellationToken);
@@ -126,7 +199,8 @@ public sealed class DownloadEngine : IDisposable
     {
         try
         {
-            if (FileVerifier.Matches(item.TargetPath, item.Size, item.Sha1)) return null;
+            cancellationToken.ThrowIfCancellationRequested();
+            if (await FileVerifier.MatchesAsync(item.TargetPath, item.Size, item.Sha1, cancellationToken).ConfigureAwait(false)) return null;
 
             Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(item.TargetPath))!);
             var tempPath = $"{item.TargetPath}.{Guid.NewGuid():N}.tmp";
@@ -134,7 +208,10 @@ public sealed class DownloadEngine : IDisposable
             {
                 var error = await FetchAsync(item, tempPath, tracker, cancellationToken);
                 if (error is null)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
                     File.Move(tempPath, item.TargetPath, overwrite: true);
+                }
                 return error;
             }
             finally
@@ -172,7 +249,8 @@ public sealed class DownloadEngine : IDisposable
                         break;
                     }
                 }
-                await Task.Delay(_options.RetryDelay * Math.Pow(2, attempt), cancellationToken);
+                var delay = Math.Min(30_000, _options.RetryDelay.TotalMilliseconds * Math.Pow(2, Math.Min(attempt, 30)));
+                await Task.Delay(TimeSpan.FromMilliseconds(delay), cancellationToken);
             }
         }
         if (errors.Count == 0)
@@ -205,6 +283,9 @@ public sealed class DownloadEngine : IDisposable
             while ((read = await source.ReadAsync(buffer, stall.Token)) > 0)
             {
                 stall.CancelAfter(_options.Timeout);
+                if (item.Size is { } size && received + read > size)
+                    throw new VerificationException(DownloadErrorKind.SizeMismatch, size.ToString(CultureInfo.InvariantCulture),
+                        (received + read).ToString(CultureInfo.InvariantCulture));
                 sha1.AppendData(buffer, 0, read);
                 await target.WriteAsync(buffer.AsMemory(0, read), stall.Token);
                 received += read;
@@ -217,6 +298,50 @@ public sealed class DownloadEngine : IDisposable
             tracker.EndAttempt(item, received);
         }
         Verify(item, received, sha1.GetHashAndReset());
+    }
+
+    private async Task<IDisposable> LockTargetAsync(string targetPath, CancellationToken cancellationToken)
+    {
+        var path = Path.GetFullPath(targetPath);
+        TargetLock target;
+        lock (_targetsGate)
+        {
+            if (!_targets.TryGetValue(path, out target!))
+                _targets[path] = target = new TargetLock();
+            target.Users++;
+        }
+        try
+        {
+            await target.Semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+            return new TargetLease(this, path, target);
+        }
+        catch
+        {
+            ReleaseTarget(path, target, acquired: false);
+            throw;
+        }
+    }
+
+    private void ReleaseTarget(string path, TargetLock target, bool acquired)
+    {
+        lock (_targetsGate)
+        {
+            if (acquired) target.Semaphore.Release();
+            if (--target.Users != 0) return;
+            _targets.Remove(path);
+            target.Semaphore.Dispose();
+        }
+    }
+
+    private sealed class TargetLock
+    {
+        public SemaphoreSlim Semaphore { get; } = new(1, 1);
+        public int Users;
+    }
+
+    private sealed class TargetLease(DownloadEngine engine, string path, TargetLock target) : IDisposable
+    {
+        public void Dispose() => engine.ReleaseTarget(path, target, acquired: true);
     }
 
     private static void Verify(DownloadItem item, long received, byte[] hash)

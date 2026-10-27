@@ -10,13 +10,15 @@ namespace PCL.Shion.Core.Launch;
 public sealed class GameSession : IDisposable
 {
     private readonly Process _process;
+    private readonly Lock _gate = new();
+    private readonly CancellationTokenSource _exitCancellation = new();
+    private int _disposed;
 
     private GameSession(Process process)
     {
         _process = process;
         process.OutputDataReceived += OnDataReceived;
         process.ErrorDataReceived += OnDataReceived;
-        process.Exited += OnExited;
     }
 
     /// <summary>标准输出与标准错误合流后的一行文本。</summary>
@@ -53,23 +55,27 @@ public sealed class GameSession : IDisposable
         foreach (var (name, value) in plan.EnvironmentVariables)
             startInfo.Environment[name] = value;
 
-        var process = new Process { StartInfo = startInfo, EnableRaisingEvents = true };
+        var process = new Process { StartInfo = startInfo };
         var session = new GameSession(process);
         session.OutputReceived += onOutput;
         session.Exited += onExited;
         try
         {
             process.Start();
+            session.ProcessId = process.Id;
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+
+            // 先开始读两条管道再等待退出，避免瞬间退出的进程在读日志前触发清理并释放句柄。
+            // 始终在线程池回调，不能在 Start 返回前同步调用 GameRunner 的退出处理。
+            var exitToken = session._exitCancellation.Token;
+            _ = Task.Run(() => session.WaitForExitAsync(exitToken));
         }
         catch
         {
             session.Dispose();
             throw;
         }
-
-        session.ProcessId = process.Id;
-        process.BeginOutputReadLine();
-        process.BeginErrorReadLine();
         return session;
     }
 
@@ -78,7 +84,19 @@ public sealed class GameSession : IDisposable
     /// </summary>
     public void Kill()
     {
-        _process.Kill(entireProcessTree: true);
+        lock (_gate)
+        {
+            if (_disposed != 0) return;
+            try
+            {
+                if (!_process.HasExited)
+                    _process.Kill(entireProcessTree: true);
+            }
+            catch (InvalidOperationException) when (_process.HasExited)
+            {
+                // 进程可能在 HasExited 与 Kill 之间退出。
+            }
+        }
     }
 
     /// <summary>
@@ -86,19 +104,58 @@ public sealed class GameSession : IDisposable
     /// </summary>
     public void Dispose()
     {
-        _process.Dispose();
+        lock (_gate)
+        {
+            if (Interlocked.Exchange(ref _disposed, 1) != 0) return;
+            _exitCancellation.Cancel();
+            _process.OutputDataReceived -= OnDataReceived;
+            _process.ErrorDataReceived -= OnDataReceived;
+            _process.Dispose();
+            _exitCancellation.Dispose();
+        }
     }
 
     private void OnDataReceived(object sender, DataReceivedEventArgs e)
     {
-        if (e.Data is not null)
-            OutputReceived?.Invoke(e.Data);
+        if (e.Data is not null && Volatile.Read(ref _disposed) == 0)
+            InvokeSafely(OutputReceived, e.Data);
     }
 
-    private void OnExited(object? sender, EventArgs e)
+    private async Task WaitForExitAsync(CancellationToken cancellationToken)
     {
-        // 无参的 WaitForExit 会等到重定向的输出读完，保证退出事件在全部日志行之后
-        _process.WaitForExit();
-        Exited?.Invoke(_process.ExitCode);
+        try
+        {
+            // WaitForExitAsync 同时等待重定向输出结束，退出通知一定晚于最后一行日志。
+            await _process.WaitForExitAsync(cancellationToken).ConfigureAwait(false);
+            if (Volatile.Read(ref _disposed) == 0)
+                InvokeSafely(Exited, _process.ExitCode);
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+        }
+        catch (InvalidOperationException) when (Volatile.Read(ref _disposed) != 0)
+        {
+        }
+        catch (Exception exception)
+        {
+            Trace.TraceError("Unable to observe game process exit: {0}", exception);
+        }
+    }
+
+    private static void InvokeSafely<T>(Action<T>? handlers, T value)
+    {
+        if (handlers is null) return;
+        foreach (Action<T> handler in handlers.GetInvocationList())
+        {
+            try
+            {
+                handler(value);
+            }
+            catch (Exception exception)
+            {
+                // 输出与退出来自后台线程，界面或日志订阅者异常不能终止整个启动器或阻止其他订阅者。
+                Trace.TraceError("Game process callback failed: {0}", exception);
+            }
+        }
     }
 }

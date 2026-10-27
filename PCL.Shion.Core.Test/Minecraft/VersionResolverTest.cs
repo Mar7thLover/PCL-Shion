@@ -6,6 +6,17 @@ namespace PCL.Shion.Core.Test;
 [TestClass]
 public sealed class VersionResolverTest
 {
+    [TestMethod]
+    [DataRow("../outside")]
+    [DataRow("..\\outside")]
+    [DataRow("C:\\outside")]
+    public void InheritedVersionNamesCannotEscapeVersions(string parent)
+    {
+        _root.WriteVersion("child", "{\"mainClass\":\"Main\",\"inheritsFrom\":" + System.Text.Json.JsonSerializer.Serialize(parent) + "}");
+
+        Assert.ThrowsExactly<InvalidDataException>(() => VersionResolver.Resolve(_root.RootPath, "child"));
+    }
+
     private const string VanillaJson = """
         {
           "id": "1.20.1",

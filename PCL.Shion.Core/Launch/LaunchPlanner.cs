@@ -77,7 +77,7 @@ public static class LaunchPlanner
         Directory.CreateDirectory(layout.NativesDirectory);
         foreach (var library in LibrarySelector.Select(version.Libraries, environment))
         {
-            var path = Path.Combine(layout.LibrariesDirectory, library.RelativePath.Replace('/', Path.DirectorySeparatorChar));
+            var path = ManifestPath.Resolve(layout.LibrariesDirectory, library.RelativePath);
             var exists = File.Exists(path);
             if (!exists)
                 missingFiles.Add(path);
@@ -155,7 +155,7 @@ public static class LaunchPlanner
         if (version.LoggingArgument is not null && version.LoggingFileId is not null)
         {
             // 日志配置文件不在 MissingFiles 之列：没有它游戏照常运行，只是日志格式不同
-            var logConfig = Path.Combine(layout.AssetsDirectory, "log_configs", version.LoggingFileId);
+            var logConfig = ManifestPath.ResolveName(Path.Combine(layout.AssetsDirectory, "log_configs"), version.LoggingFileId);
             if (File.Exists(logConfig))
                 arguments.Add(version.LoggingArgument.Replace("${path}", logConfig));
         }
